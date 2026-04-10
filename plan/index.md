@@ -39,7 +39,27 @@ The following user stories illustrate what features the app provides, but they a
 
 ## System design
 
+Thumbtax is a frontend-only web app built with Vite, React, and TypeScript and served via GitHub Pages.
+The specifications for the different available tax forms are statically defined as part of the app bundle.
+User-entered information can be persisted locally or the user can export it, but there is no remote storage mechanism.
+
+By omitting a backend, we simplify the app and eliminate most security and privacy concerns.
+However, the code is still structured such that data, business logic, and presentation are decoupled.
+
 ### High-level architecture
+
+```mermaid
+graph
+  specs[form specs]-->|form specs|service[TaxFormService]
+  state<-->|user input values|service
+  service-->|render views|view[view layer]
+  view-->|rendered components|screen
+  view-->|updated values|service
+  service-->|state|saver[state saver]
+  saver-->|save file|filesystem[file system]
+  service-->|render views|exporter
+  exporter-->|export file|filesystem
+```
 
 ### Data model
 
