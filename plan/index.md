@@ -201,6 +201,34 @@ type ValueProvider =
     };
 ```
 
+We can construct the entire application state from the user's filing status, the set of tax form instances that the user has added, and the values they have entered.
+So, that's the only information we need to persist between sessions (in the browser's local storage or a save file).
+
+```ts
+type PersistedState = {
+  filingStatus: FilingStatus;
+  forms: Array<{
+    class: TaxFormClass;
+    id: string;
+    userLabel?: string;
+    userValues: Record<TaxFormBoxIdentifier, number>;
+  }>;
+};
+```
+
+As shown above, we model the application around a TaxFormService which performs tax form operations.
+One such operation is to produce a render view, an interface suitable for the view layer to display, for each tax form.
+
+```ts
+type TaxFormView = {
+  specification: TaxFormSpecification;
+  instances: Array<{
+    id: string;
+    userLabel?: string;
+  }>;
+};
+```
+
 ### Sequence diagrams
 
 The TaxFormService tracks information like the current value of each form box in its internal state.
