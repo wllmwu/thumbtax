@@ -63,6 +63,144 @@ graph
 
 ### Data model
 
+The IRS publishes various tax forms, schedules, and worksheets involved in the process of filing tax returns.
+Conceptually, these are different names for the same thing in different contexts, so we model them all as "tax forms."
+
+```mermaid
+---
+title: Conceptual class diagram
+---
+classDiagram
+  direction LR
+  class TaxForm {
+    String id
+    List~Section~ sections
+  }
+  class Section {
+    Optional~List~Column~~ columns
+    List~Line~ lines
+  }
+  class Column {
+    String index
+  }
+  class Line {
+    String index
+    List~Box~ boxes
+  }
+  class Box~ValueType~ {
+    String id
+    Optional~String~ column
+    getValue() ValueType
+  }
+
+  TaxForm "1" *-- "1..*" Section
+  Section "1" *-- "0..*" Column
+  Section "1" *-- "1..*" Line
+  Line "1" *-- "0..*" Box
+```
+
+We store a static specification of each type of tax form, represented by the following schema (TypeScript syntax).
+
+```ts
+type FilingStatus =
+  | "single"
+  | "married_filing_jointly"
+  | "married_filing_separately"
+  | "head_of_household"
+  | "qualifying_surviving_spouse";
+
+type TaxFormClass =
+  | "f1040"
+  | "f1040s1"
+  | "f1040sA"
+  | "f1040wQDCGT"
+  | "f1099DIV"
+  | "f8959"
+  | "fW2"
+  | ...;
+
+type TaxFormBoxIdentifier = string;
+
+type TaxFormSpecification = {
+  class: TaxFormClass;
+  title: string;
+  description: string;
+  irsPageUrl: string;
+  cardinality: "one" | "multiple";
+  sections: Array<TaxFormSection>;
+};
+
+type TaxFormSection = {
+  heading?: string;
+  columns?: Array<{
+    index: string;
+    description?: string;
+  }>;
+  lines: Array<TaxFormLine>;
+};
+
+type TaxFormLine = {
+  index: string;
+  description: string;
+  boxes: Array<TaxFormBox>;
+};
+
+type TaxFormBox = {
+  identifier: TaxFormBoxIdentifier;
+  columnIndex?: string;
+  value: ValueProvider;
+  format?: "checkbox" | "financial" | "percentage" | "plain";
+};
+
+type ValueProvider =
+  | number
+  | TaxFormBoxIdentifier
+  | { type: "unused" }
+  | { type: "number_input" }
+  | { type: "list_amounts_input" }
+  | { type: "checkbox_input" }
+  | {
+      type: "form_reference";
+      form: TaxFormClass;
+      box: TaxFormBoxIdentifier;
+    }
+  | { type: "sum"; values: Array<ValueProvider> }
+  | {
+      type: "sum_range";
+      form?: TaxFormClass;
+      fromLine: string;
+      toLine: string;
+      column?: string;
+    }
+  | { type: "difference"; minuend: ValueProvider; subtrahend: ValueProvider }
+  | { type: "product"; values: Array<ValueProvider> }
+  | { type: "quotient"; dividend: ValueProvider; divisor: ValueProvider }
+  | { type: "minimum"; values: Array<ValueProvider> }
+  | { type: "maximum"; values: Array<ValueProvider> }
+  | { type: "absolute_value"; value: ValueProvider }
+  | { type: "numerical_negation"; value: ValueProvider }
+  | { type: "form_presence"; form: TaxFormClass }
+  | {
+      type: "conditional";
+      condition: ValueProvider;
+      trueValue: ValueProvider;
+      falseValue: ValueProvider;
+    }
+  | {
+      type: "comparison";
+      value: ValueProvider;
+      minimum?: ValueProvider;
+      maximum?: ValueProvider;
+      strict?: boolean;
+    }
+  | { type: "logical_negation"; value: ValueProvider }
+  | {
+      type: "filing_status_map";
+      values: Record<FilingStatus, ValueProvider>;
+      default?: ValueProvider;
+    };
+```
+
 ### Data flow
 
 ## Tasks
