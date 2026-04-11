@@ -201,6 +201,98 @@ type ValueProvider =
     };
 ```
 
-### Data flow
+### Sequence diagrams
+
+The TaxFormService tracks information like the current value of each form box in its internal state.
+Subscribers register themselves to listen for updates to a value.
+Thus, we encapsulate business logic such as computing each box's value within the service.
+
+The following diagrams explain some different TaxFormService operations.
+They describe the expected behavior but do not prescribe any particular implementation.
+
+```mermaid
+---
+title: "TaxFormService method: addForm(type, values)"
+---
+sequenceDiagram
+  participant caller
+  participant service as TaxFormService
+  box service internals
+  participant specs as form specifications
+  participant instances as form instances
+  participant values as box values
+  end
+
+  caller->>service: addForm(type, values)
+  service->>specs: get form spec
+  specs-->>service: form spec
+  service->>service: filter out unrecognized values
+  service->>instances: add form instance
+  instances->>values: register boxes and listeners
+  values->>values: update listeners
+  service-->>caller: ok
+```
+
+```mermaid
+---
+title: "TaxFormService method: setBoxValue(formId, boxId, value)"
+---
+sequenceDiagram
+  participant caller
+  participant service as TaxFormService
+  box service internals
+  participant specs as form specifications
+  participant instances as form instances
+  participant values as box values
+  end
+
+  caller->>service: setBoxValue(formId, boxId, value)
+  service->>specs: get form spec
+  specs-->>service: form spec
+  service->>service: validate against spec
+  service->>values: update box value
+  values->>values: update listeners
+  service-->>caller: ok
+```
+
+```mermaid
+---
+title: "TaxFormService method: getFormViews()"
+---
+sequenceDiagram
+  participant caller
+  participant service as TaxFormService
+  box service internals
+  participant specs as form specifications
+  participant instances as form instances
+  end
+
+  caller->>service: getFormViews()
+  activate service
+  Note over service: memoized
+  service->>instances: get form instances
+  instances-->>service: form instances
+  service->>service: group instances by class
+  service->>specs: get form specs
+  specs-->>service: form specs
+  service-->>caller: form render views
+  deactivate service
+```
+
+```mermaid
+---
+title: "TaxFormService method: registerBoxListener(formId, boxId)"
+---
+sequenceDiagram
+  participant caller
+  participant service as TaxFormService
+  box service internals
+  participant values as box values
+  end
+
+  caller->>service: registerBoxListener(formId, boxId)
+  service->>values: register listener
+  service-->>caller: ok
+```
 
 ## Tasks
