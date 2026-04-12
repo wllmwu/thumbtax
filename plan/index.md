@@ -323,4 +323,85 @@ sequenceDiagram
   service-->>caller: ok
 ```
 
+The following diagrams explain how the app handles some different events.
+
+```mermaid
+---
+title: Initialization
+---
+sequenceDiagram
+  participant app as App
+  participant localStorage
+  participant service as TaxFormService
+
+  app->>localStorage: retrieve saved state
+  localStorage-->>app: maybe saved state
+  alt if saved state is present
+  app->>service: initialize with saved state
+  else
+  app->>service: initialize with default forms
+  end
+  service-->>app: ok
+  app->>app: render...
+```
+
+```mermaid
+---
+title: Render
+---
+sequenceDiagram
+  participant app as App
+  participant service as TaxFormService
+  box view layer
+  participant formview as form view
+  participant lineview as line view
+  participant boxview as box view
+  end
+
+  app->>service: getFormViews()
+  service-->>app: form render views
+  loop for each form class
+  app->>formview: render(specification, instances)
+  loop for each line and instance
+  formview->>lineview: render(line, columns, boxes)
+  loop for each instance and box
+  lineview->>boxview: render(box)
+  opt as applicable
+  boxview->>app: registerBoxListener(formId, boxId)
+  app->>service: registerBoxListener(formId, boxId)
+  end
+  end
+  end
+  end
+```
+
+```mermaid
+---
+title: Value change
+---
+sequenceDiagram
+  participant app as App
+  participant service as TaxFormService
+  box view layer
+  participant boxview as box view
+  end
+  participant user
+
+  user->>boxview: enter input field
+  activate boxview
+  loop
+  user->>boxview: type into input field
+  boxview->>boxview: update local state
+  end
+  user->>boxview: exit input field
+  deactivate boxview
+  alt if input is valid
+  boxview->>app: setBoxValue(formId, boxId, value)
+  app->>service: setBoxValue(formId, boxId, value)
+  app->>app: render...
+  else
+  boxview->>boxview: show error state
+  end
+```
+
 ## Tasks
