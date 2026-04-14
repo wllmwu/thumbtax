@@ -37,6 +37,72 @@ The following user stories illustrate what features the app provides, but they a
 - As a **taxpayer,** I want to save the values I have entered for each tax form, so that I can resume later or come back with new information.
 - As a **taxpayer,** I want to export my estimated tax forms in a structured, portable format, so that I can import them into a spreadsheet or similar program to process them further.
 
+## User experience
+
+Overall, the Thumbtax interface is clean and minimal.
+It communicates that Thumbtax is an efficient, unbloated tool.
+It follows modern conventions in information architecture; uses colors, decorations, and animations sparingly; and is fully responsive and accessible to keyboards and screen readers.
+
+### Primary view
+
+Thumbtax has three tabs in its primary view: Income, Taxes, and About.
+The tabs are displayed in a navigation bar at the top of the page along with some other controls.
+On narrow screens, the navigation controls are collapsed.
+
+#### Income tab
+
+In the Income tab, the user estimates their income for the year.
+The tab contains a list of income-related tax forms, which is populated with an empty Form W-2 by default if there is no saved state.
+The user can add and remove these forms as needed.
+
+#### Taxes tab
+
+In the Taxes tab, the user estimates their taxes for the year based on their inputs in the Income tab.
+Similar to the Income tab, this contains a list of tax forms related to computing one's tax return, which is populated with an empty Form 1040 by default if there is no saved state.
+
+#### About tab
+
+The About tab contains a description of Thumbtax's features, the app's terms of service and privacy policy (both of which are pretty minimal as it's a very simple app), and some author information.
+
+### Form connections
+
+Thumbtax also offers an interactive visualization of the connections between tax forms in a graph view.
+The graph view is displayed to the left of the primary view, where the tabs described above are located.
+However, on narrow screens, the graph view is moved into a fourth tab titled Connections.
+
+In this graph view, each form that the user has added is represented by a small image of its first page.
+References between forms (such as "enter the value from Form 1040, line 7a") are represented by lines connecting the forms.
+The overall view is stylized to appear like the tax forms are pinned to a bulletin board and connected by strings (alluding to "thumbtacks," like the name of the app).
+
+The user can pan and zoom the view, move forms around, and click on a form to navigate to it in the Income or Taxes tab.
+
+### Form list
+
+Both the Income and Taxes tabs contain a list of tax forms.
+
+Here we distinguish a "class" of tax form, such as Form W-2, from "instances" of a class, such as different instances of Form W-2 for different employers.
+Some classes are restricted to a single instance; for example, one does not need to file multiple different instances of Form 1040.
+
+The form list displays a table for each form class that the user has added.
+Within each table, the first columns show the line number (such as "1" or "2a") and line description.
+Then we show a column (or set of columns, if the form itself has multiple columns on this line) for each instance of that form class.
+
+A form often has multiple sections and different columns in different parts of the form.
+These are still rendered as a contiguous table as much as possible.
+
+Only form boxes that require user input render as input fields.
+When the user enters a value in such a box, then all boxes that depend on that value automatically recompute their own values.
+
+### Saving and exporting
+
+The user's progress is automatically saved in the browser's local storage, so it persists if they accidentally reload the page or want to come back later.
+However, they can disable this feature for security.
+
+Alternatively, the user can download a save file which represents the application's current state.
+They can then load the save file later from their file system to restore that state.
+
+Finally, the user can export their tax form data as a CSV or Excel file.
+
 ## System design
 
 Thumbtax is a frontend-only web app built with Vite, React, and TypeScript and served via GitHub Pages.
