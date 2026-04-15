@@ -46,7 +46,7 @@ It follows modern conventions in information architecture; uses colors, decorati
 ### Primary view
 
 Thumbtax has three tabs in its primary view: Income, Taxes, and About.
-The tabs are displayed in a navigation bar at the top of the page along with some other controls.
+The tabs are displayed in a navigation bar at the top of the page along with other controls, including a filing status selector.
 On narrow screens, the navigation controls are collapsed.
 
 #### Income tab
@@ -71,10 +71,16 @@ The graph view is displayed to the left of the primary view, where the tabs desc
 However, on narrow screens, the graph view is moved into a fourth tab titled Connections.
 
 In this graph view, each form that the user has added is represented by a small image of its first page.
+Forms that exist in the specification but have not yet been added by the user are also shown by default, in a faded or visually distinct style, to aid discoverability.
+The user can toggle the visibility of these unadded forms.
 References between forms (such as "enter the value from Form 1040, line 7a") are represented by lines connecting the forms.
+These connections are derived from the `form_reference` and `form_presence` value provider types in the form specifications.
 The overall view is stylized to appear like the tax forms are pinned to a bulletin board and connected by strings (alluding to "thumbtacks," like the name of the app).
 
 The user can pan and zoom the view, move forms around, and click on a form to navigate to it in the Income or Taxes tab.
+
+Discussion of the technical implementation of this view is deferred.
+Possible approaches include an SVG element, the Canvas API, or a dedicated graph library such as React Flow or Cytoscape.js.
 
 ### Form list
 
@@ -93,6 +99,22 @@ These are still rendered as a contiguous table as much as possible.
 Only form boxes that require user input render as input fields.
 When the user enters a value in such a box, then all boxes that depend on that value automatically recompute their own values.
 
+#### Adding forms
+
+A dropdown at the top and bottom of the form list lets the user add a new form class.
+For form classes with `cardinality: "one"`, the option is disabled in the dropdown when an instance already exists.
+For form classes with `cardinality: "multiple"`, a button within the form view also lets the user add another instance of that class.
+
+#### Removing forms
+
+Each form instance has a button to remove it.
+If removing an instance leaves no remaining instances of that class, the class is also removed from the list.
+
+#### Reordering forms
+
+Each form instance has left and right buttons to reorder it relative to other instances of the same class.
+Each form class has up and down buttons to reorder it relative to other form classes in the overall list.
+
 ### Saving and exporting
 
 The user's progress is automatically saved in the browser's local storage, so it persists if they accidentally reload the page or want to come back later.
@@ -102,6 +124,12 @@ Alternatively, the user can download a save file which represents the applicatio
 They can then load the save file later from their file system to restore that state.
 
 Finally, the user can export their tax form data as a CSV or Excel file.
+
+The persisted state includes a `taxYear` field indicating the tax year the data pertains to.
+If the user loads a save file whose `taxYear` does not match the current build's tax year, a warning is displayed.
+
+When loading a save file or restoring from local storage, unrecognized fields are ignored and missing values are treated as zero.
+A warning is also shown in these cases.
 
 ## System design
 
@@ -223,6 +251,7 @@ type ValueProvider =
   | TaxFormBoxIdentifier
   | { type: "unused" }
   | { type: "number_input" }
+  // User enters a list of individual amounts and labels; their total is the box value
   | { type: "list_amounts_input" }
   | { type: "checkbox_input" }
   | {
@@ -272,6 +301,7 @@ So, that's the only information we need to persist between sessions (in the brow
 
 ```ts
 type PersistedState = {
+  taxYear: number;
   filingStatus: FilingStatus;
   forms: Array<{
     class: TaxFormClass;
@@ -294,6 +324,11 @@ type TaxFormView = {
   }>;
 };
 ```
+
+`TaxFormView` intentionally omits computed box values.
+Instead, view components subscribe to individual box values via `registerBoxListener(formId, boxId)`, where `formId` is the instance ID and `boxId` is the identifier from the form specification.
+These two fields together uniquely identify a box value in the service, so no additional information is needed to subscribe.
+The listener fires whenever a value changes, triggering a re-render of the subscribing component.
 
 ### Sequence diagrams
 
@@ -322,8 +357,34 @@ sequenceDiagram
   specs-->>service: form spec
   service->>service: filter out unrecognized values
   service->>instances: add form instance
-  instances->>values: register boxes and listeners
+  service->>values: register boxes and listeners
   values->>values: update listeners
+  service-->>caller: ok
+```
+
+```mermaid
+---
+title: "TaxFormService method: removeForm(formId)"
+---
+sequenceDiagram
+  participant caller
+  participant service as TaxFormService
+  box service internals
+  participant specs as form specifications
+  participant instances as form instances
+  participant values as box values
+  end
+
+  caller->>service: removeForm(formId)
+  service->>specs: get form spec
+  specs-->>service: form spec
+  service->>instances: remove form instance
+  service->>values: deregister boxes for this instance
+  values->>values: update listeners
+  service->>instances: check remaining instances of this class
+  alt no instances remain
+  service->>instances: remove class tracking
+  end
   service-->>caller: ok
 ```
 
