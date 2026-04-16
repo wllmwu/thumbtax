@@ -321,20 +321,16 @@ type TaxFormView = {
   instances: Array<{
     id: string;
     userLabel?: string;
+    boxValues: Record<TaxFormBoxIdentifier, number>;
   }>;
 };
 ```
 
-`TaxFormView` intentionally omits computed box values.
-Instead, view components subscribe to individual box values via `registerBoxListener(formId, boxId)`, where `formId` is the instance ID and `boxId` is the identifier from the form specification.
-These two fields together uniquely identify a box value in the service, so no additional information is needed to subscribe.
-The listener fires whenever a value changes, triggering a re-render of the subscribing component.
-
 ### Sequence diagrams
 
-The TaxFormService tracks information like the current value of each form box in its internal state.
-Subscribers register themselves to listen for updates to a value.
-Thus, we encapsulate business logic such as computing each box's value within the service.
+The TaxFormService maintains an internal dependency graph of box values derived from the `ValueProvider` types in the form specifications.
+When any user input changes, the service recomputes the dependent values, then notifies subscribers.
+Thus, the service encapsulates all computation logic.
 
 The following diagrams explain some different TaxFormService operations.
 They describe the expected behavior but do not prescribe any particular implementation.
@@ -344,12 +340,13 @@ They describe the expected behavior but do not prescribe any particular implemen
 title: "TaxFormService method: addForm(type, values)"
 ---
 sequenceDiagram
+  participant subscribers
   participant caller
   participant service as TaxFormService
   box service internals
   participant specs as form specifications
   participant instances as form instances
-  participant values as box values
+  participant values as box values graph
   end
 
   caller->>service: addForm(type, values)
@@ -357,8 +354,9 @@ sequenceDiagram
   specs-->>service: form spec
   service->>service: filter out unrecognized values
   service->>instances: add form instance
-  service->>values: register boxes and listeners
-  values->>values: update listeners
+  service->>values: register boxes
+  values->>values: recompute values
+  service->>subscribers: notify
   service-->>caller: ok
 ```
 
@@ -367,24 +365,23 @@ sequenceDiagram
 title: "TaxFormService method: removeForm(formId)"
 ---
 sequenceDiagram
+  participant subscribers
   participant caller
   participant service as TaxFormService
   box service internals
-  participant specs as form specifications
   participant instances as form instances
-  participant values as box values
+  participant values as box values graph
   end
 
   caller->>service: removeForm(formId)
-  service->>specs: get form spec
-  specs-->>service: form spec
   service->>instances: remove form instance
-  service->>values: deregister boxes for this instance
-  values->>values: update listeners
+  service->>values: remove boxes
+  values->>values: recompute values
   service->>instances: check remaining instances of this class
   alt no instances remain
   service->>instances: remove class tracking
   end
+  service->>subscribers: notify
   service-->>caller: ok
 ```
 
@@ -393,12 +390,13 @@ sequenceDiagram
 title: "TaxFormService method: setBoxValue(formId, boxId, value)"
 ---
 sequenceDiagram
+  participant subscribers
   participant caller
   participant service as TaxFormService
   box service internals
   participant specs as form specifications
   participant instances as form instances
-  participant values as box values
+  participant values as box values graph
   end
 
   caller->>service: setBoxValue(formId, boxId, value)
@@ -406,7 +404,8 @@ sequenceDiagram
   specs-->>service: form spec
   service->>service: validate against spec
   service->>values: update box value
-  values->>values: update listeners
+  values->>values: recompute values
+  service->>subscribers: notify
   service-->>caller: ok
 ```
 
@@ -420,34 +419,18 @@ sequenceDiagram
   box service internals
   participant specs as form specifications
   participant instances as form instances
+  participant values as box values graph
   end
 
   caller->>service: getFormViews()
-  activate service
-  Note over service: memoized
-  service->>instances: get form instances
-  instances-->>service: form instances
-  service->>service: group instances by class
   service->>specs: get form specs
   specs-->>service: form specs
+  service->>instances: get form instances
+  instances-->>service: form instances
+  service->>values: get box values
+  values-->>service: box values
+  service->>service: group instances by class and gather values
   service-->>caller: form render views
-  deactivate service
-```
-
-```mermaid
----
-title: "TaxFormService method: registerBoxListener(formId, boxId)"
----
-sequenceDiagram
-  participant caller
-  participant service as TaxFormService
-  box service internals
-  participant values as box values
-  end
-
-  caller->>service: registerBoxListener(formId, boxId)
-  service->>values: register listener
-  service-->>caller: ok
 ```
 
 The following diagrams explain how the app handles some different events.
@@ -492,11 +475,7 @@ sequenceDiagram
   loop for each line and instance
   formview->>lineview: render(line, columns, boxes)
   loop for each instance and box
-  lineview->>boxview: render(box)
-  opt as applicable
-  boxview->>app: registerBoxListener(formId, boxId)
-  app->>service: registerBoxListener(formId, boxId)
-  end
+  lineview->>boxview: render(box, resolvedValue)
   end
   end
   end
@@ -525,7 +504,8 @@ sequenceDiagram
   alt if input is valid
   boxview->>app: setBoxValue(formId, boxId, value)
   app->>service: setBoxValue(formId, boxId, value)
-  app->>app: render...
+  service->>app: notify subscriber
+  app->>app: render with updated form views
   else
   boxview->>boxview: show error state
   end
