@@ -300,6 +300,16 @@ We can construct the entire application state from the user's filing status, the
 So, that's the only information we need to persist between sessions (in the browser's local storage or a save file).
 
 ```ts
+type UserInputValue =
+  | {
+      type: "number";
+      value: number;
+    }
+  | {
+      type: "labeled_list";
+      value: Array<[string, number]>;
+    };
+
 type PersistedState = {
   taxYear: number;
   filingStatus: FilingStatus;
@@ -307,7 +317,7 @@ type PersistedState = {
     class: TaxFormClass;
     id: string;
     userLabel?: string;
-    userValues: Record<TaxFormBoxIdentifier, number>;
+    userValues: Record<TaxFormBoxIdentifier, UserInputValue>;
   }>;
 };
 ```
@@ -321,7 +331,7 @@ type TaxFormView = {
   instances: Array<{
     id: string;
     userLabel?: string;
-    boxValues: Record<TaxFormBoxIdentifier, number>;
+    boxValues: Record<TaxFormBoxIdentifier, UserInputValue>;
   }>;
 };
 ```
