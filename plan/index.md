@@ -243,6 +243,7 @@ type TaxFormBox = {
   identifier: TaxFormBoxIdentifier;
   columnIndex?: string;
   value: ValueProvider;
+  predictedValue?: ValueProvider;
   format?: "checkbox" | "financial" | "percentage" | "plain";
 };
 
@@ -254,6 +255,13 @@ type ValueProvider =
   // User enters a list of individual amounts and labels; their total is the box value
   | { type: "list_amounts_input" }
   | { type: "checkbox_input" }
+  | {
+      type: "box_selection_input";
+      options: Array<{
+        form: TaxFormClass;
+        box: TaxFormBoxIdentifier;
+      }>;
+    }
   | {
       type: "form_reference";
       form: TaxFormClass;
@@ -323,10 +331,10 @@ type PersistedState = {
 ```
 
 As shown above, we model the application around a TaxFormService which performs tax form operations.
-One such operation is to produce a render view, an interface suitable for the view layer to display, for each tax form.
+One such operation is to produce a render view, an interface suitable for the view layer (and other consumers) to display, for each tax form.
 
 ```ts
-type TaxFormView = {
+type TaxFormRenderView = {
   specification: TaxFormSpecification;
   instances: Array<{
     id: string;
@@ -522,3 +530,26 @@ sequenceDiagram
 ```
 
 ## Tasks
+
+1. Scaffold the Vite project
+2. Set up navigation and page layout
+3. Add skeleton TaxFormList and TaxFormView components
+4. Add the Form W-2 specification
+5. Add skeleton TaxFormService with support for Form W-2
+6. Wire up the service to the view layer
+   - At this point, we can add and remove instances of Form W-2
+7. Implement all box types end-to-end in Form W-2
+   - At this point, we can enter values into form boxes
+8. Add the Form 1040 specification
+9. Implement all new box types end-to-end in Form 1040
+   - At this point, we can compute values based on our inputs
+10. Add more form specifications and implement the new box types end-to-end
+11. Support reordering forms and form instances
+12. Support saving and restoring state in the browser's local storage
+    - This represents the minimum viable product
+13. Style the view components
+14. Add any remaining form specifications and box types
+15. Support saving and loading a save file
+16. Support exporting to external file formats
+17. Write the About page
+18. Add the Connections view (requires further planning)
