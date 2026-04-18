@@ -314,6 +314,10 @@ type UserInputValue =
       value: number;
     }
   | {
+      type: "predicted_number";
+      value: number;
+    }
+  | {
       type: "labeled_list";
       value: Array<[string, number]>;
     };
@@ -532,24 +536,28 @@ sequenceDiagram
 ## Tasks
 
 1. Scaffold the Vite project
-2. Set up navigation and page layout
-3. Add skeleton TaxFormList and TaxFormView components
-4. Add the Form W-2 specification
-5. Add skeleton TaxFormService with support for Form W-2
-6. Wire up the service to the view layer
-   - At this point, we can add and remove instances of Form W-2
-7. Implement all box types end-to-end in Form W-2
-   - At this point, we can enter values into form boxes
-8. Add the Form 1040 specification
-9. Implement all new box types end-to-end in Form 1040
-   - At this point, we can compute values based on our inputs
-10. Add more form specifications and implement the new box types end-to-end
-11. Support reordering forms and form instances
-12. Support saving and restoring state in the browser's local storage
-    - This represents the minimum viable product
-13. Style the view components
-14. Add any remaining form specifications and box types
-15. Support saving and loading a save file
-16. Support exporting to external file formats
-17. Write the About page
-18. Add the Connections view (requires further planning)
+2. Display forms
+   1. Define types
+   2. Add the specifications for Form W-2 and Form 1040 (as static constants)
+   3. Add a skeleton TaxFormView component
+   4. Render the two forms
+3. Compute values
+   1. Add a skeleton TaxFormService with the two forms
+   2. Connect the service to the App component
+   3. Implement user input boxes
+   4. Recompute dependent values when input changes
+   5. Update the view
+4. Organize the view
+   1. Set up navigation and page layout
+   2. Add the TaxFormList component
+   3. Split forms between the two main tabs
+5. Add more form specifications and implement the new box types
+6. Support keyboard navigation between boxes
+7. Support saving and restoring state in the browser's local storage
+8. Style the view components
+9. Support reordering forms and form instances
+10. Support rich text markup
+11. Support saving and loading a save file
+12. Support exporting to external file formats
+13. Write the About page
+14. Add the Connections view (requires further planning)
