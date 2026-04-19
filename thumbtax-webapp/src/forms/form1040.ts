@@ -437,7 +437,7 @@ export const Form1040: TaxFormSpecification = {
             {
               identifier: "15",
               value: {
-                type: "absolute_value",
+                type: "non_negative",
                 value: { type: "difference", minuend: "11b", subtrahend: "14" },
               },
             },
@@ -512,7 +512,7 @@ export const Form1040: TaxFormSpecification = {
             {
               identifier: "22",
               value: {
-                type: "absolute_value",
+                type: "non_negative",
                 value: { type: "difference", minuend: "18", subtrahend: "21" },
               },
             },
@@ -704,7 +704,7 @@ export const Form1040: TaxFormSpecification = {
             {
               identifier: "34",
               value: {
-                type: "absolute_value",
+                type: "non_negative",
                 value: { type: "difference", minuend: "33", subtrahend: "24" },
               },
             },
@@ -744,7 +744,7 @@ export const Form1040: TaxFormSpecification = {
             {
               identifier: "37",
               value: {
-                type: "absolute_value",
+                type: "non_negative",
                 value: { type: "difference", minuend: "24", subtrahend: "33" },
               },
             },

@@ -70,6 +70,7 @@ export type ValueProvider =
   | { type: "minimum"; values: Array<ValueProvider> }
   | { type: "maximum"; values: Array<ValueProvider> }
   | { type: "absolute_value"; value: ValueProvider }
+  | { type: "non_negative"; value: ValueProvider }
   | { type: "numerical_negation"; value: ValueProvider }
   | { type: "form_presence"; form: TaxFormClass }
   | {

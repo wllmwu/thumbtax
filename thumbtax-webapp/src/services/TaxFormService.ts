@@ -226,9 +226,10 @@ export class TaxFormService {
       case "maximum":
         return Math.max(...vp.values.map(recurse));
 
-      // In tax forms, "absolute value" means clamp to zero when negative
-      // (i.e. "if zero or less, enter -0-"), not mathematical |x|.
       case "absolute_value":
+        return Math.abs(recurse(vp.value));
+
+      case "non_negative":
         return Math.max(0, recurse(vp.value));
 
       case "numerical_negation":
