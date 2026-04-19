@@ -1,24 +1,28 @@
+import { useEffect, useState } from "react";
+
 import { TaxFormView } from "#src/components/TaxFormView";
-import { Form1040 } from "#src/forms/form1040";
-import { FormW2 } from "#src/forms/formW2";
+import { TaxFormService } from "#src/services/TaxFormService";
 
 import type { TaxFormRenderView } from "#src/types/taxFormRenderView";
 
-const w2View: TaxFormRenderView = {
-  specification: FormW2,
-  instances: [{ id: "w2-1", boxValues: {} }],
-};
-
-const f1040View: TaxFormRenderView = {
-  specification: Form1040,
-  instances: [{ id: "f1040-1", boxValues: {} }],
-};
+const service = new TaxFormService();
 
 function App() {
+  const [formViews, setFormViews] = useState<TaxFormRenderView[]>(
+    () => service.getFormViews(),
+  );
+
+  useEffect(() => {
+    return service.subscribe(() => {
+      setFormViews(service.getFormViews());
+    });
+  }, []);
+
   return (
     <>
-      <TaxFormView view={w2View} />
-      <TaxFormView view={f1040View} />
+      {formViews.map((view) => (
+        <TaxFormView key={view.specification.class} view={view} />
+      ))}
     </>
   );
 }
