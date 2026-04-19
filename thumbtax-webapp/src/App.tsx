@@ -21,7 +21,11 @@ function App() {
   return (
     <>
       {formViews.map((view) => (
-        <TaxFormView key={view.specification.class} view={view} />
+        <TaxFormView
+          key={view.specification.class}
+          view={view}
+          onSetBoxValue={(formId, boxId, value) => service.setBoxValue(formId, boxId, value)}
+        />
       ))}
     </>
   );
