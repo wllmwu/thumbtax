@@ -7,9 +7,9 @@ export type TaxFormBoxIdentifier = string;
 export type TaxFormSpecification = {
   class: TaxFormClass;
   title: string;
-  description: string;
+  subtitle?: string;
   irsPageUrl: string;
-  cardinality: "one" | "multiple";
+  cardinality: "single" | "multiple";
   sections: Array<TaxFormSection>;
 };
 
@@ -24,7 +24,7 @@ export type TaxFormSection = {
 
 export type TaxFormLine = {
   index: string;
-  description: string;
+  description?: string;
   boxes: Array<TaxFormBox>;
 };
 
@@ -40,6 +40,7 @@ export type ValueProvider =
   | number
   | TaxFormBoxIdentifier
   | { type: "unused" }
+  | { type: "unsupported" }
   | { type: "number_input" }
   | { type: "list_amounts_input" }
   | { type: "checkbox_input" }
