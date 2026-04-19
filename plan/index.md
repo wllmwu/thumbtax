@@ -218,7 +218,7 @@ type TaxFormBoxIdentifier = string;
 type TaxFormSpecification = {
   class: TaxFormClass;
   title: string;
-  description: string;
+  subtitle?: string;
   irsPageUrl: string;
   cardinality: "one" | "multiple";
   sections: Array<TaxFormSection>;
@@ -235,7 +235,7 @@ type TaxFormSection = {
 
 type TaxFormLine = {
   index: string;
-  description: string;
+  description?: string;
   boxes: Array<TaxFormBox>;
 };
 
@@ -311,10 +311,6 @@ So, that's the only information we need to persist between sessions (in the brow
 type UserInputValue =
   | {
       type: "number";
-      value: number;
-    }
-  | {
-      type: "predicted_number";
       value: number;
     }
   | {

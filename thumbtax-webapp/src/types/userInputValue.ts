@@ -4,10 +4,6 @@ export type UserInputValue =
       value: number;
     }
   | {
-      type: "predicted_number";
-      value: number;
-    }
-  | {
       type: "labeled_list";
       value: Array<[string, number]>;
     };
