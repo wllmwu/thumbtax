@@ -10,7 +10,11 @@ import type { UserInputValue } from "#src/types/userInputValue";
 
 interface TaxFormViewProps {
   view: TaxFormRenderView;
-  onSetBoxValue: (formId: string, boxId: TaxFormBoxIdentifier, value: UserInputValue) => void;
+  onSetBoxValue: (
+    formId: string,
+    boxId: TaxFormBoxIdentifier,
+    value: UserInputValue,
+  ) => void;
 }
 
 interface BoxCellProps {
@@ -21,7 +25,10 @@ interface BoxCellProps {
 
 function BoxCell({ box, value, onBlur }: BoxCellProps) {
   const vp = box.value;
-  const numericValue = value.type === "number" ? value.value : value.value.reduce((s, [, v]) => s + v, 0);
+  const numericValue =
+    value.type === "number"
+      ? value.value
+      : value.value.reduce((s, [, v]) => s + v, 0);
 
   // localValue is only used while the input is focused; display falls back to
   // numericValue (from the service) when the field is not being edited.
@@ -59,7 +66,9 @@ function BoxCell({ box, value, onBlur }: BoxCellProps) {
         <input
           type="checkbox"
           checked={numericValue !== 0}
-          onChange={(e) => onBlur({ type: "number", value: e.target.checked ? 1 : 0 })}
+          onChange={(e) =>
+            onBlur({ type: "number", value: e.target.checked ? 1 : 0 })
+          }
         />
       );
 
@@ -78,10 +87,19 @@ interface SectionRowsProps {
   section: TaxFormSection;
   instances: TaxFormRenderView["instances"];
   colSpan: number;
-  onSetBoxValue: (formId: string, boxId: TaxFormBoxIdentifier, value: UserInputValue) => void;
+  onSetBoxValue: (
+    formId: string,
+    boxId: TaxFormBoxIdentifier,
+    value: UserInputValue,
+  ) => void;
 }
 
-function SectionRows({ section, instances, colSpan, onSetBoxValue }: SectionRowsProps) {
+function SectionRows({
+  section,
+  instances,
+  colSpan,
+  onSetBoxValue,
+}: SectionRowsProps) {
   return (
     <>
       {section.heading && (
@@ -98,8 +116,15 @@ function SectionRows({ section, instances, colSpan, onSetBoxValue }: SectionRows
               <td key={`${inst.id}-${box.identifier}`}>
                 <BoxCell
                   box={box}
-                  value={inst.boxValues[box.identifier] ?? { type: "number", value: 0 }}
-                  onBlur={(value) => onSetBoxValue(inst.id, box.identifier, value)}
+                  value={
+                    inst.boxValues[box.identifier] ?? {
+                      type: "number",
+                      value: 0,
+                    }
+                  }
+                  onBlur={(value) =>
+                    onSetBoxValue(inst.id, box.identifier, value)
+                  }
                 />
               </td>
             )),

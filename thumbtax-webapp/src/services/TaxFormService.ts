@@ -72,7 +72,9 @@ export class TaxFormService {
     const views: TaxFormRenderView[] = [];
 
     for (const formClass of CLASS_ORDER) {
-      const classInstances = this.instances.filter((i) => i.class === formClass);
+      const classInstances = this.instances.filter(
+        (i) => i.class === formClass,
+      );
       if (classInstances.length === 0) continue;
       const spec = this.specs.get(formClass)!;
       views.push({
@@ -114,7 +116,9 @@ export class TaxFormService {
 
     for (const formClass of CLASS_ORDER) {
       const spec = this.specs.get(formClass)!;
-      const classInstances = this.instances.filter((i) => i.class === formClass);
+      const classInstances = this.instances.filter(
+        (i) => i.class === formClass,
+      );
 
       for (const instance of classInstances) {
         const instValues = new Map<TaxFormBoxIdentifier, number>();
@@ -125,7 +129,14 @@ export class TaxFormService {
             for (const box of line.boxes) {
               instValues.set(
                 box.identifier,
-                this.eval(box.value, box.identifier, instance, spec, instValues, allValues),
+                this.eval(
+                  box.value,
+                  box.identifier,
+                  instance,
+                  spec,
+                  instValues,
+                  allValues,
+                ),
               );
             }
           }
@@ -175,7 +186,10 @@ export class TaxFormService {
 
       case "form_reference": {
         const refInstances = this.instances.filter((i) => i.class === vp.form);
-        return refInstances.reduce((sum, inst) => sum + (all.get(inst.id)?.get(vp.box) ?? 0), 0);
+        return refInstances.reduce(
+          (sum, inst) => sum + (all.get(inst.id)?.get(vp.box) ?? 0),
+          0,
+        );
       }
 
       case "sum_range": {
@@ -239,7 +253,9 @@ export class TaxFormService {
         return this.instances.some((i) => i.class === vp.form) ? 1 : 0;
 
       case "conditional":
-        return recurse(vp.condition) !== 0 ? recurse(vp.trueValue) : recurse(vp.falseValue);
+        return recurse(vp.condition) !== 0
+          ? recurse(vp.trueValue)
+          : recurse(vp.falseValue);
 
       case "comparison": {
         const val = recurse(vp.value);

@@ -8,8 +8,8 @@ import type { TaxFormRenderView } from "#src/types/taxFormRenderView";
 const service = new TaxFormService();
 
 function App() {
-  const [formViews, setFormViews] = useState<TaxFormRenderView[]>(
-    () => service.getFormViews(),
+  const [formViews, setFormViews] = useState<TaxFormRenderView[]>(() =>
+    service.getFormViews(),
   );
 
   useEffect(() => {
@@ -24,7 +24,9 @@ function App() {
         <TaxFormView
           key={view.specification.class}
           view={view}
-          onSetBoxValue={(formId, boxId, value) => service.setBoxValue(formId, boxId, value)}
+          onSetBoxValue={(formId, boxId, value) =>
+            service.setBoxValue(formId, boxId, value)
+          }
         />
       ))}
     </>
