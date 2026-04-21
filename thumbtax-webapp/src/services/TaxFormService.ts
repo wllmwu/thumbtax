@@ -18,12 +18,16 @@ type AllValues = Map<string, Map<TaxFormBoxIdentifier, number>>;
 const CLASS_ORDER: readonly TaxFormClass[] = ["fW2", "f1040"];
 
 export class TaxFormService {
+  // REVIEW: use the ServiceState type that I just added which contains instances and filingStatus
   private instances: FormInstance[];
   private subscribers: Set<() => void>;
+  // REVIEW: factor out handling of specifications to a separate FormSpecificationService service so it's easier to change how we store the specs later
   private readonly specs: Map<TaxFormClass, TaxFormSpecification>;
   private filingStatus: FilingStatus = "single";
+  // REVIEW: use the uuid package which I just added, specifically v4 UUIDs
   private counter = 0;
 
+  // REVIEW: initialize the service with no form instances and let App call addForm for each of the two currently hardcoded forms
   constructor() {
     this.specs = new Map([
       ["fW2", FormW2],
@@ -70,6 +74,7 @@ export class TaxFormService {
         (i) => i.class === formClass,
       );
       if (classInstances.length === 0) continue;
+      // REVIEW: avoid the non-null assertion operator (!) unless it's super infeasible to do it any other way. it appears several times in this file. this operator encodes an assumption and prevents TypeScript from alerting us if that assumption ever changes. for now I think it's acceptable to silently skip any form class that doesn't have a specification
       const spec = this.specs.get(formClass)!;
       views.push({
         specification: spec,
@@ -105,6 +110,7 @@ export class TaxFormService {
     return result;
   }
 
+  // REVIEW: instead of recomputing all values every time one of them changes, let's maintain an explicit dependency graph structure within this service (the actual data structure implementation should be written in a separate file). I don't think we need to bring in a third-party library for this as it's a pretty straightforward graph shape. then we can just recompute the values that need to change, which saves some time
   private computeAllValues(): AllValues {
     const allValues: AllValues = new Map();
 
@@ -141,6 +147,7 @@ export class TaxFormService {
     return allValues;
   }
 
+  // REVIEW: eval is already the name of a (rather sketchy) JavaScript language feature. although the language permits you to also use eval as an identifier, I think it's safest to avoid that. and either way, it's ok to be a little verbose in variable/function names, so I would prefer to call this evaluteBox
   private eval(
     vp: ValueProvider,
     boxId: TaxFormBoxIdentifier,
