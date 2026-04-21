@@ -195,6 +195,9 @@ classDiagram
 
 We store a static specification of each type of tax form, represented by the following schema (TypeScript syntax).
 
+Note that the type definitions in this plan are sketches, not final.
+The actual types may diverge from what's written here.
+
 ```ts
 type FilingStatus =
   | "single"
@@ -320,7 +323,7 @@ type UserInputValue =
       value: Array<[string, number]>;
     };
 
-type PersistedState = {
+type ServiceState = {
   taxYear: number;
   filingStatus: FilingStatus;
   forms: Array<{

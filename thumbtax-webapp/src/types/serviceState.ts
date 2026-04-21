@@ -5,13 +5,15 @@ import type {
 } from "#src/types/taxFormSpecification";
 import type { UserInputValue } from "#src/types/userInputValue";
 
-export type PersistedState = {
+export type FormInstance = {
+  class: TaxFormClass;
+  id: string;
+  userLabel?: string;
+  userValues: Record<TaxFormBoxIdentifier, UserInputValue>;
+};
+
+export type ServiceState = {
   taxYear: number;
   filingStatus: FilingStatus;
-  forms: Array<{
-    class: TaxFormClass;
-    id: string;
-    userLabel?: string;
-    userValues: Record<TaxFormBoxIdentifier, UserInputValue>;
-  }>;
+  forms: Array<FormInstance>;
 };

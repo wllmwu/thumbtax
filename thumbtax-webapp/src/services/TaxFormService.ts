@@ -2,6 +2,7 @@ import { Form1040 } from "#src/forms/form1040";
 import { FormW2 } from "#src/forms/formW2";
 
 import type { FilingStatus } from "#src/types/filingStatus";
+import type { FormInstance } from "#src/types/serviceState";
 import type { TaxFormRenderView } from "#src/types/taxFormRenderView";
 import type {
   TaxFormBoxIdentifier,
@@ -10,13 +11,6 @@ import type {
   ValueProvider,
 } from "#src/types/taxFormSpecification";
 import type { UserInputValue } from "#src/types/userInputValue";
-
-type FormInstance = {
-  class: TaxFormClass;
-  id: string;
-  userLabel?: string;
-  userValues: Record<TaxFormBoxIdentifier, UserInputValue>;
-};
 
 // Evaluated numeric values for all boxes across all form instances.
 type AllValues = Map<string, Map<TaxFormBoxIdentifier, number>>;
