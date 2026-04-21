@@ -220,7 +220,7 @@ type TaxFormSpecification = {
   title: string;
   subtitle?: string;
   irsPageUrl: string;
-  cardinality: "one" | "multiple";
+  cardinality: "single" | "multiple";
   sections: Array<TaxFormSection>;
 };
 
@@ -251,6 +251,7 @@ type ValueProvider =
   | number
   | TaxFormBoxIdentifier
   | { type: "unused" }
+  | { type: "unsupported" }
   | { type: "number_input" }
   // User enters a list of individual amounts and labels; their total is the box value
   | { type: "list_amounts_input" }
