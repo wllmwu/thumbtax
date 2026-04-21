@@ -6,6 +6,8 @@ import { TaxFormService } from "#src/services/TaxFormService";
 import type { TaxFormRenderView } from "#src/types/taxFormRenderView";
 
 const service = new TaxFormService();
+service.addForm("fW2");
+service.addForm("f1040");
 
 function App() {
   const [formViews, setFormViews] = useState<TaxFormRenderView[]>(() =>

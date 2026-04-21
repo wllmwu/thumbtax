@@ -1,10 +1,12 @@
-import { Form1040 } from "#src/forms/form1040";
-import { FormW2 } from "#src/forms/formW2";
+import { v4 as uuidv4 } from "uuid";
 
-import type { FilingStatus } from "#src/types/filingStatus";
-import type { FormInstance } from "#src/types/serviceState";
+import { BoxValueGraph, makeBoxKey } from "#src/services/BoxValueGraph";
+import { FormSpecificationService } from "#src/services/FormSpecificationService";
+
+import type { FormInstance, ServiceState } from "#src/types/serviceState";
 import type { TaxFormRenderView } from "#src/types/taxFormRenderView";
 import type {
+  TaxFormBox,
   TaxFormBoxIdentifier,
   TaxFormClass,
   TaxFormSpecification,
@@ -12,45 +14,64 @@ import type {
 } from "#src/types/taxFormSpecification";
 import type { UserInputValue } from "#src/types/userInputValue";
 
-// Evaluated numeric values for all boxes across all form instances.
-type AllValues = Map<string, Map<TaxFormBoxIdentifier, number>>;
-
 const CLASS_ORDER: readonly TaxFormClass[] = ["fW2", "f1040"];
 
 export class TaxFormService {
-  // REVIEW: use the ServiceState type that I just added which contains instances and filingStatus
-  private instances: FormInstance[];
-  private subscribers: Set<() => void>;
-  // REVIEW: factor out handling of specifications to a separate FormSpecificationService service so it's easier to change how we store the specs later
-  private readonly specs: Map<TaxFormClass, TaxFormSpecification>;
-  private filingStatus: FilingStatus = "single";
-  // REVIEW: use the uuid package which I just added, specifically v4 UUIDs
-  private counter = 0;
+  private state: ServiceState = {
+    taxYear: 2024,
+    filingStatus: "single",
+    forms: [],
+  };
+  private readonly subscribers: Set<() => void> = new Set();
+  private readonly specService = new FormSpecificationService();
+  private readonly graph = new BoxValueGraph();
 
-  // REVIEW: initialize the service with no form instances and let App call addForm for each of the two currently hardcoded forms
   constructor() {
-    this.specs = new Map([
-      ["fW2", FormW2],
-      ["f1040", Form1040],
-    ]);
-    this.subscribers = new Set();
-    this.instances = [
-      { class: "fW2", id: "w2-1", userLabel: undefined, userValues: {} },
-      { class: "f1040", id: "f1040-1", userLabel: undefined, userValues: {} },
-    ];
+    for (const formClass of this.specService.getAllClasses()) {
+      this.graph.addNode(`form_presence|${formClass}`, [], () => 0);
+    }
   }
 
   addForm(type: TaxFormClass, userLabel?: string): string {
-    const id = this.generateId();
-    this.instances.push({ class: type, id, userLabel, userValues: {} });
+    const id = uuidv4();
+    const instance: FormInstance = {
+      class: type,
+      id,
+      userLabel,
+      userValues: {},
+    };
+    this.state.forms.push(instance);
+    const spec = this.specService.getSpec(type);
+    if (spec !== undefined) {
+      this.registerInstanceBoxes(instance, spec);
+      this.updateAggregateNodes(type, id, spec, "add");
+    }
+    this.graph.setInputValue(`form_presence|${type}`, 1);
     this.notify();
     return id;
   }
 
   removeForm(formId: string): void {
-    const index = this.instances.findIndex((i) => i.id === formId);
+    const index = this.state.forms.findIndex((i) => i.id === formId);
     if (index === -1) return;
-    this.instances.splice(index, 1);
+    const instance = this.state.forms[index];
+    this.state.forms.splice(index, 1);
+    const spec = this.specService.getSpec(instance.class);
+    if (spec !== undefined) {
+      for (const section of spec.sections) {
+        for (const line of section.lines) {
+          for (const box of line.boxes) {
+            this.graph.removeNode(makeBoxKey(formId, box.identifier));
+          }
+        }
+      }
+    }
+    const classRemaining = this.state.forms.some(
+      (i) => i.class === instance.class,
+    );
+    if (!classRemaining) {
+      this.graph.setInputValue(`form_presence|${instance.class}`, 0);
+    }
     this.notify();
   }
 
@@ -59,33 +80,42 @@ export class TaxFormService {
     boxId: TaxFormBoxIdentifier,
     value: UserInputValue,
   ): void {
-    const instance = this.instances.find((i) => i.id === formId);
+    const instance = this.state.forms.find((i) => i.id === formId);
     if (instance === undefined) return;
     instance.userValues[boxId] = value;
+    const spec = this.specService.getSpec(instance.class);
+    if (spec === undefined) {
+      this.notify();
+      return;
+    }
+    const box = this.findBox(spec, boxId);
+    if (box === undefined) {
+      this.notify();
+      return;
+    }
+    const newValue = this.evaluateBox(box.value, boxId, instance);
+    this.graph.setInputValue(makeBoxKey(formId, boxId), newValue);
     this.notify();
   }
 
   getFormViews(): TaxFormRenderView[] {
-    const allValues = this.computeAllValues();
     const views: TaxFormRenderView[] = [];
-
     for (const formClass of CLASS_ORDER) {
-      const classInstances = this.instances.filter(
+      const classInstances = this.state.forms.filter(
         (i) => i.class === formClass,
       );
       if (classInstances.length === 0) continue;
-      // REVIEW: avoid the non-null assertion operator (!) unless it's super infeasible to do it any other way. it appears several times in this file. this operator encodes an assumption and prevents TypeScript from alerting us if that assumption ever changes. for now I think it's acceptable to silently skip any form class that doesn't have a specification
-      const spec = this.specs.get(formClass)!;
+      const spec = this.specService.getSpec(formClass);
+      if (spec === undefined) continue;
       views.push({
         specification: spec,
         instances: classInstances.map((inst) => ({
           id: inst.id,
           userLabel: inst.userLabel,
-          boxValues: this.toBoxValues(allValues.get(inst.id) ?? new Map()),
+          boxValues: this.toBoxValues(inst.id, spec),
         })),
       });
     }
-
     return views;
   }
 
@@ -101,70 +131,214 @@ export class TaxFormService {
   }
 
   private toBoxValues(
-    values: Map<TaxFormBoxIdentifier, number>,
+    formId: string,
+    spec: TaxFormSpecification,
   ): Record<TaxFormBoxIdentifier, UserInputValue> {
     const result: Record<TaxFormBoxIdentifier, UserInputValue> = {};
-    for (const [id, value] of values) {
-      result[id] = { type: "number", value };
+    for (const section of spec.sections) {
+      for (const line of section.lines) {
+        for (const box of line.boxes) {
+          result[box.identifier] = {
+            type: "number",
+            value: this.graph.getValue(makeBoxKey(formId, box.identifier)),
+          };
+        }
+      }
     }
     return result;
   }
 
-  // REVIEW: instead of recomputing all values every time one of them changes, let's maintain an explicit dependency graph structure within this service (the actual data structure implementation should be written in a separate file). I don't think we need to bring in a third-party library for this as it's a pretty straightforward graph shape. then we can just recompute the values that need to change, which saves some time
-  private computeAllValues(): AllValues {
-    const allValues: AllValues = new Map();
+  private registerInstanceBoxes(
+    instance: FormInstance,
+    spec: TaxFormSpecification,
+  ): void {
+    for (const section of spec.sections) {
+      for (const line of section.lines) {
+        for (const box of line.boxes) {
+          const boxId = box.identifier;
+          const key = makeBoxKey(instance.id, boxId);
+          const deps = this.extractDependencies(box.value, instance, spec);
+          this.graph.addNode(key, deps, () =>
+            this.evaluateBox(box.value, boxId, instance),
+          );
+        }
+      }
+    }
+  }
 
-    for (const formClass of CLASS_ORDER) {
-      const spec = this.specs.get(formClass)!;
-      const classInstances = this.instances.filter(
-        (i) => i.class === formClass,
-      );
-
-      for (const instance of classInstances) {
-        const instValues = new Map<TaxFormBoxIdentifier, number>();
-        allValues.set(instance.id, instValues);
-
-        for (const section of spec.sections) {
-          for (const line of section.lines) {
-            for (const box of line.boxes) {
-              instValues.set(
-                box.identifier,
-                this.eval(
-                  box.value,
-                  box.identifier,
-                  instance,
-                  spec,
-                  instValues,
-                  allValues,
-                ),
+  private updateAggregateNodes(
+    formClass: TaxFormClass,
+    instanceId: string,
+    spec: TaxFormSpecification,
+    action: "add",
+  ): void {
+    for (const section of spec.sections) {
+      for (const line of section.lines) {
+        for (const box of line.boxes) {
+          const boxId = box.identifier;
+          const aggKey = `agg|${formClass}|${boxId}`;
+          const instanceBoxKey = makeBoxKey(instanceId, boxId);
+          const computeAgg = (): number =>
+            this.state.forms
+              .filter((i) => i.class === formClass)
+              .reduce(
+                (sum, inst) =>
+                  sum + this.graph.getValue(makeBoxKey(inst.id, boxId)),
+                0,
               );
+          if (action === "add") {
+            if (this.graph.hasNode(aggKey)) {
+              this.graph.addDep(aggKey, instanceBoxKey);
+            } else {
+              this.graph.addNode(aggKey, [instanceBoxKey], computeAgg);
             }
           }
         }
       }
     }
-
-    return allValues;
   }
 
-  // REVIEW: eval is already the name of a (rather sketchy) JavaScript language feature. although the language permits you to also use eval as an identifier, I think it's safest to avoid that. and either way, it's ok to be a little verbose in variable/function names, so I would prefer to call this evaluteBox
-  private eval(
+  private findBox(
+    spec: TaxFormSpecification,
+    boxId: TaxFormBoxIdentifier,
+  ): TaxFormBox | undefined {
+    for (const section of spec.sections) {
+      for (const line of section.lines) {
+        for (const box of line.boxes) {
+          if (box.identifier === boxId) return box;
+        }
+      }
+    }
+    return undefined;
+  }
+
+  private extractDependencies(
+    vp: ValueProvider,
+    instance: FormInstance,
+    spec: TaxFormSpecification,
+  ): string[] {
+    const deps = new Set<string>();
+    this.collectDependencies(vp, instance, spec, deps);
+    return [...deps];
+  }
+
+  private collectDependencies(
+    vp: ValueProvider,
+    instance: FormInstance,
+    spec: TaxFormSpecification,
+    deps: Set<string>,
+  ): void {
+    if (typeof vp === "number") return;
+
+    if (typeof vp === "string") {
+      deps.add(makeBoxKey(instance.id, vp));
+      return;
+    }
+
+    const recurse = (sub: ValueProvider) =>
+      this.collectDependencies(sub, instance, spec, deps);
+
+    switch (vp.type) {
+      case "number_input":
+      case "list_amounts_input":
+      case "checkbox_input":
+      case "unused":
+      case "unsupported":
+      case "box_selection_input":
+        return;
+
+      case "form_reference":
+        deps.add(`agg|${vp.form}|${vp.box}`);
+        return;
+
+      case "sum_range": {
+        if (vp.form !== undefined) {
+          const form = vp.form;
+          const targetSpec = this.specService.getSpec(form);
+          if (targetSpec === undefined) return;
+          for (const boxId of this.specService.getBoxesInRange(
+            targetSpec,
+            vp.fromLine,
+            vp.toLine,
+            vp.column,
+          )) {
+            deps.add(`agg|${form}|${boxId}`);
+          }
+        } else {
+          for (const boxId of this.specService.getBoxesInRange(
+            spec,
+            vp.fromLine,
+            vp.toLine,
+            vp.column,
+          )) {
+            deps.add(makeBoxKey(instance.id, boxId));
+          }
+        }
+        return;
+      }
+
+      case "form_presence":
+        deps.add(`form_presence|${vp.form}`);
+        return;
+
+      case "sum":
+      case "product":
+      case "minimum":
+      case "maximum":
+        for (const v of vp.values) recurse(v);
+        return;
+
+      case "difference":
+        recurse(vp.minuend);
+        recurse(vp.subtrahend);
+        return;
+
+      case "quotient":
+        recurse(vp.dividend);
+        recurse(vp.divisor);
+        return;
+
+      case "absolute_value":
+      case "non_negative":
+      case "numerical_negation":
+      case "logical_negation":
+        recurse(vp.value);
+        return;
+
+      case "conditional":
+        recurse(vp.condition);
+        recurse(vp.trueValue);
+        recurse(vp.falseValue);
+        return;
+
+      case "comparison":
+        recurse(vp.value);
+        if (vp.minimum !== undefined) recurse(vp.minimum);
+        if (vp.maximum !== undefined) recurse(vp.maximum);
+        return;
+
+      case "filing_status_map":
+        for (const v of Object.values(vp.values)) recurse(v);
+        if (vp.default !== undefined) recurse(vp.default);
+        return;
+    }
+  }
+
+  private evaluateBox(
     vp: ValueProvider,
     boxId: TaxFormBoxIdentifier,
     instance: FormInstance,
-    spec: TaxFormSpecification,
-    current: Map<TaxFormBoxIdentifier, number>,
-    all: AllValues,
   ): number {
     const recurse = (sub: ValueProvider) =>
-      this.eval(sub, boxId, instance, spec, current, all);
+      this.evaluateBox(sub, boxId, instance);
 
     if (typeof vp === "number") return vp;
 
     if (typeof vp === "string") {
-      // Reference to another box in the same form instance.
-      return current.get(vp) ?? 0;
+      return this.graph.getValue(makeBoxKey(instance.id, vp));
     }
+
+    const spec = this.specService.getSpec(instance.class);
 
     switch (vp.type) {
       case "number_input":
@@ -185,40 +359,30 @@ export class TaxFormService {
       case "box_selection_input":
         return 0;
 
-      case "form_reference": {
-        const refInstances = this.instances.filter((i) => i.class === vp.form);
-        return refInstances.reduce(
-          (sum, inst) => sum + (all.get(inst.id)?.get(vp.box) ?? 0),
-          0,
-        );
-      }
+      case "form_reference":
+        return this.graph.getValue(`agg|${vp.form}|${vp.box}`);
 
       case "sum_range": {
-        const isCrossForm = vp.form !== undefined;
-        const targetSpec = isCrossForm ? this.specs.get(vp.form!)! : spec;
-        const targetInstances = isCrossForm
-          ? this.instances.filter((i) => i.class === vp.form)
-          : [instance];
-
-        let inRange = false;
-        let sum = 0;
-        for (const section of targetSpec.sections) {
-          for (const line of section.lines) {
-            if (line.index === vp.fromLine) inRange = true;
-            if (inRange) {
-              for (const box of line.boxes) {
-                if (vp.column === undefined || box.columnIndex === vp.column) {
-                  for (const inst of targetInstances) {
-                    const vals = isCrossForm ? all.get(inst.id) : current;
-                    sum += vals?.get(box.identifier) ?? 0;
-                  }
-                }
-              }
-              if (line.index === vp.toLine) inRange = false;
-            }
-          }
+        if (vp.form !== undefined) {
+          const form = vp.form;
+          const targetSpec = this.specService.getSpec(form);
+          if (targetSpec === undefined) return 0;
+          return this.specService
+            .getBoxesInRange(targetSpec, vp.fromLine, vp.toLine, vp.column)
+            .reduce(
+              (sum, boxIdInRange) =>
+                sum + this.graph.getValue(`agg|${form}|${boxIdInRange}`),
+              0,
+            );
         }
-        return sum;
+        if (spec === undefined) return 0;
+        return this.specService
+          .getBoxesInRange(spec, vp.fromLine, vp.toLine, vp.column)
+          .reduce(
+            (sum, boxIdInRange) =>
+              sum + this.graph.getValue(makeBoxKey(instance.id, boxIdInRange)),
+            0,
+          );
       }
 
       case "sum":
@@ -251,7 +415,7 @@ export class TaxFormService {
         return -recurse(vp.value);
 
       case "form_presence":
-        return this.instances.some((i) => i.class === vp.form) ? 1 : 0;
+        return this.graph.getValue(`form_presence|${vp.form}`);
 
       case "conditional":
         return recurse(vp.condition) !== 0
@@ -277,13 +441,9 @@ export class TaxFormService {
         return recurse(vp.value) === 0 ? 1 : 0;
 
       case "filing_status_map": {
-        const mapped = vp.values[this.filingStatus] ?? vp.default;
+        const mapped = vp.values[this.state.filingStatus] ?? vp.default;
         return mapped !== undefined ? recurse(mapped) : 0;
       }
     }
-  }
-
-  private generateId(): string {
-    return `form-${++this.counter}`;
   }
 }
