@@ -18,17 +18,17 @@ const CLASS_ORDER: readonly TaxFormClass[] = ["fW2", "f1040"];
 
 export class TaxFormService {
   private state: ServiceState = {
-    taxYear: 2024,
+    taxYear: 2025,
     filingStatus: "single",
     forms: [],
   };
   private readonly subscribers: Set<() => void> = new Set();
-  private readonly specService = new FormSpecificationService();
-  private readonly graph = new BoxValueGraph();
+  private readonly specificationService = new FormSpecificationService();
+  private readonly boxValues = new BoxValueGraph();
 
   constructor() {
-    for (const formClass of this.specService.getAllClasses()) {
-      this.graph.addNode(`form_presence|${formClass}`, [], () => 0);
+    for (const formClass of this.specificationService.getAllClasses()) {
+      this.boxValues.addNode(`form_presence|${formClass}`, [], () => 0);
     }
   }
 
@@ -41,12 +41,12 @@ export class TaxFormService {
       userValues: {},
     };
     this.state.forms.push(instance);
-    const spec = this.specService.getSpec(type);
+    const spec = this.specificationService.getSpec(type);
     if (spec !== undefined) {
       this.registerInstanceBoxes(instance, spec);
       this.updateAggregateNodes(type, id, spec, "add");
     }
-    this.graph.setInputValue(`form_presence|${type}`, 1);
+    this.boxValues.setInputValue(`form_presence|${type}`, 1);
     this.notify();
     return id;
   }
@@ -56,12 +56,12 @@ export class TaxFormService {
     if (index === -1) return;
     const instance = this.state.forms[index];
     this.state.forms.splice(index, 1);
-    const spec = this.specService.getSpec(instance.class);
+    const spec = this.specificationService.getSpec(instance.class);
     if (spec !== undefined) {
       for (const section of spec.sections) {
         for (const line of section.lines) {
           for (const box of line.boxes) {
-            this.graph.removeNode(makeBoxKey(formId, box.identifier));
+            this.boxValues.removeNode(makeBoxKey(formId, box.identifier));
           }
         }
       }
@@ -70,7 +70,7 @@ export class TaxFormService {
       (i) => i.class === instance.class,
     );
     if (!classRemaining) {
-      this.graph.setInputValue(`form_presence|${instance.class}`, 0);
+      this.boxValues.setInputValue(`form_presence|${instance.class}`, 0);
     }
     this.notify();
   }
@@ -83,7 +83,7 @@ export class TaxFormService {
     const instance = this.state.forms.find((i) => i.id === formId);
     if (instance === undefined) return;
     instance.userValues[boxId] = value;
-    const spec = this.specService.getSpec(instance.class);
+    const spec = this.specificationService.getSpec(instance.class);
     if (spec === undefined) {
       this.notify();
       return;
@@ -94,7 +94,7 @@ export class TaxFormService {
       return;
     }
     const newValue = this.evaluateBox(box.value, boxId, instance);
-    this.graph.setInputValue(makeBoxKey(formId, boxId), newValue);
+    this.boxValues.setInputValue(makeBoxKey(formId, boxId), newValue);
     this.notify();
   }
 
@@ -105,7 +105,7 @@ export class TaxFormService {
         (i) => i.class === formClass,
       );
       if (classInstances.length === 0) continue;
-      const spec = this.specService.getSpec(formClass);
+      const spec = this.specificationService.getSpec(formClass);
       if (spec === undefined) continue;
       views.push({
         specification: spec,
@@ -140,7 +140,7 @@ export class TaxFormService {
         for (const box of line.boxes) {
           result[box.identifier] = {
             type: "number",
-            value: this.graph.getValue(makeBoxKey(formId, box.identifier)),
+            value: this.boxValues.getValue(makeBoxKey(formId, box.identifier)),
           };
         }
       }
@@ -158,7 +158,7 @@ export class TaxFormService {
           const boxId = box.identifier;
           const key = makeBoxKey(instance.id, boxId);
           const deps = this.extractDependencies(box.value, instance, spec);
-          this.graph.addNode(key, deps, () =>
+          this.boxValues.addNode(key, deps, () =>
             this.evaluateBox(box.value, boxId, instance),
           );
         }
@@ -183,14 +183,14 @@ export class TaxFormService {
               .filter((i) => i.class === formClass)
               .reduce(
                 (sum, inst) =>
-                  sum + this.graph.getValue(makeBoxKey(inst.id, boxId)),
+                  sum + this.boxValues.getValue(makeBoxKey(inst.id, boxId)),
                 0,
               );
           if (action === "add") {
-            if (this.graph.hasNode(aggKey)) {
-              this.graph.addDep(aggKey, instanceBoxKey);
+            if (this.boxValues.hasNode(aggKey)) {
+              this.boxValues.addDep(aggKey, instanceBoxKey);
             } else {
-              this.graph.addNode(aggKey, [instanceBoxKey], computeAgg);
+              this.boxValues.addNode(aggKey, [instanceBoxKey], computeAgg);
             }
           }
         }
@@ -254,9 +254,9 @@ export class TaxFormService {
       case "sum_range": {
         if (vp.form !== undefined) {
           const form = vp.form;
-          const targetSpec = this.specService.getSpec(form);
+          const targetSpec = this.specificationService.getSpec(form);
           if (targetSpec === undefined) return;
-          for (const boxId of this.specService.getBoxesInRange(
+          for (const boxId of this.specificationService.getBoxesInRange(
             targetSpec,
             vp.fromLine,
             vp.toLine,
@@ -265,7 +265,7 @@ export class TaxFormService {
             deps.add(`agg|${form}|${boxId}`);
           }
         } else {
-          for (const boxId of this.specService.getBoxesInRange(
+          for (const boxId of this.specificationService.getBoxesInRange(
             spec,
             vp.fromLine,
             vp.toLine,
@@ -335,10 +335,10 @@ export class TaxFormService {
     if (typeof vp === "number") return vp;
 
     if (typeof vp === "string") {
-      return this.graph.getValue(makeBoxKey(instance.id, vp));
+      return this.boxValues.getValue(makeBoxKey(instance.id, vp));
     }
 
-    const spec = this.specService.getSpec(instance.class);
+    const spec = this.specificationService.getSpec(instance.class);
 
     switch (vp.type) {
       case "number_input":
@@ -360,27 +360,28 @@ export class TaxFormService {
         return 0;
 
       case "form_reference":
-        return this.graph.getValue(`agg|${vp.form}|${vp.box}`);
+        return this.boxValues.getValue(`agg|${vp.form}|${vp.box}`);
 
       case "sum_range": {
         if (vp.form !== undefined) {
           const form = vp.form;
-          const targetSpec = this.specService.getSpec(form);
+          const targetSpec = this.specificationService.getSpec(form);
           if (targetSpec === undefined) return 0;
-          return this.specService
+          return this.specificationService
             .getBoxesInRange(targetSpec, vp.fromLine, vp.toLine, vp.column)
             .reduce(
               (sum, boxIdInRange) =>
-                sum + this.graph.getValue(`agg|${form}|${boxIdInRange}`),
+                sum + this.boxValues.getValue(`agg|${form}|${boxIdInRange}`),
               0,
             );
         }
         if (spec === undefined) return 0;
-        return this.specService
+        return this.specificationService
           .getBoxesInRange(spec, vp.fromLine, vp.toLine, vp.column)
           .reduce(
             (sum, boxIdInRange) =>
-              sum + this.graph.getValue(makeBoxKey(instance.id, boxIdInRange)),
+              sum +
+              this.boxValues.getValue(makeBoxKey(instance.id, boxIdInRange)),
             0,
           );
       }
@@ -415,7 +416,7 @@ export class TaxFormService {
         return -recurse(vp.value);
 
       case "form_presence":
-        return this.graph.getValue(`form_presence|${vp.form}`);
+        return this.boxValues.getValue(`form_presence|${vp.form}`);
 
       case "conditional":
         return recurse(vp.condition) !== 0

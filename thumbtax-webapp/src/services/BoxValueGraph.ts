@@ -1,8 +1,8 @@
 type NodeData = {
   value: number;
   compute: () => number;
-  deps: Set<string>;
-  dependents: Set<string>;
+  parents: Set<string>;
+  children: Set<string>;
 };
 
 export function makeBoxKey(formId: string, boxId: string): string {
@@ -26,8 +26,8 @@ export class BoxValueGraph {
         this.nodes.set(dep, {
           value: 0,
           compute: () => 0,
-          deps: new Set(),
-          dependents: new Set(),
+          parents: new Set(),
+          children: new Set(),
         });
       }
     }
@@ -36,26 +36,26 @@ export class BoxValueGraph {
     if (existing) {
       existing.compute = compute;
       for (const dep of deps) {
-        if (!existing.deps.has(dep)) {
-          existing.deps.add(dep);
-          this.nodes.get(dep)!.dependents.add(key);
+        if (!existing.parents.has(dep)) {
+          existing.parents.add(dep);
+          this.nodes.get(dep)!.children.add(key);
         }
       }
       existing.value = compute();
-      this.propagate(existing.dependents);
+      this.propagate(existing.children);
     } else {
       const node: NodeData = {
         value: 0,
         compute,
-        deps: new Set(deps),
-        dependents: new Set(),
+        parents: new Set(deps),
+        children: new Set(),
       };
       this.nodes.set(key, node);
       for (const dep of deps) {
-        this.nodes.get(dep)!.dependents.add(key);
+        this.nodes.get(dep)!.children.add(key);
       }
       node.value = compute();
-      this.propagate(node.dependents);
+      this.propagate(node.children);
     }
   }
 
@@ -65,13 +65,13 @@ export class BoxValueGraph {
     const node = this.nodes.get(key);
     if (!node) return;
 
-    const formerDependents = new Set(node.dependents);
+    const formerDependents = new Set(node.children);
 
-    for (const dep of node.deps) {
-      this.nodes.get(dep)?.dependents.delete(key);
+    for (const dep of node.parents) {
+      this.nodes.get(dep)?.children.delete(key);
     }
-    for (const dependent of node.dependents) {
-      this.nodes.get(dependent)?.deps.delete(key);
+    for (const dependent of node.children) {
+      this.nodes.get(dependent)?.parents.delete(key);
     }
     this.nodes.delete(key);
 
@@ -82,21 +82,21 @@ export class BoxValueGraph {
   // cross-form references when new form instances are added.
   addDep(nodeKey: string, depKey: string): void {
     const node = this.nodes.get(nodeKey);
-    if (!node || node.deps.has(depKey)) return;
+    if (!node || node.parents.has(depKey)) return;
 
     if (!this.nodes.has(depKey)) {
       this.nodes.set(depKey, {
         value: 0,
         compute: () => 0,
-        deps: new Set(),
-        dependents: new Set(),
+        parents: new Set(),
+        children: new Set(),
       });
     }
 
-    node.deps.add(depKey);
-    this.nodes.get(depKey)!.dependents.add(nodeKey);
+    node.parents.add(depKey);
+    this.nodes.get(depKey)!.children.add(nodeKey);
     node.value = node.compute();
-    this.propagate(node.dependents);
+    this.propagate(node.children);
   }
 
   // Sets a value directly (for user-input leaf nodes) and propagates through
@@ -105,7 +105,7 @@ export class BoxValueGraph {
     const node = this.nodes.get(key);
     if (!node) return;
     node.value = value;
-    this.propagate(node.dependents);
+    this.propagate(node.children);
   }
 
   getValue(key: string): number {
@@ -125,7 +125,7 @@ export class BoxValueGraph {
       const k = bfsQueue[i++];
       if (!affected.has(k)) {
         affected.add(k);
-        for (const dependent of this.nodes.get(k)?.dependents ?? []) {
+        for (const dependent of this.nodes.get(k)?.children ?? []) {
           bfsQueue.push(dependent);
         }
       }
@@ -135,7 +135,7 @@ export class BoxValueGraph {
     const inDegree = new Map<string, number>();
     for (const k of affected) {
       let count = 0;
-      for (const dep of this.nodes.get(k)?.deps ?? []) {
+      for (const dep of this.nodes.get(k)?.parents ?? []) {
         if (affected.has(dep)) count++;
       }
       inDegree.set(k, count);
@@ -150,7 +150,7 @@ export class BoxValueGraph {
       const current = sources.shift()!;
       const node = this.nodes.get(current);
       if (node) node.value = node.compute();
-      for (const dependent of this.nodes.get(current)?.dependents ?? []) {
+      for (const dependent of this.nodes.get(current)?.children ?? []) {
         if (affected.has(dependent)) {
           const newDeg = (inDegree.get(dependent) ?? 0) - 1;
           inDegree.set(dependent, newDeg);
