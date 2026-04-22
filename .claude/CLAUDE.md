@@ -1,5 +1,8 @@
 # Project conventions
 
+The project code is in the `thumbtax-webapp` directory.
+Run all commands from there.
+
 ## Commands
 
 - Typecheck: `npm run typecheck`
@@ -15,7 +18,6 @@
 
 ## Patterns
 
-- Use absolute paths starting from `#src/` to import from other project files
-- Don't abbreviate too much; it's okay to spell out whole words in variable/function/type names
+- Don't abbreviate too much; prefer to spell out whole words in variable/function/type names
 - Put each React component in its own file
   - A small, one-off component can live in its parent's file
