@@ -1,4 +1,5 @@
 import type { FilingStatus } from "#src/types/filingStatus";
+import type { TaxFormInstanceId } from "#src/types/taxFormInstanceId";
 import type {
   TaxFormBoxIdentifier,
   TaxFormClass,
@@ -7,8 +8,8 @@ import type { UserInputValue } from "#src/types/userInputValue";
 
 export type FormInstance = {
   class: TaxFormClass;
-  id: string;
-  userLabel?: string;
+  id: TaxFormInstanceId;
+  userLabel: string | null;
   userValues: Record<TaxFormBoxIdentifier, UserInputValue>;
 };
 

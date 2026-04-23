@@ -37,7 +37,7 @@ export class TaxFormService {
     const instance: FormInstance = {
       class: type,
       id,
-      userLabel,
+      userLabel: userLabel ?? null,
       userValues: {},
     };
     this.state.forms.push(instance);

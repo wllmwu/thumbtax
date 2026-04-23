@@ -1,3 +1,4 @@
+import type { TaxFormInstanceId } from "#src/types/taxFormInstanceId";
 import type {
   TaxFormBoxIdentifier,
   TaxFormSpecification,
@@ -7,8 +8,8 @@ import type { UserInputValue } from "#src/types/userInputValue";
 export type TaxFormRenderView = {
   specification: TaxFormSpecification;
   instances: Array<{
-    id: string;
-    userLabel?: string;
+    id: TaxFormInstanceId;
+    userLabel: string | null;
     boxValues: Record<TaxFormBoxIdentifier, UserInputValue>;
   }>;
 };

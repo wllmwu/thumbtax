@@ -434,7 +434,7 @@ sequenceDiagram
 
 ```mermaid
 ---
-title: "TaxFormService method: getFormViews()"
+title: "TaxFormService method: renderFormViews()"
 ---
 sequenceDiagram
   participant caller
@@ -445,7 +445,7 @@ sequenceDiagram
   participant values as box values graph
   end
 
-  caller->>service: getFormViews()
+  caller->>service: renderFormViews()
   service->>specs: get form specs
   specs-->>service: form specs
   service->>instances: get form instances
@@ -491,7 +491,7 @@ sequenceDiagram
   participant boxview as box view
   end
 
-  app->>service: getFormViews()
+  app->>service: renderFormViews()
   service-->>app: form render views
   loop for each form class
   app->>formview: render(specification, instances)
