@@ -43,7 +43,7 @@ Overall, the Thumbtax interface is clean and minimal.
 It communicates that Thumbtax is an efficient, unbloated tool.
 It follows modern conventions in information architecture; uses colors, decorations, and animations sparingly; and is fully responsive and accessible to keyboards and screen readers.
 
-### Navigation
+### Navigation bar
 
 Thumbtax has a navigation header bar with links to the different pages.
 On narrow screens, the navigation bar converts to a drawer.
@@ -63,7 +63,7 @@ The user can add and remove these forms as needed.
 In the Taxes section, the user estimates their taxes for the year based on their inputs in the Income section.
 Similar to the Income section, this contains a list of tax forms related to computing one's tax return, which is populated with an empty Form 1040 by default if there is no saved state.
 
-#### Controls
+#### Control bar
 
 Important controls are accessible in a control bar at the top of the main page.
 The control bar sits below the navigation bar when the latter is present.
@@ -75,6 +75,8 @@ However, the control bar is present even on narrow screens; its controls move in
 - Add form button
   - Opens a form selector
 - Browser save toggle
+- Download button
+- Upload button
 - Export button
   - Opens a menu with options
 
@@ -110,6 +112,7 @@ Some classes are restricted to a single instance; for example, one does not need
 The form list displays a table for each form class that the user has added.
 Within each table, the first columns show the line number (such as "1" or "2a") and line description.
 Then we show a column (or set of columns, if the form itself has multiple columns on this line) for each instance of that form class.
+For forms that allow more than one instance, the user can label each instance with a custom string, such as the employer name for each Form W-2.
 
 A form often has multiple sections and different columns in different parts of the form.
 These are still rendered as a contiguous table as much as possible.
@@ -152,3 +155,38 @@ If the user loads a save file whose `taxYear` does not match the current build's
 
 When loading a save file or restoring from local storage, unrecognized fields are ignored and missing values are treated as zero.
 A warning is also shown in these cases.
+
+### Miscellaneous
+
+- **Keyboard navigation:**
+  The tab key focuses successive input elements as usual.
+  When an input box is currently focused, the enter key switches focus to the next input box.
+  The enter key focus priority is: (1) next column of same line in same form instance; (2) first column of next line in same form instance; (3) first column of first line in next form instance.
+- **Value updates:**
+  When the user types in a value, we only "commit" the new value and recompute dependent values once the user leaves the input box (the onBlur event).
+
+## System design
+
+Thumbtax is a single-page web application built with Vite and React.
+It is frontend-only for simplicity, but could be extended into a full-stack application in the future.
+
+See `system-design.md` for the full document.
+
+### Principles
+
+These principles, listed in no particular order, guide the system design.
+
+- **Separation of concerns:**
+  Different parts of the system are not tightly coupled to each other.
+  Instead, they define clean interfaces and abstractions which allow us to change the internal implementation of one component, or even move some parts to a backend server, without needing to update any other code.
+- **Extensibility:**
+  Application data follow a robust, flexible schema that supports future updates.
+  For example, each new tax year will likely bring adjustments to various tax forms.
+  We can make these adjustments without breaking the schema or code, within reason.
+- **Single source of truth:**
+  The user's input values and some additional metadata, such as the filing status and instance labels, are the only real state in the overall app, at least conceptually.
+  Everything else is derived from these data.
+  - Some UI components might maintain temporary local state.
+    For example, a form box input only commits its value to the app state on blur.
+- **Unit testing:**
+  Each unit of code is easy to test with little or no mocking.
