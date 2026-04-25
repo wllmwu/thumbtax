@@ -43,32 +43,46 @@ Overall, the Thumbtax interface is clean and minimal.
 It communicates that Thumbtax is an efficient, unbloated tool.
 It follows modern conventions in information architecture; uses colors, decorations, and animations sparingly; and is fully responsive and accessible to keyboards and screen readers.
 
+### Navigation
+
+Thumbtax has a navigation header bar with links to the different pages.
+On narrow screens, the navigation bar converts to a drawer.
+
 ### Primary view
 
-Thumbtax has three tabs in its primary view: Income, Taxes, and About.
-The tabs are displayed in a navigation bar at the top of the page along with other controls, including a filing status selector.
-On narrow screens, the navigation controls are collapsed.
+Thumbtax has a single main page with two main sections, Income and Taxes, and various controls at the top of the page.
 
-#### Income tab
+#### Income section
 
-In the Income tab, the user estimates their income for the year.
-The tab contains a list of income-related tax forms, which is populated with an empty Form W-2 by default if there is no saved state.
+In the Income section, the user estimates their income for the year.
+The section contains a list of income-related tax forms, which is populated with an empty Form W-2 by default if there is no saved state.
 The user can add and remove these forms as needed.
 
-#### Taxes tab
+#### Taxes section
 
-In the Taxes tab, the user estimates their taxes for the year based on their inputs in the Income tab.
-Similar to the Income tab, this contains a list of tax forms related to computing one's tax return, which is populated with an empty Form 1040 by default if there is no saved state.
+In the Taxes section, the user estimates their taxes for the year based on their inputs in the Income section.
+Similar to the Income section, this contains a list of tax forms related to computing one's tax return, which is populated with an empty Form 1040 by default if there is no saved state.
 
-#### About tab
+#### Controls
 
-The About tab contains a description of Thumbtax's features, the app's terms of service and privacy policy (both of which are pretty minimal as it's a very simple app), and some author information.
+Important controls are accessible in a control bar at the top of the main page.
+The control bar sits below the navigation bar when the latter is present.
+However, the control bar is present even on narrow screens; its controls move into an overflow menu if necessary.
 
-### Form connections
+- Tax year (currently static since the app only supports the current tax year, but still important to show)
+- Filing status selector
+- Undo and redo buttons
+- Add form button
+  - Opens a form selector
+- Browser save toggle
+- Export button
+  - Opens a menu with options
+
+### Connections view
 
 Thumbtax also offers an interactive visualization of the connections between tax forms in a graph view.
-The graph view is displayed to the left of the primary view, where the tabs described above are located.
-However, on narrow screens, the graph view is moved into a fourth tab titled Connections.
+The graph view is displayed to the left of the primary view described above.
+However, on narrow screens, the graph view is moved into another page titled Connections.
 
 In this graph view, each form that the user has added is represented by a small image of its first page.
 Forms that exist in the specification but have not yet been added by the user are also shown by default, in a faded or visually distinct style, to aid discoverability.
@@ -77,14 +91,18 @@ References between forms (such as "enter the value from Form 1040, line 7a") are
 These connections are derived from the `form_reference` and `form_presence` value provider types in the form specifications.
 The overall view is stylized to appear like the tax forms are pinned to a bulletin board and connected by strings (alluding to "thumbtacks," like the name of the app).
 
-The user can pan and zoom the view, move forms around, and click on a form to navigate to it in the Income or Taxes tab.
+The user can pan and zoom the view, move forms around, and click on a form to navigate to it in the Income or Taxes section.
 
 Discussion of the technical implementation of this view is deferred.
 Possible approaches include an SVG element, the Canvas API, or a dedicated graph library such as React Flow or Cytoscape.js.
 
+### About page
+
+The About page contains a description of Thumbtax's features, the app's terms of service and privacy policy (both of which are pretty minimal as it's a very simple app), and some author information.
+
 ### Form list
 
-Both the Income and Taxes tabs contain a list of tax forms.
+Both the Income and Taxes sections contain a list of tax forms.
 
 Here we distinguish a "class" of tax form, such as Form W-2, from "instances" of a class, such as different instances of Form W-2 for different employers.
 Some classes are restricted to a single instance; for example, one does not need to file multiple different instances of Form 1040.
@@ -101,9 +119,13 @@ When the user enters a value in such a box, then all boxes that depend on that v
 
 #### Adding forms
 
-A dropdown at the top and bottom of the form list lets the user add a new form class.
-For form classes with `cardinality: "one"`, the option is disabled in the dropdown when an instance already exists.
-For form classes with `cardinality: "multiple"`, a button within the form view also lets the user add another instance of that class.
+A button in the control bar lets the user add a new form instance by choosing the form class.
+
+If a form class has reached its maximum number of instances, then the option is disabled.
+If a form class is present but has not reached its maximum number of instances, then a button within the form view also lets the user add another instance of that class.
+
+For some forms, a taxpayer is required to file them under certain conditions.
+If the rules for a box specify that a particular form needs to be present but that form is not present yet, then the box displays a warning state and prompts the user to add the form.
 
 #### Removing forms
 
