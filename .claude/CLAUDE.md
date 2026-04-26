@@ -19,6 +19,7 @@ Run all commands from there.
 ## Patterns
 
 - Import paths from other project files start with `#src/` which maps to `thumbtax-webapp/src/`
-- Don't abbreviate too much; prefer to spell out whole words in variable/function/type names
+- Don't abbreviate too much. Prefer to spell out whole words in variable/function/type names
 - Put each React component in its own file
   - A small, one-off component can live in its parent's file
+- Keep code type-safe. Don't use the exclamation mark operator or type casts and don't disable the typechecker or linter
