@@ -190,3 +190,51 @@ These principles, listed in no particular order, guide the system design.
     For example, a form box input only commits its value to the app state on blur.
 - **Unit testing:**
   Each unit of code is easy to test with little or no mocking.
+
+### Overview
+
+The system has four major parts:
+
+1. **Form specifications:**
+   The set of static specifications describing each supported tax form.
+2. **User state:**
+   The user's input data and preferences.
+   The rest of the application state is derived from this information.
+3. **Workbook engine:**
+   Essentially a pipeline that takes the specifications and user state as input and produces a _workbook_ as output.
+   The workbook contains every form box's value in a structured format.
+4. **UI and other consumers:**
+   The UI components, data exporters, and other modules that consume the workbook.
+
+```mermaid
+graph
+  specifications
+  state
+  engine
+  consumers
+
+  specifications --> engine
+  state -- data --> engine
+  engine -- workbook --> consumers
+  state -- preferences --> consumers
+```
+
+### Specifications
+
+Each form specification is defined in a YAML file according to a concise, human-readable schema.
+
+The schema itself is versioned, separately from the tax year.
+
+A code generation script parses and validates the specifications, then writes them to static constants.
+These constants have more explicit types than the YAML schema to simplify downstream code.
+To speed up the build, we run the code generation manually and check in the constants with Git.
+
+A centralized provider grants access to the form specifications, so as to encapsulate the "retrieval" process.
+
+### User state
+
+### Workbook engine
+
+### UI structure
+
+### Other consumers
