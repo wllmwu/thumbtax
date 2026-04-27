@@ -216,7 +216,7 @@ graph
   specifications --> engine
   state -- data --> engine
   engine -- workbook --> consumers
-  state -- preferences --> consumers
+  state <-- updates / preferences --> consumers
 ```
 
 ### Specifications
@@ -231,9 +231,31 @@ To speed up the build, we run the code generation manually and check in the cons
 
 A centralized provider grants access to the form specifications, so as to encapsulate the "retrieval" process.
 
-### User state
+### State
 
-### Workbook engine
+We use the [Zustand](https://zustand.docs.pmnd.rs/) library to manage state across the React app.
+The Zustand store contains the primary state (user inputs and preferences) and derived workbook.
+
+We include the workbook in the store so consumers can subscribe to individual parts of the workbook via standard Zustand selectors.
+In response to actions that affect the workbook, the updater function runs the workbook engine to get the new workbook and put it in the store.
+
+### Engine
+
+The workbook engine is a pure function that maps form specifications plus user state to a workbook.
+
+At a high level, it has these steps:
+
+1. Compute the dependency graph of all form boxes.
+2. Compute a topological ordering of the dependency graph.
+3. In topological order, compute the value of each box.
+4. Map the forms and boxes to the workbook data structure.
+
+This algorithm is linear in the number of boxes (graph vertices) plus the number of dependencies (graph edges).
+
+Potential optimizations include:
+
+- Memoize the topological ordering and recompute it when a form instance is added or removed.
+- Only visit vertices in the dependency graph subtree rooted at the vertex whose value was just changed by the user.
 
 ### UI structure
 
