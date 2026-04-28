@@ -89,14 +89,12 @@ However, on narrow screens, the graph view is moved into another page titled Con
 In this graph view, each form that the user has added is represented by a small image of its first page.
 Forms that exist in the specification but have not yet been added by the user are also shown by default, in a faded or visually distinct style, to aid discoverability.
 The user can toggle the visibility of these unadded forms.
+
 References between forms (such as "enter the value from Form 1040, line 7a") are represented by lines connecting the forms.
-These connections are derived from the `form_reference` and `form_presence` value provider types in the form specifications.
+These connections are derived from the static form specifications.
+
 The overall view is stylized to appear like the tax forms are pinned to a bulletin board and connected by strings (alluding to "thumbtacks," like the name of the app).
-
 The user can pan and zoom the view, move forms around, and click on a form to navigate to it in the Income or Taxes section.
-
-Discussion of the technical implementation of this view is deferred.
-Possible approaches include an SVG element, the Canvas API, or a dedicated graph library such as React Flow or Cytoscape.js.
 
 ### About page
 
@@ -233,7 +231,7 @@ A centralized provider grants access to the form specifications, so as to encaps
 
 ### State
 
-We use the [Zustand](https://zustand.docs.pmnd.rs/) library to manage state across the React app.
+We use the [Zustand](https://zustand.docs.pmnd.rs) library to manage state across the React app.
 The Zustand store contains the primary state (user inputs and preferences) and derived workbook.
 
 We include the workbook in the store so consumers can subscribe to individual parts of the workbook via standard Zustand selectors.
@@ -257,6 +255,19 @@ Potential optimizations include:
 - Memoize the topological ordering and recompute it when a form instance is added or removed.
 - Only visit vertices in the dependency graph subtree rooted at the vertex whose value was just changed by the user.
 
+To avoid loss of floating-point precision, the engine uses the [decimal.js-light](https://mikemcl.github.io/decimal.js-light/) library.
+Precision is unlikely to be an issue in Thumbtax because we don't expect to deal with very small or very large numbers, but this is just a general good practice.
+
 ### UI structure
+
+We use the following libraries to build the user interface:
+
+- [React Router](https://reactrouter.com) for client-side routing
+- [React Aria](https://react-aria.adobe.com) for accessible UI components
+- [React Flow](https://reactflow.dev) for the Connections graph view
+
+and CSS modules, supported by Vite out of the box, for styling.
+
+React components naturally follow from the different parts of the user interface outlined above.
 
 ### Other consumers
