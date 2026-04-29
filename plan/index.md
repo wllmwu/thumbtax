@@ -277,3 +277,8 @@ We use the [SheetJS](https://docs.sheetjs.com) library to export the workbook to
 We implement saving and loading the state file using native browser functionality.
 The save button is a React Aria Link which downloads the JSON blob.
 The load button is a FileTrigger which provides the user's selected file via the standard FileList interface.
+
+### Deployment
+
+Thumbtax is hosted via GitHub Pages.
+A GitHub Actions workflow runs the typechecker, linter, and tests, runs the Vite build step, and deploys to GitHub Pages on every latest commit to the main branch.
