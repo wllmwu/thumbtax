@@ -98,7 +98,7 @@ The user can pan and zoom the view, move forms around, and click on a form to na
 
 ### About page
 
-The About page contains a description of Thumbtax's features, the app's terms of service and privacy policy (both of which are pretty minimal as it's a very simple app), and some author information.
+The About page contains a description of Thumbtax's features, the app's terms of service and privacy policy (both of which are pretty minimal as it's a very simple app), library attributions, and some author information.
 
 ### Form list
 
@@ -268,6 +268,12 @@ We use the following libraries to build the user interface:
 
 and CSS modules, supported by Vite out of the box, for styling.
 
-React components naturally follow from the different parts of the user interface outlined above.
+React components naturally follow from the different parts of the user experience outlined above.
 
 ### Other consumers
+
+We use the [SheetJS](https://docs.sheetjs.com) library to export the workbook to XLSX and CSV files.
+
+We implement saving and loading the state file using native browser functionality.
+The save button is a React Aria Link which downloads the JSON blob.
+The load button is a FileTrigger which provides the user's selected file via the standard FileList interface.
