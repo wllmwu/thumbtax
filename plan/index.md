@@ -278,6 +278,16 @@ We implement saving and loading the state file using native browser functionalit
 The save button is a React Aria Link which downloads the JSON blob.
 The load button is a FileTrigger which provides the user's selected file via the standard FileList interface.
 
+### Testing
+
+We use [Vitest](https://vitest.dev) to test the code.
+
+As a rule of thumb, every source code file should have a corresponding `.test.(ts|tsx)` file in the same directory.
+Every exported class, function, React component, etc. should be covered by tests.
+However, we do not use snapshot tests.
+
+How to write good tests is out of scope for this document, but in general, tests should be realistic: as little mocking as possible and all cases covered that are in the public "contract" of the unit under test.
+
 ### Deployment
 
 Thumbtax is hosted via GitHub Pages.
