@@ -219,15 +219,9 @@ graph
 
 ### Specifications
 
-Each form specification is defined in a YAML file according to a concise, human-readable schema.
+Each form specification is defined as a strongly-typed static constant.
 
-The schema itself is versioned, separately from the tax year.
-
-A code generation script parses and validates the specifications, then writes them to static constants.
-These constants have more explicit types than the YAML schema to simplify downstream code.
-To speed up the build, we run the code generation manually and check in the constants with Git.
-
-A centralized provider grants access to the form specifications, so as to encapsulate the "retrieval" process.
+A centralized service grants access to the form specifications, so as to encapsulate the "retrieval" process.
 
 ### State
 
@@ -255,8 +249,7 @@ Potential optimizations include:
 - Memoize the topological ordering and recompute it when a form instance is added or removed.
 - Only visit vertices in the dependency graph subtree rooted at the vertex whose value was just changed by the user.
 
-To avoid loss of floating-point precision, the engine uses the [decimal.js-light](https://mikemcl.github.io/decimal.js-light/) library.
-Precision is unlikely to be an issue in Thumbtax because we don't expect to deal with very small or very large numbers, but this is just a general good practice.
+Because Thumbtax is not a professional service and we do not expect to deal with very small or very large numbers, we use the native JavaScript number type in all calculations.
 
 ### UI structure
 
