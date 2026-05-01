@@ -84,7 +84,7 @@ However, the control bar is present even on narrow screens; its controls move in
 
 Thumbtax also offers an interactive visualization of the connections between tax forms in a graph view.
 The graph view is displayed to the left of the primary view described above.
-However, on narrow screens, the graph view is moved into another page titled Connections.
+However, on narrow screens, the graph view is moved into a bottom sheet which is opened by a floating button.
 
 In this graph view, each form that the user has added is represented by a small image of its first page.
 Forms that exist in the specification but have not yet been added by the user are also shown by default, in a faded or visually distinct style, to aid discoverability.
@@ -273,7 +273,7 @@ The load button is a FileTrigger which provides the user's selected file via the
 
 ### Testing
 
-We use [Vitest](https://vitest.dev) to test the code.
+We use [Vitest](https://vitest.dev), [jsdom](https://github.com/jsdom/jsdom), and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) to test the code.
 
 As a rule of thumb, every source code file should have a corresponding `.test.(ts|tsx)` file in the same directory.
 Every exported class, function, React component, etc. should be covered by tests.
