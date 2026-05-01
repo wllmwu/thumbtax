@@ -9,7 +9,7 @@ The system is organized as four layers, each with a clean boundary:
 
 1. **Form specifications** — static, declarative descriptions of every supported tax form, expressed as pure data.
 2. **User state** — the user's filing status, the set of present form instances, and per-box input values, plus user-facing preferences.
-3. **Workbook engine** — a pure function that takes specifications and user state and produces the *workbook*, which holds every box's resolved value and any warnings.
+3. **Workbook engine** — a pure function that takes specifications and user state and produces the _workbook_, which holds every box's resolved value and any warnings.
 4. **Consumers** — UI components, data exporters, the Connections graph extractor, and the persistence layer, all of which read the workbook and (in the UI's case) dispatch actions back into the state layer.
 
 ```mermaid
@@ -270,21 +270,21 @@ A form has three levels of nesting: **sections** (e.g., "Part I — Short-Term C
 // specifications/types/taxFormSpecification.ts
 export type TaxFormSpecification = {
   class: TaxFormClass;
-  title: string;                      // "Form W-2"
-  subtitle?: string;                  // "Wage and Tax Statement"
-  description: string;                // educational blurb shown in UI
-  irsPageUrl: string;                 // deep link to IRS reference
-  section: "income" | "taxes";        // which page area the form belongs in
-  maxInstances: number | null;        // null = unlimited
-  defaultInstanceLabel?: string;      // placeholder text for instance label
+  title: string; // "Form W-2"
+  subtitle?: string; // "Wage and Tax Statement"
+  description: string; // educational blurb shown in UI
+  irsPageUrl: string; // deep link to IRS reference
+  section: "income" | "taxes"; // which page area the form belongs in
+  maxInstances: number | null; // null = unlimited
+  defaultInstanceLabel?: string; // placeholder text for instance label
   sections: Array<TaxFormSection>;
 };
 
 // specifications/types/taxFormSection.ts
 export type TaxFormSection = {
-  heading?: string;                   // e.g. "Part I", "Filing Status"
+  heading?: string; // e.g. "Part I", "Filing Status"
   columns?: Array<{
-    index: string;                    // "(a)", "(b)", or unnamed if omitted
+    index: string; // "(a)", "(b)", or unnamed if omitted
     description?: string;
   }>;
   lines: Array<TaxFormLine>;
@@ -292,18 +292,18 @@ export type TaxFormSection = {
 
 // specifications/types/taxFormLine.ts
 export type TaxFormLine = {
-  index: string;                      // "1a", "7", "12b"
+  index: string; // "1a", "7", "12b"
   description?: string;
   boxes: Array<TaxFormBox>;
 };
 
 // specifications/types/taxFormBox.ts
 export type TaxFormBox = {
-  identifier: TaxFormBoxIdentifier;   // unique within the enclosing form class
-  columnIndex?: string;               // refers to enclosing section's columns[].index
+  identifier: TaxFormBoxIdentifier; // unique within the enclosing form class
+  columnIndex?: string; // refers to enclosing section's columns[].index
   value: ValueProvider;
   format?: BoxFormat;
-  helpText?: string;                  // educational tooltip
+  helpText?: string; // educational tooltip
 };
 
 // specifications/types/boxFormat.ts
@@ -322,8 +322,8 @@ export type ValueProvider =
   | { type: "boolean_constant"; value: boolean }
 
   // ── Sentinels (no value computed) ──────────
-  | { type: "unused" }              // box exists in form layout but Thumbtax skips it
-  | { type: "unsupported" }         // out of scope; UI shows N/A
+  | { type: "unused" } // box exists in form layout but Thumbtax skips it
+  | { type: "unsupported" } // out of scope; UI shows N/A
 
   // ── User inputs ────────────────────────────
   | { type: "number_input" }
@@ -365,7 +365,7 @@ export type ValueProvider =
       box: TaxFormBoxIdentifier;
     }
   | { type: "count_instances"; form: TaxFormClass }
-  | { type: "any_instance_present"; form: TaxFormClass }   // boolean
+  | { type: "any_instance_present"; form: TaxFormClass } // boolean
 
   // ── Arithmetic on already-resolved scalars ─
   | { type: "sum"; values: Array<ValueProvider> }
@@ -375,8 +375,8 @@ export type ValueProvider =
   | { type: "minimum"; values: Array<ValueProvider> }
   | { type: "maximum"; values: Array<ValueProvider> }
   | { type: "absolute_value"; value: ValueProvider }
-  | { type: "non_negative"; value: ValueProvider }         // max(value, 0)
-  | { type: "numerical_negation"; value: ValueProvider }   // value * -1
+  | { type: "non_negative"; value: ValueProvider } // max(value, 0)
+  | { type: "numerical_negation"; value: ValueProvider } // value * -1
 
   // ── Logic / control flow ───────────────────
   | {
@@ -420,7 +420,9 @@ Most providers yield numbers. The boolean-yielding providers are: `boolean_const
 
 ```typescript
 // specifications/service.ts
-export function getFormSpecification(formClass: TaxFormClass): TaxFormSpecification;
+export function getFormSpecification(
+  formClass: TaxFormClass,
+): TaxFormSpecification;
 export function allFormClasses(): TaxFormClass[];
 export function allSpecifications(): TaxFormSpecification[];
 ```
@@ -454,21 +456,21 @@ The state layer owns the user's primary state and exposes a set of actions. Deri
 
 ### Primary state
 
-The *primary* state is the only authentic state. Everything else is derived.
+The _primary_ state is the only authentic state. Everything else is derived.
 
 ```typescript
 // state/types/primaryState.ts
 export type PrimaryState = {
   filingStatus: FilingStatus;
-  formClassOrder: TaxFormClass[];                              // explicit display order
+  formClassOrder: TaxFormClass[]; // explicit display order
   formInstancesByClass: Partial<Record<TaxFormClass, FormInstance[]>>;
   preferences: { browserSaveEnabled: boolean };
 };
 
 // state/types/formInstance.ts
 export type FormInstance = {
-  instanceId: InstanceId;                                      // uuid
-  label?: string;                                              // user-set; falls back to defaultInstanceLabel
+  instanceId: InstanceId; // uuid
+  label?: string; // user-set; falls back to defaultInstanceLabel
   inputs: Record<TaxFormBoxIdentifier, BoxValue>;
 };
 ```
@@ -482,7 +484,7 @@ The `formInstancesByClass` record makes per-class operations (add/remove/reorder
 ```typescript
 // state/types/storeState.ts
 export type StoreState = PrimaryState & {
-  workbook: Workbook;                            // derived; refreshed by every action
+  workbook: Workbook; // derived; refreshed by every action
   history: { past: PrimaryState[]; future: PrimaryState[] };
 };
 ```
@@ -510,7 +512,7 @@ redo()
 
 Action behavior rules:
 
-- Any action that mutates primary state pushes the *previous* primary state onto `history.past`, clears `history.future`, applies the mutation, and recomputes the workbook.
+- Any action that mutates primary state pushes the _previous_ primary state onto `history.past`, clears `history.future`, applies the mutation, and recomputes the workbook.
 - `loadState` and `resetState` clear undo history (rather than recording the prior state as undoable). This matches the user expectation that "undo" rolls back individual edits, not whole-document operations.
 - `addFormInstance` appends to `formClassOrder` if the class is new; `removeFormInstance` removes the class from `formClassOrder` when its last instance is removed.
 - `addFormInstance` returns the new `InstanceId` so the UI can scroll to or focus on it.
@@ -521,7 +523,7 @@ Snapshot-based, rolled in-house — the primary state is small enough that snaps
 
 `history.past` holds prior primary states (newest at the end). On a mutating action, the current primary state is pushed onto `past`, `future` is cleared, and the new state is applied. `undo()` pops `past`, pushes the current state onto `future`, and restores the popped state. `redo()` is the mirror.
 
-The workbook is *not* part of history; it is recomputed after each restore via the same engine call any other action makes.
+The workbook is _not_ part of history; it is recomputed after each restore via the same engine call any other action makes.
 
 ### Workbook recomputation
 
@@ -540,7 +542,7 @@ The engine is a pure function. It has no React, DOM, or I/O dependencies.
 export function computeWorkbook(input: {
   specifications: Map<TaxFormClass, TaxFormSpecification>;
   state: PrimaryState;
-  previousWorkbook?: Workbook;          // for reference preservation
+  previousWorkbook?: Workbook; // for reference preservation
 }): Workbook;
 ```
 
@@ -553,7 +555,7 @@ Because JavaScript's `Map` compares object keys by reference, the workbook's loo
 ```typescript
 // engine/types/workbook.ts
 export type Workbook = {
-  resolvedBoxes: Map<string, ResolvedBox>;   // key = encodeBoxAddress(addr)
+  resolvedBoxes: Map<string, ResolvedBox>; // key = encodeBoxAddress(addr)
 };
 
 // engine/types/resolvedBox.ts
@@ -585,7 +587,7 @@ Identifiers, descriptions, line numbers, formats, and provider definitions are n
 // engine/dependencyGraph.ts
 export type Vertex =
   | { kind: "box"; address: BoxAddress }
-  | { kind: "form_presence"; form: TaxFormClass };  // synthetic; see below
+  | { kind: "form_presence"; form: TaxFormClass }; // synthetic; see below
 
 export type DependencyGraph = {
   vertices: Vertex[];
@@ -603,19 +605,19 @@ Per-instance-box granularity makes the graph map directly onto what's actually b
 
 The provider-to-edges mapping:
 
-| Provider | Edges added (from the resolving box's vertex) |
-| --- | --- |
-| `self_box_reference` | one edge to the same instance's named box |
-| `self_line_range_sum` | one edge per box in the named line range, same instance |
-| `unique_instance_box_reference` | one edge to the singleton instance's named box |
-| `unique_instance_line_range_sum` | one edge per box in the named line range on the singleton |
-| `sum_across_instances` | one edge per present instance of the target form, to the named box |
-| `count_instances`, `any_instance_present` | one edge to a synthetic `form_presence` vertex for the target form (see below) |
-| `box_selection_input` | one edge to the chosen target box (resolved when the user makes a selection; rebuilt on change) |
-| Composite providers (`sum`, `conditional`, etc.) | union of edges from their sub-providers |
-| Constants, sentinels, plain inputs | no edges |
+| Provider                                         | Edges added (from the resolving box's vertex)                                                   |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| `self_box_reference`                             | one edge to the same instance's named box                                                       |
+| `self_line_range_sum`                            | one edge per box in the named line range, same instance                                         |
+| `unique_instance_box_reference`                  | one edge to the singleton instance's named box                                                  |
+| `unique_instance_line_range_sum`                 | one edge per box in the named line range on the singleton                                       |
+| `sum_across_instances`                           | one edge per present instance of the target form, to the named box                              |
+| `count_instances`, `any_instance_present`        | one edge to a synthetic `form_presence` vertex for the target form (see below)                  |
+| `box_selection_input`                            | one edge to the chosen target box (resolved when the user makes a selection; rebuilt on change) |
+| Composite providers (`sum`, `conditional`, etc.) | union of edges from their sub-providers                                                         |
+| Constants, sentinels, plain inputs               | no edges                                                                                        |
 
-`count_instances` and `any_instance_present` depend on form *presence*, not on any box's value. Modeling them as edges to *every* box would over-invalidate. Instead, the graph contains one synthetic `form_presence` vertex per form class that has any consumer; that vertex is recomputed whenever instances of the class are added or removed. The user-visible box that uses these providers depends on the synthetic vertex.
+`count_instances` and `any_instance_present` depend on form _presence_, not on any box's value. Modeling them as edges to _every_ box would over-invalidate. Instead, the graph contains one synthetic `form_presence` vertex per form class that has any consumer; that vertex is recomputed whenever instances of the class are added or removed. The user-visible box that uses these providers depends on the synthetic vertex.
 
 ### Topological order
 
@@ -636,7 +638,7 @@ export type ResolveContext = {
   filingStatus: FilingStatus;
   state: PrimaryState;
   specifications: Map<TaxFormClass, TaxFormSpecification>;
-  resolvedSoFar: Map<string, ResolvedBox>;     // partial workbook (string-keyed addresses)
+  resolvedSoFar: Map<string, ResolvedBox>; // partial workbook (string-keyed addresses)
 };
 ```
 
@@ -680,8 +682,8 @@ Two destinations: explicit save files (download/upload) and browser local storag
 ```typescript
 // persistence/types/saveFile.ts
 export type SaveFile = {
-  schemaVersion: number;          // bumped on breaking schema changes
-  taxYear: number;                // e.g. 2025
+  schemaVersion: number; // bumped on breaking schema changes
+  taxYear: number; // e.g. 2025
   filingStatus: FilingStatus;
   formClassOrder: TaxFormClass[];
   formInstancesByClass: Partial<Record<TaxFormClass, FormInstance[]>>;
@@ -698,8 +700,10 @@ export type SaveFile = {
 export function serialize(state: PrimaryState): SaveFile;
 
 // persistence/deserialize.ts
-export function deserialize(raw: unknown):
-  { state: PrimaryState; warnings: LoadWarning[] };
+export function deserialize(raw: unknown): {
+  state: PrimaryState;
+  warnings: LoadWarning[];
+};
 ```
 
 ### Forgiving deserialization
@@ -738,7 +742,7 @@ Two distinct keys with different durability tiers:
 - `thumbtax.preferences` — always written. Holds at minimum the `browserSaveEnabled` flag plus any future user-facing preference. Surviving across "clear my data" actions is intentional.
 - `thumbtax.savedState` — only written when `browserSaveEnabled === true`. Holds a complete `SaveFile`. Cleared immediately when the user disables the toggle.
 
-A third key, `thumbtax.uiState`, holds browser-only ephemera that should *not* be in the download file (most notably Connections graph node positions; see [Connections graph](#connections-graph)).
+A third key, `thumbtax.uiState`, holds browser-only ephemera that should _not_ be in the download file (most notably Connections graph node positions; see [Connections graph](#connections-graph)).
 
 `persistence/localStorage.ts` exports a `useAutosave()` hook used at the top of `App.tsx`. It debounces writes to `thumbtax.savedState` (~300 ms after the last commit) to avoid hammering local storage on every keystroke commit. On mount, it reads any saved state and dispatches `loadState`.
 
@@ -758,15 +762,15 @@ export type ConnectionsGraph = {
 // connectionsGraph/types/connectionsNode.ts
 export type ConnectionsNode = {
   form: TaxFormClass;
-  status: "added" | "not_added";    // drives faded styling
-  instanceCount: number;             // 0 when not_added
+  status: "added" | "not_added"; // drives faded styling
+  instanceCount: number; // 0 when not_added
 };
 
 // connectionsGraph/types/connectionsEdge.ts
 export type ConnectionsEdge = {
   source: TaxFormClass;
   target: TaxFormClass;
-  references: Array<EdgeReference>;  // every individual reference between this pair
+  references: Array<EdgeReference>; // every individual reference between this pair
 };
 
 // connectionsGraph/types/edgeReference.ts
@@ -790,7 +794,7 @@ Edge direction: `A → B` means "form A's spec references form B's values." Mult
 
 `connectionsGraph/extract.ts` walks every form's spec via a reusable provider visitor (`visitProviderReferences.ts`) that yields each cross-form `(sourceBox, target, aggregation)` reference. The same visitor is used by the validator and engine where they need to enumerate cross-form dependencies.
 
-When the user toggles "show unadded forms" off, the *renderer* filters `status === "not_added"` nodes and incident edges. This is purely a UI concern and is not part of the extracted graph data.
+When the user toggles "show unadded forms" off, the _renderer_ filters `status === "not_added"` nodes and incident edges. This is purely a UI concern and is not part of the extracted graph data.
 
 ### Position persistence
 
@@ -850,7 +854,7 @@ There is no `/connections` route. On narrow viewports, a "Show connections" entr
 
 ### Form list
 
-The form list is fundamentally tabular. For each `formClass` in `formClassOrder` whose spec's `section` matches the section, the list renders a `<FormClassTable>`. Within a class table, lines are grouped by spec section (`<FormSectionGroup>`); each line becomes a `<FormLineRow>` with one `<FormBoxCell>` per *(instance × column on this line)* pair.
+The form list is fundamentally tabular. For each `formClass` in `formClassOrder` whose spec's `section` matches the section, the list renders a `<FormClassTable>`. Within a class table, lines are grouped by spec section (`<FormSectionGroup>`); each line becomes a `<FormLineRow>` with one `<FormBoxCell>` per _(instance × column on this line)_ pair.
 
 ```
 <FormLineRow>
@@ -877,7 +881,7 @@ Cell formatting is driven by the box's `format` (`financial`, `percentage`, `pla
 
 ### Custom keyboard navigation
 
-The plan's enter-key focus order — *next column of same line in same instance → first column of next line in same instance → first column of first line in next instance* — does not match DOM order, since per-line DOM order interleaves columns across instances. React Aria's `useFocusManager` follows DOM order and can't express this directly.
+The plan's enter-key focus order — _next column of same line in same instance → first column of next line in same instance → first column of first line in next instance_ — does not match DOM order, since per-line DOM order interleaves columns across instances. React Aria's `useFocusManager` follows DOM order and can't express this directly.
 
 The form list owns a `FocusContext` provider that solves this with a refs registry:
 
@@ -886,8 +890,8 @@ The form list owns a `FocusContext` provider that solves this with a refs regist
 export type FocusKey = {
   class: TaxFormClass;
   instance: InstanceId;
-  line: string;       // line.index
-  column?: string;    // box.columnIndex
+  line: string; // line.index
+  column?: string; // box.columnIndex
 };
 
 // ui/formList/focus/types/focusRegistry.ts
