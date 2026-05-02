@@ -110,7 +110,8 @@ src/
 │   ├── types/
 │   │   ├── primaryState.ts
 │   │   ├── formInstance.ts
-│   │   └── storeState.ts
+│   │   ├── storeState.ts
+│   │   └── userPreferences.ts
 │   ├── store.ts                     # createStore + selector hooks
 │   ├── store.test.ts
 │   ├── actions.ts
@@ -233,6 +234,7 @@ export type BoxIdentifier = string;
 export type FormInstanceId = string;
 
 // common/types/boxAddress.ts
+// Used in BoxWarning (upstream variant) and the connections graph.
 export type BoxAddress = {
   form: FormClass;
   instance: FormInstanceId;
@@ -243,19 +245,13 @@ export type BoxAddress = {
 // Used in two places:
 //   - Stored in user state for input-provider boxes.
 //   - Stored in the workbook for every box (input or computed).
-// At runtime, the workbook only ever holds "number", "boolean", "absent",
-// "list_of_numbers", or "box_selection" — the same variants that the
-// corresponding state input would hold.
 export type BoxValue =
   | { type: "number"; value: number }
-  | { type: "boolean"; value: boolean }
-  | { type: "list_of_numbers"; values: number[] }
+  | { type: "amount_list"; value: Array<{ label: string; amount: number }> }
   | {
-      type: "box_selection";
-      form: FormClass;
-      box: BoxIdentifier;
-    }
-  | { type: "absent" };
+      type: "selection";
+      selectedIndex: number;
+    };
 ```
 
 ## Form specifications
@@ -312,7 +308,7 @@ export type BoxFormat = "checkbox" | "financial" | "percentage" | "plain";
 
 ### Value providers
 
-A `ValueProvider` declares how a box's value is derived. The union is fully tagged with no shorthand literals, prioritizing strong, explicit types over conciseness. Provider names use a deliberate naming convention to make instance-cardinality decisions obvious in spec data.
+A `ValueProvider` declares how a box's value is derived. The union is fully tagged with no shorthand literals, prioritizing strong, explicit types over conciseness.
 
 ```typescript
 // specifications/types/valueProvider.ts
@@ -329,42 +325,23 @@ export type ValueProvider =
   | { type: "list_amounts_input" } // user enters a list of amounts; resolves to their sum
   | { type: "checkbox_input" } // resolves to 0 if unchecked, 1 if checked
   | {
-      type: "box_selection_input";
-      options: Array<{ form: FormClass; box: BoxIdentifier }>;
+      type: "selection_input";
+      options: Array<{ label: string; value: ValueProvider }>;
     }
 
-  // ── Single-instance references ─────────────
-  // Same form class, same instance the box belongs to.
-  | { type: "self_box_reference"; box: BoxIdentifier }
+  // ── References ─────────────────────────────
+  // If form is not specified, refers to a box on the same form instance.
+  // If form is present and that form has multiple instances, aggregates
+  // across all present instances of that form.
+  | { type: "box_reference"; form?: FormClass; box: BoxIdentifier }
   | {
-      type: "self_line_range_sum";
+      type: "line_range_sum";
+      form?: FormClass;
       fromLine: string;
       toLine: string;
       column?: string;
     }
-  // Different form class that is constrained to maxInstances === 1.
-  | {
-      type: "unique_instance_box_reference";
-      form: FormClass;
-      box: BoxIdentifier;
-    }
-  | {
-      type: "unique_instance_line_range_sum";
-      form: FormClass;
-      fromLine: string;
-      toLine: string;
-      column?: string;
-    }
-
-  // ── All-instance aggregations ──────────────
-  // For multi-instance forms; resolves over every present instance.
-  | {
-      type: "sum_across_instances";
-      form: FormClass;
-      box: BoxIdentifier;
-    }
-  | { type: "count_instances"; form: FormClass }
-  | { type: "any_instance_present"; form: FormClass } // boolean
+  | { type: "form_instance_count"; form: FormClass } // counts present instances
 
   // ── Arithmetic on already-resolved scalars ─
   | { type: "sum"; values: Array<ValueProvider> }
@@ -399,17 +376,19 @@ export type ValueProvider =
     };
 ```
 
-#### Naming convention
+#### Reference semantics
 
-- **`self_*`** — same form class, same instance as the box being resolved.
-- **`unique_instance_*`** — a different form class whose `maxInstances === 1`.
-- **`*_across_instances`** — aggregates over every present instance of a multi-instance form class.
+`box_reference` and `line_range_sum` use the optional `form` field to express both same-instance and cross-instance references:
 
-This convention puts the cardinality story in the provider name itself; readers of a spec can answer "is this referencing one instance or many?" without context.
+- **`form` absent** — refers to a box (or line range) on the same form instance as the box being resolved.
+- **`form` present, `maxInstances === 1`** — refers to the singleton instance of the named form class.
+- **`form` present, `maxInstances` null or >1** — aggregates (sums) across all present instances of the named form class.
 
-#### Range sums are within a single instance
+`form_instance_count` returns the number of present instances of that form (0 if none are added). It subsumes both the "how many?" and "is any present?" queries; use a `conditional` or `comparison` on top when a boolean is needed.
 
-`self_line_range_sum` and `unique_instance_line_range_sum` walk lines `fromLine` through `toLine` within one instance. To aggregate ranges across multiple instances, compose: `sum` of `sum_across_instances`, one per line in the range. If this turns out to be common enough to warrant a primitive, we add it then.
+#### Range sums
+
+`line_range_sum` with no `form` walks lines `fromLine` through `toLine` within the same instance. With `form` set to a multi-instance form, it sums the line-range result across all present instances of that form.
 
 #### Numbers as booleans
 
@@ -436,10 +415,10 @@ Invariants checked:
 
 - Every `TaxFormBox.identifier` is unique within its enclosing form class.
 - Every `box.columnIndex`, when present, refers to a column declared on the enclosing section.
-- Every `unique_instance_*` provider targets a form class whose `maxInstances === 1`.
-- Every `*_across_instances`, `count_instances`, and `any_instance_present` provider targets a multi-instance form class.
-- Every `box_selection_input.options` entry points to a real form/box, and all options share the same target cardinality.
-- Every `self_*` and same-form box reference resolves to a real box on this form.
+- Every `box_reference` and `line_range_sum` with no `form` field resolves to a real box (or line range) on the same form class.
+- Every `box_reference` and `line_range_sum` with a `form` field targets a form class that exists in the spec registry.
+- Every `form_instance_count` provider targets a form class that exists in the spec registry.
+- Every `selection_input.options` entry has a non-empty `label` and a structurally valid `ValueProvider`.
 - The dependency graph induced by the specifications has no cycles after instance expansion.
 
 The validator runs:
@@ -458,12 +437,17 @@ The state layer owns the user's primary state and exposes a set of actions. Deri
 The _primary_ state is the only authentic state. Everything else is derived.
 
 ```typescript
+// state/types/userPreferences.ts
+export type UserPreferences = {
+  browserSaveEnabled: boolean;
+};
+
 // state/types/primaryState.ts
 export type PrimaryState = {
   filingStatus: FilingStatus;
   formClassOrder: FormClass[]; // explicit display order
   formInstancesByClass: Partial<Record<FormClass, FormInstance[]>>;
-  preferences: { browserSaveEnabled: boolean };
+  preferences: UserPreferences;
 };
 
 // state/types/formInstance.ts
@@ -547,15 +531,14 @@ export function computeWorkbook(input: {
 
 ### Workbook shape
 
-The workbook is just a lookup index over resolved boxes. Walking by form/instance for display, export, or graph rendering is done by consumers using `(specifications, primaryState)` and joining with the workbook by `BoxAddress`.
-
-Because JavaScript's `Map` compares object keys by reference, the workbook's lookup is keyed by a string-encoded address (`"${form}|${instance}|${box}"`). A small helper module (`common/types/boxAddress.ts`) provides `encodeBoxAddress(addr)` and `decodeBoxAddress(key)` so consumers never compose the string by hand.
+The workbook is just a lookup index over resolved boxes. Walking by form/instance for display, export, or graph rendering is done by consumers using `(specifications, primaryState)` and joining with the workbook by `FormInstanceId` and `BoxIdentifier`.
 
 ```typescript
 // engine/types/workbook.ts
-export type Workbook = {
-  resolvedBoxes: Map<string, ResolvedBox>; // key = encodeBoxAddress(addr)
-};
+export type Workbook = Record<
+  FormInstanceId,
+  Record<BoxIdentifier, ResolvedBox>
+>;
 
 // engine/types/resolvedBox.ts
 export type ResolvedBox = {
@@ -577,7 +560,7 @@ Identifiers, descriptions, line numbers, formats, and provider definitions are n
 
 1. Build the dependency graph from `(specifications, primaryState)`. Vertices are concrete `BoxAddress` triples — one node per `(class, instance, box)` for every present instance. Edges go from a box to the boxes it depends on.
 2. Compute a topological ordering with Kahn's algorithm. A cycle is a developer error; the engine throws with the cycle's box addresses.
-3. In topological order, resolve each box by dispatching on its `ValueProvider`. Resolution reads already-resolved upstream values from a partially-built workbook map.
+3. In topological order, resolve each box by dispatching on its `ValueProvider`. Resolution reads already-resolved upstream values from the partially-built two-level workbook record (keyed by `FormInstanceId`, then `BoxIdentifier`).
 4. Apply reference preservation against `previousWorkbook` before returning.
 
 ### Dependency graph
@@ -604,19 +587,20 @@ Per-instance-box granularity makes the graph map directly onto what's actually b
 
 The provider-to-edges mapping:
 
-| Provider                                         | Edges added (from the resolving box's vertex)                                                   |
-| ------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| `self_box_reference`                             | one edge to the same instance's named box                                                       |
-| `self_line_range_sum`                            | one edge per box in the named line range, same instance                                         |
-| `unique_instance_box_reference`                  | one edge to the singleton instance's named box                                                  |
-| `unique_instance_line_range_sum`                 | one edge per box in the named line range on the singleton                                       |
-| `sum_across_instances`                           | one edge per present instance of the target form, to the named box                              |
-| `count_instances`, `any_instance_present`        | one edge to a synthetic `form_presence` vertex for the target form (see below)                  |
-| `box_selection_input`                            | one edge to the chosen target box (resolved when the user makes a selection; rebuilt on change) |
-| Composite providers (`sum`, `conditional`, etc.) | union of edges from their sub-providers                                                         |
-| Constants, sentinels, plain inputs               | no edges                                                                                        |
+| Provider                                         | Edges added (from the resolving box's vertex)                                                                             |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `box_reference` (no `form`)                      | one edge to the same instance's named box                                                                                 |
+| `box_reference` (with `form`, single-instance)   | one edge to the singleton instance's named box                                                                            |
+| `box_reference` (with `form`, multi-instance)    | one edge per present instance of the target form, to the named box                                                        |
+| `line_range_sum` (no `form`)                     | one edge per box in the named line range, same instance                                                                   |
+| `line_range_sum` (with `form`, single-instance)  | one edge per box in the named line range on the singleton                                                                 |
+| `line_range_sum` (with `form`, multi-instance)   | one edge per box in the named line range, across every present instance of the target form                                |
+| `form_instance_count`                            | one edge to a synthetic `form_presence` vertex for the target form (see below)                                            |
+| `selection_input`                                | one edge per option's ValueProvider dependencies (any option could be selected, so all options' dependencies are tracked) |
+| Composite providers (`sum`, `conditional`, etc.) | union of edges from their sub-providers                                                                                   |
+| Constants, sentinels, plain inputs               | no edges                                                                                                                  |
 
-`count_instances` and `any_instance_present` depend on form _presence_, not on any box's value. Modeling them as edges to _every_ box would over-invalidate. Instead, the graph contains one synthetic `form_presence` vertex per form class that has any consumer; that vertex is recomputed whenever instances of the class are added or removed. The user-visible box that uses these providers depends on the synthetic vertex.
+`form_instance_count` depends on form _presence_, not on any box's value. Modeling it as edges to _every_ box would over-invalidate. Instead, the graph contains one synthetic `form_presence` vertex per form class that has any consumer; that vertex is recomputed whenever instances of the class are added or removed. The user-visible box that uses this provider depends on the synthetic vertex.
 
 ### Topological order
 
@@ -637,7 +621,7 @@ export type ResolveContext = {
   filingStatus: FilingStatus;
   state: PrimaryState;
   specifications: Map<FormClass, TaxFormSpecification>;
-  resolvedSoFar: Map<string, ResolvedBox>; // partial workbook (string-keyed addresses)
+  resolvedSoFar: Workbook; // partial workbook built up in topological order
 };
 ```
 
@@ -656,15 +640,14 @@ Coercion rules:
 
 - `number` → its `value`.
 - `boolean` → `1`/`0` for number, identity for boolean.
-- `list_of_numbers` → sum for number, "any non-zero" for boolean.
-- `box_selection` → recursively follow to the chosen target's resolved value, then re-interpret.
-- `absent` → `0` for number, `false` for boolean.
+- `amount_list` → sum of all `amount` fields for number, "any non-zero amount" for boolean.
+- `selection` → evaluate the selected option's `ValueProvider` and re-interpret the result.
 
 These helpers are private to the engine. Consumers of the workbook read `BoxValue` directly and decide their own display semantics.
 
 ### Reference preservation
 
-`engine/preserveReferences.ts` walks `previousWorkbook.resolvedBoxes` after a fresh resolution and, for each address whose new `value` and `warnings` are deep-equal to the previous entry's, reuses the previous `ResolvedBox` reference. This keeps Zustand subscribers stable across recomputes: a cell that didn't change does not re-render, even though the workbook object as a whole was replaced.
+`engine/preserveReferences.ts` walks the outer instance keys of `previousWorkbook` after a fresh resolution and, for each address whose new `value` and `warnings` are deep-equal to the previous entry's, reuses the previous `ResolvedBox` reference. This keeps Zustand subscribers stable across recomputes: a cell that didn't change does not re-render, even though the workbook object as a whole was replaced.
 
 ### Warning propagation
 
@@ -680,13 +663,10 @@ Two destinations: explicit save files (download/upload) and browser local storag
 
 ```typescript
 // persistence/types/saveFile.ts
-export type SaveFile = {
+// PrimaryState is imported from state/types/primaryState.ts
+export type SaveFile = PrimaryState & {
   schemaVersion: number; // bumped on breaking schema changes
   taxYear: number; // e.g. 2025
-  filingStatus: FilingStatus;
-  formClassOrder: FormClass[];
-  formInstancesByClass: Partial<Record<FormClass, FormInstance[]>>;
-  preferences: { browserSaveEnabled: boolean };
 };
 ```
 
@@ -696,6 +676,7 @@ export type SaveFile = {
 
 ```typescript
 // persistence/serialize.ts
+// schemaVersion and taxYear are populated from persistence/config.ts constants.
 export function serialize(state: PrimaryState): SaveFile;
 
 // persistence/deserialize.ts
@@ -773,15 +754,12 @@ export type ConnectionsEdge = {
 };
 
 // connectionsGraph/types/edgeReference.ts
+// Note: EdgeReference currently carries only source/target identity. Richer metadata
+// (aggregation kind, cardinality, conditionality) will be designed after the initial
+// version is built and we can see how the graph is actually used.
 export type EdgeReference = {
   sourceBox: BoxIdentifier;
   targetBox?: BoxIdentifier;
-  aggregation:
-    | "unique_instance"
-    | "sum_across_instances"
-    | "count_instances"
-    | "any_instance_present"
-    | "selection";
 };
 ```
 
@@ -791,7 +769,7 @@ Edge direction: `A → B` means "form A's spec references form B's values." Mult
 
 ### Extraction
 
-`connectionsGraph/extract.ts` walks every form's spec via a reusable provider visitor (`visitProviderReferences.ts`) that yields each cross-form `(sourceBox, target, aggregation)` reference. The same visitor is used by the validator and engine where they need to enumerate cross-form dependencies.
+`connectionsGraph/extract.ts` walks every form's spec via a reusable provider visitor (`visitProviderReferences.ts`) that yields each cross-form `(sourceBox, targetBox)` reference. The same visitor is used by the validator and engine where they need to enumerate cross-form dependencies.
 
 When the user toggles "show unadded forms" off, the _renderer_ filters `status === "not_added"` nodes and incident edges. This is purely a UI concern and is not part of the extracted graph data.
 
@@ -871,7 +849,7 @@ Cells render based on the box's `provider.type`:
 
 - `number_input` → React Aria `<NumberField>`.
 - `checkbox_input` → React Aria `<Checkbox>`.
-- `box_selection_input` → React Aria `<Select>` over the listed options.
+- `selection_input` → React Aria `<Select>` over the listed options, each displayed with its label.
 - `list_amounts_input` → custom multi-input (a small list editor; sum displayed below).
 - `unused`, `unsupported` → static "—" or "N/A".
 - All other (computed) providers → static formatted display of `value`.
