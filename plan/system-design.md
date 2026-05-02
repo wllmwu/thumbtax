@@ -65,9 +65,9 @@ src/
 ├── common/
 │   └── types/                       # truly cross-module types
 │       ├── filingStatus.ts
-│       ├── taxFormClass.ts
-│       ├── taxFormBoxIdentifier.ts
-│       ├── instanceId.ts
+│       ├── formClass.ts
+│       ├── boxIdentifier.ts
+│       ├── formInstanceId.ts
 │       ├── boxValue.ts
 │       └── boxAddress.ts
 │
@@ -193,7 +193,7 @@ src/
     │   ├── ConnectionsBottomSheet.tsx
     │   ├── FormNode.tsx
     │   └── ReferenceEdge.tsx
-    └── primitives/                  # thin wrappers around React Aria, on demand
+    └── primitives/                  # thin wrappers around React Aria
 ```
 
 Conventions:
@@ -203,7 +203,7 @@ Conventions:
 - **`common/types/` is small by design.** A type only belongs here if it has multiple owning modules in practice (rule of thumb: used by ≥3 modules). Otherwise it stays in its primary owner.
 - **CSS modules are co-located.** A component `Foo.tsx` may have a sibling `Foo.module.css`. Global styles live only in `index.css`.
 - **Small one-off components live in their parent's file**, per the project rule. Components reused in more than one place earn their own file.
-- **`primitives/` are wrap-on-demand.** A React Aria component goes through a wrapper only once it actually needs project-specific styling or defaults; otherwise the rest of the app imports React Aria directly.
+- **`primitives/` wraps React Aria components.** The wrappers apply project styles and defaults. Nowhere else imports React Aria components directly.
 
 ## Cross-cutting types
 
@@ -218,25 +218,25 @@ export type FilingStatus =
   | "head_of_household"
   | "qualifying_surviving_spouse";
 
-// common/types/taxFormClass.ts
+// common/types/formClass.ts
 // String literal union of every supported form class. Adding a form means
 // adding to this union and registering its specification in specifications/forms.
 // Example variants:
-export type TaxFormClass = "f1040" | "fW2" | "f1099Int" | "f1099Div";
+export type FormClass = "f1040" | "fW2" | "f1099Int" | "f1099Div";
 
-// common/types/taxFormBoxIdentifier.ts
+// common/types/boxIdentifier.ts
 // Unique within a form class; no global uniqueness requirement across classes.
-export type TaxFormBoxIdentifier = string;
+export type BoxIdentifier = string;
 
-// common/types/instanceId.ts
+// common/types/formInstanceId.ts
 // UUID minted when a form instance is added.
-export type InstanceId = string;
+export type FormInstanceId = string;
 
 // common/types/boxAddress.ts
 export type BoxAddress = {
-  form: TaxFormClass;
-  instance: InstanceId;
-  box: TaxFormBoxIdentifier;
+  form: FormClass;
+  instance: FormInstanceId;
+  box: BoxIdentifier;
 };
 
 // common/types/boxValue.ts
@@ -252,8 +252,8 @@ export type BoxValue =
   | { type: "list_of_numbers"; values: number[] }
   | {
       type: "box_selection";
-      form: TaxFormClass;
-      box: TaxFormBoxIdentifier;
+      form: FormClass;
+      box: BoxIdentifier;
     }
   | { type: "absent" };
 ```
@@ -269,12 +269,12 @@ A form has three levels of nesting: **sections** (e.g., "Part I — Short-Term C
 ```typescript
 // specifications/types/taxFormSpecification.ts
 export type TaxFormSpecification = {
-  class: TaxFormClass;
+  class: FormClass;
   title: string; // "Form W-2"
   subtitle?: string; // "Wage and Tax Statement"
   description: string; // educational blurb shown in UI
   irsPageUrl: string; // deep link to IRS reference
-  section: "income" | "taxes"; // which page area the form belongs in
+  category: "income" | "taxes"; // which page area the form belongs in
   maxInstances: number | null; // null = unlimited
   defaultInstanceLabel?: string; // placeholder text for instance label
   sections: Array<TaxFormSection>;
@@ -284,7 +284,7 @@ export type TaxFormSpecification = {
 export type TaxFormSection = {
   heading?: string; // e.g. "Part I", "Filing Status"
   columns?: Array<{
-    index: string; // "(a)", "(b)", or unnamed if omitted
+    index: string; // "(a)", "(b)"
     description?: string;
   }>;
   lines: Array<TaxFormLine>;
@@ -299,10 +299,10 @@ export type TaxFormLine = {
 
 // specifications/types/taxFormBox.ts
 export type TaxFormBox = {
-  identifier: TaxFormBoxIdentifier; // unique within the enclosing form class
+  identifier: BoxIdentifier; // unique within the enclosing form class
   columnIndex?: string; // refers to enclosing section's columns[].index
   value: ValueProvider;
-  format?: BoxFormat;
+  format: BoxFormat;
   helpText?: string; // educational tooltip
 };
 
@@ -319,7 +319,6 @@ A `ValueProvider` declares how a box's value is derived. The union is fully tagg
 export type ValueProvider =
   // ── Constants ──────────────────────────────
   | { type: "number_constant"; value: number }
-  | { type: "boolean_constant"; value: boolean }
 
   // ── Sentinels (no value computed) ──────────
   | { type: "unused" } // box exists in form layout but Thumbtax skips it
@@ -328,15 +327,15 @@ export type ValueProvider =
   // ── User inputs ────────────────────────────
   | { type: "number_input" }
   | { type: "list_amounts_input" } // user enters a list of amounts; resolves to their sum
-  | { type: "checkbox_input" }
+  | { type: "checkbox_input" } // resolves to 0 if unchecked, 1 if checked
   | {
       type: "box_selection_input";
-      options: Array<{ form: TaxFormClass; box: TaxFormBoxIdentifier }>;
+      options: Array<{ form: FormClass; box: BoxIdentifier }>;
     }
 
   // ── Single-instance references ─────────────
   // Same form class, same instance the box belongs to.
-  | { type: "self_box_reference"; box: TaxFormBoxIdentifier }
+  | { type: "self_box_reference"; box: BoxIdentifier }
   | {
       type: "self_line_range_sum";
       fromLine: string;
@@ -346,12 +345,12 @@ export type ValueProvider =
   // Different form class that is constrained to maxInstances === 1.
   | {
       type: "unique_instance_box_reference";
-      form: TaxFormClass;
-      box: TaxFormBoxIdentifier;
+      form: FormClass;
+      box: BoxIdentifier;
     }
   | {
       type: "unique_instance_line_range_sum";
-      form: TaxFormClass;
+      form: FormClass;
       fromLine: string;
       toLine: string;
       column?: string;
@@ -361,11 +360,11 @@ export type ValueProvider =
   // For multi-instance forms; resolves over every present instance.
   | {
       type: "sum_across_instances";
-      form: TaxFormClass;
-      box: TaxFormBoxIdentifier;
+      form: FormClass;
+      box: BoxIdentifier;
     }
-  | { type: "count_instances"; form: TaxFormClass }
-  | { type: "any_instance_present"; form: TaxFormClass } // boolean
+  | { type: "count_instances"; form: FormClass }
+  | { type: "any_instance_present"; form: FormClass } // boolean
 
   // ── Arithmetic on already-resolved scalars ─
   | { type: "sum"; values: Array<ValueProvider> }
@@ -381,7 +380,7 @@ export type ValueProvider =
   // ── Logic / control flow ───────────────────
   | {
       type: "conditional";
-      condition: ValueProvider;
+      condition: ValueProvider; // 0 is considered false, anything else is true
       trueValue: ValueProvider;
       falseValue: ValueProvider;
     }
@@ -395,7 +394,7 @@ export type ValueProvider =
   | { type: "logical_negation"; value: ValueProvider }
   | {
       type: "filing_status_map";
-      values: Record<FilingStatus, ValueProvider>;
+      values: Partial<Record<FilingStatus, ValueProvider>>;
       default?: ValueProvider;
     };
 ```
@@ -412,18 +411,18 @@ This convention puts the cardinality story in the provider name itself; readers 
 
 `self_line_range_sum` and `unique_instance_line_range_sum` walk lines `fromLine` through `toLine` within one instance. To aggregate ranges across multiple instances, compose: `sum` of `sum_across_instances`, one per line in the range. If this turns out to be common enough to warrant a primitive, we add it then.
 
-#### Boolean-yielding providers
+#### Numbers as booleans
 
-Most providers yield numbers. The boolean-yielding providers are: `boolean_constant`, `checkbox_input`, `any_instance_present`, `comparison`, and `logical_negation`. Conditional and logical operators that take a "boolean" argument accept any provider; the engine coerces via `interpretAsBoolean`.
+All providers resolve to a number. Where a true/false value is needed, 0 represents false and any other value represents true.
 
 ### Service
 
 ```typescript
 // specifications/service.ts
 export function getFormSpecification(
-  formClass: TaxFormClass,
+  formClass: FormClass,
 ): TaxFormSpecification;
-export function allFormClasses(): TaxFormClass[];
+export function allFormClasses(): FormClass[];
 export function allSpecifications(): TaxFormSpecification[];
 ```
 
@@ -462,16 +461,16 @@ The _primary_ state is the only authentic state. Everything else is derived.
 // state/types/primaryState.ts
 export type PrimaryState = {
   filingStatus: FilingStatus;
-  formClassOrder: TaxFormClass[]; // explicit display order
-  formInstancesByClass: Partial<Record<TaxFormClass, FormInstance[]>>;
+  formClassOrder: FormClass[]; // explicit display order
+  formInstancesByClass: Partial<Record<FormClass, FormInstance[]>>;
   preferences: { browserSaveEnabled: boolean };
 };
 
 // state/types/formInstance.ts
 export type FormInstance = {
-  instanceId: InstanceId; // uuid
+  instanceId: FormInstanceId; // uuid
   label?: string; // user-set; falls back to defaultInstanceLabel
-  inputs: Record<TaxFormBoxIdentifier, BoxValue>;
+  inputs: Record<BoxIdentifier, BoxValue>;
 };
 ```
 
@@ -497,7 +496,7 @@ All actions either mutate primary state, replace it wholesale (load/reset), or a
 
 ```text
 setFilingStatus(status)
-addFormInstance(formClass) -> InstanceId        // appends a new instance with default inputs
+addFormInstance(formClass) -> FormInstanceId        // appends a new instance with default inputs
 removeFormInstance(formClass, instanceId)
 setInstanceLabel(formClass, instanceId, label)
 moveInstance(formClass, instanceId, direction)  // "left" | "right" within the class
@@ -515,7 +514,7 @@ Action behavior rules:
 - Any action that mutates primary state pushes the _previous_ primary state onto `history.past`, clears `history.future`, applies the mutation, and recomputes the workbook.
 - `loadState` and `resetState` clear undo history (rather than recording the prior state as undoable). This matches the user expectation that "undo" rolls back individual edits, not whole-document operations.
 - `addFormInstance` appends to `formClassOrder` if the class is new; `removeFormInstance` removes the class from `formClassOrder` when its last instance is removed.
-- `addFormInstance` returns the new `InstanceId` so the UI can scroll to or focus on it.
+- `addFormInstance` returns the new `FormInstanceId` so the UI can scroll to or focus on it.
 
 ### Undo/redo
 
@@ -540,7 +539,7 @@ The engine is a pure function. It has no React, DOM, or I/O dependencies.
 ```typescript
 // engine/computeWorkbook.ts
 export function computeWorkbook(input: {
-  specifications: Map<TaxFormClass, TaxFormSpecification>;
+  specifications: Map<FormClass, TaxFormSpecification>;
   state: PrimaryState;
   previousWorkbook?: Workbook; // for reference preservation
 }): Workbook;
@@ -566,7 +565,7 @@ export type ResolvedBox = {
 
 // engine/types/boxWarning.ts
 export type BoxWarning =
-  | { type: "required_form_missing"; form: TaxFormClass }
+  | { type: "required_form_missing"; form: FormClass }
   | { type: "divide_by_zero" }
   | { type: "upstream"; sourceAddress: BoxAddress }
   | { type: "unparseable_input" };
@@ -587,7 +586,7 @@ Identifiers, descriptions, line numbers, formats, and provider definitions are n
 // engine/dependencyGraph.ts
 export type Vertex =
   | { kind: "box"; address: BoxAddress }
-  | { kind: "form_presence"; form: TaxFormClass }; // synthetic; see below
+  | { kind: "form_presence"; form: FormClass }; // synthetic; see below
 
 export type DependencyGraph = {
   vertices: Vertex[];
@@ -596,7 +595,7 @@ export type DependencyGraph = {
 };
 
 export function buildDependencyGraph(input: {
-  specifications: Map<TaxFormClass, TaxFormSpecification>;
+  specifications: Map<FormClass, TaxFormSpecification>;
   state: PrimaryState;
 }): DependencyGraph;
 ```
@@ -637,7 +636,7 @@ export type ResolveContext = {
   ownAddress: BoxAddress;
   filingStatus: FilingStatus;
   state: PrimaryState;
-  specifications: Map<TaxFormClass, TaxFormSpecification>;
+  specifications: Map<FormClass, TaxFormSpecification>;
   resolvedSoFar: Map<string, ResolvedBox>; // partial workbook (string-keyed addresses)
 };
 ```
@@ -685,8 +684,8 @@ export type SaveFile = {
   schemaVersion: number; // bumped on breaking schema changes
   taxYear: number; // e.g. 2025
   filingStatus: FilingStatus;
-  formClassOrder: TaxFormClass[];
-  formInstancesByClass: Partial<Record<TaxFormClass, FormInstance[]>>;
+  formClassOrder: FormClass[];
+  formInstancesByClass: Partial<Record<FormClass, FormInstance[]>>;
   preferences: { browserSaveEnabled: boolean };
 };
 ```
@@ -761,22 +760,22 @@ export type ConnectionsGraph = {
 
 // connectionsGraph/types/connectionsNode.ts
 export type ConnectionsNode = {
-  form: TaxFormClass;
+  form: FormClass;
   status: "added" | "not_added"; // drives faded styling
   instanceCount: number; // 0 when not_added
 };
 
 // connectionsGraph/types/connectionsEdge.ts
 export type ConnectionsEdge = {
-  source: TaxFormClass;
-  target: TaxFormClass;
+  source: FormClass;
+  target: FormClass;
   references: Array<EdgeReference>; // every individual reference between this pair
 };
 
 // connectionsGraph/types/edgeReference.ts
 export type EdgeReference = {
-  sourceBox: TaxFormBoxIdentifier;
-  targetBox?: TaxFormBoxIdentifier;
+  sourceBox: BoxIdentifier;
+  targetBox?: BoxIdentifier;
   aggregation:
     | "unique_instance"
     | "sum_across_instances"
@@ -798,7 +797,7 @@ When the user toggles "show unadded forms" off, the _renderer_ filters `status =
 
 ### Position persistence
 
-Node positions live in `thumbtax.uiState` (browser-only) under `connectionsGraphPositions: Partial<Record<TaxFormClass, { x: number; y: number }>>`. They are intentionally excluded from the SaveFile so a downloaded file does not impose someone else's layout on the loader.
+Node positions live in `thumbtax.uiState` (browser-only) under `connectionsGraphPositions: Partial<Record<FormClass, { x: number; y: number }>>`. They are intentionally excluded from the SaveFile so a downloaded file does not impose someone else's layout on the loader.
 
 Initial layout is a simple deterministic placement: income-section forms on the left, taxes-section forms on the right, ordered top-to-bottom by `formClassOrder`. The placement function is its own module so we can swap in a fancier algorithm (e.g., dagre, force-directed) later for polish.
 
@@ -811,7 +810,7 @@ Initial layout is a simple deterministic placement: income-section forms on the 
 /about    AboutPage     description, terms, privacy, attributions
 ```
 
-There is no `/connections` route. On narrow viewports, a "Show connections" entry in the navigation drawer (and a button in the control bar) opens a React Aria `<ModalOverlay>` + `<Modal>` styled as a bottom sheet, containing the same `<ConnectionsGraph>` component. On wide viewports, the graph renders inline alongside the form list and the bottom-sheet trigger is hidden via CSS.
+On narrow viewports, a "Show connections" entry in the navigation drawer (and a button in the control bar) opens a React Aria `<ModalOverlay>` + `<Modal>` styled as a bottom sheet, containing the same `<ConnectionsGraph>` component. On wide viewports, the graph renders inline alongside the form list and the bottom-sheet trigger is hidden via CSS.
 
 ### Component tree
 
@@ -888,8 +887,8 @@ The form list owns a `FocusContext` provider that solves this with a refs regist
 ```typescript
 // ui/formList/focus/types/focusKey.ts
 export type FocusKey = {
-  class: TaxFormClass;
-  instance: InstanceId;
+  class: FormClass;
+  instance: FormInstanceId;
   line: string; // line.index
   column?: string; // box.columnIndex
 };
@@ -922,7 +921,7 @@ When a referenced form class is missing (e.g., a Form 1040 box that needs Schedu
 
 ### Primitives
 
-`ui/primitives/` contains thin wrappers around React Aria components. A wrapper exists only when the rest of the app benefits from project-specific styling or default props; otherwise the rest of the app imports React Aria directly. This keeps the primitives directory small and avoids premature abstraction.
+`ui/primitives/` contains thin wrappers around React Aria components. Each wrapper sets project-specific styling and potentially default props. The number of default props should be kept low.
 
 ## Exporters
 
