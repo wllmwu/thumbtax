@@ -68,7 +68,7 @@ src/
 │       ├── formClass.ts
 │       ├── boxIdentifier.ts
 │       ├── formInstanceId.ts
-│       ├── boxValue.ts
+│       ├── boxInput.ts
 │       └── boxAddress.ts
 │
 ├── specifications/
@@ -81,8 +81,6 @@ src/
 │   │   └── valueProvider.ts
 │   ├── service.ts                   # getFormSpecification, allFormClasses, allSpecifications
 │   ├── service.test.ts
-│   ├── validate.ts                  # invariant checker (run in tests + dev startup)
-│   ├── validate.test.ts
 │   └── forms/
 │       ├── form1040.ts
 │       ├── formW2.ts
@@ -93,16 +91,10 @@ src/
 │   │   ├── workbook.ts
 │   │   ├── resolvedBox.ts
 │   │   └── boxWarning.ts
-│   ├── computeWorkbook.ts           # public entry point
+│   ├── computeWorkbook.ts           # public entry point; resolveProvider is a private closure inside
 │   ├── computeWorkbook.test.ts
-│   ├── dependencyGraph.ts
-│   ├── dependencyGraph.test.ts
-│   ├── topologicalOrder.ts
+│   ├── topologicalOrder.ts          # builds dependency graph internally; exports computeTopologicalOrder
 │   ├── topologicalOrder.test.ts
-│   ├── resolveValue.ts
-│   ├── resolveValue.test.ts
-│   ├── interpret.ts                 # interpretAsNumber, interpretAsBoolean
-│   ├── interpret.test.ts
 │   ├── preserveReferences.ts        # ref-equality preservation across recomputes
 │   └── preserveReferences.test.ts
 │
@@ -241,17 +233,16 @@ export type BoxAddress = {
   box: BoxIdentifier;
 };
 
-// common/types/boxValue.ts
-// Used in two places:
-//   - Stored in user state for input-provider boxes.
-//   - Stored in the workbook for every box (input or computed).
-export type BoxValue =
+// common/types/boxInput.ts
+// Stored in FormInstance.inputs for input-provider boxes only.
+// Computed boxes have no entry in inputs.
+export type BoxInput =
   | { type: "number"; value: number }
   | { type: "amount_list"; value: Array<{ label: string; amount: number }> }
-  | {
-      type: "selection";
-      selectedIndex: number;
-    };
+  | { type: "selection"; selectedIndex: number };
+
+// The workbook stores resolved values as plain numbers.
+// Every provider resolves to a number; no separate ResolvedValue type is needed.
 ```
 
 ## Form specifications
@@ -407,27 +398,6 @@ export function allSpecifications(): TaxFormSpecification[];
 
 The service is the only path through which engine, UI, and connections code reach specification data. It encapsulates the registry lookup so we can later swap to a backend-loaded source without touching consumers.
 
-### Validator
-
-`specifications/validate.ts` checks invariants that the type system cannot enforce. It returns a list of validation errors; callers decide whether to throw or log.
-
-Invariants checked:
-
-- Every `TaxFormBox.identifier` is unique within its enclosing form class.
-- Every `box.columnIndex`, when present, refers to a column declared on the enclosing section.
-- Every `box_reference` and `line_range_sum` with no `form` field resolves to a real box (or line range) on the same form class.
-- Every `box_reference` and `line_range_sum` with a `form` field targets a form class that exists in the spec registry.
-- Every `form_instance_count` provider targets a form class that exists in the spec registry.
-- Every `selection_input.options` entry has a non-empty `label` and a structurally valid `ValueProvider`.
-- The dependency graph induced by the specifications has no cycles after instance expansion.
-
-The validator runs:
-
-- In `specifications/service.test.ts` against the full spec set on every test run.
-- At app startup in development (`import.meta.env.DEV`) so spec authors hit failures the moment they reload the app.
-
-A cycle is currently treated as a developer error — the validator throws at startup with the addresses of the boxes in the cycle. If a real-world tax form ever requires cyclic semantics, we will downgrade this to a per-box warning.
-
 ## User state
 
 The state layer owns the user's primary state and exposes a set of actions. Derived data (the workbook) lives in the same Zustand store so consumers can subscribe via standard selectors.
@@ -454,7 +424,7 @@ export type PrimaryState = {
 export type FormInstance = {
   instanceId: FormInstanceId; // uuid
   label?: string; // user-set; falls back to defaultInstanceLabel
-  inputs: Record<BoxIdentifier, BoxValue>;
+  inputs: Partial<Record<BoxIdentifier, BoxInput>>;
 };
 ```
 
@@ -485,7 +455,7 @@ removeFormInstance(formClass, instanceId)
 setInstanceLabel(formClass, instanceId, label)
 moveInstance(formClass, instanceId, direction)  // "left" | "right" within the class
 moveFormClass(formClass, direction)             // "up" | "down" within formClassOrder
-setBoxInput(formClass, instanceId, boxId, value: BoxValue)
+setBoxInput(formClass, instanceId, boxId, value: BoxInput)
 setBrowserSaveEnabled(enabled)
 loadState(deserialized)                         // replaces primary state, clears history
 resetState()                                    // back to defaults, clears history
@@ -542,7 +512,7 @@ export type Workbook = Record<
 
 // engine/types/resolvedBox.ts
 export type ResolvedBox = {
-  value: BoxValue;
+  value: number;
   warnings: BoxWarning[];
 };
 
@@ -550,40 +520,30 @@ export type ResolvedBox = {
 export type BoxWarning =
   | { type: "required_form_missing"; form: FormClass }
   | { type: "divide_by_zero" }
-  | { type: "upstream"; sourceAddress: BoxAddress }
-  | { type: "unparseable_input" };
+  | { type: "upstream"; sourceAddress: BoxAddress };
 ```
 
-Identifiers, descriptions, line numbers, formats, and provider definitions are not duplicated in the workbook — UI components that need them join with the spec at render time. A small `useResolvedBox(class, instance, box)` hook returns `{ spec, value, warnings }` joined for ergonomics.
+Identifiers, descriptions, line numbers, formats, and provider definitions are not duplicated in the workbook — UI components that need them join with the spec at render time. A small `useResolvedBox(class, instance, box)` hook returns `{ spec, input, value, warnings }` where `input` is the user's raw entry from `FormInstance.inputs` (present only for input-type boxes; used to render the input control) and `value` is the resolved number (used for display and downstream computation).
 
 ### Algorithm
 
-1. Build the dependency graph from `(specifications, primaryState)`. Vertices are concrete `BoxAddress` triples — one node per `(class, instance, box)` for every present instance. Edges go from a box to the boxes it depends on.
-2. Compute a topological ordering with Kahn's algorithm. A cycle is a developer error; the engine throws with the cycle's box addresses.
-3. In topological order, resolve each box by dispatching on its `ValueProvider`. Resolution reads already-resolved upstream values from the partially-built two-level workbook record (keyed by `FormInstanceId`, then `BoxIdentifier`).
-4. Apply reference preservation against `previousWorkbook` before returning.
+1. Compute a topological ordering via `computeTopologicalOrder(specifications, state)`. Vertices are concrete `BoxAddress` triples — one per `(class, instance, box)` for every present instance. The dependency graph is built and consumed internally. A cycle is a developer error; the function throws with the cycle's box addresses.
+2. In topological order, resolve each box by dispatching on its `ValueProvider` via a `resolveProvider` closure. The closure reads `state`, `specifications`, and the partially-built workbook, returning a `number` and any warnings.
+3. Apply reference preservation against `previousWorkbook` before returning.
 
-### Dependency graph
+### Dependency graph and topological order
+
+`engine/topologicalOrder.ts` builds the dependency graph internally and exports a single function:
 
 ```typescript
-// engine/dependencyGraph.ts
-export type Vertex =
-  | { kind: "box"; address: BoxAddress }
-  | { kind: "form_presence"; form: FormClass }; // synthetic; see below
-
-export type DependencyGraph = {
-  vertices: Vertex[];
-  // Edges keyed by encoded vertex id; values are the vertices the key depends on.
-  edges: Map<string, Vertex[]>;
-};
-
-export function buildDependencyGraph(input: {
-  specifications: Map<FormClass, TaxFormSpecification>;
-  state: PrimaryState;
-}): DependencyGraph;
+// engine/topologicalOrder.ts
+export function computeTopologicalOrder(
+  specifications: Map<FormClass, TaxFormSpecification>,
+  state: PrimaryState,
+): BoxAddress[];
 ```
 
-Per-instance-box granularity makes the graph map directly onto what's actually being computed and keeps Kahn's algorithm straightforward. Adding or removing an instance triggers a full graph rebuild in v1; the plan's per-instance optimization (rebuild affected portion only) is a clear future win.
+Vertices are `BoxAddress` triples — one per `(class, instance, box)` for every present instance. The graph is an adjacency map over encoded addresses, private to this module.
 
 The provider-to-edges mapping:
 
@@ -595,55 +555,25 @@ The provider-to-edges mapping:
 | `line_range_sum` (no `form`)                     | one edge per box in the named line range, same instance                                                                   |
 | `line_range_sum` (with `form`, single-instance)  | one edge per box in the named line range on the singleton                                                                 |
 | `line_range_sum` (with `form`, multi-instance)   | one edge per box in the named line range, across every present instance of the target form                                |
-| `form_instance_count`                            | one edge to a synthetic `form_presence` vertex for the target form (see below)                                            |
+| `form_instance_count`                            | no edges; reads instance count directly from state at resolve time                                                        |
 | `selection_input`                                | one edge per option's ValueProvider dependencies (any option could be selected, so all options' dependencies are tracked) |
 | Composite providers (`sum`, `conditional`, etc.) | union of edges from their sub-providers                                                                                   |
 | Constants, sentinels, plain inputs               | no edges                                                                                                                  |
 
-`form_instance_count` depends on form _presence_, not on any box's value. Modeling it as edges to _every_ box would over-invalidate. Instead, the graph contains one synthetic `form_presence` vertex per form class that has any consumer; that vertex is recomputed whenever instances of the class are added or removed. The user-visible box that uses this provider depends on the synthetic vertex.
-
-### Topological order
-
-`engine/topologicalOrder.ts` implements Kahn's algorithm. On cycle detection it throws an error whose message lists the cycle's addresses.
+Kahn's algorithm produces the resolution order. On cycle detection it throws with the addresses of the boxes involved.
 
 ### Resolve
 
-`engine/resolveValue.ts` exports the dispatch function:
+Provider dispatch lives in a private `resolveProvider` closure inside `computeWorkbook`. The closure captures `state`, `specifications`, and the `resolvedSoFar` accumulator, so individual call sites only pass the provider and the resolving box's own address:
 
 ```typescript
-export function resolveValue(input: {
-  provider: ValueProvider;
-  context: ResolveContext;
-}): { value: BoxValue; warnings: BoxWarning[] };
-
-export type ResolveContext = {
-  ownAddress: BoxAddress;
-  filingStatus: FilingStatus;
-  state: PrimaryState;
-  specifications: Map<FormClass, TaxFormSpecification>;
-  resolvedSoFar: Workbook; // partial workbook built up in topological order
-};
+function resolveProvider(
+  provider: ValueProvider,
+  ownAddress: BoxAddress,
+): { value: number; warnings: BoxWarning[] };
 ```
 
-Each provider variant has its own dispatch case; cases are exhaustively typed and covered by tests in `resolveValue.test.ts`.
-
-### Interpret
-
-`engine/interpret.ts` exports:
-
-```typescript
-export function interpretAsNumber(value: BoxValue): number;
-export function interpretAsBoolean(value: BoxValue): boolean;
-```
-
-Coercion rules:
-
-- `number` → its `value`.
-- `boolean` → `1`/`0` for number, identity for boolean.
-- `amount_list` → sum of all `amount` fields for number, "any non-zero amount" for boolean.
-- `selection` → evaluate the selected option's `ValueProvider` and re-interpret the result.
-
-These helpers are private to the engine. Consumers of the workbook read `BoxValue` directly and decide their own display semantics.
+Each provider variant has its own dispatch case; cases are exhaustively typed. Since `ResolvedBox.value` is a plain `number`, arithmetic and boolean coercion are trivial one-liners inlined at each call site — no separate interpret module is needed. Provider dispatch is tested through `computeWorkbook.test.ts` using minimal synthetic specs.
 
 ### Reference preservation
 
@@ -769,7 +699,7 @@ Edge direction: `A → B` means "form A's spec references form B's values." Mult
 
 ### Extraction
 
-`connectionsGraph/extract.ts` walks every form's spec via a reusable provider visitor (`visitProviderReferences.ts`) that yields each cross-form `(sourceBox, targetBox)` reference. The same visitor is used by the validator and engine where they need to enumerate cross-form dependencies.
+`connectionsGraph/extract.ts` walks every form's spec via a reusable provider visitor (`visitProviderReferences.ts`) that yields each cross-form `(sourceBox, targetBox)` reference. The same visitor is used by the engine where it needs to enumerate cross-form dependencies.
 
 When the user toggles "show unadded forms" off, the _renderer_ filters `status === "not_added"` nodes and incident edges. This is purely a UI concern and is not part of the extracted graph data.
 
@@ -913,7 +843,7 @@ The exporters are pure functions that return a `Blob` (or `ArrayBuffer`); the UI
 
 ### What we test
 
-- **Pure modules** (engine, interpret, computeNextFocusKey, validators, the deserializer, the connections extractor, exporters): exhaustive unit tests using small synthetic fixtures. The engine tests construct minimal test-only specs to exercise each provider variant and warning case in isolation.
+- **Pure modules** (engine, computeNextFocusKey, the deserializer, the connections extractor, exporters): exhaustive unit tests using small synthetic fixtures. The engine tests construct minimal test-only specs to exercise each provider variant and warning case in isolation.
 - **State store**: action behavior, undo/redo, workbook recomputation triggers.
 - **Persistence**: round-trip serialize/deserialize, every `LoadWarning` variant, schema-version handling, tax-year mismatch.
 - **UI components**: rendering and interaction via accessible queries (`getByRole`, `getByLabel`). Focus behavior is tested at the form-list integration level by simulating enter-key presses.
@@ -923,11 +853,7 @@ The exporters are pure functions that return a `Blob` (or `ArrayBuffer`); the UI
 
 - React Aria's internal behavior — already covered upstream.
 - CSS modules.
-- The `forms/*.ts` static spec data files for tax-law correctness; the validator covers structural correctness, and tax-law correctness is a manual review concern.
-
-### Spec validator at startup
-
-In addition to running the validator inside `specifications/service.test.ts`, `App.tsx` runs `validate(allSpecifications())` once on first mount when `import.meta.env.DEV` is true and throws on any error. Production builds do not run the validator at startup; failures must surface in CI before they can ship.
+- The `forms/*.ts` static spec data files for tax-law correctness; that is a manual review concern.
 
 ## Deployment
 
