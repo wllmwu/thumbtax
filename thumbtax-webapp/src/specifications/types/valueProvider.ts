@@ -15,13 +15,6 @@ type UserInputValueProvider =
 
 type ReferenceValueProvider =
   | { type: "box_reference"; form?: FormClass; box: BoxIdentifier }
-  | {
-      type: "line_range_sum";
-      form?: FormClass;
-      fromLine: string;
-      toLine: string;
-      column?: string;
-    }
   | { type: "form_instance_count"; form: FormClass };
 
 type ArithmeticValueProvider =

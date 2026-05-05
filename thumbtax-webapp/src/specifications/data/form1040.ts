@@ -111,7 +111,19 @@ export const Form1040: FormSpecification = {
           boxes: [
             {
               identifier: "1z",
-              value: { type: "line_range_sum", fromLine: "1a", toLine: "1h" },
+              value: {
+                type: "sum",
+                values: [
+                  { type: "box_reference", box: "1a" },
+                  { type: "box_reference", box: "1b" },
+                  { type: "box_reference", box: "1c" },
+                  { type: "box_reference", box: "1d" },
+                  { type: "box_reference", box: "1e" },
+                  { type: "box_reference", box: "1f" },
+                  { type: "box_reference", box: "1g" },
+                  { type: "box_reference", box: "1h" },
+                ],
+              },
             },
           ],
         },
@@ -640,7 +652,14 @@ export const Form1040: FormSpecification = {
           boxes: [
             {
               identifier: "25d",
-              value: { type: "line_range_sum", fromLine: "25a", toLine: "25c" },
+              value: {
+                type: "sum",
+                values: [
+                  { type: "box_reference", box: "25a" },
+                  { type: "box_reference", box: "25b" },
+                  { type: "box_reference", box: "25c" },
+                ],
+              },
             },
           ],
         },
