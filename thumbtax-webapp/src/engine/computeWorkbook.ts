@@ -84,6 +84,87 @@ function makeNodeId(address: BoxAddress): string {
   return `${address.instance};${address.box}`;
 }
 
+function resolveValue(
+  address: BoxAddress,
+  provider: ValueProvider,
+  instancesByClass: Map<FormClass, FormInstanceId[]>,
+  graph: DependencyGraph<NodeData>,
+): ResolvedBox {
+  const type = provider.type;
+  switch (type) {
+    case "absolute_value": {
+      const { value, errors } = resolveValue(
+        address,
+        provider.value,
+        instancesByClass,
+        graph,
+      );
+      return { value: Math.abs(value), errors };
+    }
+    case "box_reference": {
+      if (provider.form) {
+        const addresses = instancesByClass
+          .get(provider.form)
+          ?.map<BoxAddress>((instanceId) => ({
+            instance: instanceId,
+            box: provider.box,
+          }));
+
+        if (!addresses || addresses.length === 0) {
+          return {
+            value: 0,
+            errors: [{ type: "required_form_missing", form: provider.form }],
+          };
+        }
+
+        return addresses
+          .map((a) => graph.getData(makeNodeId(a)))
+          .reduce<ResolvedBox>(
+            (acc, nodeData) => {
+              const resolved = nodeData.resolvedBox;
+              if (!resolved) {
+                throw new Error(
+                  `Node at ${nodeData.address} was not resolved before its dependent at ${address}`,
+                );
+              }
+
+              acc.value += resolved.value;
+              if (resolved.errors.length > 0) {
+                acc.errors.push({
+                  type: "upstream",
+                  sourceAddress: nodeData.address,
+                });
+              }
+
+              return acc;
+            },
+            { value: 0, errors: [] },
+          );
+      } else {
+        const nodeData = graph.getData(
+          makeNodeId({ instance: address.instance, box: provider.box }),
+        );
+        const resolved = nodeData.resolvedBox;
+        if (!resolved) {
+          throw new Error(
+            `Node at ${nodeData.address} was not resolved before its dependent at ${address}`,
+          );
+        }
+
+        return {
+          value: resolved.value,
+          errors:
+            resolved.errors.length > 0
+              ? [{ type: "upstream", sourceAddress: nodeData.address }]
+              : [],
+        };
+      }
+    }
+    default:
+      absurd(type);
+  }
+}
+
 export function computeWorkbook(
   specifications: SpecificationRegistry,
   instances: Map<FormInstanceId, FormInstance>,
@@ -127,4 +208,12 @@ export function computeWorkbook(
       }
     }
   }
+
+  const newWorkbook = graph
+    .getTopologicalOrder()
+    .reduce<Workbook>((acc, nodeId) => {
+      const nodeData = graph.getData(nodeId);
+      //
+      return acc;
+    }, {});
 }
