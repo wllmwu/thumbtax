@@ -35,34 +35,41 @@ export class DependencyGraph<TNodeData> {
 
   public removeNode(id: string) {
     const node = this.nodes.get(id);
-    if (node) {
-      const parentNodes = this.getNodes(node.parents);
-      for (const parentNode of parentNodes) {
-        parentNode.children = parentNode.children.filter(
-          (childId) => childId !== id,
-        );
-      }
-
-      const childNodes = this.getNodes(node.children);
-      for (const childNode of childNodes) {
-        childNode.children = childNode.children.filter(
-          (parentId) => parentId !== id,
-        );
-      }
-
-      this.nodes.delete(id);
+    if (!node) {
+      throw new Error(`Attempted to remove nonexistent node ${id}`);
     }
+
+    const parentNodes = this.getNodes(node.parents);
+    for (const parentNode of parentNodes) {
+      parentNode.children = parentNode.children.filter(
+        (childId) => childId !== id,
+      );
+    }
+
+    const childNodes = this.getNodes(node.children);
+    for (const childNode of childNodes) {
+      childNode.children = childNode.children.filter(
+        (parentId) => parentId !== id,
+      );
+    }
+
+    this.nodes.delete(id);
   }
 
-  public getData(id: string): TNodeData | undefined {
-    return this.nodes.get(id)?.data;
+  public getData(id: string): TNodeData {
+    const data = this.nodes.get(id)?.data;
+    if (!data) {
+      throw new Error(`Data is not set on node ${id}`);
+    }
+    return data;
   }
 
   public setData(id: string, data: TNodeData) {
     const node = this.nodes.get(id);
-    if (node) {
-      node.data = data;
+    if (!node) {
+      throw new Error(`Attempted to set data on nonexistent node ${id}`);
     }
+    node.data = data;
   }
 
   public getTopologicalOrder(): string[] {
