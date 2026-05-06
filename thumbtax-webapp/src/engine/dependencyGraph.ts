@@ -68,10 +68,18 @@ export class DependencyGraph<TNodeData> {
   public getTopologicalOrder(): string[] {
     let counter = 0;
 
-    const depthFirstPostOrder = (node: DependencyNode<TNodeData>) => {
+    const depthFirstPostOrder = (
+      node: DependencyNode<TNodeData>,
+      startingCounter: number,
+    ) => {
+      if (node.postorderNumber > startingCounter) {
+        throw new Error("Dependency cycle detected");
+      } else if (node.postorderNumber !== -1) {
+        return;
+      }
       counter++;
       for (const child of this.getNodes(node.children)) {
-        depthFirstPostOrder(child);
+        depthFirstPostOrder(child, startingCounter);
       }
       node.postorderNumber = counter;
       counter++;
@@ -82,10 +90,7 @@ export class DependencyGraph<TNodeData> {
     }
 
     for (const node of this.nodes.values()) {
-      if (node.postorderNumber !== undefined) {
-        continue;
-      }
-      depthFirstPostOrder(node);
+      depthFirstPostOrder(node, counter);
     }
 
     return Array.from(this.nodes.values())
