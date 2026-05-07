@@ -1,3 +1,5 @@
+import { isEqual } from "lodash";
+
 import { absurd } from "#src/common/utils/absurd";
 import { DependencyGraph } from "#src/engine/dependencyGraph";
 
@@ -11,6 +13,7 @@ import type { ValueProvider } from "#src/specifications/types/valueProvider";
 
 type NodeData = {
   address: BoxAddress;
+  provider: ValueProvider;
   resolvedBox: ResolvedBox | undefined;
 };
 
@@ -165,6 +168,43 @@ function resolveValue(
   }
 }
 
+class WorkbookBuilder {
+  private workbook: Workbook;
+  private dirtyInstances: Set<FormInstanceId>;
+
+  constructor(oldWorkbook: Workbook) {
+    this.workbook = { ...oldWorkbook };
+    this.dirtyInstances = new Set();
+  }
+
+  public upsertBox(address: BoxAddress, resolvedBox: ResolvedBox) {
+    const { instance, box } = address;
+
+    if (
+      instance in this.workbook &&
+      box in this.workbook[instance] &&
+      isEqual(this.workbook[instance][box], resolvedBox)
+    ) {
+      return;
+    }
+
+    if (instance in this.workbook) {
+      if (!this.dirtyInstances.has(instance)) {
+        this.workbook[instance] = { ...this.workbook[instance] };
+      }
+      this.workbook[instance][box] = resolvedBox;
+    } else {
+      this.workbook[instance] = { [box]: resolvedBox };
+    }
+
+    this.dirtyInstances.add(instance);
+  }
+
+  public build(): Workbook {
+    return this.workbook;
+  }
+}
+
 export function computeWorkbook(
   specifications: SpecificationRegistry,
   instances: Map<FormInstanceId, FormInstance>,
@@ -190,6 +230,7 @@ export function computeWorkbook(
             instance: instance.id,
             box: box.identifier,
           };
+          const provider = box.value;
           const dependencies = resolveDependencies(
             address,
             box.value,
@@ -201,7 +242,7 @@ export function computeWorkbook(
 
           graph.upsertNode(
             nodeId,
-            { address, resolvedBox: undefined },
+            { address, provider, resolvedBox: undefined },
             parentIds,
           );
         }
@@ -209,11 +250,23 @@ export function computeWorkbook(
     }
   }
 
-  const newWorkbook = graph
+  return graph
     .getTopologicalOrder()
-    .reduce<Workbook>((acc, nodeId) => {
+    .reduce<WorkbookBuilder>((builder, nodeId) => {
       const nodeData = graph.getData(nodeId);
-      //
-      return acc;
-    }, {});
+      const { address, provider } = nodeData;
+
+      const resolvedBox = resolveValue(
+        address,
+        provider,
+        instancesByClass,
+        graph,
+      );
+
+      nodeData.resolvedBox = resolvedBox;
+      builder.upsertBox(address, resolvedBox);
+
+      return builder;
+    }, new WorkbookBuilder(currentWorkbook))
+    .build();
 }
