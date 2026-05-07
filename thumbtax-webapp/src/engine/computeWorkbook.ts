@@ -4,6 +4,7 @@ import { absurd } from "#src/common/utils/absurd";
 import { DependencyGraph } from "#src/engine/dependencyGraph";
 
 import type { BoxAddress } from "#src/common/types/boxAddress";
+import type { FilingStatus } from "#src/common/types/filingStatus";
 import type { FormClass } from "#src/common/types/formClass";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
@@ -90,18 +91,18 @@ function makeNodeId(address: BoxAddress): string {
 function resolveValue(
   address: BoxAddress,
   provider: ValueProvider,
+  instances: Map<FormInstanceId, FormInstance>,
   instancesByClass: Map<FormClass, FormInstanceId[]>,
   graph: DependencyGraph<NodeData>,
+  filingStatus: FilingStatus,
 ): ResolvedBox {
+  const resolveRecursive = (vp: ValueProvider) =>
+    resolveValue(address, vp, instances, instancesByClass, graph, filingStatus);
+
   const type = provider.type;
   switch (type) {
     case "absolute_value": {
-      const { value, errors } = resolveValue(
-        address,
-        provider.value,
-        instancesByClass,
-        graph,
-      );
+      const { value, errors } = resolveRecursive(provider.value);
       return { value: Math.abs(value), errors };
     }
     case "box_reference": {
@@ -116,7 +117,7 @@ function resolveValue(
         if (!addresses || addresses.length === 0) {
           return {
             value: 0,
-            errors: [{ type: "required_form_missing", form: provider.form }],
+            errors: [],
           };
         }
 
@@ -163,6 +164,165 @@ function resolveValue(
         };
       }
     }
+    case "checkbox_input": {
+      const formInstance = instances.get(address.instance);
+      const userInput = formInstance?.inputs[address.box];
+      if (userInput && userInput.type === "number") {
+        return { value: userInput.value, errors: [] };
+      }
+      return { value: 0, errors: [] };
+    }
+    case "comparison": {
+      const resolved = resolveRecursive(provider.value);
+      const errors = [...resolved.errors];
+      let inBounds = true;
+
+      if (provider.minimum !== undefined) {
+        const min = resolveRecursive(provider.minimum);
+        errors.push(...min.errors);
+        inBounds =
+          inBounds &&
+          (provider.strict
+            ? resolved.value > min.value
+            : resolved.value >= min.value);
+      }
+
+      if (provider.maximum !== undefined) {
+        const max = resolveRecursive(provider.maximum);
+        errors.push(...max.errors);
+        inBounds =
+          inBounds &&
+          (provider.strict
+            ? resolved.value < max.value
+            : resolved.value <= max.value);
+      }
+
+      return { value: inBounds ? 1 : 0, errors };
+    }
+    case "conditional": {
+      const condition = resolveRecursive(provider.condition);
+      const branch =
+        condition.value !== 0 ? provider.trueValue : provider.falseValue;
+      const result = resolveRecursive(branch);
+      return {
+        value: result.value,
+        errors: [...condition.errors, ...result.errors],
+      };
+    }
+    case "difference": {
+      const minuend = resolveRecursive(provider.minuend);
+      const subtrahend = resolveRecursive(provider.subtrahend);
+      return {
+        value: minuend.value - subtrahend.value,
+        errors: [...minuend.errors, ...subtrahend.errors],
+      };
+    }
+    case "filing_status_map": {
+      const matchedProvider = provider.values[filingStatus] ?? provider.default;
+      if (matchedProvider === undefined) {
+        return { value: 0, errors: [] };
+      }
+      return resolveRecursive(matchedProvider);
+    }
+    case "form_instance_count": {
+      const count = instancesByClass.get(provider.form)?.length ?? 0;
+      return { value: count, errors: [] };
+    }
+    case "list_amounts_input": {
+      const formInstance = instances.get(address.instance);
+      const userInput = formInstance?.inputs[address.box];
+      if (userInput && userInput.type === "amount_list") {
+        const total = userInput.value.reduce(
+          (sum, { amount }) => sum + amount,
+          0,
+        );
+        return { value: total, errors: [] };
+      }
+      return { value: 0, errors: [] };
+    }
+    case "logical_negation": {
+      const { value, errors } = resolveRecursive(provider.value);
+      return { value: value === 0 ? 1 : 0, errors };
+    }
+    case "maximum": {
+      const resolved = provider.values.map(resolveRecursive);
+      if (resolved.length === 0) {
+        return { value: 0, errors: [] };
+      }
+      return {
+        value: Math.max(...resolved.map((r) => r.value)),
+        errors: resolved.flatMap((r) => r.errors),
+      };
+    }
+    case "minimum": {
+      const resolved = provider.values.map(resolveRecursive);
+      if (resolved.length === 0) {
+        return { value: 0, errors: [] };
+      }
+      return {
+        value: Math.min(...resolved.map((r) => r.value)),
+        errors: resolved.flatMap((r) => r.errors),
+      };
+    }
+    case "non_negative": {
+      const { value, errors } = resolveRecursive(provider.value);
+      return { value: Math.max(0, value), errors };
+    }
+    case "number_constant": {
+      return { value: provider.value, errors: [] };
+    }
+    case "number_input": {
+      const formInstance = instances.get(address.instance);
+      const userInput = formInstance?.inputs[address.box];
+      if (userInput && userInput.type === "number") {
+        return { value: userInput.value, errors: [] };
+      }
+      return { value: 0, errors: [] };
+    }
+    case "numerical_negation": {
+      const { value, errors } = resolveRecursive(provider.value);
+      return { value: -value, errors };
+    }
+    case "product": {
+      const resolved = provider.values.map(resolveRecursive);
+      if (resolved.length === 0) {
+        return { value: 0, errors: [] };
+      }
+      return {
+        value: resolved.reduce((acc, r) => acc * r.value, 1),
+        errors: resolved.flatMap((r) => r.errors),
+      };
+    }
+    case "quotient": {
+      const dividend = resolveRecursive(provider.dividend);
+      const divisor = resolveRecursive(provider.divisor);
+      const errors = [...dividend.errors, ...divisor.errors];
+      if (divisor.value === 0) {
+        return { value: 0, errors: [...errors, { type: "divide_by_zero" }] };
+      }
+      return { value: dividend.value / divisor.value, errors };
+    }
+    case "selection_input": {
+      const formInstance = instances.get(address.instance);
+      const userInput = formInstance?.inputs[address.box];
+      if (userInput && userInput.type === "selection") {
+        const option = provider.options[userInput.selectedIndex];
+        if (option) {
+          return resolveRecursive(option.value);
+        }
+      }
+      return { value: 0, errors: [] };
+    }
+    case "sum": {
+      const resolved = provider.values.map(resolveRecursive);
+      return {
+        value: resolved.reduce((acc, r) => acc + r.value, 0),
+        errors: resolved.flatMap((r) => r.errors),
+      };
+    }
+    case "unsupported":
+    case "unused":
+      return { value: 0, errors: [] };
     default:
       absurd(type);
   }
@@ -208,6 +368,7 @@ class WorkbookBuilder {
 export function computeWorkbook(
   specifications: SpecificationRegistry,
   instances: Map<FormInstanceId, FormInstance>,
+  filingStatus: FilingStatus,
   currentWorkbook: Workbook,
 ): Workbook {
   const instancesByClass = Array.from(instances.values()).reduce<
@@ -259,8 +420,10 @@ export function computeWorkbook(
       const resolvedBox = resolveValue(
         address,
         provider,
+        instances,
         instancesByClass,
         graph,
+        filingStatus,
       );
 
       nodeData.resolvedBox = resolvedBox;
