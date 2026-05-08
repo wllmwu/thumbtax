@@ -401,7 +401,7 @@ export function computeWorkbook(
           const nodeId = makeNodeId(address);
           const parentIds = dependencies.map(makeNodeId);
 
-          graph.upsertNode(
+          graph.addNode(
             nodeId,
             { address, provider, resolvedBox: undefined },
             parentIds,

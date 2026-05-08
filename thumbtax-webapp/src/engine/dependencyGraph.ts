@@ -1,8 +1,9 @@
-class DependencyNode<TNodeData> {
+class DependencyNode<TNodeData extends object> {
   id: string;
   parents: string[];
   children: string[];
   data: TNodeData | undefined;
+  preorderNumber: number;
   postorderNumber: number;
 
   constructor(id: string) {
@@ -10,16 +11,27 @@ class DependencyNode<TNodeData> {
     this.parents = [];
     this.children = [];
     this.data = undefined;
+    this.preorderNumber = -1;
+    this.postorderNumber = -1;
+  }
+
+  public clearMetadata() {
+    this.preorderNumber = -1;
     this.postorderNumber = -1;
   }
 }
 
-export class DependencyGraph<TNodeData> {
+export class DependencyGraph<TNodeData extends object> {
   private nodes: Map<string, DependencyNode<TNodeData>> = new Map();
 
-  public upsertNode(id: string, data: TNodeData, parents: string[]) {
+  public addNode(id: string, data: TNodeData, parents: string[]) {
+    const existingNode = this.nodes.get(id);
+    if (existingNode && existingNode.data !== undefined) {
+      throw new Error(`Node ${id} was already added`);
+    }
+
     const node: DependencyNode<TNodeData> =
-      this.nodes.get(id) ?? new DependencyNode<TNodeData>(id);
+      existingNode ?? new DependencyNode<TNodeData>(id);
     node.data = data;
 
     for (const parentId of parents) {
@@ -33,29 +45,6 @@ export class DependencyGraph<TNodeData> {
     this.nodes.set(id, node);
   }
 
-  public removeNode(id: string) {
-    const node = this.nodes.get(id);
-    if (!node) {
-      throw new Error(`Attempted to remove nonexistent node ${id}`);
-    }
-
-    const parentNodes = this.getNodes(node.parents);
-    for (const parentNode of parentNodes) {
-      parentNode.children = parentNode.children.filter(
-        (childId) => childId !== id,
-      );
-    }
-
-    const childNodes = this.getNodes(node.children);
-    for (const childNode of childNodes) {
-      childNode.children = childNode.children.filter(
-        (parentId) => parentId !== id,
-      );
-    }
-
-    this.nodes.delete(id);
-  }
-
   public getData(id: string): TNodeData {
     const data = this.nodes.get(id)?.data;
     if (!data) {
@@ -64,48 +53,44 @@ export class DependencyGraph<TNodeData> {
     return data;
   }
 
-  public setData(id: string, data: TNodeData) {
-    const node = this.nodes.get(id);
-    if (!node) {
-      throw new Error(`Attempted to set data on nonexistent node ${id}`);
-    }
-    node.data = data;
-  }
-
   public getTopologicalOrder(): string[] {
     let counter = 0;
 
-    const depthFirstPostOrder = (
-      node: DependencyNode<TNodeData>,
-      startingCounter: number,
-    ) => {
-      if (node.postorderNumber > startingCounter) {
-        throw new Error("Dependency cycle detected");
-      } else if (node.postorderNumber !== -1) {
+    const depthFirstPostOrder = (node: DependencyNode<TNodeData>) => {
+      if (node.postorderNumber !== -1) {
         return;
+      } else if (node.preorderNumber !== -1) {
+        throw new Error(`Dependency cycle detected at node ${node.id}`);
       }
+      node.preorderNumber = counter;
       counter++;
       for (const child of this.getNodes(node.children)) {
-        depthFirstPostOrder(child, startingCounter);
+        depthFirstPostOrder(child);
       }
       node.postorderNumber = counter;
       counter++;
     };
 
     for (const node of this.nodes.values()) {
-      node.postorderNumber = -1;
+      node.clearMetadata();
     }
 
     for (const node of this.nodes.values()) {
-      depthFirstPostOrder(node, counter);
+      depthFirstPostOrder(node);
     }
 
     return Array.from(this.nodes.values())
-      .sort((a, b) => a.postorderNumber - b.postorderNumber)
+      .sort((a, b) => b.postorderNumber - a.postorderNumber)
       .map((n) => n.id);
   }
 
   private getNodes(ids: string[]): Array<DependencyNode<TNodeData>> {
-    return ids.map((id) => this.nodes.get(id)).filter((n) => n !== undefined);
+    return ids.map((id) => {
+      const node = this.nodes.get(id);
+      if (!node) {
+        throw new Error(`Node ${id} does not exist`);
+      }
+      return node;
+    });
   }
 }
