@@ -27,13 +27,20 @@ export type FormSection<MultiColumns extends boolean> = {
         description?: string;
       }>;
     }
-  : object);
+  : {
+      columns?: never;
+    });
 
 export type FormLine<MultiColumns extends boolean> = {
   index: LineIndex;
   description?: string;
-  boxes: Array<FormBox<MultiColumns>>;
-};
+} & (MultiColumns extends true
+  ? {
+      boxes: Array<FormBox<MultiColumns>>;
+    }
+  : {
+      box: FormBox<MultiColumns>;
+    });
 
 export type FormBox<MultiColumns extends boolean> = {
   identifier: BoxIdentifier;
@@ -44,4 +51,6 @@ export type FormBox<MultiColumns extends boolean> = {
   ? {
       column: ColumnIndex;
     }
-  : object);
+  : {
+      column?: never;
+    });

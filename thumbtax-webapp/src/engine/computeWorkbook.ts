@@ -386,7 +386,8 @@ export function computeWorkbook(
 
     for (const section of specification.sections) {
       for (const line of section.lines) {
-        for (const box of line.boxes) {
+        const boxes = "box" in line ? [line.box] : line.boxes;
+        for (const box of boxes) {
           const address: BoxAddress = {
             instance: instance.id,
             box: box.identifier,
