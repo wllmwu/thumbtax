@@ -21,7 +21,7 @@ type NodeData = {
 function resolveDependencies(
   address: BoxAddress,
   provider: ValueProvider,
-  instancesByClass: Map<FormClass, FormInstanceId[]>,
+  instancesByClass: Partial<Record<FormClass, FormInstance[]>>,
 ): BoxAddress[] {
   const traverse = (providers: ValueProvider[]): BoxAddress[] =>
     providers.flatMap((p) => resolveDependencies(address, p, instancesByClass));
@@ -30,9 +30,9 @@ function resolveDependencies(
   switch (type) {
     case "box_reference":
       if (provider.form) {
-        const instanceIds = instancesByClass.get(provider.form);
-        return instanceIds
-          ? instanceIds.map((id) => ({ instance: id, box: provider.box }))
+        const instances = instancesByClass[provider.form];
+        return instances
+          ? instances.map(({ id }) => ({ instance: id, box: provider.box }))
           : [];
       } else {
         return [{ instance: address.instance, box: provider.box }];
@@ -92,7 +92,7 @@ function resolveValue(
   address: BoxAddress,
   provider: ValueProvider,
   instances: Map<FormInstanceId, FormInstance>,
-  instancesByClass: Map<FormClass, FormInstanceId[]>,
+  instancesByClass: Partial<Record<FormClass, FormInstance[]>>,
   graph: DependencyGraph<NodeData>,
   filingStatus: FilingStatus,
 ): ResolvedBox {
@@ -107,12 +107,12 @@ function resolveValue(
     }
     case "box_reference": {
       if (provider.form) {
-        const addresses = instancesByClass
-          .get(provider.form)
-          ?.map<BoxAddress>((instanceId) => ({
-            instance: instanceId,
+        const addresses = instancesByClass[provider.form]?.map<BoxAddress>(
+          ({ id }) => ({
+            instance: id,
             box: provider.box,
-          }));
+          }),
+        );
 
         if (!addresses || addresses.length === 0) {
           return {
@@ -225,7 +225,7 @@ function resolveValue(
       return resolveRecursive(matchedProvider);
     }
     case "form_instance_count": {
-      const count = instancesByClass.get(provider.form)?.length ?? 0;
+      const count = instancesByClass[provider.form]?.length ?? 0;
       return { value: count, errors: [] };
     }
     case "list_amounts_input": {
@@ -367,16 +367,16 @@ class WorkbookBuilder {
 
 export function computeWorkbook(
   specifications: SpecificationRegistry,
-  instances: Map<FormInstanceId, FormInstance>,
+  instancesByClass: Partial<Record<FormClass, FormInstance[]>>,
   filingStatus: FilingStatus,
   currentWorkbook: Workbook,
 ): Workbook {
-  const instancesByClass = Array.from(instances.values()).reduce<
-    Map<FormClass, FormInstanceId[]>
-  >((acc, instance) => {
-    const array = acc.get(instance.class) ?? [];
-    array.push(instance.id);
-    acc.set(instance.class, array);
+  const instances = Object.values(instancesByClass).reduce<
+    Map<FormInstanceId, FormInstance>
+  >((acc, curr) => {
+    for (const instance of curr) {
+      acc.set(instance.id, instance);
+    }
     return acc;
   }, new Map());
   const graph = new DependencyGraph<NodeData>();
