@@ -4,6 +4,7 @@ import type {
   FormSection,
   FormSpecification,
 } from "#src/specifications/types/formSpecification";
+import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 
 export function makeBoxFixture(
   overrides?: Partial<FormBox<false>>,
@@ -11,6 +12,17 @@ export function makeBoxFixture(
   return {
     identifier: "1",
     value: { type: "number_constant", value: 0 },
+    ...overrides,
+  };
+}
+
+export function makeBoxFixtureMultiColumn(
+  overrides?: Partial<FormBox<true>>,
+): FormBox<true> {
+  return {
+    identifier: "1",
+    value: { type: "number_constant", value: 0 },
+    column: "(a)",
     ...overrides,
   };
 }
@@ -25,6 +37,16 @@ export function makeLineFixture(
   };
 }
 
+export function makeLineFixtureMultiColumn(
+  overrides?: Partial<FormLine<true>>,
+): FormLine<true> {
+  return {
+    index: "1",
+    boxes: [makeBoxFixtureMultiColumn()],
+    ...overrides,
+  };
+}
+
 export function makeSectionFixture(
   overrides?: Partial<FormSection<false>>,
 ): FormSection<false> {
@@ -34,7 +56,17 @@ export function makeSectionFixture(
   };
 }
 
-export function makeFormSpecFixture(
+export function makeSectionFixtureMultiColumn(
+  overrides?: Partial<FormSection<true>>,
+): FormSection<true> {
+  return {
+    lines: [makeLineFixtureMultiColumn()],
+    columns: [{ index: "(a)" }],
+    ...overrides,
+  };
+}
+
+export function makeSpecificationFixture(
   overrides?: Partial<FormSpecification>,
 ): FormSpecification {
   return {
@@ -44,6 +76,16 @@ export function makeFormSpecFixture(
     category: "income",
     maxInstances: null,
     sections: [makeSectionFixture()],
+    ...overrides,
+  };
+}
+
+export function makeRegistryFixture(
+  overrides?: Partial<SpecificationRegistry>,
+): SpecificationRegistry {
+  return {
+    f1040: makeSpecificationFixture({ class: "f1040" }),
+    fW2: makeSpecificationFixture({ class: "fW2" }),
     ...overrides,
   };
 }
