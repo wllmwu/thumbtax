@@ -9,3 +9,5 @@ export type FormInstance = {
   label: string;
   inputs: Partial<Record<BoxIdentifier, UserInput>>;
 };
+
+export type InstanceRegistry = Partial<Record<FormClass, FormInstance[]>>;

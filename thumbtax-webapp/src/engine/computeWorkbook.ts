@@ -5,8 +5,10 @@ import { DependencyGraph } from "#src/engine/dependencyGraph";
 
 import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { FilingStatus } from "#src/common/types/filingStatus";
-import type { FormClass } from "#src/common/types/formClass";
-import type { FormInstance } from "#src/common/types/formInstance";
+import type {
+  FormInstance,
+  InstanceRegistry,
+} from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { ResolvedBox, Workbook } from "#src/common/types/workbook";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
@@ -21,16 +23,16 @@ type NodeData = {
 function resolveDependencies(
   address: BoxAddress,
   provider: ValueProvider,
-  instancesByClass: Partial<Record<FormClass, FormInstance[]>>,
+  instanceRegistry: InstanceRegistry,
 ): BoxAddress[] {
   const traverse = (providers: ValueProvider[]): BoxAddress[] =>
-    providers.flatMap((p) => resolveDependencies(address, p, instancesByClass));
+    providers.flatMap((p) => resolveDependencies(address, p, instanceRegistry));
 
   const type = provider.type;
   switch (type) {
     case "box_reference":
       if (provider.form) {
-        const instances = instancesByClass[provider.form];
+        const instances = instanceRegistry[provider.form];
         return instances
           ? instances.map(({ id }) => ({ instance: id, box: provider.box }))
           : [];
@@ -50,7 +52,7 @@ function resolveDependencies(
     case "logical_negation":
     case "non_negative":
     case "numerical_negation":
-      return resolveDependencies(address, provider.value, instancesByClass);
+      return resolveDependencies(address, provider.value, instanceRegistry);
     case "selection_input":
       return traverse(provider.options.map(({ value }) => value));
     case "conditional":
@@ -92,12 +94,12 @@ function resolveValue(
   address: BoxAddress,
   provider: ValueProvider,
   instances: Map<FormInstanceId, FormInstance>,
-  instancesByClass: Partial<Record<FormClass, FormInstance[]>>,
+  instanceRegistry: InstanceRegistry,
   graph: DependencyGraph<NodeData>,
   filingStatus: FilingStatus,
 ): ResolvedBox {
   const resolveRecursive = (vp: ValueProvider) =>
-    resolveValue(address, vp, instances, instancesByClass, graph, filingStatus);
+    resolveValue(address, vp, instances, instanceRegistry, graph, filingStatus);
 
   const type = provider.type;
   switch (type) {
@@ -107,7 +109,7 @@ function resolveValue(
     }
     case "box_reference": {
       if (provider.form) {
-        const addresses = instancesByClass[provider.form]?.map<BoxAddress>(
+        const addresses = instanceRegistry[provider.form]?.map<BoxAddress>(
           ({ id }) => ({
             instance: id,
             box: provider.box,
@@ -168,7 +170,8 @@ function resolveValue(
       const formInstance = instances.get(address.instance);
       const userInput = formInstance?.inputs[address.box];
       if (userInput && userInput.type === "number") {
-        return { value: userInput.value, errors: [] };
+        const value = userInput.value === 0 ? 0 : 1;
+        return { value, errors: [] };
       }
       return { value: 0, errors: [] };
     }
@@ -225,7 +228,7 @@ function resolveValue(
       return resolveRecursive(matchedProvider);
     }
     case "form_instance_count": {
-      const count = instancesByClass[provider.form]?.length ?? 0;
+      const count = instanceRegistry[provider.form]?.length ?? 0;
       return { value: count, errors: [] };
     }
     case "list_amounts_input": {
@@ -366,12 +369,12 @@ class WorkbookBuilder {
 }
 
 export function computeWorkbook(
-  specifications: SpecificationRegistry,
-  instancesByClass: Partial<Record<FormClass, FormInstance[]>>,
+  specificationRegistry: SpecificationRegistry,
+  instanceRegistry: InstanceRegistry,
   filingStatus: FilingStatus,
   currentWorkbook: Workbook,
 ): Workbook {
-  const instances = Object.values(instancesByClass).reduce<
+  const instances = Object.values(instanceRegistry).reduce<
     Map<FormInstanceId, FormInstance>
   >((acc, curr) => {
     for (const instance of curr) {
@@ -382,7 +385,7 @@ export function computeWorkbook(
   const graph = new DependencyGraph<NodeData>();
 
   for (const instance of instances.values()) {
-    const specification = specifications[instance.class];
+    const specification = specificationRegistry[instance.class];
 
     for (const section of specification.sections) {
       for (const line of section.lines) {
@@ -396,7 +399,7 @@ export function computeWorkbook(
           const dependencies = resolveDependencies(
             address,
             box.value,
-            instancesByClass,
+            instanceRegistry,
           );
 
           const nodeId = makeNodeId(address);
@@ -422,7 +425,7 @@ export function computeWorkbook(
         address,
         provider,
         instances,
-        instancesByClass,
+        instanceRegistry,
         graph,
         filingStatus,
       );
