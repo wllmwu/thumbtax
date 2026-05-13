@@ -335,8 +335,16 @@ class WorkbookBuilder {
   private workbook: Workbook;
   private dirtyInstances: Set<FormInstanceId>;
 
-  constructor(oldWorkbook: Workbook) {
-    this.workbook = { ...oldWorkbook };
+  constructor(
+    oldWorkbook: Workbook,
+    liveInstanceIds: Iterable<FormInstanceId>,
+  ) {
+    this.workbook = {};
+    for (const id of liveInstanceIds) {
+      if (id in oldWorkbook) {
+        this.workbook[id] = oldWorkbook[id];
+      }
+    }
     this.dirtyInstances = new Set();
   }
 
@@ -417,23 +425,26 @@ export function computeWorkbook(
 
   return graph
     .getTopologicalOrder()
-    .reduce<WorkbookBuilder>((builder, nodeId) => {
-      const nodeData = graph.getData(nodeId);
-      const { address, provider } = nodeData;
+    .reduce<WorkbookBuilder>(
+      (builder, nodeId) => {
+        const nodeData = graph.getData(nodeId);
+        const { address, provider } = nodeData;
 
-      const resolvedBox = resolveValue(
-        address,
-        provider,
-        instances,
-        instanceRegistry,
-        graph,
-        filingStatus,
-      );
+        const resolvedBox = resolveValue(
+          address,
+          provider,
+          instances,
+          instanceRegistry,
+          graph,
+          filingStatus,
+        );
 
-      nodeData.resolvedBox = resolvedBox;
-      builder.upsertBox(address, resolvedBox);
+        nodeData.resolvedBox = resolvedBox;
+        builder.upsertBox(address, resolvedBox);
 
-      return builder;
-    }, new WorkbookBuilder(currentWorkbook))
+        return builder;
+      },
+      new WorkbookBuilder(currentWorkbook, instances.keys()),
+    )
     .build();
 }

@@ -1688,7 +1688,7 @@ describe("computeWorkbook", () => {
       );
     });
 
-    it("carries over entries that have been removed", () => {
+    it("excludes entries for instances no longer in the registry but preserves missing boxes", () => {
       const originalWorkbook: Workbook = {
         "1040-1": {
           "1": { value: 10, errors: [] },
@@ -1735,15 +1735,12 @@ describe("computeWorkbook", () => {
       );
 
       expect(newWorkbook).toEqual({
-        "1040-1": {
-          "1": { value: 10, errors: [] },
-        },
         [TEST_INSTANCE_ID]: {
           "1": { value: 20, errors: [] },
           "2": { value: 0, errors: [{ type: "divide_by_zero" }] },
         },
       });
-      expect(newWorkbook["1040-1"]).toBe(originalWorkbook["1040-1"]);
+      expect(newWorkbook["1040-1"]).toBeUndefined();
       expect(newWorkbook[TEST_INSTANCE_ID]["2"]).toBe(
         originalWorkbook[TEST_INSTANCE_ID]["2"],
       );
