@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 
 import { computeWorkbook } from "#src/engine/computeWorkbook";
-import { SpecificationClient } from "#src/specifications/specificationClient";
 
 import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FilingStatus } from "#src/common/types/filingStatus";
@@ -11,16 +10,24 @@ import type { FormClass } from "#src/common/types/formClass";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { UserInput } from "#src/common/types/userInput";
+import type { Workbook } from "#src/common/types/workbook";
+import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ApplicationState } from "#src/state/types/applicationState";
-import type { StoreState } from "#src/state/types/storeState";
 import type { UiState } from "#src/state/types/uiState";
 import type { UserPreferences } from "#src/state/types/userPreferences";
 
-type StoreActions = {
+type StoreState = {
+  applicationState: ApplicationState;
+  uiState: UiState;
+  userPreferences: UserPreferences;
+  workbook: Workbook;
+  history: { past: ApplicationState[]; future: ApplicationState[] };
+  specifications: SpecificationRegistry | undefined;
   initialize: (
     applicationState: ApplicationState,
     uiState: UiState,
     userPreferences: UserPreferences,
+    specifications: SpecificationRegistry,
   ) => void;
   setFilingStatus: (filingStatus: FilingStatus) => void;
   addFormInstance: (formClass: FormClass) => FormInstanceId;
@@ -50,16 +57,16 @@ type StoreActions = {
   redo: () => void;
 };
 
-const specificationClient = new SpecificationClient();
-
-type FullState = StoreState & StoreActions;
-
 type ApplicationStateRecipe = (draft: Draft<ApplicationState>) => void;
 
 function applyApplicationStateChange(
   recipe: ApplicationStateRecipe,
-): (state: FullState) => FullState {
+): (state: StoreState) => StoreState {
   return (state) => {
+    if (!state.specifications) {
+      throw new Error("Store not initialized yet");
+    }
+
     const newApplicationState = produce(state.applicationState, recipe);
     if (newApplicationState === state.applicationState) {
       return state;
@@ -72,7 +79,7 @@ function applyApplicationStateChange(
     }
 
     const newWorkbook = computeWorkbook(
-      specificationClient.getAllForms(),
+      state.specifications,
       newApplicationState.formInstances,
       newApplicationState.filingStatus,
       state.workbook,
@@ -87,7 +94,7 @@ function applyApplicationStateChange(
   };
 }
 
-export const useStore = create<StoreState & StoreActions>((set) => ({
+export const useStore = create<StoreState>((set) => ({
   applicationState: {
     filingStatus: "single" as const,
     formClasses: [],
@@ -105,8 +112,9 @@ export const useStore = create<StoreState & StoreActions>((set) => ({
     past: [],
     future: [],
   },
+  specifications: undefined,
 
-  initialize: (applicationState, uiState, userPreferences) => {
+  initialize: (applicationState, uiState, userPreferences, specifications) => {
     set(
       (state) => ({
         ...state,
@@ -114,8 +122,9 @@ export const useStore = create<StoreState & StoreActions>((set) => ({
         uiState,
         userPreferences,
         history: { past: [], future: [] },
+        specifications,
         workbook: computeWorkbook(
-          specificationClient.getAllForms(),
+          specifications,
           applicationState.formInstances,
           applicationState.filingStatus,
           {},
@@ -243,17 +252,25 @@ export const useStore = create<StoreState & StoreActions>((set) => ({
 
   undo: () => {
     set((state) => {
+      if (!state.specifications) {
+        throw new Error("Store not initialized yet");
+      }
+
       const { past, future } = state.history;
-      if (past.length === 0) return state;
+      if (past.length === 0) {
+        return state;
+      }
+
       const previous = past[past.length - 1];
       const newPast = past.slice(0, -1);
       const newFuture = [state.applicationState, ...future];
+
       return {
         ...state,
         applicationState: previous,
         history: { past: newPast, future: newFuture },
         workbook: computeWorkbook(
-          specificationClient.getAllForms(),
+          state.specifications,
           previous.formInstances,
           previous.filingStatus,
           state.workbook,
@@ -264,17 +281,25 @@ export const useStore = create<StoreState & StoreActions>((set) => ({
 
   redo: () => {
     set((state) => {
+      if (!state.specifications) {
+        throw new Error("Store not initialized yet");
+      }
+
       const { past, future } = state.history;
-      if (future.length === 0) return state;
+      if (future.length === 0) {
+        return state;
+      }
+
       const next = future[0];
       const newFuture = future.slice(1);
       const newPast = [...past, state.applicationState];
+
       return {
         ...state,
         applicationState: next,
         history: { past: newPast, future: newFuture },
         workbook: computeWorkbook(
-          specificationClient.getAllForms(),
+          state.specifications,
           next.formInstances,
           next.filingStatus,
           state.workbook,
