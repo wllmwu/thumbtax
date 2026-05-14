@@ -8,7 +8,7 @@ import {
   makeSectionFixture,
   makeSpecificationFixture,
 } from "#src/specifications/test/fixtures";
-import { useStore } from "#src/state/store";
+import { useStore } from "#src/state/useStore";
 
 import type { FormClass } from "#src/common/types/formClass";
 import type { UserInput } from "#src/common/types/userInput";
