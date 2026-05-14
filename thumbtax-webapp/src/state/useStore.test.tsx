@@ -1206,4 +1206,46 @@ describe("useStore", () => {
       expect(past[1]).toEqual(afterSecond);
     });
   });
+
+  describe("selectors", () => {
+    it("returns selector output when selector is provided", () => {
+      const { result, rerender } = renderHook(() => useStore());
+      const instanceId = result.current.addFormInstance(TEST_CLASS);
+      rerender();
+
+      const { result: filingStatusResult } = renderHook(() =>
+        useStore((state) => state.applicationState.filingStatus),
+      );
+      expect(filingStatusResult.current).toEqual("single");
+
+      const { result: boxResult } = renderHook(() =>
+        useStore((state) => state.workbook[instanceId][NUMBER_INPUT_BOX]),
+      );
+      expect(boxResult.current).toEqual({ value: 0, errors: [] });
+
+      result.current.setFilingStatus("head_of_household");
+      result.current.setBoxInput(TEST_CLASS, instanceId, NUMBER_INPUT_BOX, {
+        type: "number",
+        value: 10,
+      });
+      rerender();
+
+      expect(filingStatusResult.current).toEqual("head_of_household");
+      expect(boxResult.current).toEqual({ value: 10, errors: [] });
+    });
+
+    it("returns entire state when no selector is provided", () => {
+      const { result } = renderHook(() => useStore());
+      expect(result.current).toEqual(
+        expect.objectContaining({
+          applicationState: expect.any(Object),
+          uiState: expect.any(Object),
+          userPreferences: expect.any(Object),
+          workbook: expect.any(Object),
+          history: expect.any(Object),
+          specifications: expect.any(Object),
+        }),
+      );
+    });
+  });
 });
