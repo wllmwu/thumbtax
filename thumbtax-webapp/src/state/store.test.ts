@@ -234,7 +234,7 @@ describe("useStore", () => {
   describe("setFilingStatus", () => {
     it("updates applicationState.filingStatus", () => {
       useStore.getState().setFilingStatus("married_filing_jointly");
-      expect(useStore.getState().applicationState.filingStatus).toBe(
+      expect(useStore.getState().applicationState.filingStatus).toEqual(
         "married_filing_jointly",
       );
     });
@@ -243,7 +243,7 @@ describe("useStore", () => {
       const before = useStore.getState().applicationState;
       useStore.getState().setFilingStatus("married_filing_jointly");
       useStore.getState().undo();
-      expect(useStore.getState().history.future.length).toBe(1);
+      expect(useStore.getState().history.future.length).toEqual(1);
 
       useStore.getState().setFilingStatus("head_of_household");
 
@@ -253,12 +253,13 @@ describe("useStore", () => {
 
     it("recomputes the workbook to reflect the new filing status", () => {
       const id = useStore.getState().addFormInstance(TEST_CLASS);
-      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toBe(
+      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toEqual(
         100,
       );
 
       useStore.getState().setFilingStatus("married_filing_jointly");
-      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toBe(
+
+      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toEqual(
         200,
       );
     });
@@ -267,14 +268,14 @@ describe("useStore", () => {
   describe("addFormInstance", () => {
     it("returns a non-empty string id", () => {
       const id = useStore.getState().addFormInstance(TEST_CLASS);
-      expect(typeof id).toBe("string");
+      expect(id).toEqual(expect.any(String));
       expect(id.length).toBeGreaterThan(0);
     });
 
     it("returns a distinct id on each call", () => {
       const id1 = useStore.getState().addFormInstance(TEST_CLASS);
       const id2 = useStore.getState().addFormInstance(TEST_CLASS);
-      expect(id1).not.toBe(id2);
+      expect(id1).not.toEqual(id2);
     });
 
     it("appends an instance with empty inputs, empty label, and matching class/id", () => {
@@ -315,7 +316,7 @@ describe("useStore", () => {
       const before = useStore.getState().applicationState;
       useStore.getState().addFormInstance(TEST_CLASS);
       useStore.getState().undo();
-      expect(useStore.getState().history.future.length).toBe(1);
+      expect(useStore.getState().history.future.length).toEqual(1);
 
       useStore.getState().addFormInstance(TEST_CLASS);
 
@@ -374,7 +375,7 @@ describe("useStore", () => {
       const before = useStore.getState().applicationState;
       useStore.getState().setFilingStatus("married_filing_jointly");
       useStore.getState().undo();
-      expect(useStore.getState().history.future.length).toBe(1);
+      expect(useStore.getState().history.future.length).toEqual(1);
 
       useStore.getState().removeFormInstance(TEST_CLASS, id);
 
@@ -388,12 +389,14 @@ describe("useStore", () => {
       const stateBefore = useStore.getState();
 
       useStore.getState().removeFormInstance(OTHER_CLASS, "any-id");
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
       expect(useStore.getState().history).toBe(stateBefore.history);
 
       useStore.getState().removeFormInstance(TEST_CLASS, "no-such-id");
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
@@ -429,7 +432,7 @@ describe("useStore", () => {
 
       const instance =
         useStore.getState().applicationState.formInstances[TEST_CLASS]?.[0];
-      expect(instance?.label).toBe("Updated");
+      expect(instance?.label).toEqual("Updated");
       expect(instance?.inputs[NUMBER_INPUT_BOX]).toEqual({
         type: "number",
         value: 7,
@@ -449,8 +452,8 @@ describe("useStore", () => {
       const state = useStore.getState();
       const sameClass = state.applicationState.formInstances[TEST_CLASS];
       const otherClass = state.applicationState.formInstances[OTHER_CLASS];
-      expect(sameClass?.find(({ id }) => id === id2)?.label).toBe("L2");
-      expect(otherClass?.find(({ id }) => id === id3)?.label).toBe("L3");
+      expect(sameClass?.find(({ id }) => id === id2)?.label).toEqual("L2");
+      expect(otherClass?.find(({ id }) => id === id3)?.label).toEqual("L3");
     });
 
     it("pushes the prior applicationState onto history.past and clears history.future", () => {
@@ -458,7 +461,7 @@ describe("useStore", () => {
       const before = useStore.getState().applicationState;
       useStore.getState().setFilingStatus("married_filing_jointly");
       useStore.getState().undo();
-      expect(useStore.getState().history.future.length).toBe(1);
+      expect(useStore.getState().history.future.length).toEqual(1);
 
       useStore.getState().setFormInstanceLabel(TEST_CLASS, id, "Label");
 
@@ -472,12 +475,14 @@ describe("useStore", () => {
       const stateBefore = useStore.getState();
 
       useStore.getState().setFormInstanceLabel(OTHER_CLASS, "any-id", "L");
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
       expect(useStore.getState().history).toBe(stateBefore.history);
 
       useStore.getState().setFormInstanceLabel(TEST_CLASS, "no-such-id", "L");
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
@@ -526,12 +531,14 @@ describe("useStore", () => {
       const stateBefore = useStore.getState();
 
       useStore.getState().moveFormInstance(TEST_CLASS, id1, -1);
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
       expect(useStore.getState().history).toBe(stateBefore.history);
 
       useStore.getState().moveFormInstance(TEST_CLASS, id2, 1);
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
@@ -543,12 +550,14 @@ describe("useStore", () => {
       const stateBefore = useStore.getState();
 
       useStore.getState().moveFormInstance(OTHER_CLASS, "any-id", 1);
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
       expect(useStore.getState().history).toBe(stateBefore.history);
 
       useStore.getState().moveFormInstance(TEST_CLASS, "no-such-id", 1);
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
@@ -593,12 +602,14 @@ describe("useStore", () => {
       const stateBefore = useStore.getState();
 
       useStore.getState().moveFormClass(TEST_CLASS, -1);
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
       expect(useStore.getState().history).toBe(stateBefore.history);
 
       useStore.getState().moveFormClass(OTHER_CLASS, 1);
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
@@ -720,14 +731,18 @@ describe("useStore", () => {
 
     it("recomputes the workbook to reflect the new input value", () => {
       const id = useStore.getState().addFormInstance(TEST_CLASS);
-      expect(useStore.getState().workbook[id][NUMBER_INPUT_BOX].value).toBe(0);
+      expect(useStore.getState().workbook[id][NUMBER_INPUT_BOX].value).toEqual(
+        0,
+      );
 
       useStore.getState().setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
         type: "number",
         value: 42,
       });
 
-      expect(useStore.getState().workbook[id][NUMBER_INPUT_BOX].value).toBe(42);
+      expect(useStore.getState().workbook[id][NUMBER_INPUT_BOX].value).toEqual(
+        42,
+      );
     });
 
     it("pushes the prior applicationState onto history.past and clears history.future", () => {
@@ -735,7 +750,7 @@ describe("useStore", () => {
       const before = useStore.getState().applicationState;
       useStore.getState().setFilingStatus("married_filing_jointly");
       useStore.getState().undo();
-      expect(useStore.getState().history.future.length).toBe(1);
+      expect(useStore.getState().history.future.length).toEqual(1);
 
       useStore.getState().setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
         type: "number",
@@ -755,6 +770,7 @@ describe("useStore", () => {
       useStore
         .getState()
         .setBoxInput(OTHER_CLASS, "any-id", NUMBER_INPUT_BOX, value);
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
@@ -763,6 +779,7 @@ describe("useStore", () => {
       useStore
         .getState()
         .setBoxInput(TEST_CLASS, "no-such-id", NUMBER_INPUT_BOX, value);
+
       expect(useStore.getState().applicationState).toBe(
         stateBefore.applicationState,
       );
@@ -792,7 +809,7 @@ describe("useStore", () => {
       });
     });
 
-    it("does not push to history.past or alter history.future", () => {
+    it("does not change history.past or history.future", () => {
       useStore.getState().setFilingStatus("married_filing_jointly");
       useStore.getState().undo();
       const historyBefore = useStore.getState().history;
@@ -836,13 +853,13 @@ describe("useStore", () => {
     it("recomputes the workbook to match the restored state", () => {
       const id = useStore.getState().addFormInstance(TEST_CLASS);
       useStore.getState().setFilingStatus("married_filing_jointly");
-      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toBe(
+      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toEqual(
         200,
       );
 
       useStore.getState().undo();
 
-      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toBe(
+      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toEqual(
         100,
       );
     });
@@ -899,13 +916,13 @@ describe("useStore", () => {
       const id = useStore.getState().addFormInstance(TEST_CLASS);
       useStore.getState().setFilingStatus("married_filing_jointly");
       useStore.getState().undo();
-      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toBe(
+      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toEqual(
         100,
       );
 
       useStore.getState().redo();
 
-      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toBe(
+      expect(useStore.getState().workbook[id][FILING_STATUS_BOX].value).toEqual(
         200,
       );
     });
@@ -936,11 +953,11 @@ describe("useStore", () => {
           makeTestRegistry(),
         );
 
-      useStore.getState().setFilingStatus("married_filing_jointly"); // pushes "single"
+      useStore.getState().setFilingStatus("married_filing_jointly");
       const afterFirst = useStore.getState().applicationState;
-      useStore.getState().setFilingStatus("head_of_household"); // pushes mfj
+      useStore.getState().setFilingStatus("head_of_household");
       const afterSecond = useStore.getState().applicationState;
-      useStore.getState().setFilingStatus("qualifying_surviving_spouse"); // pushes hoh; "single" drops
+      useStore.getState().setFilingStatus("qualifying_surviving_spouse");
 
       const past = useStore.getState().history.past;
       expect(past).toHaveLength(2);

@@ -94,7 +94,7 @@ function applyApplicationStateChange(
   };
 }
 
-export const useStore = create<StoreState>((set) => ({
+const useStoreInner = create<StoreState>((set) => ({
   applicationState: {
     filingStatus: "single" as const,
     formClasses: [],
@@ -308,3 +308,14 @@ export const useStore = create<StoreState>((set) => ({
     }, true);
   },
 }));
+
+export function useStore(): StoreState;
+export function useStore<U>(selector: (state: StoreState) => U): U;
+export function useStore<U>(selector?: (state: StoreState) => U) {
+  const state = useStoreInner();
+  if (selector) {
+    return selector(state);
+  } else {
+    return state;
+  }
+}
