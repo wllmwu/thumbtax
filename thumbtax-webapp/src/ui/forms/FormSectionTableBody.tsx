@@ -19,7 +19,7 @@ export function FormSectionTableBody({
   return (
     <tbody>
       {formSection.lines.map((line) => (
-        <tr>
+        <tr key={line.index}>
           <td>{line.index}</td>
           <td>{line.description}</td>
           {instances.map((instance) => {
