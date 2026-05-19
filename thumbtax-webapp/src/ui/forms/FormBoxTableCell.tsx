@@ -1,9 +1,9 @@
 import { absurd } from "#src/common/utils/absurd";
 import { useStore } from "#src/state/useStore";
+import { AmountListInput } from "#src/ui/forms/AmountListInput";
 import { CheckboxInput } from "#src/ui/primitives/CheckboxInput";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
-import { TextField } from "#src/ui/primitives/TextField";
 
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormBox } from "#src/specifications/types/formSpecification";
@@ -43,12 +43,15 @@ export function FormBoxTableCell({ instance, box }: Props) {
       const list = input?.type === "amount_list" ? input.value : [];
       return (
         <td>
-          {list.map(({ label, amount }) => (
-            <>
-              <TextField value={label} onChange={() => {}} />
-              <NumberField value={amount} onChange={() => {}} />
-            </>
-          ))}
+          <AmountListInput
+            list={list}
+            onChange={(newList) =>
+              setBoxInput(instance.class, instance.id, box.identifier, {
+                type: "amount_list",
+                value: newList,
+              })
+            }
+          />
         </td>
       );
     }
