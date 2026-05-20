@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import { defineConfig, globalIgnores } from "eslint/config";
+import jestDom from "eslint-plugin-jest-dom";
 import noRelativeImportPaths from "eslint-plugin-no-relative-import-paths";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import reactHooks from "eslint-plugin-react-hooks";
@@ -17,6 +18,7 @@ export default defineConfig([
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
+      jestDom.configs["flat/recommended"],
     ],
     languageOptions: {
       ecmaVersion: 2020,
@@ -32,7 +34,7 @@ export default defineConfig([
         "error",
         {
           groups: [
-            ["^react"],
+            ["^react$"],
             ["^@?\\w"],
             ["^#src", "^.+\\.css"],
             ["^.*\\u0000$"],

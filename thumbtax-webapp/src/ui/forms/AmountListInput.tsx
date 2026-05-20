@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Group } from "react-aria-components";
 
 import { produce } from "immer";
+import { Button, Group } from "react-aria-components";
 
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { TextField } from "#src/ui/primitives/TextField";
