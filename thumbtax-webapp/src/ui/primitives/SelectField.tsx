@@ -45,7 +45,7 @@ export function SelectField({
   );
 
   return (
-    <Select value={value} onChange={handleChange}>
+    <Select value={value} onChange={handleChange} isInvalid={!!errorMessage}>
       {label && <Label>{label}</Label>}
       <Button>
         <SelectValue />

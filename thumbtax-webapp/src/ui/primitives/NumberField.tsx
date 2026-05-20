@@ -22,7 +22,11 @@ export function NumberField({
   onChange,
 }: Props) {
   return (
-    <AriaNumberField value={value} onChange={onChange}>
+    <AriaNumberField
+      value={value}
+      onChange={onChange}
+      isInvalid={!!errorMessage}
+    >
       {label && <Label>{label}</Label>}
       <Input />
       {description && <Text slot="description">{description}</Text>}

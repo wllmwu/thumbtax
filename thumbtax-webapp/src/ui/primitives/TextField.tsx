@@ -22,7 +22,7 @@ export function TextField({
   onChange,
 }: Props) {
   return (
-    <AriaTextField value={value} onChange={onChange}>
+    <AriaTextField value={value} onChange={onChange} isInvalid={!!errorMessage}>
       {label && <Label>{label}</Label>}
       <Input />
       {description && <Text slot="description">{description}</Text>}
