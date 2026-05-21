@@ -39,7 +39,13 @@ describe("SelectField", () => {
   it("renders label when provided", async () => {
     renderComponent({ label: "Fruit", value: "apple" });
 
-    expect(await screen.findByText("Fruit")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Fruit")).toBeInTheDocument();
+  });
+
+  it("renders aria-label when provided", async () => {
+    renderComponent({ "aria-label": "Fruit", value: "apple" });
+
+    expect(await screen.findByLabelText("Fruit")).toBeInTheDocument();
   });
 
   it("renders description when provided", async () => {

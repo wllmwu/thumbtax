@@ -6,16 +6,26 @@ import { Button, Group } from "react-aria-components";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { TextField } from "#src/ui/primitives/TextField";
 
+import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { UserInput } from "#src/common/types/userInput";
 
 type AmountList = Extract<UserInput, { type: "amount_list" }>["value"];
 
 type Props = {
+  formTitle: string;
+  instanceLabel: string;
+  boxIdentifier: BoxIdentifier;
   list: AmountList;
   onChange: (list: AmountList) => void;
 };
 
-export function AmountListInput({ list, onChange }: Props) {
+export function AmountListInput({
+  formTitle,
+  instanceLabel,
+  boxIdentifier,
+  list,
+  onChange,
+}: Props) {
   const onChangeLabel = React.useCallback(
     (index: number, newLabel: string) => {
       onChange(
@@ -58,14 +68,18 @@ export function AmountListInput({ list, onChange }: Props) {
   );
 
   return (
-    <Group>
+    <Group
+      aria-label={`${formTitle} (${instanceLabel}) box ${boxIdentifier} list of amounts`}
+    >
       {list.map(({ label, amount }, index) => (
         <div key={index}>
           <TextField
+            aria-label={`Entry ${index + 1} label`}
             value={label}
             onChange={(newLabel) => onChangeLabel(index, newLabel)}
           />
           <NumberField
+            aria-label={`Entry ${index + 1} amount`}
             value={amount}
             onChange={(newAmount) => onChangeAmount(index, newAmount)}
           />

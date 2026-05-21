@@ -25,6 +25,12 @@ describe("TextField", () => {
     expect(await screen.findByLabelText("Name")).toHaveValue("hello");
   });
 
+  it("renders aria-label when provided", async () => {
+    renderComponent({ "aria-label": "Name", value: "hello" });
+
+    expect(await screen.findByLabelText("Name")).toHaveValue("hello");
+  });
+
   it("renders description when provided", async () => {
     renderComponent({ label: "Name", description: "Enter your name" });
 

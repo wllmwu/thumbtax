@@ -8,6 +8,7 @@ import {
 
 type Props = {
   label?: React.ReactNode;
+  "aria-label"?: string;
   description?: React.ReactNode;
   errorMessage?: React.ReactNode;
   value: string;
@@ -16,13 +17,19 @@ type Props = {
 
 export function TextField({
   label,
+  "aria-label": ariaLabel,
   description,
   errorMessage,
   value,
   onChange,
 }: Props) {
   return (
-    <AriaTextField value={value} onChange={onChange} isInvalid={!!errorMessage}>
+    <AriaTextField
+      aria-label={!label ? ariaLabel : undefined}
+      value={value}
+      onChange={onChange}
+      isInvalid={!!errorMessage}
+    >
       {label && <Label>{label}</Label>}
       <Input />
       {description && <Text slot="description">{description}</Text>}

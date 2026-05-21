@@ -8,6 +8,7 @@ import {
 
 type Props = {
   label?: React.ReactNode;
+  "aria-label"?: string;
   description?: React.ReactNode;
   errorMessage?: React.ReactNode;
   value: number;
@@ -16,6 +17,7 @@ type Props = {
 
 export function NumberField({
   label,
+  "aria-label": ariaLabel,
   description,
   errorMessage,
   value,
@@ -23,6 +25,7 @@ export function NumberField({
 }: Props) {
   return (
     <AriaNumberField
+      aria-label={!label ? ariaLabel : undefined}
       value={value}
       onChange={onChange}
       isInvalid={!!errorMessage}

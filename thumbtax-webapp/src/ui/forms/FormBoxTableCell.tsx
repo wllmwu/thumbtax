@@ -17,7 +17,14 @@ export function FormBoxTableCell({ instance, box }: Props) {
   const resolvedBox = useStore(
     (state) => state.workbook[instance.id][box.identifier],
   );
+  const specifications = useStore((state) => state.specifications);
   const setBoxInput = useStore((state) => state.setBoxInput);
+
+  if (!specifications) {
+    return null;
+  }
+
+  const inputLabel = `${specifications[instance.class].title} (${instance.label}) box ${box.identifier}`;
 
   const valueType = box.value.type;
   switch (valueType) {
@@ -27,6 +34,7 @@ export function FormBoxTableCell({ instance, box }: Props) {
       return (
         <td>
           <CheckboxInput
+            aria-label={inputLabel}
             value={value}
             onChange={(newValue) =>
               setBoxInput(instance.class, instance.id, box.identifier, {
@@ -44,6 +52,9 @@ export function FormBoxTableCell({ instance, box }: Props) {
       return (
         <td>
           <AmountListInput
+            formTitle={specifications[instance.class].title}
+            instanceLabel={instance.label}
+            boxIdentifier={box.identifier}
             list={list}
             onChange={(newList) =>
               setBoxInput(instance.class, instance.id, box.identifier, {
@@ -61,6 +72,7 @@ export function FormBoxTableCell({ instance, box }: Props) {
       return (
         <td>
           <NumberField
+            aria-label={inputLabel}
             value={value}
             onChange={(newValue) =>
               setBoxInput(instance.class, instance.id, box.identifier, {
@@ -84,6 +96,7 @@ export function FormBoxTableCell({ instance, box }: Props) {
       return (
         <td>
           <SelectField
+            aria-label={inputLabel}
             value={selectedId}
             onChange={(newSelectedId) => {
               for (const [index, option] of options.entries()) {
@@ -121,9 +134,10 @@ export function FormBoxTableCell({ instance, box }: Props) {
     case "product":
     case "quotient":
     case "sum":
+      return <td>{resolvedBox.value}</td>;
     case "unsupported":
     case "unused":
-      return <td>{resolvedBox.value}</td>;
+      return <td />;
     default:
       absurd(valueType);
   }

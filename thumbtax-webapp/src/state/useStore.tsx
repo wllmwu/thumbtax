@@ -150,7 +150,7 @@ const useStoreInner = create<StoreState>((set) => ({
         const newInstance: FormInstance = {
           id: newId,
           class: formClass,
-          label: "",
+          label: "Untitled form",
           inputs: {},
         };
         const existing = draft.formInstances[formClass];

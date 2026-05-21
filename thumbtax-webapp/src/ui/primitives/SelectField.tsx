@@ -16,6 +16,7 @@ import {
 
 type Props = {
   label?: React.ReactNode;
+  "aria-label"?: string;
   description?: React.ReactNode;
   errorMessage?: React.ReactNode;
   value: string;
@@ -29,6 +30,7 @@ export const SelectFieldSection = ListBoxSection;
 
 export function SelectField({
   label,
+  "aria-label": ariaLabel,
   description,
   errorMessage,
   value,
@@ -45,7 +47,12 @@ export function SelectField({
   );
 
   return (
-    <Select value={value} onChange={handleChange} isInvalid={!!errorMessage}>
+    <Select
+      aria-label={!label ? ariaLabel : undefined}
+      value={value}
+      onChange={handleChange}
+      isInvalid={!!errorMessage}
+    >
       {label && <Label>{label}</Label>}
       <Button>
         <SelectValue />

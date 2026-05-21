@@ -25,6 +25,12 @@ describe("NumberField", () => {
     expect(await screen.findByLabelText("Amount")).toHaveValue("42");
   });
 
+  it("renders aria-label when provided", async () => {
+    renderComponent({ "aria-label": "Amount", value: 42 });
+
+    expect(await screen.findByLabelText("Amount")).toHaveValue("42");
+  });
+
   it("renders description when provided", async () => {
     renderComponent({ label: "Amount", description: "Enter an amount" });
 
