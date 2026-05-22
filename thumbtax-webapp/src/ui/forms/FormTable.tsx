@@ -19,26 +19,23 @@ export function FormTable({ formClass }: Props) {
   }
 
   return (
-    <section>
-      <h3>{specification.title}</h3>
+    <div>
       {specification.subtitle && <p>{specification.subtitle}</p>}
       {specification.sections.map((formSection, index) => (
-        <section key={index}>
-          {formSection.heading && <h4>{formSection.heading}</h4>}
-          <table>
-            <FormSectionTableHeader
-              specification={specification}
-              sectionIndex={index}
-              instances={instances}
-            />
-            <FormSectionTableBody
-              specification={specification}
-              sectionIndex={index}
-              instances={instances}
-            />
-          </table>
-        </section>
+        <table>
+          {formSection.heading && <caption>{formSection.heading}</caption>}
+          <FormSectionTableHeader
+            specification={specification}
+            sectionIndex={index}
+            instances={instances}
+          />
+          <FormSectionTableBody
+            specification={specification}
+            sectionIndex={index}
+            instances={instances}
+          />
+        </table>
       ))}
-    </section>
+    </div>
   );
 }
