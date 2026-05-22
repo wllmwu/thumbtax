@@ -6,14 +6,9 @@ import {
   TextField as AriaTextField,
 } from "react-aria-components";
 
-type Props = {
-  label?: React.ReactNode;
-  "aria-label"?: string;
-  description?: React.ReactNode;
-  errorMessage?: React.ReactNode;
-  value: string;
-  onChange: (value: string) => void;
-};
+import type { FieldProps } from "#src/ui/types/fieldProps";
+
+type Props = FieldProps<string>;
 
 export function TextField({
   label,

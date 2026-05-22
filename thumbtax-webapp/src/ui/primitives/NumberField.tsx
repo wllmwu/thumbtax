@@ -6,14 +6,9 @@ import {
   Text,
 } from "react-aria-components";
 
-type Props = {
-  label?: React.ReactNode;
-  "aria-label"?: string;
-  description?: React.ReactNode;
-  errorMessage?: React.ReactNode;
-  value: number;
-  onChange: (value: number) => void;
-};
+import type { FieldProps } from "#src/ui/types/fieldProps";
+
+type Props = FieldProps<number>;
 
 export function NumberField({
   label,

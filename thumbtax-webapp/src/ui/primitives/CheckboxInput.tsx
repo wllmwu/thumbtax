@@ -1,20 +1,25 @@
 import { Checkbox } from "react-aria-components";
 
-type Props = {
-  label?: React.ReactNode;
-  value: boolean;
-  onChange: (value: boolean) => void;
+import type { InputProps } from "#src/ui/types/inputProps";
+
+type Props = InputProps<boolean> & {
   "data-testid"?: string;
 };
 
 export function CheckboxInput({
   label,
+  "aria-label": ariaLabel,
   value,
   onChange,
   "data-testid": dataTestId,
 }: Props) {
   return (
-    <Checkbox isSelected={value} onChange={onChange} data-testid={dataTestId}>
+    <Checkbox
+      aria-label={!label ? ariaLabel : undefined}
+      isSelected={value}
+      onChange={onChange}
+      data-testid={dataTestId}
+    >
       {`${value}`}
       {label}
     </Checkbox>
