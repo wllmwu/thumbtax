@@ -16,7 +16,7 @@ import {
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
 
-type Props = FieldProps<string> & {
+type Props = Omit<FieldProps<string>, "placeholder"> & {
   children: React.ReactNode;
 };
 

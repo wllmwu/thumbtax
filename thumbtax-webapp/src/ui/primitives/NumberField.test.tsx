@@ -31,6 +31,12 @@ describe("NumberField", () => {
     expect(await screen.findByLabelText("Amount")).toHaveValue("42");
   });
 
+  it("renders placeholder when provided", async () => {
+    renderComponent({ placeholder: "Amount", value: 42 });
+
+    expect(await screen.findByPlaceholderText("Amount")).toHaveValue("42");
+  });
+
   it("renders description when provided", async () => {
     renderComponent({ label: "Amount", description: "Enter an amount" });
 

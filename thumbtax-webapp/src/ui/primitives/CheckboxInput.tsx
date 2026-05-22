@@ -2,7 +2,7 @@ import { Checkbox } from "react-aria-components";
 
 import type { InputProps } from "#src/ui/types/inputProps";
 
-type Props = InputProps<boolean> & {
+type Props = Omit<InputProps<boolean>, "placeholder"> & {
   "data-testid"?: string;
 };
 

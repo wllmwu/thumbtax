@@ -31,6 +31,12 @@ describe("TextField", () => {
     expect(await screen.findByLabelText("Name")).toHaveValue("hello");
   });
 
+  it("renders placeholder when provided", async () => {
+    renderComponent({ placeholder: "Name", value: "hello" });
+
+    expect(await screen.findByPlaceholderText("Name")).toHaveValue("hello");
+  });
+
   it("renders description when provided", async () => {
     renderComponent({ label: "Name", description: "Enter your name" });
 

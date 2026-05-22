@@ -13,6 +13,7 @@ type Props = FieldProps<string>;
 export function TextField({
   label,
   "aria-label": ariaLabel,
+  placeholder,
   description,
   errorMessage,
   value,
@@ -26,7 +27,7 @@ export function TextField({
       isInvalid={!!errorMessage}
     >
       {label && <Label>{label}</Label>}
-      <Input />
+      <Input placeholder={placeholder} />
       {description && <Text slot="description">{description}</Text>}
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
     </AriaTextField>
