@@ -8,7 +8,9 @@ import {
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
 
-type Props = FieldProps<string>;
+type Props = FieldProps<string> & {
+  autoFocus?: boolean;
+};
 
 export function SearchField({
   label,
@@ -18,12 +20,14 @@ export function SearchField({
   errorMessage,
   value,
   onChange,
+  autoFocus,
 }: Props) {
   return (
     <AriaSearchField
       aria-label={!label ? ariaLabel : undefined}
       value={value}
       onChange={onChange}
+      autoFocus={autoFocus}
       isInvalid={!!errorMessage}
     >
       {label && <Label>{label}</Label>}

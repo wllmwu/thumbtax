@@ -13,8 +13,8 @@ function renderComponent(
 }
 
 describe("NumberField", () => {
-  it("renders input field by itself with provided value", async () => {
-    renderComponent({ value: 42 });
+  it("renders input field with provided value", async () => {
+    renderComponent({ label: "Amount", value: 42 });
 
     expect(await screen.findByRole("textbox")).toHaveValue("42");
   });
@@ -32,7 +32,7 @@ describe("NumberField", () => {
   });
 
   it("renders placeholder when provided", async () => {
-    renderComponent({ placeholder: "Amount", value: 42 });
+    renderComponent({ label: "Amount", placeholder: "Amount", value: 42 });
 
     expect(await screen.findByPlaceholderText("Amount")).toHaveValue("42");
   });

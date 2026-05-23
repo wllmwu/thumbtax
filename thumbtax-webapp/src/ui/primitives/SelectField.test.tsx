@@ -28,8 +28,8 @@ function renderComponent({
 }
 
 describe("SelectField", () => {
-  it("renders button by itself with selected value", async () => {
-    renderComponent({ value: "apple" });
+  it("renders button with selected value", async () => {
+    renderComponent({ label: "Fruit", value: "apple" });
 
     expect(await screen.findByRole("button")).toHaveTextContent("Apple");
   });
@@ -133,7 +133,7 @@ describe("SelectField", () => {
   });
 
   it("renders default text in button when value doesn't match any options", async () => {
-    renderComponent({ value: "nonexistent" });
+    renderComponent({ label: "Fruit", value: "nonexistent" });
 
     expect(await screen.findByRole("button")).toHaveTextContent(
       "Select an item",

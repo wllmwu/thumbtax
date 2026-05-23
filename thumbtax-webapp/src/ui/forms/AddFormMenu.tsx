@@ -100,6 +100,7 @@ export function AddFormMenu() {
             placeholder="w-2"
             value={searchValue}
             onChange={setSearchValue}
+            autoFocus
           />
           <Menu>
             <MenuSection>
