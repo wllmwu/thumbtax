@@ -9,7 +9,7 @@
     "fixlint": "eslint --fix",
     "lint": "eslint",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --build --noEmit",
     "test": "vitest"
   },
   "dependencies": {
