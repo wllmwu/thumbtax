@@ -10,21 +10,19 @@ import {
 
 import type React from "react";
 
-const defaultOptions = (
-  <>
-    <SelectFieldItem id="apple">Apple</SelectFieldItem>
-    <SelectFieldItem id="banana">Banana</SelectFieldItem>
-    <SelectFieldItem id="cherry">Cherry</SelectFieldItem>
-  </>
-);
-
 function renderComponent({
   children,
   ...props
 }: Partial<React.ComponentProps<typeof SelectField>> = {}) {
   return render(
     <SelectField value="apple" onChange={vi.fn()} {...props}>
-      {children ?? defaultOptions}
+      {children ?? (
+        <>
+          <SelectFieldItem id="apple">Apple</SelectFieldItem>
+          <SelectFieldItem id="banana">Banana</SelectFieldItem>
+          <SelectFieldItem id="cherry">Cherry</SelectFieldItem>
+        </>
+      )}
     </SelectField>,
   );
 }

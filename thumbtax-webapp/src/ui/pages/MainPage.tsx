@@ -1,4 +1,4 @@
-import { AddFormControl } from "#src/ui/forms/AddFormControl";
+import { AddFormMenu } from "#src/ui/forms/AddFormMenu";
 import { FormList } from "#src/ui/forms/FormList";
 
 export function MainPage() {
@@ -6,7 +6,7 @@ export function MainPage() {
     <main>
       <div>
         <h1>Thumbtax</h1>
-        <AddFormControl />
+        <AddFormMenu />
         <FormList />
       </div>
     </main>
