@@ -10,7 +10,7 @@ type UserInputValueProvider =
   | { type: "checkbox_input" }
   | {
       type: "selection_input";
-      options: Array<{ label: string; value: ValueProvider }>;
+      options: Array<{ label: string; value: ComputedValueProvider }>;
     };
 
 type ReferenceValueProvider =
@@ -18,43 +18,52 @@ type ReferenceValueProvider =
   | { type: "form_instance_count"; form: FormClass };
 
 type ArithmeticValueProvider =
-  | { type: "sum"; values: Array<ValueProvider> }
-  | { type: "difference"; minuend: ValueProvider; subtrahend: ValueProvider }
-  | { type: "product"; values: Array<ValueProvider> }
-  | { type: "quotient"; dividend: ValueProvider; divisor: ValueProvider }
-  | { type: "minimum"; values: Array<ValueProvider> }
-  | { type: "maximum"; values: Array<ValueProvider> }
-  | { type: "absolute_value"; value: ValueProvider }
-  | { type: "non_negative"; value: ValueProvider }
-  | { type: "numerical_negation"; value: ValueProvider };
+  | { type: "sum"; values: Array<ComputedValueProvider> }
+  | {
+      type: "difference";
+      minuend: ComputedValueProvider;
+      subtrahend: ComputedValueProvider;
+    }
+  | { type: "product"; values: Array<ComputedValueProvider> }
+  | {
+      type: "quotient";
+      dividend: ComputedValueProvider;
+      divisor: ComputedValueProvider;
+    }
+  | { type: "minimum"; values: Array<ComputedValueProvider> }
+  | { type: "maximum"; values: Array<ComputedValueProvider> }
+  | { type: "absolute_value"; value: ComputedValueProvider }
+  | { type: "non_negative"; value: ComputedValueProvider }
+  | { type: "numerical_negation"; value: ComputedValueProvider };
 
 type ControlFlowValueProvider =
   | {
       type: "conditional";
-      condition: ValueProvider;
-      trueValue: ValueProvider;
-      falseValue: ValueProvider;
+      condition: ComputedValueProvider;
+      trueValue: ComputedValueProvider;
+      falseValue: ComputedValueProvider;
     }
   | {
       type: "comparison";
-      value: ValueProvider;
-      minimum?: ValueProvider;
-      maximum?: ValueProvider;
+      value: ComputedValueProvider;
+      minimum?: ComputedValueProvider;
+      maximum?: ComputedValueProvider;
       strict?: boolean;
     }
-  | { type: "logical_negation"; value: ValueProvider }
+  | { type: "logical_negation"; value: ComputedValueProvider }
   | {
       type: "filing_status_map";
-      values: Partial<Record<FilingStatus, ValueProvider>>;
-      default?: ValueProvider;
+      values: Partial<Record<FilingStatus, ComputedValueProvider>>;
+      default?: ComputedValueProvider;
     };
 
 type SkippedValueProvider = { type: "unused" } | { type: "unsupported" };
 
-export type ValueProvider =
+type ComputedValueProvider =
   | ConstantValueProvider
-  | UserInputValueProvider
   | ReferenceValueProvider
   | ArithmeticValueProvider
   | ControlFlowValueProvider
   | SkippedValueProvider;
+
+export type ValueProvider = ComputedValueProvider | UserInputValueProvider;
