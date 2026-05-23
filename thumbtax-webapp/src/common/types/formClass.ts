@@ -1,1 +1,7 @@
-export type FormClass = "f1040" | "f1099DIV" | "f1099INT" | "fW2";
+export type FormClass =
+  | "f1040"
+  | "f1099B"
+  | "f1099DIV"
+  | "f1099INT"
+  | "f1099NEC"
+  | "fW2";
