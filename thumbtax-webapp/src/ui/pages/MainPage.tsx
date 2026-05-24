@@ -1,4 +1,4 @@
-import { AddFormMenu } from "#src/ui/forms/AddFormMenu";
+import { AddFormMenu } from "#src/ui/control-bar/AddFormMenu";
 import { FormList } from "#src/ui/forms/FormList";
 
 export function MainPage() {

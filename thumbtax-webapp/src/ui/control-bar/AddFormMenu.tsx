@@ -78,6 +78,7 @@ export function AddFormMenu() {
       <MenuItem
         id={id}
         aria-label={`Add ${title}`}
+        textValue={title}
         isDisabled={disabled}
         onAction={() => addFormInstance(formClass)}
       >
