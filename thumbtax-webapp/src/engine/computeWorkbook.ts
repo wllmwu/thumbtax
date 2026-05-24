@@ -303,7 +303,14 @@ function resolveValue(
       if (divisor.value === 0) {
         return { value: 0, errors: [...errors, { type: "divide_by_zero" }] };
       }
-      return { value: dividend.value / divisor.value, errors };
+      const quotient = dividend.value / divisor.value;
+      const value =
+        provider.round === "down"
+          ? Math.floor(quotient)
+          : provider.round === "up"
+            ? Math.ceil(quotient)
+            : quotient;
+      return { value, errors };
     }
     case "selection_input": {
       const formInstance = instances.get(address.instance);

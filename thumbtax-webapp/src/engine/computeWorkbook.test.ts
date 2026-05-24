@@ -585,6 +585,26 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
           ],
         },
       },
+      {
+        description: 'rounds down when round is "down"',
+        provider: {
+          type: "quotient",
+          dividend: { type: "number_constant", value: 7 },
+          divisor: { type: "number_constant", value: 2 },
+          round: "down",
+        },
+        expected: { value: 3, errors: [] },
+      },
+      {
+        description: 'rounds up when round is "up"',
+        provider: {
+          type: "quotient",
+          dividend: { type: "number_constant", value: 7 },
+          divisor: { type: "number_constant", value: 2 },
+          round: "up",
+        },
+        expected: { value: 4, errors: [] },
+      },
     ],
     minimum: [
       {
