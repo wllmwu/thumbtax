@@ -148,7 +148,9 @@ export function FormTable({ formClass }: Props) {
     <div>
       {specification.subtitle && <p>{specification.subtitle}</p>}
       {specification.sections.map((formSection, index) => (
-        <table>
+        <table
+          aria-label={formSection.heading ? undefined : "Untitled section"}
+        >
           {formSection.heading && <caption>{formSection.heading}</caption>}
           <FormSectionTableHeader
             specification={specification}

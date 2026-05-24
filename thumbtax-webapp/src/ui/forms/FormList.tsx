@@ -45,12 +45,12 @@ export function FormList() {
             <CollapsibleFormTable
               formClass={formClass}
               header={
-                <span>
+                <h2>
                   {specification.title} <Badge>{specification.category}</Badge>{" "}
                   {specification.maxInstances !== 1 && (
                     <Badge>{instances[formClass]?.length}</Badge>
                   )}
-                </span>
+                </h2>
               }
             />
           </li>
