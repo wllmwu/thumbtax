@@ -1,4 +1,5 @@
 import { Form1040 } from "#src/specifications/data/form1040";
+import { Form1040S1 } from "#src/specifications/data/form1040s1";
 import { Form1099B } from "#src/specifications/data/form1099B";
 import { Form1099DIV } from "#src/specifications/data/form1099DIV";
 import { Form1099INT } from "#src/specifications/data/form1099INT";
@@ -11,6 +12,7 @@ import type { SpecificationRegistry } from "#src/specifications/types/specificat
 
 const allSpecifications: SpecificationRegistry = {
   f1040: Form1040,
+  f1040s1: Form1040S1,
   f1099B: Form1099B,
   f1099DIV: Form1099DIV,
   f1099INT: Form1099INT,

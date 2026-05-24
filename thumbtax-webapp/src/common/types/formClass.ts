@@ -1,5 +1,6 @@
 export type FormClass =
   | "f1040"
+  | "f1040s1"
   | "f1099B"
   | "f1099DIV"
   | "f1099INT"
