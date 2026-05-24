@@ -112,7 +112,7 @@ export const Form1040: FormSpecification = {
           description: "Tax-exempt interest",
           box: {
             identifier: "2a",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1099INT", box: "8" },
           },
         },
         {
@@ -120,7 +120,13 @@ export const Form1040: FormSpecification = {
           description: "Taxable interest",
           box: {
             identifier: "2b",
-            value: { type: "number_input" },
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", form: "f1099INT", box: "1" },
+                { type: "box_reference", form: "f1099INT", box: "3" },
+              ],
+            },
           },
         },
         {
@@ -128,7 +134,7 @@ export const Form1040: FormSpecification = {
           description: "Qualified dividends",
           box: {
             identifier: "3a",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1099DIV", box: "1b" },
           },
         },
         {
@@ -136,7 +142,7 @@ export const Form1040: FormSpecification = {
           description: "Ordinary dividends",
           box: {
             identifier: "3b",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1099DIV", box: "1a" },
           },
         },
         {
@@ -147,6 +153,7 @@ export const Form1040: FormSpecification = {
           },
         },
         {
+          // TODO: Form 1099-R
           index: "4a",
           description: "IRA distributions",
           box: {
@@ -170,6 +177,7 @@ export const Form1040: FormSpecification = {
           },
         },
         {
+          // TODO: Form 1099-R
           index: "5a",
           description: "Pensions and annuities",
           box: {
@@ -223,6 +231,7 @@ export const Form1040: FormSpecification = {
           },
         },
         {
+          // TODO: Form 8949, Schedule D, exceptions
           index: "7a",
           description: "Capital gain or (loss). Attach Schedule D if required",
           box: {
@@ -242,7 +251,7 @@ export const Form1040: FormSpecification = {
           description: "Additional income from Schedule 1, line 10",
           box: {
             identifier: "8",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1040s1", box: "10" },
           },
         },
         {
@@ -271,7 +280,7 @@ export const Form1040: FormSpecification = {
           description: "Adjustments to income from Schedule 1, line 26",
           box: {
             identifier: "10",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1040s1", box: "26" },
           },
         },
         {
@@ -329,6 +338,7 @@ export const Form1040: FormSpecification = {
           },
         },
         {
+          // TODO: Schedule A
           index: "12e",
           description:
             "**Standard deduction or itemized deductions** (from Schedule A)",
@@ -362,6 +372,7 @@ export const Form1040: FormSpecification = {
           },
         },
         {
+          // TODO: Form 8995, Form 8995-A
           index: "13a",
           description:
             "Qualified business income deduction from Form 8995 or Form 8995-A",
@@ -375,7 +386,7 @@ export const Form1040: FormSpecification = {
           description: "Additional deductions from Schedule 1-A, line 38",
           box: {
             identifier: "13b",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1040s1a", box: "38" },
           },
         },
         {
@@ -410,6 +421,7 @@ export const Form1040: FormSpecification = {
           },
         },
         {
+          // TODO: piecewise provider, tax computation worksheet, Schedule D, qualified dividends and capital gain tax worksheet, Form 2555, foreign earned income tax worksheet
           index: "16",
           description: "**Tax** (see instructions)",
           box: {
@@ -422,7 +434,7 @@ export const Form1040: FormSpecification = {
           description: "Amount from Schedule 2, line 3",
           box: {
             identifier: "17",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1040s2", box: "3" },
           },
         },
         {
@@ -453,7 +465,7 @@ export const Form1040: FormSpecification = {
           description: "Amount from Schedule 3, line 8",
           box: {
             identifier: "20",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1040s3", box: "8" },
           },
         },
         {
@@ -492,7 +504,7 @@ export const Form1040: FormSpecification = {
             "Other taxes, including self-employment tax, from Schedule 2, line 21",
           box: {
             identifier: "23",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1040s2", box: "21" },
           },
         },
         {
@@ -535,10 +547,19 @@ export const Form1040: FormSpecification = {
           description: "Form(s) 1099",
           box: {
             identifier: "25b",
-            value: { type: "number_input" },
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", form: "f1099B", box: "4" },
+                { type: "box_reference", form: "f1099DIV", box: "4" },
+                { type: "box_reference", form: "f1099INT", box: "4" },
+                { type: "box_reference", form: "f1099NEC", box: "4" },
+              ],
+            },
           },
         },
         {
+          // TODO: Form 8959
           index: "25c",
           description: "Other forms (see instructions)",
           box: {
@@ -622,7 +643,7 @@ export const Form1040: FormSpecification = {
           description: "Amount from Schedule 3, line 15",
           box: {
             identifier: "31",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1040s3", box: "15" },
           },
         },
         {

@@ -38,6 +38,7 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
+          // TODO: Schedule C
           index: "3",
           description: "Business income or (loss). Attach Schedule C",
           box: {
@@ -111,6 +112,7 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
+          // TODO: Form 2555
           index: "8d",
           description: "Foreign earned income exclusion from Form 2555",
           box: {
@@ -127,6 +129,7 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
+          // TODO: Form 8889
           index: "8f",
           description: "Income from Form 8889",
           box: {
@@ -159,6 +162,7 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
+          // TODO: support referencing instances
           index: "8j",
           description: "Activity not engaged in for profit income",
           box: {
@@ -356,6 +360,7 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
+          // TODO: Form 8889
           index: "13",
           description: "Health savings account deduction. Attach Form 8889",
           box: {
@@ -373,6 +378,7 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
+          // TODO: Schedule SE
           index: "15",
           description:
             "Deductible part of self-employment tax. Attach Schedule SE",
@@ -549,6 +555,7 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
+          // TODO: Form 2555
           index: "24j",
           description: "Housing deduction from Form 2555",
           box: {

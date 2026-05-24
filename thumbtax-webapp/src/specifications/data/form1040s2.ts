@@ -100,6 +100,7 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
+          // TODO: Form 6251
           index: "2",
           description: "Alternative minimum tax. Attach Form 6251",
           box: {
@@ -128,6 +129,7 @@ export const Form1040S2: FormSpecification = {
       heading: "Part II. Other Taxes",
       lines: [
         {
+          // TODO: Schedule SE
           index: "4",
           description: "Self-employment tax. Attach Schedule SE",
           box: {
@@ -194,6 +196,7 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
+          // TODO: Form 8959
           index: "11",
           description: "Additional Medicare Tax. Attach Form 8959",
           box: {
@@ -202,6 +205,7 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
+          // TODO: Form 8960
           index: "12",
           description: "Net investment income tax. Attach Form 8960",
           box: {
@@ -210,6 +214,7 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
+          // TODO: support codes in Form W-2 box 12
           index: "13",
           description:
             "Uncollected social security and Medicare or RRTA tax on tips or group-term life insurance from Form W-2, box 12",
@@ -272,6 +277,7 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
+          // TODO: Form 8889
           index: "17c",
           description: "Additional tax on HSA distributions. Attach Form 8889",
           box: {

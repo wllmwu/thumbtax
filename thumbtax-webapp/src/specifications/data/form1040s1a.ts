@@ -29,6 +29,7 @@ export const Form1040S1A: FormSpecification = {
           },
         },
         {
+          // TODO: Form 2555
           index: "2b",
           description: "Enter the amount from Form 2555, line 45",
           box: {
@@ -37,6 +38,7 @@ export const Form1040S1A: FormSpecification = {
           },
         },
         {
+          // TODO: Form 2555
           index: "2c",
           description: "Enter the amount from Form 2555, line 50",
           box: {
@@ -115,6 +117,7 @@ export const Form1040S1A: FormSpecification = {
           },
         },
         {
+          // TODO: support override
           index: "4c",
           description:
             "If you only received qualified tips as an employee with respect to employment with one employer, enter the larger of line 4a or line 4b. Otherwise, see the instructions to determine the amount to enter on line 4c. If you received tips as an employee in more than one occupation, see the instructions",
@@ -124,6 +127,7 @@ export const Form1040S1A: FormSpecification = {
           },
         },
         {
+          // TODO: support referencing instances
           index: "5",
           description:
             "Qualified tips received in the course of a trade or business.\nQualified tip amount included in Form 1099-NEC, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions",
@@ -257,6 +261,7 @@ export const Form1040S1A: FormSpecification = {
       heading: "Part III. No Tax on Overtime",
       lines: [
         {
+          // TODO: support codes in Form W-2 box 12
           index: "14a",
           description:
             "Qualified overtime compensation included in Form W-2, box 1. If you received qualified overtime compensation not reported on Form W-2, box 1, see instructions",
@@ -427,18 +432,18 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "22(i)",
-              value: { type: "unused" },
               column: "(i)",
+              value: { type: "unused" },
             },
             {
               identifier: "22(ii)",
-              value: { type: "unused" },
               column: "(ii)",
+              value: { type: "unused" },
             },
             {
               identifier: "22(iii)",
-              value: { type: "unused" },
               column: "(iii)",
+              value: { type: "unused" },
             },
           ],
         },
@@ -448,18 +453,18 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "22a(i)",
-              value: { type: "unused" },
               column: "(i)",
+              value: { type: "unused" },
             },
             {
               identifier: "22a(ii)",
-              value: { type: "number_input" },
               column: "(ii)",
+              value: { type: "number_input" },
             },
             {
               identifier: "22a(iii)",
-              value: { type: "number_input" },
               column: "(iii)",
+              value: { type: "number_input" },
             },
           ],
         },
@@ -469,143 +474,243 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "22b(i)",
-              value: { type: "unused" },
               column: "(i)",
+              value: { type: "unused" },
             },
             {
               identifier: "22b(ii)",
-              value: { type: "number_input" },
               column: "(ii)",
+              value: { type: "number_input" },
             },
             {
               identifier: "22b(iii)",
-              value: { type: "number_input" },
               column: "(iii)",
+              value: { type: "number_input" },
             },
           ],
         },
-      ],
-    },
-    {
-      lines: [
         {
           index: "23",
           description: "Add lines 22a and 22b, column (iii)",
-          box: {
-            identifier: "23",
-            value: {
-              type: "sum",
-              values: [
-                { type: "box_reference", box: "22a(iii)" },
-                { type: "box_reference", box: "22b(iii)" },
-              ],
+          boxes: [
+            {
+              identifier: "23_skip_i",
+              column: "(i)",
+              value: { type: "unused" },
             },
-          },
+            {
+              identifier: "23_skip_ii",
+              column: "(ii)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "23",
+              column: "(iii)",
+              value: {
+                type: "sum",
+                values: [
+                  { type: "box_reference", box: "22a(iii)" },
+                  { type: "box_reference", box: "22b(iii)" },
+                ],
+              },
+            },
+          ],
         },
         {
           index: "24",
           description: "Enter the smaller of the amount on line 23 or $10,000",
-          box: {
-            identifier: "24",
-            value: {
-              type: "minimum",
-              values: [
-                { type: "box_reference", box: "23" },
-                { type: "number_constant", value: 10000 },
-              ],
+          boxes: [
+            {
+              identifier: "24_skip_i",
+              column: "(i)",
+              value: { type: "unused" },
             },
-          },
+            {
+              identifier: "24_skip_ii",
+              column: "(ii)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "24",
+              column: "(iii)",
+              value: {
+                type: "minimum",
+                values: [
+                  { type: "box_reference", box: "23" },
+                  { type: "number_constant", value: 10000 },
+                ],
+              },
+            },
+          ],
         },
         {
           index: "25",
           description: "Enter the amount from line 3",
-          box: {
-            identifier: "25",
-            value: { type: "box_reference", box: "3" },
-          },
+          boxes: [
+            {
+              identifier: "25_skip_i",
+              column: "(i)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "25_skip_ii",
+              column: "(ii)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "25",
+              column: "(iii)",
+              value: { type: "box_reference", box: "3" },
+            },
+          ],
         },
         {
           index: "26",
           description: "Enter $100,000 ($200,000 if married filing jointly)",
-          box: {
-            identifier: "26",
-            value: {
-              type: "filing_status_map",
-              values: {
-                married_filing_jointly: {
-                  type: "number_constant",
-                  value: 200000,
-                },
-              },
-              default: { type: "number_constant", value: 100000 },
+          boxes: [
+            {
+              identifier: "26_skip_i",
+              column: "(i)",
+              value: { type: "unused" },
             },
-          },
+            {
+              identifier: "26_skip_ii",
+              column: "(ii)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "26",
+              column: "(iii)",
+              value: {
+                type: "filing_status_map",
+                values: {
+                  married_filing_jointly: {
+                    type: "number_constant",
+                    value: 200000,
+                  },
+                },
+                default: { type: "number_constant", value: 100000 },
+              },
+            },
+          ],
         },
         {
           index: "27",
           description:
             "Subtract line 26 from line 25. If zero or less, enter the amount from line 24 on line 30",
-          box: {
-            identifier: "27",
-            value: {
-              type: "difference",
-              minuend: { type: "box_reference", box: "25" },
-              subtrahend: { type: "box_reference", box: "26" },
+          boxes: [
+            {
+              identifier: "27_skip_i",
+              column: "(i)",
+              value: { type: "unused" },
             },
-          },
+            {
+              identifier: "27_skip_ii",
+              column: "(ii)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "27",
+              column: "(iii)",
+              value: {
+                type: "difference",
+                minuend: { type: "box_reference", box: "25" },
+                subtrahend: { type: "box_reference", box: "26" },
+              },
+            },
+          ],
         },
         {
           index: "28",
           description:
             "Divide line 27 by $1,000. If the resulting number isn't a whole number, increase the result to the next higher whole number",
-          box: {
-            identifier: "28",
-            value: {
-              type: "quotient",
-              dividend: { type: "box_reference", box: "27" },
-              divisor: { type: "number_constant", value: 1000 },
-              round: "up",
+          boxes: [
+            {
+              identifier: "28_skip_i",
+              column: "(i)",
+              value: { type: "unused" },
             },
-          },
+            {
+              identifier: "28_skip_ii",
+              column: "(ii)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "28",
+              column: "(iii)",
+              value: {
+                type: "quotient",
+                dividend: { type: "box_reference", box: "27" },
+                divisor: { type: "number_constant", value: 1000 },
+                round: "up",
+              },
+            },
+          ],
         },
         {
           index: "29",
           description: "Multiply line 28 by $200",
-          box: {
-            identifier: "29",
-            value: {
-              type: "product",
-              values: [
-                { type: "box_reference", box: "28" },
-                { type: "number_constant", value: 200 },
-              ],
+          boxes: [
+            {
+              identifier: "29_skip_i",
+              column: "(i)",
+              value: { type: "unused" },
             },
-          },
+            {
+              identifier: "29_skip_ii",
+              column: "(ii)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "29",
+              column: "(iii)",
+              value: {
+                type: "product",
+                values: [
+                  { type: "box_reference", box: "28" },
+                  { type: "number_constant", value: 200 },
+                ],
+              },
+            },
+          ],
         },
         {
           index: "30",
           description:
             "**Qualified passenger vehicle loan interest deduction.** Subtract line 29 from line 24. If zero or less, enter -0-",
-          box: {
-            identifier: "30",
-            value: {
-              type: "conditional",
-              condition: {
-                type: "comparison",
-                value: { type: "box_reference", box: "27" },
-                maximum: { type: "number_constant", value: 0 },
-              },
-              trueValue: { type: "box_reference", box: "24" },
-              falseValue: {
-                type: "non_negative_clamp",
-                value: {
-                  type: "difference",
-                  minuend: { type: "box_reference", box: "24" },
-                  subtrahend: { type: "box_reference", box: "29" },
+          boxes: [
+            {
+              identifier: "30_skip_i",
+              column: "(i)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "30_skip_ii",
+              column: "(ii)",
+              value: { type: "unused" },
+            },
+            {
+              identifier: "30",
+              column: "(iii)",
+              value: {
+                type: "conditional",
+                condition: {
+                  type: "comparison",
+                  value: { type: "box_reference", box: "27" },
+                  maximum: { type: "number_constant", value: 0 },
+                },
+                trueValue: { type: "box_reference", box: "24" },
+                falseValue: {
+                  type: "non_negative_clamp",
+                  value: {
+                    type: "difference",
+                    minuend: { type: "box_reference", box: "24" },
+                    subtrahend: { type: "box_reference", box: "29" },
+                  },
                 },
               },
             },
-          },
+          ],
         },
       ],
     },
