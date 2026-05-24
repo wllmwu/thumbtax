@@ -50,7 +50,7 @@ function resolveDependencies(
       return traverse([provider.dividend, provider.divisor]);
     case "absolute_value":
     case "logical_negation":
-    case "non_negative":
+    case "non_negative_clamp":
     case "numerical_negation":
       return resolveDependencies(address, provider.value, instanceRegistry);
     case "selection_input":
@@ -267,7 +267,7 @@ function resolveValue(
         errors: resolved.flatMap((r) => r.errors),
       };
     }
-    case "non_negative": {
+    case "non_negative_clamp": {
       const { value, errors } = resolveRecursive(provider.value);
       return { value: Math.max(0, value), errors };
     }

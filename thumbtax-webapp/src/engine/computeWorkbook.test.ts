@@ -687,11 +687,11 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
         expected: { value: 0, errors: [{ type: "divide_by_zero" }] },
       },
     ],
-    non_negative: [
+    non_negative_clamp: [
       {
         description: "resolves to the value when it is non-negative",
         provider: {
-          type: "non_negative",
+          type: "non_negative_clamp",
           value: { type: "number_constant", value: 5 },
         },
         expected: { value: 5, errors: [] },
@@ -699,14 +699,14 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
       {
         description: "resolves to 0 when the value is negative",
         provider: {
-          type: "non_negative",
+          type: "non_negative_clamp",
           value: { type: "number_constant", value: -5 },
         },
         expected: { value: 0, errors: [] },
       },
       {
         description: "propagates errors",
-        provider: { type: "non_negative", value: ERROR_PROVIDER },
+        provider: { type: "non_negative_clamp", value: ERROR_PROVIDER },
         expected: { value: 0, errors: [{ type: "divide_by_zero" }] },
       },
     ],
@@ -1074,7 +1074,7 @@ describe("computeWorkbook", () => {
                 values: [
                   { type: "number_constant", value: 5 },
                   {
-                    type: "non_negative",
+                    type: "non_negative_clamp",
                     value: {
                       type: "difference",
                       minuend: { type: "number_constant", value: 6 },

@@ -400,7 +400,7 @@ export const Form1040: FormSpecification = {
           box: {
             identifier: "15",
             value: {
-              type: "non_negative",
+              type: "non_negative_clamp",
               value: {
                 type: "difference",
                 minuend: { type: "box_reference", box: "11b" },
@@ -477,7 +477,7 @@ export const Form1040: FormSpecification = {
           box: {
             identifier: "22",
             value: {
-              type: "non_negative",
+              type: "non_negative_clamp",
               value: {
                 type: "difference",
                 minuend: { type: "box_reference", box: "18" },
@@ -671,7 +671,7 @@ export const Form1040: FormSpecification = {
           box: {
             identifier: "34",
             value: {
-              type: "non_negative",
+              type: "non_negative_clamp",
               value: {
                 type: "difference",
                 minuend: { type: "box_reference", box: "33" },
@@ -709,7 +709,7 @@ export const Form1040: FormSpecification = {
           box: {
             identifier: "37",
             value: {
-              type: "non_negative",
+              type: "non_negative_clamp",
               value: {
                 type: "difference",
                 minuend: { type: "box_reference", box: "24" },

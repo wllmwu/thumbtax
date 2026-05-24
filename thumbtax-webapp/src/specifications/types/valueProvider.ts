@@ -4,15 +4,6 @@ import type { FormClass } from "#src/common/types/formClass";
 
 type ConstantValueProvider = { type: "number_constant"; value: number };
 
-type UserInputValueProvider =
-  | { type: "number_input" }
-  | { type: "list_amounts_input" }
-  | { type: "checkbox_input" }
-  | {
-      type: "selection_input";
-      options: Array<{ label: string; value: ComputedValueProvider }>;
-    };
-
 type ReferenceValueProvider =
   | { type: "box_reference"; form?: FormClass; box: BoxIdentifier }
   | { type: "form_instance_count"; form: FormClass };
@@ -33,7 +24,7 @@ type ArithmeticValueProvider =
   | { type: "minimum"; values: Array<ComputedValueProvider> }
   | { type: "maximum"; values: Array<ComputedValueProvider> }
   | { type: "absolute_value"; value: ComputedValueProvider }
-  | { type: "non_negative"; value: ComputedValueProvider }
+  | { type: "non_negative_clamp"; value: ComputedValueProvider }
   | { type: "numerical_negation"; value: ComputedValueProvider };
 
 type ControlFlowValueProvider =
@@ -65,5 +56,14 @@ type ComputedValueProvider =
   | ArithmeticValueProvider
   | ControlFlowValueProvider
   | SkippedValueProvider;
+
+type UserInputValueProvider =
+  | { type: "number_input"; coerceSign?: "negative" | "positive" }
+  | { type: "list_amounts_input" }
+  | { type: "checkbox_input" }
+  | {
+      type: "selection_input";
+      options: Array<{ label: string; value: ComputedValueProvider }>;
+    };
 
 export type ValueProvider = ComputedValueProvider | UserInputValueProvider;

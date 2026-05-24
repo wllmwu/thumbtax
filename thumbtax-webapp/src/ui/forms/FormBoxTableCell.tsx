@@ -128,7 +128,7 @@ export function FormBoxTableCell({ instance, box }: Props) {
     case "logical_negation":
     case "maximum":
     case "minimum":
-    case "non_negative":
+    case "non_negative_clamp":
     case "number_constant":
     case "numerical_negation":
     case "product":
