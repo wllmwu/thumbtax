@@ -165,4 +165,32 @@ describe("single vs. multiple columns", () => {
       ],
     }).toExtend<FormSpecification>();
   });
+
+  it("rejects FormSpecification with sections that have incorrect column cardinalities", () => {
+    expectTypeOf({
+      class: "fW2" as const,
+      title: "test",
+      irsPageUrl: "test",
+      category: "income" as const,
+      maxInstances: null,
+      sections: [
+        { lines: [{ index: "1", box: { identifier: "1", value } }] },
+        {
+          columns: [{ index: "(a)" }],
+          lines: [{ index: "2", box: { identifier: "2", value } }],
+        },
+        {
+          lines: [
+            {
+              index: "3",
+              boxes: [
+                { identifier: "3(a)", value, column: "(a)" },
+                { identifier: "3(b)", value, column: "(b)" },
+              ],
+            },
+          ],
+        },
+      ],
+    }).not.toExtend<FormSpecification>();
+  });
 });

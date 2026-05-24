@@ -14,7 +14,7 @@ export type FormSpecification = {
   irsPageUrl: string;
   category: "income" | "taxes";
   maxInstances: number | null;
-  sections: Array<FormSection<false | true>>;
+  sections: Array<FormSection<false> | FormSection<true>>;
 };
 
 export type FormSection<MultiColumns extends boolean> = {
