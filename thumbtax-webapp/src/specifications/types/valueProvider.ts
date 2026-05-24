@@ -20,6 +20,7 @@ type ArithmeticValueProvider =
       type: "quotient";
       dividend: ComputedValueProvider;
       divisor: ComputedValueProvider;
+      round?: "down" | "up";
     }
   | { type: "minimum"; values: Array<ComputedValueProvider> }
   | { type: "maximum"; values: Array<ComputedValueProvider> }
