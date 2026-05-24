@@ -5,7 +5,7 @@ export const Form1040S1: FormSpecification = {
   title: "Schedule 1 (Form 1040)",
   subtitle: "Additional Income and Adjustments to Income",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
-  category: "income",
+  category: "taxes",
   maxInstances: 1,
   sections: [
     {

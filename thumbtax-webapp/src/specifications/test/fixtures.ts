@@ -86,6 +86,9 @@ export function makeRegistryFixture(
   return {
     f1040: makeSpecificationFixture({ class: "f1040" }),
     f1040s1: makeSpecificationFixture({ class: "f1040s1" }),
+    f1040s1a: makeSpecificationFixture({ class: "f1040s1a" }),
+    f1040s2: makeSpecificationFixture({ class: "f1040s2" }),
+    f1040s3: makeSpecificationFixture({ class: "f1040s3" }),
     f1099B: makeSpecificationFixture({ class: "f1099B" }),
     f1099DIV: makeSpecificationFixture({ class: "f1099DIV" }),
     f1099INT: makeSpecificationFixture({ class: "f1099INT" }),
