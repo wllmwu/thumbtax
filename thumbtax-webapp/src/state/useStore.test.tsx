@@ -304,14 +304,14 @@ describe("useStore", () => {
       expect(id1).not.toEqual(id2);
     });
 
-    it("appends an instance with empty inputs, empty label, and matching class/id", () => {
+    it("appends an instance with empty inputs, default label, and matching class/id", () => {
       const { result, rerender } = renderHook(() => useStore());
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
       rerender();
       expect(result.current.applicationState.formInstances[TEST_CLASS]).toEqual(
-        [{ id, class: TEST_CLASS, label: "", inputs: {} }],
+        [{ id, class: TEST_CLASS, label: "Untitled form", inputs: {} }],
       );
     });
 
