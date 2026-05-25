@@ -3,6 +3,11 @@ import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 
 import { computeWorkbook } from "#src/engine/computeWorkbook";
+import {
+  DEFAULT_APPLICATION_STATE,
+  DEFAULT_UI_STATE,
+  DEFAULT_USER_PREFERENCES,
+} from "#src/state/defaults";
 
 import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FilingStatus } from "#src/common/types/filingStatus";
@@ -11,6 +16,7 @@ import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { UserInput } from "#src/common/types/userInput";
 import type { Workbook } from "#src/common/types/workbook";
+import type { LoadError } from "#src/persistence/loadError";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
@@ -23,12 +29,16 @@ type StoreState = {
   workbook: Workbook;
   history: { past: ApplicationState[]; future: ApplicationState[] };
   specifications: SpecificationRegistry | undefined;
+  loadErrors: LoadError[];
   initialize: (
     applicationState: ApplicationState,
     uiState: UiState,
     userPreferences: UserPreferences,
     specifications: SpecificationRegistry,
+    loadErrors?: LoadError[],
   ) => void;
+  setLoadErrors: (errors: LoadError[]) => void;
+  clearLoadErrors: () => void;
   setFilingStatus: (filingStatus: FilingStatus) => void;
   addFormInstance: (formClass: FormClass) => FormInstanceId;
   removeFormInstance: (
@@ -95,26 +105,24 @@ function applyApplicationStateChange(
 }
 
 const useStoreInner = create<StoreState>((set) => ({
-  applicationState: {
-    filingStatus: "single" as const,
-    formClasses: [],
-    formInstances: {},
-  },
-  uiState: {
-    connectionsGraphNodePositions: {},
-  },
-  userPreferences: {
-    browserSaveEnabled: true,
-    maximumHistorySize: 50,
-  },
+  applicationState: DEFAULT_APPLICATION_STATE,
+  uiState: DEFAULT_UI_STATE,
+  userPreferences: DEFAULT_USER_PREFERENCES,
   workbook: {},
   history: {
     past: [],
     future: [],
   },
   specifications: undefined,
+  loadErrors: [],
 
-  initialize: (applicationState, uiState, userPreferences, specifications) => {
+  initialize: (
+    applicationState,
+    uiState,
+    userPreferences,
+    specifications,
+    loadErrors = [],
+  ) => {
     set(
       (state) => ({
         ...state,
@@ -123,6 +131,7 @@ const useStoreInner = create<StoreState>((set) => ({
         userPreferences,
         history: { past: [], future: [] },
         specifications,
+        loadErrors,
         workbook: computeWorkbook(
           specifications,
           applicationState.formInstances,
@@ -132,6 +141,14 @@ const useStoreInner = create<StoreState>((set) => ({
       }),
       true,
     );
+  },
+
+  setLoadErrors: (errors) => {
+    set((state) => ({ ...state, loadErrors: errors }));
+  },
+
+  clearLoadErrors: () => {
+    set((state) => ({ ...state, loadErrors: [] }));
   },
 
   setFilingStatus: (filingStatus) => {
@@ -309,13 +326,48 @@ const useStoreInner = create<StoreState>((set) => ({
   },
 }));
 
-export function useStore(): StoreState;
-export function useStore<U>(selector: (state: StoreState) => U): U;
-export function useStore<U>(selector?: (state: StoreState) => U) {
+type UseStore = {
+  (): StoreState;
+  <U>(selector: (state: StoreState) => U): U;
+  getState: () => StoreState;
+  setState: {
+    (
+      partial:
+        | StoreState
+        | Partial<StoreState>
+        | ((state: StoreState) => StoreState | Partial<StoreState>),
+      replace?: false,
+    ): void;
+    (
+      state: StoreState | ((state: StoreState) => StoreState),
+      replace: true,
+    ): void;
+  };
+};
+
+function useStoreBase<U>(selector?: (state: StoreState) => U) {
   const state = useStoreInner();
   if (selector) {
     return selector(state);
   } else {
     return state;
   }
+}
+
+export const useStore: UseStore = Object.assign(useStoreBase, {
+  getState: () => useStoreInner.getState(),
+  setState: useStoreInner.setState.bind(useStoreInner),
+});
+
+export function subscribeToStore<U>(
+  selector: (state: StoreState) => U,
+  listener: (current: U, previous: U) => void,
+): () => void {
+  return useStoreInner.subscribe((state, previousState) => {
+    const current = selector(state);
+    const previous = selector(previousState);
+    if (!Object.is(current, previous)) {
+      listener(current, previous);
+    }
+  });
 }

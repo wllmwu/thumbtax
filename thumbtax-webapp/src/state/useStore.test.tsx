@@ -8,10 +8,11 @@ import {
   makeSectionFixture,
   makeSpecificationFixture,
 } from "#src/specifications/test/fixtures";
-import { useStore } from "#src/state/useStore";
+import { subscribeToStore, useStore } from "#src/state/useStore";
 
 import type { FormClass } from "#src/common/types/formClass";
 import type { UserInput } from "#src/common/types/userInput";
+import type { LoadError } from "#src/persistence/loadError";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
@@ -1246,6 +1247,75 @@ describe("useStore", () => {
           specifications: expect.any(Object),
         }),
       );
+    });
+  });
+
+  describe("loadErrors", () => {
+    it("defaults to an empty array", () => {
+      const { result } = renderHook(() => useStore());
+      expect(result.current.loadErrors).toEqual([]);
+    });
+
+    it("is populated by initialize", () => {
+      const { result, rerender } = renderHook(() => useStore());
+      const errors: LoadError[] = [
+        { type: "tax_year_mismatch", saved: 2024, current: 2025 },
+      ];
+      result.current.initialize(
+        DEFAULT_APPLICATION_STATE,
+        DEFAULT_UI_STATE,
+        DEFAULT_PREFERENCES,
+        makeTestRegistry(),
+        errors,
+      );
+      rerender();
+      expect(result.current.loadErrors).toEqual(errors);
+    });
+
+    it("setLoadErrors replaces the current array", () => {
+      const { result, rerender } = renderHook(() => useStore());
+      const errors: LoadError[] = [
+        { type: "invalid_value", path: "x", reason: "bad" },
+      ];
+      result.current.setLoadErrors(errors);
+      rerender();
+      expect(result.current.loadErrors).toEqual(errors);
+    });
+
+    it("clearLoadErrors empties the array", () => {
+      const { result, rerender } = renderHook(() => useStore());
+      result.current.setLoadErrors([
+        { type: "invalid_value", path: "x", reason: "bad" },
+      ]);
+      rerender();
+      result.current.clearLoadErrors();
+      rerender();
+      expect(result.current.loadErrors).toEqual([]);
+    });
+  });
+
+  describe("subscribeToStore", () => {
+    it("invokes the listener with new and previous slice values on change", () => {
+      const { result } = renderHook(() => useStore());
+      const observed: Array<{ current: string; previous: string }> = [];
+      const unsubscribe = subscribeToStore(
+        (state) => state.applicationState.filingStatus,
+        (current, previous) => {
+          observed.push({ current, previous });
+        },
+      );
+
+      result.current.setFilingStatus("married_filing_jointly");
+      result.current.setFilingStatus("head_of_household");
+
+      unsubscribe();
+
+      result.current.setFilingStatus("single");
+
+      expect(observed).toEqual([
+        { current: "married_filing_jointly", previous: "single" },
+        { current: "head_of_household", previous: "married_filing_jointly" },
+      ]);
     });
   });
 });
