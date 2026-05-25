@@ -13,7 +13,7 @@ type Props = {
   box: FormBox<boolean>;
 };
 
-export function FormBoxTableCell({ instance, box }: Props) {
+export function FormBoxContent({ instance, box }: Props) {
   const resolvedBox = useStore(
     (state) => state.workbook[instance.id][box.identifier],
   );
@@ -32,56 +32,50 @@ export function FormBoxTableCell({ instance, box }: Props) {
       const input = instance.inputs[box.identifier];
       const value = input?.type === "number" && input.value !== 0;
       return (
-        <td>
-          <CheckboxInput
-            aria-label={inputLabel}
-            value={value}
-            onChange={(newValue) =>
-              setBoxInput(instance.class, instance.id, box.identifier, {
-                type: "number",
-                value: newValue ? 1 : 0,
-              })
-            }
-          />
-        </td>
+        <CheckboxInput
+          aria-label={inputLabel}
+          value={value}
+          onChange={(newValue) =>
+            setBoxInput(instance.class, instance.id, box.identifier, {
+              type: "number",
+              value: newValue ? 1 : 0,
+            })
+          }
+        />
       );
     }
     case "list_amounts_input": {
       const input = instance.inputs[box.identifier];
       const list = input?.type === "amount_list" ? input.value : [];
       return (
-        <td>
-          <AmountListInput
-            formTitle={specifications[instance.class].title}
-            instanceLabel={instance.label}
-            boxIdentifier={box.identifier}
-            list={list}
-            onChange={(newList) =>
-              setBoxInput(instance.class, instance.id, box.identifier, {
-                type: "amount_list",
-                value: newList,
-              })
-            }
-          />
-        </td>
+        <AmountListInput
+          formTitle={specifications[instance.class].title}
+          instanceLabel={instance.label}
+          boxIdentifier={box.identifier}
+          list={list}
+          onChange={(newList) =>
+            setBoxInput(instance.class, instance.id, box.identifier, {
+              type: "amount_list",
+              value: newList,
+            })
+          }
+        />
       );
     }
     case "number_input": {
       const input = instance.inputs[box.identifier];
       const value = input?.type === "number" ? input.value : 0;
       return (
-        <td>
-          <NumberField
-            aria-label={inputLabel}
-            value={value}
-            onChange={(newValue) =>
-              setBoxInput(instance.class, instance.id, box.identifier, {
-                type: "number",
-                value: newValue,
-              })
-            }
-          />
-        </td>
+        <NumberField
+          aria-label={inputLabel}
+          value={value}
+          onChange={(newValue) =>
+            setBoxInput(instance.class, instance.id, box.identifier, {
+              type: "number",
+              value: newValue,
+            })
+          }
+        />
       );
     }
     case "selection_input": {
@@ -94,28 +88,26 @@ export function FormBoxTableCell({ instance, box }: Props) {
       }));
       const selectedId = options[selectedIndex].id;
       return (
-        <td>
-          <SelectField
-            aria-label={inputLabel}
-            value={selectedId}
-            onChange={(newSelectedId) => {
-              for (const [index, option] of options.entries()) {
-                if (option.id === newSelectedId) {
-                  setBoxInput(instance.class, instance.id, box.identifier, {
-                    type: "selection",
-                    selectedIndex: index,
-                  });
-                }
+        <SelectField
+          aria-label={inputLabel}
+          value={selectedId}
+          onChange={(newSelectedId) => {
+            for (const [index, option] of options.entries()) {
+              if (option.id === newSelectedId) {
+                setBoxInput(instance.class, instance.id, box.identifier, {
+                  type: "selection",
+                  selectedIndex: index,
+                });
               }
-            }}
-          >
-            {options.map(({ id, label }) => (
-              <SelectFieldItem key={id} id={id}>
-                {label}
-              </SelectFieldItem>
-            ))}
-          </SelectField>
-        </td>
+            }
+          }}
+        >
+          {options.map(({ id, label }) => (
+            <SelectFieldItem key={id} id={id}>
+              {label}
+            </SelectFieldItem>
+          ))}
+        </SelectField>
       );
     }
     case "absolute_value":
@@ -134,10 +126,10 @@ export function FormBoxTableCell({ instance, box }: Props) {
     case "product":
     case "quotient":
     case "sum":
-      return <td>{resolvedBox.value}</td>;
+      return resolvedBox.value;
     case "unsupported":
     case "unused":
-      return <td />;
+      return null;
     default:
       absurd(valueType);
   }
