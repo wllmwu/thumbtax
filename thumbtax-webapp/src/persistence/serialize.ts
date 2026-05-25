@@ -3,7 +3,7 @@ import {
   CURRENT_TAX_YEAR,
 } from "#src/persistence/config";
 
-import type { PersistedState } from "#src/persistence/persistedState";
+import type { PersistedState } from "#src/persistence/types/persistedState";
 import type { ApplicationState } from "#src/state/types/applicationState";
 
 export function serialize(applicationState: ApplicationState): PersistedState {

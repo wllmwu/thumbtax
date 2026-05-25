@@ -1,4 +1,4 @@
-import { act, render } from "@testing-library/react";
+import { act, render, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -49,7 +49,6 @@ function Harness() {
 }
 
 beforeEach(() => {
-  localStorage.clear();
   vi.useFakeTimers();
 });
 
@@ -60,13 +59,14 @@ afterEach(() => {
 describe("usePersistence", () => {
   describe("load on mount", () => {
     it("initializes the store with defaults when localStorage is empty", () => {
+      const { result, rerender } = renderHook(() => useStore());
       render(<Harness />);
-      const state = useStore.getState();
-      expect(state.applicationState.filingStatus).toBe("single");
-      expect(state.uiState.connectionsGraphNodePositions).toEqual({});
-      expect(state.userPreferences.browserSaveEnabled).toBe(true);
-      expect(state.loadErrors).toEqual([]);
-      expect(state.specifications).toBeDefined();
+      rerender();
+      expect(result.current.applicationState.filingStatus).toBe("single");
+      expect(result.current.uiState.connectionsGraphNodePositions).toEqual({});
+      expect(result.current.userPreferences.browserSaveEnabled).toBe(true);
+      expect(result.current.loadErrors).toEqual([]);
+      expect(result.current.specifications).toBeDefined();
     });
 
     it("initializes the store from values present in localStorage", () => {
@@ -102,28 +102,34 @@ describe("usePersistence", () => {
         }),
       );
 
+      const { result, rerender } = renderHook(() => useStore());
       render(<Harness />);
+      rerender();
 
-      const state = useStore.getState();
-      expect(state.userPreferences).toEqual({
+      expect(result.current.userPreferences).toEqual({
         browserSaveEnabled: false,
         maximumHistorySize: 7,
       });
-      expect(state.applicationState.filingStatus).toBe("head_of_household");
-      expect(state.applicationState.formInstances.fW2?.[0].label).toBe(
+      expect(result.current.applicationState.filingStatus).toBe(
+        "head_of_household",
+      );
+      expect(result.current.applicationState.formInstances.fW2?.[0].label).toBe(
         "Loaded",
       );
-      expect(state.uiState.connectionsGraphNodePositions).toEqual({
+      expect(result.current.uiState.connectionsGraphNodePositions).toEqual({
         fW2: { x: 1, y: 2 },
       });
-      expect(state.loadErrors).toEqual([]);
+      expect(result.current.loadErrors).toEqual([]);
     });
 
     it("surfaces a JSON parse failure as an invalid_value at the key root path", () => {
       localStorage.setItem(SAVED_STATE_KEY, "{ not json");
+
+      const { result, rerender } = renderHook(() => useStore());
       render(<Harness />);
-      const state = useStore.getState();
-      expect(state.loadErrors).toContainEqual({
+      rerender();
+
+      expect(result.current.loadErrors).toContainEqual({
         type: "invalid_value",
         path: SAVED_STATE_KEY,
         reason: "invalid JSON",
@@ -133,16 +139,18 @@ describe("usePersistence", () => {
 
   describe("autosave (browserSaveEnabled true)", () => {
     it("writes applicationState changes to SAVED_STATE_KEY after debounce", () => {
+      const { result } = renderHook(() => useStore());
       render(<Harness />);
-      // Ensure the toggle is on (default).
+
       act(() => {
-        useStore.getState().addFormInstance("fW2");
+        result.current.addFormInstance("fW2");
       });
-      // Before debounce expires: nothing yet.
       expect(localStorage.getItem(SAVED_STATE_KEY)).toBeNull();
+
       act(() => {
         vi.advanceTimersByTime(300);
       });
+
       const saved = localStorage.getItem(SAVED_STATE_KEY);
       expect(saved).not.toBeNull();
       if (saved === null) throw new Error("expected saved state");
@@ -151,10 +159,13 @@ describe("usePersistence", () => {
     });
 
     it("writes preferences changes immediately to PREFERENCES_KEY", () => {
+      const { result } = renderHook(() => useStore());
       render(<Harness />);
+
       act(() => {
-        useStore.getState().updatePreferences({ maximumHistorySize: 99 });
+        result.current.updatePreferences({ maximumHistorySize: 99 });
       });
+
       const saved = localStorage.getItem(PREFERENCES_KEY);
       expect(saved).not.toBeNull();
       if (saved === null) throw new Error("expected saved preferences");
@@ -169,13 +180,17 @@ describe("usePersistence", () => {
         PREFERENCES_KEY,
         JSON.stringify({ browserSaveEnabled: false, maximumHistorySize: 50 }),
       );
+
+      const { result } = renderHook(() => useStore());
       render(<Harness />);
+
       act(() => {
-        useStore.getState().addFormInstance("fW2");
+        result.current.addFormInstance("fW2");
       });
       act(() => {
         vi.advanceTimersByTime(300);
       });
+
       expect(localStorage.getItem(SAVED_STATE_KEY)).toBeNull();
       expect(localStorage.getItem(UI_STATE_KEY)).toBeNull();
     });
@@ -183,31 +198,30 @@ describe("usePersistence", () => {
 
   describe("toggle-off reconciliation", () => {
     it("clears SAVED_STATE_KEY and UI_STATE_KEY when browserSaveEnabled flips true -> false", () => {
-      // Start with the toggle on; trigger an autosave; then flip off.
+      // Pre-seed UI state in localStorage so the hook loads it on mount.
+      localStorage.setItem(
+        UI_STATE_KEY,
+        JSON.stringify({
+          connectionsGraphNodePositions: { fW2: { x: 1, y: 1 } },
+        }),
+      );
+
+      const { result } = renderHook(() => useStore());
       render(<Harness />);
+
+      // Trigger an applicationState autosave so SAVED_STATE_KEY exists.
       act(() => {
-        useStore.getState().addFormInstance("fW2");
+        result.current.addFormInstance("fW2");
       });
       act(() => {
         vi.advanceTimersByTime(300);
       });
       expect(localStorage.getItem(SAVED_STATE_KEY)).not.toBeNull();
-
-      // Seed UI state explicitly (no action yet exists for it; use setState).
-      act(() => {
-        useStore.setState((state) => ({
-          ...state,
-          uiState: { connectionsGraphNodePositions: { fW2: { x: 1, y: 1 } } },
-        }));
-      });
-      act(() => {
-        vi.advanceTimersByTime(300);
-      });
       expect(localStorage.getItem(UI_STATE_KEY)).not.toBeNull();
 
-      // Flip off.
+      // Flip browserSaveEnabled off.
       act(() => {
-        useStore.getState().updatePreferences({ browserSaveEnabled: false });
+        result.current.updatePreferences({ browserSaveEnabled: false });
       });
 
       expect(localStorage.getItem(SAVED_STATE_KEY)).toBeNull();
@@ -218,23 +232,103 @@ describe("usePersistence", () => {
   });
 
   describe("unmount", () => {
-    it("does not write after unmount", () => {
+    it("does not write store changes that happen after unmount", () => {
+      const { result } = renderHook(() => useStore());
       const { unmount } = render(<Harness />);
+
       unmount();
+
       act(() => {
-        // After unmount, store mutations should not produce writes for this hook
-        // instance. (The subscriptions should be torn down.)
-        useStore.getState().addFormInstance("fW2");
+        result.current.addFormInstance("fW2");
         vi.advanceTimersByTime(1000);
       });
-      // Note: the hook may have flushed an in-flight debounced write during cleanup.
-      // We assert that no NEW write happens for mutations issued post-unmount by
-      // checking that the saved state does not reflect the post-unmount change.
+
       const saved = localStorage.getItem(SAVED_STATE_KEY);
       if (saved !== null) {
         const parsed = JSON.parse(saved);
         expect(parsed.applicationState.formClasses).not.toContain("fW2");
       }
+    });
+  });
+
+  describe("loadFromUploadedFile bridge", () => {
+    function fileFromJson(value: unknown): File {
+      return new File([JSON.stringify(value)], "upload.json", {
+        type: "application/json",
+      });
+    }
+
+    it("replaces applicationState while preserving uiState and userPreferences", async () => {
+      const registry = makeTestRegistry();
+      const { result: persistence } = renderHook(() =>
+        usePersistence(registry),
+      );
+      const { result: store } = renderHook(() => useStore());
+
+      act(() => {
+        store.current.initialize(
+          store.current.applicationState,
+          { connectionsGraphNodePositions: { fW2: { x: 7, y: 8 } } },
+          { browserSaveEnabled: false, maximumHistorySize: 12 },
+          registry,
+        );
+      });
+
+      const newApplicationState = {
+        filingStatus: "head_of_household" as const,
+        formClasses: ["fW2" as const],
+        formInstances: {
+          fW2: [
+            {
+              id: "abc",
+              class: "fW2" as const,
+              label: "Loaded",
+              inputs: { box1: { type: "number" as const, value: 99 } },
+            },
+          ],
+        },
+      };
+
+      await act(async () => {
+        await persistence.current.loadFromUploadedFile(
+          fileFromJson({
+            applicationState: newApplicationState,
+            schemaVersion: CURRENT_SCHEMA_VERSION,
+            taxYear: CURRENT_TAX_YEAR,
+          }),
+        );
+      });
+
+      expect(store.current.applicationState).toEqual(newApplicationState);
+      expect(store.current.uiState).toEqual({
+        connectionsGraphNodePositions: { fW2: { x: 7, y: 8 } },
+      });
+      expect(store.current.userPreferences).toEqual({
+        browserSaveEnabled: false,
+        maximumHistorySize: 12,
+      });
+      expect(store.current.loadErrors).toEqual([]);
+    });
+
+    it("leaves applicationState unchanged on structural failure but reports errors", async () => {
+      const registry = makeTestRegistry();
+      const { result: persistence } = renderHook(() =>
+        usePersistence(registry),
+      );
+      const { result: store } = renderHook(() => useStore());
+
+      const before = store.current.applicationState;
+
+      await act(async () => {
+        await persistence.current.loadFromUploadedFile(
+          new File(["{ not json"], "bad.json"),
+        );
+      });
+
+      expect(store.current.applicationState).toBe(before);
+      expect(store.current.loadErrors).toEqual([
+        { type: "invalid_value", path: "", reason: "invalid JSON" },
+      ]);
     });
   });
 });

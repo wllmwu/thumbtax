@@ -13,7 +13,7 @@ import type { FilingStatus } from "#src/common/types/filingStatus";
 import type { FormClass } from "#src/common/types/formClass";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { UserInput } from "#src/common/types/userInput";
-import type { LoadError } from "#src/persistence/loadError";
+import type { LoadError } from "#src/persistence/types/loadError";
 import type { ApplicationState } from "#src/state/types/applicationState";
 
 const KNOWN_FORM_CLASSES: Set<FormClass> = new Set([

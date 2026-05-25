@@ -10,6 +10,7 @@ import {
   SAVED_STATE_KEY,
   UI_STATE_KEY,
 } from "#src/persistence/localStorageKeys";
+import { parseUploadedFile } from "#src/persistence/parseUploadedFile";
 import { serialize } from "#src/persistence/serialize";
 import {
   DEFAULT_APPLICATION_STATE,
@@ -18,7 +19,7 @@ import {
 } from "#src/state/defaults";
 import { subscribeToStore, useStore } from "#src/state/useStore";
 
-import type { LoadError } from "#src/persistence/loadError";
+import type { LoadError } from "#src/persistence/types/loadError";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 
 const AUTOSAVE_DEBOUNCE_MS = 300;
@@ -43,7 +44,17 @@ function readLocalStorageJson(key: string): {
   }
 }
 
-export function usePersistence(specifications: SpecificationRegistry): void {
+export type Persistence = {
+  loadFromUploadedFile: (file: File) => Promise<void>;
+};
+
+export function usePersistence(
+  specifications: SpecificationRegistry,
+): Persistence {
+  const initialize = useStore((state) => state.initialize);
+  const setApplicationState = useStore((state) => state.setApplicationState);
+  const setLoadErrors = useStore((state) => state.setLoadErrors);
+
   React.useEffect(() => {
     const allErrors: LoadError[] = [];
 
@@ -81,44 +92,48 @@ export function usePersistence(specifications: SpecificationRegistry): void {
       allErrors.push(...errors);
     }
 
-    useStore
-      .getState()
-      .initialize(
-        applicationState,
-        uiState,
-        preferences,
-        specifications,
-        allErrors,
-      );
+    initialize(applicationState, uiState, preferences, specifications);
+    setLoadErrors(allErrors);
 
-    // Set up subscriptions.
+    // Latest slice values captured in closure so the debounced writers and the
+    // toggle-off gate don't need to read the store directly.
+    let latestApplicationState = applicationState;
+    let latestUiState = uiState;
+    let latestPreferences = preferences;
+
     const writeApplicationState = debounce(() => {
-      if (!useStore.getState().userPreferences.browserSaveEnabled) return;
-      const payload = serialize(useStore.getState().applicationState);
-      localStorage.setItem(SAVED_STATE_KEY, JSON.stringify(payload));
+      if (!latestPreferences.browserSaveEnabled) return;
+      localStorage.setItem(
+        SAVED_STATE_KEY,
+        JSON.stringify(serialize(latestApplicationState)),
+      );
     }, AUTOSAVE_DEBOUNCE_MS);
 
     const writeUiState = debounce(() => {
-      if (!useStore.getState().userPreferences.browserSaveEnabled) return;
-      localStorage.setItem(
-        UI_STATE_KEY,
-        JSON.stringify(useStore.getState().uiState),
-      );
+      if (!latestPreferences.browserSaveEnabled) return;
+      localStorage.setItem(UI_STATE_KEY, JSON.stringify(latestUiState));
     }, AUTOSAVE_DEBOUNCE_MS);
 
     const unsubApp = subscribeToStore(
       (state) => state.applicationState,
-      () => writeApplicationState(),
+      (current) => {
+        latestApplicationState = current;
+        writeApplicationState();
+      },
     );
 
     const unsubUi = subscribeToStore(
       (state) => state.uiState,
-      () => writeUiState(),
+      (current) => {
+        latestUiState = current;
+        writeUiState();
+      },
     );
 
     const unsubPrefs = subscribeToStore(
       (state) => state.userPreferences,
       (current, previous) => {
+        latestPreferences = current;
         localStorage.setItem(PREFERENCES_KEY, JSON.stringify(current));
         if (
           previous.browserSaveEnabled === true &&
@@ -133,10 +148,7 @@ export function usePersistence(specifications: SpecificationRegistry): void {
     );
 
     // Persist the initial preferences value so the key always exists.
-    localStorage.setItem(
-      PREFERENCES_KEY,
-      JSON.stringify(useStore.getState().userPreferences),
-    );
+    localStorage.setItem(PREFERENCES_KEY, JSON.stringify(preferences));
 
     return () => {
       unsubApp();
@@ -145,5 +157,18 @@ export function usePersistence(specifications: SpecificationRegistry): void {
       writeApplicationState.flush();
       writeUiState.flush();
     };
-  }, [specifications]);
+  }, [initialize, setLoadErrors, specifications]);
+
+  const loadFromUploadedFile = React.useCallback(
+    async (file: File): Promise<void> => {
+      const result = await parseUploadedFile(file);
+      if (result.kind === "ok") {
+        setApplicationState(result.applicationState);
+      }
+      setLoadErrors(result.errors);
+    },
+    [setApplicationState, setLoadErrors],
+  );
+
+  return { loadFromUploadedFile };
 }

@@ -16,7 +16,7 @@ import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { UserInput } from "#src/common/types/userInput";
 import type { Workbook } from "#src/common/types/workbook";
-import type { LoadError } from "#src/persistence/loadError";
+import type { LoadError } from "#src/persistence/types/loadError";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
@@ -37,6 +37,7 @@ type StoreState = {
     specifications: SpecificationRegistry,
     loadErrors?: LoadError[],
   ) => void;
+  setApplicationState: (applicationState: ApplicationState) => void;
   setLoadErrors: (errors: LoadError[]) => void;
   clearLoadErrors: () => void;
   setFilingStatus: (filingStatus: FilingStatus) => void;
@@ -141,6 +142,25 @@ const useStoreInner = create<StoreState>((set) => ({
       }),
       true,
     );
+  },
+
+  setApplicationState: (applicationState) => {
+    set((state) => {
+      if (!state.specifications) {
+        throw new Error("Store not initialized yet");
+      }
+      return {
+        ...state,
+        applicationState,
+        history: { past: [], future: [] },
+        workbook: computeWorkbook(
+          state.specifications,
+          applicationState.formInstances,
+          applicationState.filingStatus,
+          state.workbook,
+        ),
+      };
+    }, true);
   },
 
   setLoadErrors: (errors) => {
@@ -326,38 +346,19 @@ const useStoreInner = create<StoreState>((set) => ({
   },
 }));
 
-type UseStore = {
-  (): StoreState;
-  <U>(selector: (state: StoreState) => U): U;
-  getState: () => StoreState;
-  setState: {
-    (
-      partial:
-        | StoreState
-        | Partial<StoreState>
-        | ((state: StoreState) => StoreState | Partial<StoreState>),
-      replace?: false,
-    ): void;
-    (
-      state: StoreState | ((state: StoreState) => StoreState),
-      replace: true,
-    ): void;
-  };
-};
+const wholeStateSelector = (state: StoreState): StoreState => state;
 
-function useStoreBase<U>(selector?: (state: StoreState) => U) {
-  const state = useStoreInner();
-  if (selector) {
-    return selector(state);
-  } else {
-    return state;
-  }
+// Pass the selector through to Zustand so we only re-render on slice changes.
+// Calling useStoreInner() with no selector subscribes to the whole state and
+// re-renders on every change — which can trivially cause infinite render
+// loops in components that recompute non-stable inputs on each render.
+export function useStore(): StoreState;
+export function useStore<U>(selector: (state: StoreState) => U): U;
+export function useStore(
+  selector: (state: StoreState) => unknown = wholeStateSelector,
+): unknown {
+  return useStoreInner(selector);
 }
-
-export const useStore: UseStore = Object.assign(useStoreBase, {
-  getState: () => useStoreInner.getState(),
-  setState: useStoreInner.setState.bind(useStoreInner),
-});
 
 export function subscribeToStore<U>(
   selector: (state: StoreState) => U,

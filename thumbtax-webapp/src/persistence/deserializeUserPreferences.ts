@@ -1,6 +1,6 @@
 import { DEFAULT_USER_PREFERENCES } from "#src/state/defaults";
 
-import type { LoadError } from "#src/persistence/loadError";
+import type { LoadError } from "#src/persistence/types/loadError";
 import type { UserPreferences } from "#src/state/types/userPreferences";
 
 const KNOWN_FIELDS = new Set(["browserSaveEnabled", "maximumHistorySize"]);

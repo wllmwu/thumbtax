@@ -12,7 +12,7 @@ import { subscribeToStore, useStore } from "#src/state/useStore";
 
 import type { FormClass } from "#src/common/types/formClass";
 import type { UserInput } from "#src/common/types/userInput";
-import type { LoadError } from "#src/persistence/loadError";
+import type { LoadError } from "#src/persistence/types/loadError";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
@@ -1256,22 +1256,6 @@ describe("useStore", () => {
       expect(result.current.loadErrors).toEqual([]);
     });
 
-    it("is populated by initialize", () => {
-      const { result, rerender } = renderHook(() => useStore());
-      const errors: LoadError[] = [
-        { type: "tax_year_mismatch", saved: 2024, current: 2025 },
-      ];
-      result.current.initialize(
-        DEFAULT_APPLICATION_STATE,
-        DEFAULT_UI_STATE,
-        DEFAULT_PREFERENCES,
-        makeTestRegistry(),
-        errors,
-      );
-      rerender();
-      expect(result.current.loadErrors).toEqual(errors);
-    });
-
     it("setLoadErrors replaces the current array", () => {
       const { result, rerender } = renderHook(() => useStore());
       const errors: LoadError[] = [
@@ -1291,6 +1275,99 @@ describe("useStore", () => {
       result.current.clearLoadErrors();
       rerender();
       expect(result.current.loadErrors).toEqual([]);
+    });
+  });
+
+  describe("setApplicationState", () => {
+    it("replaces applicationState while preserving uiState and userPreferences", () => {
+      const { result, rerender } = renderHook(() => useStore());
+      result.current.initialize(
+        DEFAULT_APPLICATION_STATE,
+        { connectionsGraphNodePositions: { [TEST_CLASS]: { x: 5, y: 6 } } },
+        { browserSaveEnabled: false, maximumHistorySize: 12 },
+        makeTestRegistry(),
+      );
+      rerender();
+
+      const next: ApplicationState = {
+        filingStatus: "head_of_household",
+        formClasses: [TEST_CLASS],
+        formInstances: {
+          [TEST_CLASS]: [
+            { id: "abc", class: TEST_CLASS, label: "Loaded", inputs: {} },
+          ],
+        },
+      };
+      result.current.setApplicationState(next);
+      rerender();
+
+      expect(result.current.applicationState).toEqual(next);
+      expect(result.current.uiState).toEqual({
+        connectionsGraphNodePositions: { [TEST_CLASS]: { x: 5, y: 6 } },
+      });
+      expect(result.current.userPreferences).toEqual({
+        browserSaveEnabled: false,
+        maximumHistorySize: 12,
+      });
+    });
+
+    it("clears undo and redo history", () => {
+      const { result, rerender } = renderHook(() => useStore());
+      result.current.initialize(
+        DEFAULT_APPLICATION_STATE,
+        DEFAULT_UI_STATE,
+        DEFAULT_PREFERENCES,
+        makeTestRegistry(),
+      );
+      rerender();
+      result.current.setFilingStatus("married_filing_jointly");
+      rerender();
+      expect(result.current.history.past.length).toBe(1);
+
+      result.current.setApplicationState({
+        filingStatus: "single",
+        formClasses: [],
+        formInstances: {},
+      });
+      rerender();
+
+      expect(result.current.history).toEqual({ past: [], future: [] });
+    });
+
+    it("recomputes the workbook", () => {
+      const { result, rerender } = renderHook(() => useStore());
+      result.current.initialize(
+        DEFAULT_APPLICATION_STATE,
+        DEFAULT_UI_STATE,
+        DEFAULT_PREFERENCES,
+        makeTestRegistry(),
+      );
+      rerender();
+
+      const next: ApplicationState = {
+        filingStatus: "single",
+        formClasses: [TEST_CLASS],
+        formInstances: {
+          [TEST_CLASS]: [
+            {
+              id: "abc",
+              class: TEST_CLASS,
+              label: "L",
+              inputs: { [NUMBER_INPUT_BOX]: { type: "number", value: 42 } },
+            },
+          ],
+        },
+      };
+      result.current.setApplicationState(next);
+      rerender();
+
+      expect(result.current.workbook).toEqual(
+        expect.objectContaining({
+          abc: expect.objectContaining({
+            [NUMBER_INPUT_BOX]: expect.objectContaining({ value: 42 }),
+          }),
+        }),
+      );
     });
   });
 

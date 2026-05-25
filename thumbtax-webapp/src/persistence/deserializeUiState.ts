@@ -1,7 +1,7 @@
 import { DEFAULT_UI_STATE } from "#src/state/defaults";
 
 import type { FormClass } from "#src/common/types/formClass";
-import type { LoadError } from "#src/persistence/loadError";
+import type { LoadError } from "#src/persistence/types/loadError";
 import type { UiState } from "#src/state/types/uiState";
 
 const KNOWN_FIELDS = new Set(["connectionsGraphNodePositions"]);
