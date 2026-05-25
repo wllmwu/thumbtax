@@ -261,13 +261,12 @@ export const Form1040S1A: FormSpecification = {
       heading: "Part III. No Tax on Overtime",
       lines: [
         {
-          // TODO: support codes in Form W-2 box 12
           index: "14a",
           description:
             "Qualified overtime compensation included in Form W-2, box 1. If you received qualified overtime compensation not reported on Form W-2, box 1, see instructions",
           box: {
             identifier: "14a",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "fW2", box: "12_code_TT" },
           },
         },
         {

@@ -214,13 +214,20 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
-          // TODO: support codes in Form W-2 box 12
           index: "13",
           description:
             "Uncollected social security and Medicare or RRTA tax on tips or group-term life insurance from Form W-2, box 12",
           box: {
             identifier: "13",
-            value: { type: "number_input" },
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", form: "fW2", box: "12_code_A" },
+                { type: "box_reference", form: "fW2", box: "12_code_B" },
+                { type: "box_reference", form: "fW2", box: "12_code_M" },
+                { type: "box_reference", form: "fW2", box: "12_code_N" },
+              ],
+            },
           },
         },
         {

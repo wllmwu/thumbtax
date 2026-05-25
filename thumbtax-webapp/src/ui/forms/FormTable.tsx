@@ -1,12 +1,57 @@
+import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
+
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 
 import type { FormInstance } from "#src/common/types/formInstance";
-import type { FormSpecification } from "#src/specifications/types/formSpecification";
+import type {
+  FormLine,
+  FormSpecification,
+} from "#src/specifications/types/formSpecification";
 
 type Props = {
   specification: FormSpecification;
   instances: FormInstance[];
 };
+
+function FormLineTableRow({
+  line,
+  instance,
+}: {
+  line: FormLine<boolean>;
+  instance: FormInstance;
+}) {
+  return (
+    <div>
+      <span>{line.index}</span>
+      <span>{line.description}</span>
+      {"boxes" in line ? (
+        line.boxes.map((box) => (
+          <span key={box.identifier}>
+            <FormBoxContent instance={instance} box={box} />
+          </span>
+        ))
+      ) : (
+        <span>
+          <FormBoxContent instance={instance} box={line.box} />
+        </span>
+      )}
+      {line.children && (
+        <Disclosure>
+          <Button slot="trigger">Expand/collapse</Button>
+          <DisclosurePanel>
+            {line.children.map((child) => (
+              <FormLineTableRow
+                key={child.index}
+                line={child}
+                instance={instance}
+              />
+            ))}
+          </DisclosurePanel>
+        </Disclosure>
+      )}
+    </div>
+  );
+}
 
 export function FormTable({ specification, instances }: Props) {
   const allowsMultipleInstances =
@@ -34,21 +79,11 @@ export function FormTable({ specification, instances }: Props) {
                 )}
               </div>
               {section.lines.map((line) => (
-                <div key={line.index}>
-                  <span>{line.index}</span>
-                  <span>{line.description}</span>
-                  {"boxes" in line ? (
-                    line.boxes.map((box) => (
-                      <span key={box.identifier}>
-                        <FormBoxContent instance={instance} box={box} />
-                      </span>
-                    ))
-                  ) : (
-                    <span>
-                      <FormBoxContent instance={instance} box={line.box} />
-                    </span>
-                  )}
-                </div>
+                <FormLineTableRow
+                  key={line.index}
+                  line={line}
+                  instance={instance}
+                />
               ))}
             </div>
           ))}
