@@ -386,7 +386,7 @@ export const Form1040: FormSpecification = {
           description: "Additional deductions from Schedule 1-A, line 38",
           box: {
             identifier: "13b",
-            value: { type: "box_reference", form: "f1040s1a", box: "38" },
+            value: { type: "box_reference", form: "f1040s1A", box: "38" },
           },
         },
         {

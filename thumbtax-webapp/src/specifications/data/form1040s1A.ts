@@ -1,7 +1,7 @@
 import type { FormSpecification } from "#src/specifications/types/formSpecification";
 
 export const Form1040S1A: FormSpecification = {
-  class: "f1040s1a",
+  class: "f1040s1A",
   title: "Schedule 1-A (Form 1040)",
   subtitle: "Additional Deductions",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
