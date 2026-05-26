@@ -1,30 +1,20 @@
+import { FORM_CLASSES } from "#src/common/types/formClass";
 import { DEFAULT_UI_STATE } from "#src/state/defaults";
 
 import type { FormClass } from "#src/common/types/formClass";
 import type { LoadError } from "#src/persistence/types/loadError";
 import type { UiState } from "#src/state/types/uiState";
 
-const KNOWN_FIELDS = new Set(["connectionsGraphNodePositions"]);
+const KNOWN_FIELDS = new Set(Object.keys(DEFAULT_UI_STATE));
 
-const KNOWN_FORM_CLASSES: Set<FormClass> = new Set([
-  "f1040",
-  "f1040s1",
-  "f1040s1a",
-  "f1040s2",
-  "f1040s3",
-  "f1099B",
-  "f1099DIV",
-  "f1099INT",
-  "f1099NEC",
-  "fW2",
-]);
+const KNOWN_FORM_CLASSES = new Set<string>(FORM_CLASSES);
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function isKnownFormClass(value: string): value is FormClass {
-  return (KNOWN_FORM_CLASSES as Set<string>).has(value);
+  return KNOWN_FORM_CLASSES.has(value);
 }
 
 export function deserializeUiState(raw: unknown): {

@@ -1,23 +1,26 @@
-export type FormClass =
-  | "f1040"
-  | "f1040s1"
-  | "f1040s1A"
-  | "f1040s2"
-  | "f1040s3"
-  | "f1040sA"
-  | "f1040sC"
-  | "f1040sD"
-  | "f1040sSE"
-  | "f1099B"
-  | "f1099DIV"
-  | "f1099INT"
-  | "f1099NEC"
-  | "f2555"
-  | "f6251"
-  | "f8889"
-  | "f8949"
-  | "f8959"
-  | "f8960"
-  | "f8995"
-  | "f8995A"
-  | "fW2";
+export const FORM_CLASSES = [
+  "f1040",
+  "f1040s1",
+  "f1040s1A",
+  "f1040s2",
+  "f1040s3",
+  "f1040sA",
+  "f1040sC",
+  "f1040sD",
+  "f1040sSE",
+  "f1099B",
+  "f1099DIV",
+  "f1099INT",
+  "f1099NEC",
+  "f2555",
+  "f6251",
+  "f8889",
+  "f8949",
+  "f8959",
+  "f8960",
+  "f8995",
+  "f8995A",
+  "fW2",
+] as const;
+
+export type FormClass = (typeof FORM_CLASSES)[number];
