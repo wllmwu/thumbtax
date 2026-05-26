@@ -11,6 +11,7 @@ import type {
 } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { ResolvedBox, Workbook } from "#src/common/types/workbook";
+import type { FormLine } from "#src/specifications/types/formSpecification";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ValueProvider } from "#src/specifications/types/valueProvider";
 
@@ -403,7 +404,17 @@ export function computeWorkbook(
     const specification = specificationRegistry[instance.class];
 
     for (const section of specification.sections) {
-      for (const line of section.lines) {
+      const allLines = section.lines.reduce<Array<FormLine<boolean>>>(
+        (acc, { children, ...line }) => {
+          acc.push(line);
+          if (children) {
+            acc.push(...children);
+          }
+          return acc;
+        },
+        [],
+      );
+      for (const line of allLines) {
         const boxes = "box" in line ? [line.box] : line.boxes;
         for (const box of boxes) {
           const address: BoxAddress = {

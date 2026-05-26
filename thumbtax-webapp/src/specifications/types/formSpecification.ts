@@ -19,7 +19,11 @@ export type FormSpecification = {
 
 export type FormSection<MultiColumns extends boolean> = {
   heading?: string;
-  lines: Array<FormLine<MultiColumns>>;
+  lines: Array<
+    FormLine<MultiColumns> & {
+      children?: Array<FormLine<MultiColumns>>;
+    }
+  >;
 } & (MultiColumns extends true
   ? {
       columns: Array<{
@@ -34,7 +38,6 @@ export type FormSection<MultiColumns extends boolean> = {
 export type FormLine<MultiColumns extends boolean> = {
   index: LineIndex;
   description?: string;
-  children?: Array<FormLine<MultiColumns>>;
 } & (MultiColumns extends true
   ? {
       boxes: Array<FormBox<MultiColumns>>;

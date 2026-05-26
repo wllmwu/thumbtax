@@ -1313,6 +1313,135 @@ describe("computeWorkbook", () => {
     expect(result[TEST_INSTANCE_ID][BOX_UNDER_TEST_ID]).toEqual(expected);
   });
 
+  it("resolves boxes on child lines", () => {
+    const specificationRegistry = makeRegistryFixture({
+      [TEST_CLASS]: makeSpecificationFixture({
+        class: TEST_CLASS,
+        sections: [
+          makeSectionFixture({
+            lines: [
+              makeLineFixture({
+                index: "a",
+                box: makeBoxFixture({
+                  identifier: "a",
+                  value: { type: "number_input" },
+                }),
+              }),
+              makeLineFixture({
+                index: "b2_raw",
+                box: makeBoxFixture({
+                  identifier: "b2_raw",
+                  value: { type: "number_input" },
+                }),
+              }),
+              {
+                ...makeLineFixture({
+                  index: "b",
+                  box: makeBoxFixture({
+                    identifier: "b",
+                    value: {
+                      type: "sum",
+                      values: [
+                        { type: "box_reference", box: "b1" },
+                        { type: "box_reference", box: "b2" },
+                        { type: "box_reference", box: "b3" },
+                      ],
+                    },
+                  }),
+                }),
+                children: [
+                  makeLineFixture({
+                    index: "b1",
+                    box: makeBoxFixture({
+                      identifier: "b1",
+                      value: { type: "number_input" },
+                    }),
+                  }),
+                  makeLineFixture({
+                    index: "b2",
+                    box: makeBoxFixture({
+                      identifier: "b2",
+                      value: {
+                        type: "minimum",
+                        values: [
+                          { type: "box_reference", box: "b2_raw" },
+                          { type: "number_constant", value: 40 },
+                        ],
+                      },
+                    }),
+                  }),
+                  makeLineFixture({
+                    index: "b3",
+                    box: makeBoxFixture({
+                      identifier: "b3",
+                      value: { type: "number_input" },
+                    }),
+                  }),
+                ],
+              },
+              makeLineFixture({
+                index: "c",
+                box: makeBoxFixture({
+                  identifier: "c",
+                  value: {
+                    type: "sum",
+                    values: [
+                      { type: "box_reference", box: "a" },
+                      { type: "box_reference", box: "b" },
+                    ],
+                  },
+                }),
+              }),
+              makeLineFixture({
+                index: BOX_UNDER_TEST_ID,
+                box: makeBoxFixture({
+                  identifier: BOX_UNDER_TEST_ID,
+                  value: {
+                    type: "difference",
+                    minuend: { type: "box_reference", box: "c" },
+                    subtrahend: { type: "box_reference", box: "b2" },
+                  },
+                }),
+              }),
+            ],
+          }),
+        ],
+      }),
+    });
+
+    const instanceRegistry: InstanceRegistry = {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          class: TEST_CLASS,
+          inputs: {
+            a: { type: "number", value: 100 },
+            b2_raw: { type: "number", value: 60 },
+            b1: { type: "number", value: 25 },
+            b3: { type: "number", value: 15 },
+          },
+        }),
+      ],
+    };
+
+    const result = computeWorkbook(
+      specificationRegistry,
+      instanceRegistry,
+      "single",
+      {},
+    );
+
+    expect(result[TEST_INSTANCE_ID]["b1"]).toEqual({ value: 25, errors: [] });
+    expect(result[TEST_INSTANCE_ID]["b2"]).toEqual({ value: 40, errors: [] });
+    expect(result[TEST_INSTANCE_ID]["b3"]).toEqual({ value: 15, errors: [] });
+    expect(result[TEST_INSTANCE_ID]["b"]).toEqual({ value: 80, errors: [] });
+    expect(result[TEST_INSTANCE_ID]["c"]).toEqual({ value: 180, errors: [] });
+    expect(result[TEST_INSTANCE_ID][BOX_UNDER_TEST_ID]).toEqual({
+      value: 140,
+      errors: [],
+    });
+  });
+
   describe("referential equality preservation", () => {
     it("preserves box reference when resolved value is unchanged with no errors", () => {
       const originalBox: ResolvedBox = { value: 42, errors: [] };
