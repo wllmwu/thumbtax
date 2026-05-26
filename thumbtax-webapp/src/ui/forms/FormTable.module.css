@@ -1,0 +1,66 @@
+.form-table {
+  --instance-count: 1;
+  --line-count: 1;
+  --max-column-count: 1;
+  display: grid;
+  grid-template-columns: max-content 400px repeat(
+      calc(var(--instance-count) * var(--max-column-count)),
+      200px
+    );
+}
+
+.form-instance {
+  --row-header-column-count: 2;
+  grid-column: auto / span
+    calc(var(--row-header-column-count) + var(--max-column-count));
+  grid-row: auto / span var(--line-count);
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+}
+
+.form-instance:not(:first-child) {
+  --row-header-column-count: 0;
+}
+
+.form-instance:not(:first-child) .form-table-row-header {
+  display: none;
+}
+
+.form-table-row {
+  grid-row: auto / span 1;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+}
+
+.form-instance-label-cell {
+  grid-row: auto / span 1;
+  grid-column: 3 / -1;
+}
+
+.form-section-heading-cell {
+  grid-row: auto / span 1;
+  grid-column: 1 / -1;
+}
+
+.form-line-column {
+  --box-index: 0;
+  --column-count: 1;
+  grid-column: calc(-1 - var(--column-count) + var(--box-index)) / span 1;
+}
+
+.form-line-children-disclosure {
+  display: contents;
+}
+
+.form-line-children-disclosure[data-expanded="true"]
+  .form-line-children-disclosure-panel {
+  display: contents;
+}
+
+.form-line-children-disclosure-trigger {
+  grid-row: auto / span 1;
+  grid-column: 2 / 3;
+}
