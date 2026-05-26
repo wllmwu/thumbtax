@@ -13,6 +13,6 @@ export const DEFAULT_UI_STATE: UiState = {
 };
 
 export const DEFAULT_USER_PREFERENCES: UserPreferences = {
-  browserSaveEnabled: true,
+  browserSaveEnabled: false,
   maximumHistorySize: 50,
 };
