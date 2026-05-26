@@ -6,7 +6,7 @@ import { DEFAULT_USER_PREFERENCES } from "#src/state/defaults";
 describe("deserializeUserPreferences", () => {
   it("returns defaults with no errors when given the default-equivalent object", () => {
     const { preferences, errors } = deserializeUserPreferences({
-      browserSaveEnabled: true,
+      browserSaveEnabled: false,
       maximumHistorySize: 50,
     });
     expect(preferences).toEqual(DEFAULT_USER_PREFERENCES);

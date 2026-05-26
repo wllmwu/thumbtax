@@ -64,7 +64,7 @@ describe("usePersistence", () => {
       rerender();
       expect(result.current.applicationState.filingStatus).toBe("single");
       expect(result.current.uiState.connectionsGraphNodePositions).toEqual({});
-      expect(result.current.userPreferences.browserSaveEnabled).toBe(true);
+      expect(result.current.userPreferences.browserSaveEnabled).toBe(false);
       expect(result.current.loadErrors).toEqual([]);
       expect(result.current.specifications).toBeDefined();
     });
@@ -139,6 +139,11 @@ describe("usePersistence", () => {
 
   describe("autosave (browserSaveEnabled true)", () => {
     it("writes applicationState changes to SAVED_STATE_KEY after debounce", () => {
+      localStorage.setItem(
+        PREFERENCES_KEY,
+        JSON.stringify({ browserSaveEnabled: true, maximumHistorySize: 50 }),
+      );
+
       const { result } = renderHook(() => useStore());
       render(<Harness />);
 
@@ -198,6 +203,11 @@ describe("usePersistence", () => {
 
   describe("toggle-off reconciliation", () => {
     it("clears SAVED_STATE_KEY and UI_STATE_KEY when browserSaveEnabled flips true -> false", () => {
+      // Pre-seed preferences with browserSaveEnabled: true so autosave is active from the start.
+      localStorage.setItem(
+        PREFERENCES_KEY,
+        JSON.stringify({ browserSaveEnabled: true, maximumHistorySize: 50 }),
+      );
       // Pre-seed UI state in localStorage so the hook loads it on mount.
       localStorage.setItem(
         UI_STATE_KEY,
