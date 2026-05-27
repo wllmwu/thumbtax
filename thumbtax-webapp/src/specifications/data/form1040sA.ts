@@ -64,78 +64,82 @@ export const Form1040SA: FormSpecification = {
       lines: [
         {
           index: "5",
-          description: "State and local taxes (SALT).",
+          description: "State and local taxes (SALT):",
           box: {
             identifier: "5",
             value: { type: "unused" },
           },
-          children: [
-            {
-              index: "5a",
-              description:
-                "State and local income taxes or general sales taxes. You may include either income taxes or general sales taxes on line 5a, but not both. If you elect to include general sales taxes instead of income taxes, check this box",
-              // NOTE: This line includes both a number input and a checkbox (to elect general
-              // sales taxes instead of income taxes). The schema does not support multiple
-              // value types on a single line, so this is modeled as a number_input only.
-              box: {
-                identifier: "5a",
-                value: { type: "number_input" },
-              },
+        },
+        {
+          index: "5a",
+          description:
+            "State and local income taxes or general sales taxes. You may include either income taxes or general sales taxes on line 5a, but not both",
+          box: {
+            identifier: "5a",
+            value: { type: "number_input" },
+          },
+        },
+        {
+          index: "5b",
+          description: "State and local real estate taxes (see instructions)",
+          box: {
+            identifier: "5b",
+            value: { type: "number_input" },
+          },
+        },
+        {
+          index: "5c",
+          description: "State and local personal property taxes",
+          box: {
+            identifier: "5c",
+            value: { type: "number_input" },
+          },
+        },
+        {
+          index: "5d",
+          description: "Add lines 5a through 5c",
+          box: {
+            identifier: "5d",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "5a" },
+                { type: "box_reference", box: "5b" },
+                { type: "box_reference", box: "5c" },
+              ],
             },
-            {
-              index: "5b",
-              description:
-                "State and local real estate taxes (see instructions)",
-              box: {
-                identifier: "5b",
-                value: { type: "number_input" },
-              },
-            },
-            {
-              index: "5c",
-              description: "State and local personal property taxes",
-              box: {
-                identifier: "5c",
-                value: { type: "number_input" },
-              },
-            },
-            {
-              index: "5d",
-              description: "Add lines 5a through 5c",
-              box: {
-                identifier: "5d",
-                value: {
-                  type: "sum",
-                  values: [
-                    { type: "box_reference", box: "5a" },
-                    { type: "box_reference", box: "5b" },
-                    { type: "box_reference", box: "5c" },
-                  ],
+          },
+        },
+        {
+          index: "5e",
+          description:
+            "Enter the smaller of line 5d or $40,000 ($20,000 if married filing separately). If Form 1040 or 1040-SR, line 11b is more than $500,000 ($250,000 if married filing separately), or if you completed Form 2555, Form 4563, or excluded income from Puerto Rico, see instructions",
+          box: {
+            identifier: "5e",
+            value: {
+              type: "minimum",
+              values: [
+                { type: "box_reference", box: "5d" },
+                {
+                  type: "filing_status_map",
+                  values: {
+                    married_filing_separately: {
+                      type: "number_constant",
+                      value: 20000,
+                    },
+                  },
+                  default: { type: "number_constant", value: 40000 },
                 },
-              },
+              ],
             },
-            {
-              index: "5e",
-              description:
-                "Enter the smaller of line 5d or $40,000 ($20,000 if married filing separately). If Form 1040 or 1040-SR, line 11b is more than $500,000 ($250,000 if married filing separately), or if you completed Form 2555, Form 4563, or excluded income from Puerto Rico, see instructions",
-              // NOTE: The cap amount varies by filing status and additional conditions
-              // (Form 2555, Form 4563, Puerto Rico exclusion) that cannot be fully expressed
-              // by the current schema. Defaulting to number_input.
-              box: {
-                identifier: "5e",
-                value: { type: "number_input" },
-              },
-            },
-          ],
+          },
         },
         {
           index: "6",
           description: "Other taxes. List type and amount:",
-          // NOTE: This line accepts a free-text list of types and amounts. The schema has
-          // no "list_text_input" type, so defaulting to number_input for the amount.
           box: {
             identifier: "6",
-            value: { type: "number_input" },
+            value: { type: "list_amounts_input" },
           },
         },
         {
@@ -160,65 +164,61 @@ export const Form1040SA: FormSpecification = {
         {
           index: "8",
           description:
-            "Home mortgage interest and points. If you didn't use all of your home mortgage loan(s) to buy, build, or improve your home, see instructions and check this box",
-          // NOTE: This heading line has an associated checkbox only (no numeric value).
-          // Modeled as unused since the checkbox cannot be expressed in the current schema.
+            "Home mortgage interest and points. If you didn't use all of your home mortgage loan(s) to buy, build, or improve your home, see instructions",
           box: {
             identifier: "8",
             value: { type: "unused" },
           },
-          children: [
-            {
-              index: "8a",
-              description:
-                "Home mortgage interest and points reported to you on Form 1098. See instructions if limited",
-              box: {
-                identifier: "8a",
-                value: { type: "number_input" },
-              },
+        },
+        {
+          index: "8a",
+          description:
+            "Home mortgage interest and points reported to you on Form 1098. See instructions if limited",
+          box: {
+            identifier: "8a",
+            value: { type: "number_input" },
+          },
+        },
+        {
+          index: "8b",
+          description:
+            "Home mortgage interest not reported to you on Form 1098. See instructions if limited. If paid to the person from whom you bought the home, see instructions",
+          box: {
+            identifier: "8b",
+            value: { type: "number_input" },
+          },
+        },
+        {
+          index: "8c",
+          description:
+            "Points not reported to you on Form 1098. See instructions for special rules",
+          box: {
+            identifier: "8c",
+            value: { type: "number_input" },
+          },
+        },
+        {
+          index: "8d",
+          description: "Reserved for future use",
+          box: {
+            identifier: "8d",
+            value: { type: "unused" },
+          },
+        },
+        {
+          index: "8e",
+          description: "Add lines 8a through 8c",
+          box: {
+            identifier: "8e",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "8a" },
+                { type: "box_reference", box: "8b" },
+                { type: "box_reference", box: "8c" },
+              ],
             },
-            {
-              index: "8b",
-              description:
-                "Home mortgage interest not reported to you on Form 1098. See instructions if limited. If paid to the person from whom you bought the home, see instructions and show that person's name, identifying no., and address",
-              box: {
-                identifier: "8b",
-                value: { type: "number_input" },
-              },
-            },
-            {
-              index: "8c",
-              description:
-                "Points not reported to you on Form 1098. See instructions for special rules",
-              box: {
-                identifier: "8c",
-                value: { type: "number_input" },
-              },
-            },
-            {
-              index: "8d",
-              description: "Reserved for future use",
-              box: {
-                identifier: "8d",
-                value: { type: "unused" },
-              },
-            },
-            {
-              index: "8e",
-              description: "Add lines 8a through 8c",
-              box: {
-                identifier: "8e",
-                value: {
-                  type: "sum",
-                  values: [
-                    { type: "box_reference", box: "8a" },
-                    { type: "box_reference", box: "8b" },
-                    { type: "box_reference", box: "8c" },
-                  ],
-                },
-              },
-            },
-          ],
+          },
         },
         {
           index: "9",
@@ -310,12 +310,11 @@ export const Form1040SA: FormSpecification = {
       lines: [
         {
           index: "16",
-          description: "Other—from list in instructions. List type and amount:",
-          // NOTE: This line accepts a free-text list of types and amounts. The schema has
-          // no "list_text_input" type, so defaulting to number_input for the amount.
+          description:
+            "Other\u2014from list in instructions. List type and amount:",
           box: {
             identifier: "16",
-            value: { type: "number_input" },
+            value: { type: "list_amounts_input" },
           },
         },
       ],
@@ -346,12 +345,9 @@ export const Form1040SA: FormSpecification = {
           index: "18",
           description:
             "If you elect to itemize deductions even though they are less than your standard deduction, check this box",
-          // NOTE: This is a standalone checkbox with no associated numeric value.
-          // The schema has no standalone checkbox_input at line level without a number.
-          // Defaulting to number_input.
           box: {
             identifier: "18",
-            value: { type: "number_input" },
+            value: { type: "unused" },
           },
         },
       ],
