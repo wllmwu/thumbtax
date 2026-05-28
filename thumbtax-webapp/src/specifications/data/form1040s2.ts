@@ -222,10 +222,10 @@ export const Form1040S2: FormSpecification = {
             value: {
               type: "sum",
               values: [
-                { type: "box_reference", form: "fW2", box: "12_code_A" },
-                { type: "box_reference", form: "fW2", box: "12_code_B" },
-                { type: "box_reference", form: "fW2", box: "12_code_M" },
-                { type: "box_reference", form: "fW2", box: "12_code_N" },
+                { type: "box_reference", form: "fW2_12_codes", box: "A" },
+                { type: "box_reference", form: "fW2_12_codes", box: "B" },
+                { type: "box_reference", form: "fW2_12_codes", box: "M" },
+                { type: "box_reference", form: "fW2_12_codes", box: "N" },
               ],
             },
           },

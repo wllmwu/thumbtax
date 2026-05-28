@@ -11,5 +11,4 @@ description: Write the specification for a tax form based on the PDF
    - If something cannot currently be expressed by the specification schema, default to a "number_input" box and inform the user about the gap.
 4. Update the following files to include the new form class(es):
    - `thumbtax-webapp/src/specifications/specificationClient.ts`
-   - `thumbtax-webapp/src/specifications/test/fixtures.ts`
 5. Run `npm run typecheck` and fix any type errors related to your changes.

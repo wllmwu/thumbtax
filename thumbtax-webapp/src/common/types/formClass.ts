@@ -18,6 +18,7 @@ export const FORM_CLASSES = [
   "f8960",
   "f8995",
   "fW2",
+  "fW2_12_codes",
 ] as const;
 
 export type FormClass = (typeof FORM_CLASSES)[number];

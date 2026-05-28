@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 import classNames from "classnames";
-import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import styles from "#src/ui/forms/FormTable.module.css";
@@ -56,39 +55,17 @@ export function FormTable({ specification, instances }: Props) {
   const allowsMultipleInstances =
     specification.maxInstances === null || specification.maxInstances > 1;
 
-  const [expandedLines, setExpandedLines] = useState<Set<string>>(new Set());
-
-  const toggleLine = React.useCallback((lineIndex: string) => {
-    setExpandedLines((prev) => {
-      const next = new Set(prev);
-      if (next.has(lineIndex)) {
-        next.delete(lineIndex);
-      } else {
-        next.add(lineIndex);
-      }
-      return next;
-    });
-  }, []);
-
-  const lineCount = React.useMemo(() => {
+  const rowCount = React.useMemo(() => {
     let count = allowsMultipleInstances ? 1 : 0;
     for (const section of specification.sections) {
       if (section.heading) {
         count++;
       }
       count++;
-      for (const line of section.lines) {
-        count++;
-        if (line.children) {
-          count++;
-          if (expandedLines.has(line.index)) {
-            count += line.children.length;
-          }
-        }
-      }
+      count += section.lines.length;
     }
     return count;
-  }, [allowsMultipleInstances, expandedLines, specification.sections]);
+  }, [allowsMultipleInstances, specification.sections]);
 
   return (
     <div
@@ -96,12 +73,12 @@ export function FormTable({ specification, instances }: Props) {
       style={
         {
           "--instance-count": instances.length,
-          "--line-count": lineCount,
           "--max-column-count": Math.max(
             ...specification.sections.map(
               ({ columns }) => columns?.length ?? 1,
             ),
           ),
+          "--row-count": rowCount,
         } as React.CSSProperties
       }
     >
@@ -157,36 +134,6 @@ export function FormTable({ specification, instances }: Props) {
                     line={line}
                     instance={instance}
                   />
-                  {line.children && (
-                    <Disclosure
-                      isExpanded={expandedLines.has(line.index)}
-                      onExpandedChange={() => toggleLine(line.index)}
-                      className={styles.formLineChildrenDisclosure}
-                    >
-                      <div className={styles.formTableRow}>
-                        <Button
-                          slot="trigger"
-                          className={classNames(
-                            styles.formLineChildrenDisclosureTrigger,
-                            styles.formTableRowHeader,
-                          )}
-                        >
-                          Expand/collapse
-                        </Button>
-                      </div>
-                      <DisclosurePanel
-                        className={styles.formLineChildrenDisclosurePanel}
-                      >
-                        {line.children.map((child) => (
-                          <FormLineTableRow
-                            key={child.index}
-                            line={child}
-                            instance={instance}
-                          />
-                        ))}
-                      </DisclosurePanel>
-                    </Disclosure>
-                  )}
                 </React.Fragment>
               ))}
             </React.Fragment>

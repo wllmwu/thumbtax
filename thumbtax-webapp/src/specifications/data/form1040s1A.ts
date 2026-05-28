@@ -266,7 +266,7 @@ export const Form1040S1A: FormSpecification = {
             "Qualified overtime compensation included in Form W-2, box 1. If you received qualified overtime compensation not reported on Form W-2, box 1, see instructions",
           box: {
             identifier: "14a",
-            value: { type: "box_reference", form: "fW2", box: "12_code_TT" },
+            value: { type: "box_reference", form: "fW2_12_codes", box: "TT" },
           },
         },
         {

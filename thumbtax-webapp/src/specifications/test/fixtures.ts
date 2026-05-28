@@ -1,3 +1,5 @@
+import { FORM_CLASSES } from "#src/common/types/formClass";
+
 import type {
   FormBox,
   FormLine,
@@ -83,26 +85,14 @@ export function makeSpecificationFixture(
 export function makeRegistryFixture(
   overrides?: Partial<SpecificationRegistry>,
 ): SpecificationRegistry {
+  const defaults = Object.fromEntries(
+    FORM_CLASSES.map((formClass) => [
+      formClass,
+      makeSpecificationFixture({ class: formClass }),
+    ]),
+  ) as SpecificationRegistry;
   return {
-    f1040: makeSpecificationFixture({ class: "f1040" }),
-    f1040s1: makeSpecificationFixture({ class: "f1040s1" }),
-    f1040s1A: makeSpecificationFixture({ class: "f1040s1A" }),
-    f1040sA: makeSpecificationFixture({ class: "f1040sA" }),
-    f1040sC: makeSpecificationFixture({ class: "f1040sC" }),
-    f1040sD: makeSpecificationFixture({ class: "f1040sD" }),
-    f1040s2: makeSpecificationFixture({ class: "f1040s2" }),
-    f1040s3: makeSpecificationFixture({ class: "f1040s3" }),
-    f1099B: makeSpecificationFixture({ class: "f1099B" }),
-    f1099DIV: makeSpecificationFixture({ class: "f1099DIV" }),
-    f1099INT: makeSpecificationFixture({ class: "f1099INT" }),
-    f1099NEC: makeSpecificationFixture({ class: "f1099NEC" }),
-    f6251: makeSpecificationFixture({ class: "f6251" }),
-    f8889: makeSpecificationFixture({ class: "f8889" }),
-    f8949: makeSpecificationFixture({ class: "f8949" }),
-    f8959: makeSpecificationFixture({ class: "f8959" }),
-    f8960: makeSpecificationFixture({ class: "f8960" }),
-    f8995: makeSpecificationFixture({ class: "f8995" }),
-    fW2: makeSpecificationFixture({ class: "fW2" }),
+    ...defaults,
     ...overrides,
   };
 }

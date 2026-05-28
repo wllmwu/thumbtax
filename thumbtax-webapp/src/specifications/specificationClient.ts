@@ -17,6 +17,7 @@ import { Form8959 } from "#src/specifications/data/form8959";
 import { Form8960 } from "#src/specifications/data/form8960";
 import { Form8995 } from "#src/specifications/data/form8995";
 import { FormW2 } from "#src/specifications/data/formW2";
+import { FormW2_12_codes } from "#src/specifications/data/formW2_12_codes";
 
 import type { FormClass } from "#src/common/types/formClass";
 import type { FormSpecification } from "#src/specifications/types/formSpecification";
@@ -42,6 +43,7 @@ const allSpecifications: SpecificationRegistry = {
   f8960: Form8960,
   f8995: Form8995,
   fW2: FormW2,
+  fW2_12_codes: FormW2_12_codes,
 };
 
 export class SpecificationClient {

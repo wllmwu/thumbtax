@@ -1,7 +1,7 @@
 .form-table {
   --instance-count: 1;
-  --line-count: 1;
   --max-column-count: 1;
+  --row-count: 1;
   display: grid;
   grid-template-columns: max-content 400px repeat(
       calc(var(--instance-count) * var(--max-column-count)),
@@ -13,7 +13,7 @@
   --row-header-column-count: 2;
   grid-column: auto / span
     calc(var(--row-header-column-count) + var(--max-column-count));
-  grid-row: auto / span var(--line-count);
+  grid-row: auto / span var(--row-count);
   display: grid;
   grid-template-columns: subgrid;
   grid-template-rows: subgrid;
