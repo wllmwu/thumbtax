@@ -60,7 +60,7 @@ type ControlFlowValueProvider =
 
 type SkippedValueProvider = { type: "unused" } | { type: "unsupported" };
 
-type ComputedValueProvider =
+export type ComputedValueProvider =
   | ConstantValueProvider
   | ReferenceValueProvider
   | ArithmeticValueProvider
