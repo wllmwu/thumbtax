@@ -78,6 +78,40 @@ export function FormBoxContent({ instance, box }: Props) {
         />
       );
     }
+    case "override_number_input": {
+      const input = instance.inputs[box.identifier];
+      const isOverridden =
+        input?.type === "override" ? input.override !== null : false;
+      const value = resolvedBox.value;
+      return (
+        <div>
+          <CheckboxInput
+            label={`Override box ${box.identifier}`}
+            value={isOverridden}
+            onChange={(newIsOverridden) =>
+              setBoxInput(instance.class, instance.id, box.identifier, {
+                type: "override",
+                override: newIsOverridden ? value : null,
+              })
+            }
+          />
+          {isOverridden ? (
+            <NumberField
+              aria-label={inputLabel}
+              value={value}
+              onChange={(newValue) =>
+                setBoxInput(instance.class, instance.id, box.identifier, {
+                  type: "override",
+                  override: newValue,
+                })
+              }
+            />
+          ) : (
+            <span>{value}</span>
+          )}
+        </div>
+      );
+    }
     case "selection_input": {
       const input = instance.inputs[box.identifier];
       const selectedIndex =

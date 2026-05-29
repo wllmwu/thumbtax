@@ -73,6 +73,8 @@ function resolveDependencies(
           (vp) => vp !== undefined,
         ),
       );
+    case "override_number_input":
+      return traverse([provider.computedValue]);
     case "checkbox_input":
     case "form_instance_count":
     case "list_amounts_input":
@@ -285,6 +287,18 @@ function resolveValue(
     case "numerical_negation": {
       const { value, errors } = resolveRecursive(provider.value);
       return { value: -value, errors };
+    }
+    case "override_number_input": {
+      const formInstance = instances.get(address.instance);
+      const userInput = formInstance?.inputs[address.box];
+      if (
+        userInput &&
+        userInput.type === "override" &&
+        userInput.override !== null
+      ) {
+        return { value: userInput.override, errors: [] };
+      }
+      return resolveRecursive(provider.computedValue);
     }
     case "product": {
       const resolved = provider.values.map(resolveRecursive);

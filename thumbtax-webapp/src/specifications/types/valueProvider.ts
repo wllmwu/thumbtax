@@ -59,9 +59,10 @@ type ComputedValueProvider =
   | SkippedValueProvider;
 
 type UserInputValueProvider =
-  | { type: "number_input"; coerceSign?: "negative" | "positive" }
-  | { type: "list_amounts_input" }
   | { type: "checkbox_input" }
+  | { type: "list_amounts_input" }
+  | { type: "number_input"; coerceSign?: "negative" | "positive" }
+  | { type: "override_number_input"; computedValue: ComputedValueProvider }
   | {
       type: "selection_input";
       options: Array<{ label: string; value: ComputedValueProvider }>;
