@@ -51,7 +51,7 @@ function makeTestRegistry(): SpecificationRegistry {
               box: makeBoxFixture({
                 identifier: SELECTION_BOX,
                 value: {
-                  type: "selection_input",
+                  type: "select_value_input",
                   options: [
                     {
                       label: "A",

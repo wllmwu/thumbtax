@@ -1018,11 +1018,11 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
         expected: { value: 0, errors: [{ type: "divide_by_zero" }] },
       },
     ],
-    selection_input: [
+    select_value_input: [
       {
         description: "resolves to 0 when no input is present",
         provider: {
-          type: "selection_input",
+          type: "select_value_input",
           options: [
             { label: "A", value: { type: "number_constant", value: 10 } },
           ],
@@ -1032,7 +1032,7 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
       {
         description: "resolves to the value of the selected option",
         provider: {
-          type: "selection_input",
+          type: "select_value_input",
           options: [
             { label: "A", value: { type: "number_constant", value: 10 } },
             { label: "B", value: { type: "number_constant", value: 20 } },
@@ -1054,7 +1054,7 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
       {
         description: "propagates errors from the selected option",
         provider: {
-          type: "selection_input",
+          type: "select_value_input",
           options: [
             { label: "A", value: ERROR_PROVIDER },
             { label: "B", value: ERROR_PROVIDER },
@@ -1076,7 +1076,7 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
       {
         description: "resolves to 0 when selectedIndex is out of bounds",
         provider: {
-          type: "selection_input",
+          type: "select_value_input",
           options: [
             { label: "A", value: { type: "number_constant", value: 10 } },
           ],
@@ -1439,7 +1439,7 @@ describe("computeWorkbook", () => {
                     box: makeBoxFixture({
                       identifier: BOX_UNDER_TEST_ID,
                       value: {
-                        type: "selection_input",
+                        type: "select_value_input",
                         options: [
                           {
                             label: "A", // 3494

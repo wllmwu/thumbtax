@@ -112,7 +112,7 @@ export function FormBoxContent({ instance, box }: Props) {
         </div>
       );
     }
-    case "selection_input": {
+    case "select_value_input": {
       const input = instance.inputs[box.identifier];
       const selectedIndex =
         input?.type === "selection" ? input.selectedIndex : 0;

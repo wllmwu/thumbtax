@@ -73,7 +73,7 @@ type UserInputValueProvider =
   | { type: "number_input"; coerceSign?: "negative" | "positive" }
   | { type: "override_number_input"; computedValue: ComputedValueProvider }
   | {
-      type: "selection_input";
+      type: "select_value_input";
       options: Array<{ label: string; value: ComputedValueProvider }>;
     };
 

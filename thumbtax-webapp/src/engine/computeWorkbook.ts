@@ -53,7 +53,7 @@ function resolveDependencies(
     case "non_negative_clamp":
     case "numerical_negation":
       return resolveDependencies(address, provider.value, instanceRegistry);
-    case "selection_input":
+    case "select_value_input":
       return traverse(provider.options.map(({ value }) => value));
     case "conditional":
       return traverse([
@@ -351,7 +351,7 @@ function resolveValue(
             : quotient;
       return { value, errors };
     }
-    case "selection_input": {
+    case "select_value_input": {
       const formInstance = instances.get(address.instance);
       const userInput = formInstance?.inputs[address.box];
       if (userInput && userInput.type === "selection") {
