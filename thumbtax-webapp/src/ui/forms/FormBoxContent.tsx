@@ -157,6 +157,7 @@ export function FormBoxContent({ instance, box }: Props) {
     case "non_negative_clamp":
     case "number_constant":
     case "numerical_negation":
+    case "piecewise_function":
     case "product":
     case "quotient":
     case "sum":

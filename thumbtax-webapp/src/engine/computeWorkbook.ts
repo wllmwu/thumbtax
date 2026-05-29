@@ -75,6 +75,15 @@ function resolveDependencies(
       );
     case "override_number_input":
       return traverse([provider.computedValue]);
+    case "piecewise_function":
+      return traverse([
+        provider.input,
+        ...provider.pieces.flatMap(({ inputUpperBound, output }) => [
+          inputUpperBound,
+          output,
+        ]),
+        provider.lastOutput,
+      ]);
     case "checkbox_input":
     case "form_instance_count":
     case "list_amounts_input":
@@ -299,6 +308,22 @@ function resolveValue(
         return { value: userInput.override, errors: [] };
       }
       return resolveRecursive(provider.computedValue);
+    }
+    case "piecewise_function": {
+      const resolvedInput = resolveRecursive(provider.input);
+      const errors = [...resolvedInput.errors];
+      for (const { inputUpperBound, output } of provider.pieces) {
+        const resolvedBound = resolveRecursive(inputUpperBound);
+        errors.push(...resolvedBound.errors);
+        if (resolvedInput.value <= resolvedBound.value) {
+          const resolvedOutput = resolveRecursive(output);
+          errors.push(...resolvedOutput.errors);
+          return { value: resolvedOutput.value, errors };
+        }
+      }
+      const resolvedLast = resolveRecursive(provider.lastOutput);
+      errors.push(...resolvedLast.errors);
+      return { value: resolvedLast.value, errors };
     }
     case "product": {
       const resolved = provider.values.map(resolveRecursive);

@@ -42,6 +42,15 @@ type ControlFlowValueProvider =
       maximum?: ComputedValueProvider;
       strict?: boolean;
     }
+  | {
+      type: "piecewise_function";
+      input: ComputedValueProvider;
+      pieces: Array<{
+        inputUpperBound: ComputedValueProvider;
+        output: ComputedValueProvider;
+      }>;
+      lastOutput: ComputedValueProvider;
+    }
   | { type: "logical_negation"; value: ComputedValueProvider }
   | {
       type: "filing_status_map";
