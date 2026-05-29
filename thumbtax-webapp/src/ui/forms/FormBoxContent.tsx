@@ -1,6 +1,7 @@
 import { absurd } from "#src/common/utils/absurd";
 import { useStore } from "#src/state/useStore";
 import { AmountListInput } from "#src/ui/forms/AmountListInput";
+import { SelectInstanceBoxesInput } from "#src/ui/forms/SelectInstanceBoxesInput";
 import { CheckboxInput } from "#src/ui/primitives/CheckboxInput";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
@@ -18,6 +19,9 @@ export function FormBoxContent({ instance, box }: Props) {
     (state) => state.workbook[instance.id][box.identifier],
   );
   const specifications = useStore((state) => state.specifications);
+  const instanceRegistry = useStore(
+    (state) => state.applicationState.formInstances,
+  );
   const setBoxInput = useStore((state) => state.setBoxInput);
 
   if (!specifications) {
@@ -110,6 +114,26 @@ export function FormBoxContent({ instance, box }: Props) {
             <span>{value}</span>
           )}
         </div>
+      );
+    }
+    case "select_instance_boxes_input": {
+      const input = instance.inputs[box.identifier];
+      const selectedAddresses =
+        input?.type === "instance_box_selections" ? input.selected : [];
+      return (
+        <SelectInstanceBoxesInput
+          specifications={specifications}
+          instanceRegistry={instanceRegistry}
+          boxAddress={{ instance: instance.id, box: box.identifier }}
+          valueProvider={box.value}
+          selectedAddresses={selectedAddresses}
+          onChange={(newSelectedAddresses) =>
+            setBoxInput(instance.class, instance.id, box.identifier, {
+              type: "instance_box_selections",
+              selected: newSelectedAddresses,
+            })
+          }
+        />
       );
     }
     case "select_value_input": {

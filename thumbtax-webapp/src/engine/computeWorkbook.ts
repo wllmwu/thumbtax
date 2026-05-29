@@ -39,6 +39,13 @@ function resolveDependencies(
       } else {
         return [{ instance: address.instance, box: provider.box }];
       }
+    case "select_instance_boxes_input":
+      return provider.options.flatMap(({ form, box }) => {
+        const instances = instanceRegistry[form];
+        return instances
+          ? instances.map(({ id }) => ({ instance: id, box }))
+          : [];
+      });
     case "maximum":
     case "minimum":
     case "product":
@@ -350,6 +357,43 @@ function resolveValue(
             ? Math.ceil(quotient)
             : quotient;
       return { value, errors };
+    }
+    case "select_instance_boxes_input": {
+      const formInstance = instances.get(address.instance);
+      const userInput = formInstance?.inputs[address.box];
+      if (userInput && userInput.type === "instance_box_selections") {
+        return userInput.selected.reduce<ResolvedBox>(
+          (acc, selectedAddress) => {
+            const selectedInstance = instances.get(selectedAddress.instance);
+            if (!selectedInstance) {
+              return acc;
+            }
+
+            const isInSpecification = provider.options.some(
+              ({ form, box }) =>
+                selectedInstance.class === form && selectedAddress.box === box,
+            );
+            if (!isInSpecification) {
+              return acc;
+            }
+
+            const nodeData = graph.getData(makeNodeId(selectedAddress));
+            const resolved = nodeData.resolvedBox;
+            if (!resolved) {
+              throw new Error(
+                `Node at ${nodeData.address} was not resolved before its dependent at ${address}`,
+              );
+            }
+
+            return {
+              value: acc.value + resolved.value,
+              errors: acc.errors.concat(resolved.errors),
+            };
+          },
+          { value: 0, errors: [] },
+        );
+      }
+      return { value: 0, errors: [] };
     }
     case "select_value_input": {
       const formInstance = instances.get(address.instance);
