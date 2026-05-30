@@ -29,6 +29,7 @@ import { override_number_input } from "#src/engine/test/override_number_input.fi
 import { piecewise_function } from "#src/engine/test/piecewise_function.fixture";
 import { product } from "#src/engine/test/product.fixture";
 import { quotient } from "#src/engine/test/quotient.fixture";
+import { select_instance_boxes_input } from "#src/engine/test/select_instance_boxes_input.fixture";
 import { select_value_input } from "#src/engine/test/select_value_input.fixture";
 import { sum } from "#src/engine/test/sum.fixture";
 import {
@@ -113,6 +114,7 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
     piecewise_function,
     product,
     quotient,
+    select_instance_boxes_input,
     select_value_input,
     sum,
     unsupported: [
