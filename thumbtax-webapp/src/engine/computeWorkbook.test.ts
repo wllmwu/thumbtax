@@ -6,7 +6,10 @@ import { box_reference } from "#src/engine/test/box_reference.fixture";
 import { checkbox_input } from "#src/engine/test/checkbox_input.fixture";
 import { comparison } from "#src/engine/test/comparison.fixture";
 import { conditional } from "#src/engine/test/conditional.fixture";
+import { conditional_number_input } from "#src/engine/test/conditional_number_input.fixture";
+import { conjunction } from "#src/engine/test/conjunction.fixture";
 import { difference } from "#src/engine/test/difference.fixture";
+import { disjunction } from "#src/engine/test/disjunction.fixture";
 import { filing_status_map } from "#src/engine/test/filing_status_map.fixture";
 import {
   BOX_UNDER_TEST_ID,
@@ -99,7 +102,10 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
     checkbox_input,
     comparison,
     conditional,
+    conditional_number_input,
+    conjunction,
     difference,
+    disjunction,
     filing_status_map,
     form_instance_count,
     list_amounts_input,

@@ -28,19 +28,24 @@ type ArithmeticValueProvider =
   | { type: "non_negative_clamp"; value: ComputedValueProvider }
   | { type: "numerical_negation"; value: ComputedValueProvider };
 
-type ControlFlowValueProvider =
-  | {
-      type: "conditional";
-      condition: ComputedValueProvider;
-      trueValue: ComputedValueProvider;
-      falseValue: ComputedValueProvider;
-    }
+type BooleanValueProvider =
   | {
       type: "comparison";
       value: ComputedValueProvider;
       minimum?: ComputedValueProvider;
       maximum?: ComputedValueProvider;
       strict?: boolean;
+    }
+  | { type: "conjunction"; values: Array<ComputedValueProvider> }
+  | { type: "disjunction"; values: Array<ComputedValueProvider> }
+  | { type: "logical_negation"; value: ComputedValueProvider };
+
+type ControlFlowValueProvider =
+  | {
+      type: "conditional";
+      condition: ComputedValueProvider;
+      trueValue: ComputedValueProvider;
+      falseValue: ComputedValueProvider;
     }
   | {
       type: "piecewise_function";
@@ -51,24 +56,25 @@ type ControlFlowValueProvider =
       }>;
       lastOutput: ComputedValueProvider;
     }
-  | { type: "logical_negation"; value: ComputedValueProvider }
   | {
       type: "filing_status_map";
       values: Partial<Record<FilingStatus, ComputedValueProvider>>;
       default?: ComputedValueProvider;
     };
 
-type SkippedValueProvider = { type: "unused" } | { type: "unsupported" };
+type UnusedValueProvider = { type: "unused" } | { type: "unsupported" };
 
 export type ComputedValueProvider =
   | ConstantValueProvider
   | ReferenceValueProvider
   | ArithmeticValueProvider
+  | BooleanValueProvider
   | ControlFlowValueProvider
-  | SkippedValueProvider;
+  | UnusedValueProvider;
 
 type UserInputValueProvider =
   | { type: "checkbox_input" }
+  | { type: "conditional_number_input"; skipCondition: ComputedValueProvider }
   | { type: "list_amounts_input" }
   | { type: "number_input"; coerceSign?: "negative" | "positive" }
   | { type: "override_number_input"; computedValue: ComputedValueProvider }

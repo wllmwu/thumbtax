@@ -46,6 +46,14 @@ function resolveDependencies(
           ? instances.map(({ id }) => ({ instance: id, box }))
           : [];
       });
+    case "conditional_number_input":
+      return resolveDependencies(
+        address,
+        provider.skipCondition,
+        instanceRegistry,
+      );
+    case "conjunction":
+    case "disjunction":
     case "maximum":
     case "minimum":
     case "product":
@@ -230,6 +238,34 @@ function resolveValue(
         errors: [...condition.errors, ...result.errors],
       };
     }
+    case "conditional_number_input": {
+      const resolvedSkip = resolveRecursive(provider.skipCondition);
+      if (resolvedSkip.value !== 0) {
+        return {
+          value: 0,
+          errors: resolvedSkip.errors,
+        };
+      }
+      const formInstance = instances.get(address.instance);
+      const userInput = formInstance?.inputs[address.box];
+      if (userInput && userInput.type === "number") {
+        return { value: userInput.value, errors: resolvedSkip.errors };
+      }
+      return { value: 0, errors: resolvedSkip.errors };
+    }
+    case "conjunction": {
+      const resolved = provider.values.map(resolveRecursive);
+      return resolved.reduce<ResolvedBox>(
+        (acc, curr) => {
+          if (curr.value === 0) {
+            acc.value = 0;
+          }
+          acc.errors.push(...curr.errors);
+          return acc;
+        },
+        { value: 1, errors: [] },
+      );
+    }
     case "difference": {
       const minuend = resolveRecursive(provider.minuend);
       const subtrahend = resolveRecursive(provider.subtrahend);
@@ -237,6 +273,19 @@ function resolveValue(
         value: minuend.value - subtrahend.value,
         errors: [...minuend.errors, ...subtrahend.errors],
       };
+    }
+    case "disjunction": {
+      const resolved = provider.values.map(resolveRecursive);
+      return resolved.reduce<ResolvedBox>(
+        (acc, curr) => {
+          if (curr.value !== 0) {
+            acc.value = 1;
+          }
+          acc.errors.push(...curr.errors);
+          return acc;
+        },
+        { value: 0, errors: [] },
+      );
     }
     case "filing_status_map": {
       const matchedProvider = provider.values[filingStatus] ?? provider.default;
