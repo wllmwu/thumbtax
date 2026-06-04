@@ -138,6 +138,7 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
+          // TODO: Form 4137
           index: "5",
           description:
             "Social security and Medicare tax on unreported tip income. Attach Form 4137",

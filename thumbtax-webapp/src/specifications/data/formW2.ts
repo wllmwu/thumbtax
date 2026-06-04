@@ -117,7 +117,7 @@ export const FormW2: FormSpecification = {
           description: "Other",
           box: {
             identifier: "14a",
-            value: { type: "unused" },
+            value: { type: "number_input" },
           },
         },
         {

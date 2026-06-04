@@ -38,12 +38,11 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
-          // TODO: Schedule C
           index: "3",
           description: "Business income or (loss). Attach Schedule C",
           box: {
             identifier: "3",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1040sC", box: "31" },
           },
         },
         {
@@ -162,12 +161,15 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
-          // TODO: support referencing instances
+          // TODO: helper forms
           index: "8j",
           description: "Activity not engaged in for profit income",
           box: {
             identifier: "8j",
-            value: { type: "number_input" },
+            value: {
+              type: "select_instance_boxes_input",
+              options: [{ form: "f1099NEC", box: "1" }],
+            },
           },
         },
         {

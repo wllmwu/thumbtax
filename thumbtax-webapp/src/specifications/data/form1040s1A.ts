@@ -99,15 +99,23 @@ export const Form1040S1A: FormSpecification = {
           },
         },
         {
+          // TODO: helper forms, Form 4137
           index: "4a",
           description:
             "Enter qualified tips included on Form W-2, box 7, but see the instructions if Form W-2, box 5 is more than $176,100 or you received tips that are not subject to social security and Medicare taxes",
           box: {
             identifier: "4a",
-            value: { type: "number_input" },
+            value: {
+              type: "select_instance_boxes_input",
+              options: [
+                { form: "fW2", box: "7" },
+                { form: "fW2", box: "14a" },
+              ],
+            },
           },
         },
         {
+          // TODO: Form 4137
           index: "4b",
           description:
             "Qualified tips included on Form 4137, line 1, row A, column (c). If Form 4137 is not filed, enter -0-",
@@ -117,23 +125,35 @@ export const Form1040S1A: FormSpecification = {
           },
         },
         {
-          // TODO: support override
+          // TODO: Form 4137
           index: "4c",
           description:
             "If you only received qualified tips as an employee with respect to employment with one employer, enter the larger of line 4a or line 4b. Otherwise, see the instructions to determine the amount to enter on line 4c. If you received tips as an employee in more than one occupation, see the instructions",
           box: {
             identifier: "4c",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "maximum",
+                values: [
+                  { type: "box_reference", box: "4a" },
+                  { type: "box_reference", box: "4b" },
+                ],
+              },
+            },
           },
         },
         {
-          // TODO: support referencing instances
+          // TODO: override select instance boxes
           index: "5",
           description:
             "Qualified tips received in the course of a trade or business.\nQualified tip amount included in Form 1099-NEC, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions",
           box: {
             identifier: "5",
-            value: { type: "number_input" },
+            value: {
+              type: "select_instance_boxes_input",
+              options: [{ form: "f1099NEC", box: "1" }],
+            },
           },
         },
         {
@@ -275,7 +295,10 @@ export const Form1040S1A: FormSpecification = {
             "Qualified overtime compensation included in Form 1099-NEC, box 1, or Form 1099-MISC, box 3 (see instructions)",
           box: {
             identifier: "14b",
-            value: { type: "number_input" },
+            value: {
+              type: "select_instance_boxes_input",
+              options: [{ form: "f1099NEC", box: "1" }],
+            },
           },
         },
         {

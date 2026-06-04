@@ -33,6 +33,7 @@ export const Form1040SD: FormSpecification = {
       ],
       lines: [
         {
+          // TODO: conditional aggregation
           index: "1a",
           description:
             "Totals for all short-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 1b",
@@ -40,12 +41,18 @@ export const Form1040SD: FormSpecification = {
             {
               identifier: "1a(d)",
               column: "(d)",
-              value: { type: "number_input" },
+              value: {
+                type: "select_instance_boxes_input",
+                options: [{ form: "f1099B", box: "1d" }],
+              },
             },
             {
               identifier: "1a(e)",
               column: "(e)",
-              value: { type: "number_input" },
+              value: {
+                type: "select_instance_boxes_input",
+                options: [{ form: "f1099B", box: "1e" }],
+              },
             },
             {
               identifier: "1a(g)",
@@ -259,6 +266,7 @@ export const Form1040SD: FormSpecification = {
       ],
       lines: [
         {
+          // TODO: conditional aggregation
           index: "8a",
           description:
             "Totals for all long-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 8b",
@@ -266,12 +274,18 @@ export const Form1040SD: FormSpecification = {
             {
               identifier: "8a(d)",
               column: "(d)",
-              value: { type: "number_input" },
+              value: {
+                type: "select_instance_boxes_input",
+                options: [{ form: "f1099B", box: "1d" }],
+              },
             },
             {
               identifier: "8a(e)",
               column: "(e)",
-              value: { type: "number_input" },
+              value: {
+                type: "select_instance_boxes_input",
+                options: [{ form: "f1099B", box: "1e" }],
+              },
             },
             {
               identifier: "8a(g)",
@@ -434,7 +448,7 @@ export const Form1040SD: FormSpecification = {
           description: "Capital gain distributions. See the instructions",
           box: {
             identifier: "13",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f1099DIV", box: "2a" },
           },
         },
         {
