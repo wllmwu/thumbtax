@@ -11,6 +11,7 @@ export const FORM_CLASSES = [
   "f1099DIV",
   "f1099INT",
   "f1099NEC",
+  "f1099R",
   "f6251",
   "f8889",
   "f8949",

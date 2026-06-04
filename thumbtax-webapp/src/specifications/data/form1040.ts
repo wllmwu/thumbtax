@@ -153,12 +153,14 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          // TODO: Form 1099-R
           index: "4a",
           description: "IRA distributions",
           box: {
             identifier: "4a",
-            value: { type: "number_input" },
+            value: {
+              type: "select_instance_boxes_input",
+              options: [{ form: "f1099R", box: "1" }],
+            },
           },
         },
         {
@@ -166,7 +168,10 @@ export const Form1040: FormSpecification = {
           description: "Taxable amount",
           box: {
             identifier: "4b",
-            value: { type: "number_input" },
+            value: {
+              type: "select_instance_boxes_input",
+              options: [{ form: "f1099R", box: "2a" }],
+            },
           },
         },
         {
@@ -177,12 +182,14 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          // TODO: Form 1099-R
           index: "5a",
           description: "Pensions and annuities",
           box: {
             identifier: "5a",
-            value: { type: "number_input" },
+            value: {
+              type: "select_instance_boxes_input",
+              options: [{ form: "f1099R", box: "1" }],
+            },
           },
         },
         {
@@ -190,7 +197,10 @@ export const Form1040: FormSpecification = {
           description: "Taxable amount",
           box: {
             identifier: "5b",
-            value: { type: "number_input" },
+            value: {
+              type: "select_instance_boxes_input",
+              options: [{ form: "f1099R", box: "2a" }],
+            },
           },
         },
         {
