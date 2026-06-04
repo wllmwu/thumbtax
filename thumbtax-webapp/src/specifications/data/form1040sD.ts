@@ -507,7 +507,23 @@ export const Form1040SD: FormSpecification = {
             "Are lines 15 and 16 both gains?\n- Yes. Go to line 18.\n- No. Skip lines 18 through 21, and go to line 22.",
           box: {
             identifier: "17",
-            value: { type: "unused" },
+            value: {
+              type: "conjunction",
+              values: [
+                {
+                  type: "comparison",
+                  value: { type: "box_reference", box: "15" },
+                  minimum: { type: "number_constant", value: 0 },
+                  strict: true,
+                },
+                {
+                  type: "comparison",
+                  value: { type: "box_reference", box: "16" },
+                  minimum: { type: "number_constant", value: 0 },
+                  strict: true,
+                },
+              ],
+            },
           },
         },
         {
@@ -516,7 +532,23 @@ export const Form1040SD: FormSpecification = {
             "If you are required to complete the 28% Rate Gain Worksheet (see instructions), enter the amount, if any, from line 7 of that worksheet",
           box: {
             identifier: "18",
-            value: { type: "number_input" },
+            value: {
+              type: "conditional_number_input",
+              skipCondition: {
+                type: "disjunction",
+                values: [
+                  {
+                    type: "comparison",
+                    value: { type: "box_reference", box: "16" },
+                    maximum: { type: "number_constant", value: 0 },
+                  },
+                  {
+                    type: "logical_negation",
+                    value: { type: "box_reference", box: "17" },
+                  },
+                ],
+              },
+            },
           },
         },
         {
@@ -525,7 +557,23 @@ export const Form1040SD: FormSpecification = {
             "If you are required to complete the Unrecaptured Section 1250 Gain Worksheet (see instructions), enter the amount, if any, from line 18 of that worksheet",
           box: {
             identifier: "19",
-            value: { type: "number_input" },
+            value: {
+              type: "conditional_number_input",
+              skipCondition: {
+                type: "disjunction",
+                values: [
+                  {
+                    type: "comparison",
+                    value: { type: "box_reference", box: "16" },
+                    maximum: { type: "number_constant", value: 0 },
+                  },
+                  {
+                    type: "logical_negation",
+                    value: { type: "box_reference", box: "17" },
+                  },
+                ],
+              },
+            },
           },
         },
         {
@@ -534,7 +582,20 @@ export const Form1040SD: FormSpecification = {
             "Are lines 18 and 19 both zero or blank and you are not filing Form 4952?\n- Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16. Don't complete lines 21 and 22 below.\n- No. Complete the Schedule D Tax Worksheet in the instructions. Don't complete lines 21 and 22 below.",
           box: {
             identifier: "20",
-            value: { type: "unused" },
+            format: "yes_no",
+            value: {
+              type: "conjunction",
+              values: [
+                {
+                  type: "logical_negation",
+                  value: { type: "box_reference", box: "18" },
+                },
+                {
+                  type: "logical_negation",
+                  value: { type: "box_reference", box: "19" },
+                },
+              ],
+            },
           },
         },
         {
@@ -577,7 +638,25 @@ export const Form1040SD: FormSpecification = {
             "Do you have qualified dividends on Form 1040, 1040-SR, or 1040-NR, line 3a?\n- Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16.\n- No. Complete the rest of Form 1040, 1040-SR, or 1040-NR.",
           box: {
             identifier: "22",
-            value: { type: "unused" },
+            format: "yes_no",
+            value: { type: "box_reference", form: "f1040", box: "3a" },
+          },
+        },
+        {
+          index: "virtual_f1040_7a",
+          virtual: true,
+          box: {
+            identifier: "virtual_f1040_7a",
+            value: {
+              type: "conditional",
+              condition: {
+                type: "comparison",
+                value: { type: "box_reference", box: "16" },
+                minimum: { type: "number_constant", value: 0 },
+              },
+              trueValue: { type: "box_reference", box: "16" },
+              falseValue: { type: "box_reference", box: "21" },
+            },
           },
         },
       ],

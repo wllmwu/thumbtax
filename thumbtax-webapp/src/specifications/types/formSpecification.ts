@@ -34,6 +34,7 @@ export type FormSection<MultiColumns extends boolean> = {
 export type FormLine<MultiColumns extends boolean> = {
   index: LineIndex;
   description?: string;
+  virtual?: boolean;
 } & (MultiColumns extends true
   ? {
       boxes: Array<FormBox<MultiColumns>>;

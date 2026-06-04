@@ -241,19 +241,54 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          // TODO: Form 8949, Schedule D, exceptions
+          // TODO: Form 8949
           index: "7a",
           description: "Capital gain or (loss). Attach Schedule D if required",
           box: {
             identifier: "7a",
-            value: { type: "number_input" },
+            value: {
+              type: "conditional",
+              condition: { type: "box_reference", box: "7b" },
+              trueValue: {
+                type: "box_reference",
+                form: "f1099DIV",
+                box: "2a",
+              },
+              falseValue: {
+                type: "box_reference",
+                form: "f1040sD",
+                box: "virtual_f1040_7a",
+              },
+            },
           },
         },
         {
           index: "7b",
+          description: "Check if Schedule D not required",
           box: {
             identifier: "7b",
-            value: { type: "unused" },
+            format: "checkbox",
+            value: {
+              type: "conjunction",
+              values: [
+                {
+                  type: "logical_negation",
+                  value: { type: "form_instance_count", form: "f1099B" },
+                },
+                {
+                  type: "logical_negation",
+                  value: { type: "box_reference", form: "f1099DIV", box: "2b" },
+                },
+                {
+                  type: "logical_negation",
+                  value: { type: "box_reference", form: "f1099DIV", box: "2c" },
+                },
+                {
+                  type: "logical_negation",
+                  value: { type: "box_reference", form: "f1099DIV", box: "2d" },
+                },
+              ],
+            },
           },
         },
         {
@@ -355,28 +390,47 @@ export const Form1040: FormSpecification = {
           box: {
             identifier: "12e",
             value: {
-              type: "filing_status_map",
-              values: {
-                single: {
-                  type: "number_constant",
-                  value: 15750,
-                },
-                married_filing_separately: {
-                  type: "number_constant",
-                  value: 15750,
-                },
-                married_filing_jointly: {
-                  type: "number_constant",
-                  value: 31500,
-                },
-                qualifying_surviving_spouse: {
-                  type: "number_constant",
-                  value: 31500,
-                },
-                head_of_household: {
-                  type: "number_constant",
-                  value: 23625,
-                },
+              type: "conditional",
+              condition: {
+                type: "box_reference",
+                form: "f1040sA",
+                box: "18",
+              },
+              trueValue: {
+                type: "box_reference",
+                form: "f1040sA",
+                box: "17",
+              },
+              falseValue: {
+                type: "maximum",
+                values: [
+                  { type: "box_reference", form: "f1040sA", box: "17" },
+                  {
+                    type: "filing_status_map",
+                    values: {
+                      single: {
+                        type: "number_constant",
+                        value: 15750,
+                      },
+                      married_filing_separately: {
+                        type: "number_constant",
+                        value: 15750,
+                      },
+                      married_filing_jointly: {
+                        type: "number_constant",
+                        value: 31500,
+                      },
+                      qualifying_surviving_spouse: {
+                        type: "number_constant",
+                        value: 31500,
+                      },
+                      head_of_household: {
+                        type: "number_constant",
+                        value: 23625,
+                      },
+                    },
+                  },
+                ],
               },
             },
           },
@@ -427,6 +481,127 @@ export const Form1040: FormSpecification = {
                 minuend: { type: "box_reference", box: "11b" },
                 subtrahend: { type: "box_reference", box: "14" },
               },
+            },
+          },
+        },
+        {
+          index: "virtual_16_SDTWS",
+          box: {
+            identifier: "virtual_16_SDTWS",
+            value: {
+              type: "conjunction",
+              values: [
+                {
+                  type: "logical_negation",
+                  value: { type: "box_reference", box: "7b" },
+                },
+                {
+                  type: "disjunction",
+                  values: [
+                    {
+                      type: "comparison",
+                      value: {
+                        type: "box_reference",
+                        form: "f1040sD",
+                        box: "18",
+                      },
+                      minimum: { type: "number_constant", value: 0 },
+                      strict: true,
+                    },
+                    {
+                      type: "comparison",
+                      value: {
+                        type: "box_reference",
+                        form: "f1040sD",
+                        box: "19",
+                      },
+                      minimum: { type: "number_constant", value: 0 },
+                      strict: true,
+                    },
+                  ],
+                },
+                {
+                  type: "comparison",
+                  value: { type: "box_reference", form: "f1040sD", box: "15" },
+                  minimum: { type: "number_constant", value: 0 },
+                  strict: true,
+                },
+                {
+                  type: "comparison",
+                  value: { type: "box_reference", form: "f1040sD", box: "16" },
+                  minimum: { type: "number_constant", value: 0 },
+                  strict: true,
+                },
+              ],
+            },
+          },
+        },
+        {
+          index: "virtual_16_QDCGTWS",
+          box: {
+            identifier: "virtual_16_QDCGTWS",
+            value: {
+              type: "conjunction",
+              values: [
+                {
+                  type: "logical_negation",
+                  value: { type: "box_reference", box: "virtual_16_SDTWS" },
+                },
+                {
+                  type: "disjunction",
+                  values: [
+                    {
+                      type: "comparison",
+                      value: {
+                        type: "box_reference",
+                        box: "3a",
+                      },
+                      minimum: { type: "number_constant", value: 0 },
+                      strict: true,
+                    },
+                    {
+                      type: "conjunction",
+                      values: [
+                        { type: "box_reference", box: "7b" },
+                        {
+                          type: "comparison",
+                          value: {
+                            type: "box_reference",
+                            box: "7a",
+                          },
+                          minimum: { type: "number_constant", value: 0 },
+                          strict: true,
+                        },
+                      ],
+                    },
+                    {
+                      type: "conjunction",
+                      values: [
+                        {
+                          type: "comparison",
+                          value: {
+                            type: "box_reference",
+                            form: "f1040sD",
+                            box: "15",
+                          },
+                          minimum: { type: "number_constant", value: 0 },
+                          strict: true,
+                        },
+                        {
+                          type: "comparison",
+                          value: {
+                            type: "box_reference",
+                            form: "f1040sD",
+                            box: "16",
+                          },
+                          minimum: { type: "number_constant", value: 0 },
+                          strict: true,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
             },
           },
         },

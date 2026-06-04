@@ -347,7 +347,7 @@ export const Form1040SA: FormSpecification = {
             "If you elect to itemize deductions even though they are less than your standard deduction, check this box",
           box: {
             identifier: "18",
-            value: { type: "unused" },
+            value: { type: "checkbox_input" },
           },
         },
       ],
