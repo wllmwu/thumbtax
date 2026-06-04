@@ -13,7 +13,6 @@ import { Form1099NEC } from "#src/specifications/data/form1099NEC";
 import { Form1099R } from "#src/specifications/data/form1099R";
 import { Form6251 } from "#src/specifications/data/form6251";
 import { Form8889 } from "#src/specifications/data/form8889";
-import { Form8949 } from "#src/specifications/data/form8949";
 import { Form8959 } from "#src/specifications/data/form8959";
 import { Form8960 } from "#src/specifications/data/form8960";
 import { Form8995 } from "#src/specifications/data/form8995";
@@ -40,7 +39,6 @@ const allSpecifications: SpecificationRegistry = {
   f1099R: Form1099R,
   f6251: Form6251,
   f8889: Form8889,
-  f8949: Form8949,
   f8959: Form8959,
   f8960: Form8960,
   f8995: Form8995,
