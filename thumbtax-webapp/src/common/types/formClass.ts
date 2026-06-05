@@ -7,6 +7,7 @@ export const FORM_CLASSES = [
   "f1040sA",
   "f1040sC",
   "f1040sD",
+  "f1040sD_SDTWS",
   "f1099B",
   "f1099DIV",
   "f1099INT",

@@ -6,6 +6,7 @@ import { Form1040S3 } from "#src/specifications/data/form1040s3";
 import { Form1040SA } from "#src/specifications/data/form1040sA";
 import { Form1040SC } from "#src/specifications/data/form1040sC";
 import { Form1040SD } from "#src/specifications/data/form1040sD";
+import { Form1040SD_SDTWS } from "#src/specifications/data/form1040sD_SDTWS";
 import { Form1099B } from "#src/specifications/data/form1099B";
 import { Form1099DIV } from "#src/specifications/data/form1099DIV";
 import { Form1099INT } from "#src/specifications/data/form1099INT";
@@ -32,6 +33,7 @@ const allSpecifications: SpecificationRegistry = {
   f1040sA: Form1040SA,
   f1040sC: Form1040SC,
   f1040sD: Form1040SD,
+  f1040sD_SDTWS: Form1040SD_SDTWS,
   f1099B: Form1099B,
   f1099DIV: Form1099DIV,
   f1099INT: Form1099INT,
