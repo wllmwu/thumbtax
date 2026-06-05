@@ -1,17 +1,5 @@
 import type { FormSpecification } from "#src/specifications/types/formSpecification";
 
-// NOTE: Line 1 on Form 8995 is a table with sub-rows i–v and three columns:
-// (a) Trade, business, or aggregation name
-// (b) Taxpayer identification number
-// (c) Qualified business income or (loss)
-//
-// GAP: The schema has no "text_input" value type, so columns (a) and (b) —
-// which accept free-text name and EIN/SSN respectively — are represented as
-// "number_input" as a placeholder.
-//
-// GAP: The schema has no "repeating_rows" construct. Sub-rows i–v are modeled
-// as individual lines within a multi-column section.
-
 export const Form8995: FormSpecification = {
   class: "f8995",
   title: "Form 8995",
@@ -20,11 +8,7 @@ export const Form8995: FormSpecification = {
   category: "taxes",
   maxInstances: 1,
   sections: [
-    // -------------------------------------------------------------------------
-    // Line 1 — Qualified trade or business table (multi-column)
-    // -------------------------------------------------------------------------
     {
-      heading: "1 Trade, business, or aggregation information",
       columns: [
         { index: "(a)", description: "Trade, business, or aggregation name" },
         { index: "(b)", description: "Taxpayer identification number" },
@@ -36,19 +20,17 @@ export const Form8995: FormSpecification = {
           boxes: [
             {
               column: "(a)",
-              identifier: "1i_a",
-              // GAP: free-text name; no text_input type available
-              value: { type: "number_input" },
+              identifier: "1i(a)",
+              value: { type: "unused" },
             },
             {
               column: "(b)",
-              identifier: "1i_b",
-              // GAP: EIN/SSN; no text_input type available
-              value: { type: "number_input" },
+              identifier: "1i(b)",
+              value: { type: "unused" },
             },
             {
               column: "(c)",
-              identifier: "1i_c",
+              identifier: "1i(c)",
               value: { type: "number_input" },
             },
           ],
@@ -58,17 +40,17 @@ export const Form8995: FormSpecification = {
           boxes: [
             {
               column: "(a)",
-              identifier: "1ii_a",
-              value: { type: "number_input" },
+              identifier: "1ii(a)",
+              value: { type: "unused" },
             },
             {
               column: "(b)",
-              identifier: "1ii_b",
-              value: { type: "number_input" },
+              identifier: "1ii(b)",
+              value: { type: "unused" },
             },
             {
               column: "(c)",
-              identifier: "1ii_c",
+              identifier: "1ii(c)",
               value: { type: "number_input" },
             },
           ],
@@ -78,17 +60,17 @@ export const Form8995: FormSpecification = {
           boxes: [
             {
               column: "(a)",
-              identifier: "1iii_a",
-              value: { type: "number_input" },
+              identifier: "1iii(a)",
+              value: { type: "unused" },
             },
             {
               column: "(b)",
-              identifier: "1iii_b",
-              value: { type: "number_input" },
+              identifier: "1iii(b)",
+              value: { type: "unused" },
             },
             {
               column: "(c)",
-              identifier: "1iii_c",
+              identifier: "1iii(c)",
               value: { type: "number_input" },
             },
           ],
@@ -98,17 +80,17 @@ export const Form8995: FormSpecification = {
           boxes: [
             {
               column: "(a)",
-              identifier: "1iv_a",
-              value: { type: "number_input" },
+              identifier: "1iv(a)",
+              value: { type: "unused" },
             },
             {
               column: "(b)",
-              identifier: "1iv_b",
-              value: { type: "number_input" },
+              identifier: "1iv(b)",
+              value: { type: "unused" },
             },
             {
               column: "(c)",
-              identifier: "1iv_c",
+              identifier: "1iv(c)",
               value: { type: "number_input" },
             },
           ],
@@ -118,26 +100,23 @@ export const Form8995: FormSpecification = {
           boxes: [
             {
               column: "(a)",
-              identifier: "1v_a",
-              value: { type: "number_input" },
+              identifier: "1v(a)",
+              value: { type: "unused" },
             },
             {
               column: "(b)",
-              identifier: "1v_b",
-              value: { type: "number_input" },
+              identifier: "1v(b)",
+              value: { type: "unused" },
             },
             {
               column: "(c)",
-              identifier: "1v_c",
+              identifier: "1v(c)",
               value: { type: "number_input" },
             },
           ],
         },
       ],
     },
-    // -------------------------------------------------------------------------
-    // Lines 2–17 — Qualified business income deduction computation
-    // -------------------------------------------------------------------------
     {
       lines: [
         {
@@ -149,11 +128,11 @@ export const Form8995: FormSpecification = {
             value: {
               type: "sum",
               values: [
-                { type: "box_reference", box: "1i_c" },
-                { type: "box_reference", box: "1ii_c" },
-                { type: "box_reference", box: "1iii_c" },
-                { type: "box_reference", box: "1iv_c" },
-                { type: "box_reference", box: "1v_c" },
+                { type: "box_reference", box: "1i(c)" },
+                { type: "box_reference", box: "1ii(c)" },
+                { type: "box_reference", box: "1iii(c)" },
+                { type: "box_reference", box: "1iv(c)" },
+                { type: "box_reference", box: "1v(c)" },
               ],
             },
           },
@@ -271,7 +250,32 @@ export const Form8995: FormSpecification = {
             "Taxable income before qualified business income deduction (see instructions)",
           box: {
             identifier: "11",
-            value: { type: "number_input" },
+            value: {
+              type: "difference",
+              minuend: {
+                type: "box_reference",
+                form: "f1040",
+                box: "11a",
+                required: true,
+              },
+              subtrahend: {
+                type: "sum",
+                values: [
+                  {
+                    type: "box_reference",
+                    form: "f1040",
+                    box: "12e",
+                    required: true,
+                  },
+                  {
+                    type: "box_reference",
+                    form: "f1040",
+                    box: "13b",
+                    required: true,
+                  },
+                ],
+              },
+            },
           },
         },
         {
@@ -280,7 +284,37 @@ export const Form8995: FormSpecification = {
             "Enter your net capital gain, if any, increased by any qualified dividends (see instructions)",
           box: {
             identifier: "12",
-            value: { type: "number_input" },
+            value: {
+              type: "sum",
+              values: [
+                {
+                  type: "box_reference",
+                  form: "f1040",
+                  box: "3a",
+                  required: true,
+                },
+                {
+                  type: "conditional",
+                  condition: { type: "form_instance_count", form: "f1040sD" },
+                  trueValue: {
+                    type: "non_negative_clamp",
+                    value: {
+                      type: "minimum",
+                      values: [
+                        { type: "box_reference", form: "f1040sD", box: "15" },
+                        { type: "box_reference", form: "f1040sD", box: "16" },
+                      ],
+                    },
+                  },
+                  falseValue: {
+                    type: "box_reference",
+                    form: "f1040",
+                    box: "7a",
+                    required: true,
+                  },
+                },
+              ],
+            },
           },
         },
         {
@@ -335,19 +369,13 @@ export const Form8995: FormSpecification = {
           box: {
             identifier: "16",
             value: {
-              type: "numerical_negation",
+              type: "non_positive_clamp",
               value: {
-                type: "non_negative_clamp",
-                value: {
-                  type: "numerical_negation",
-                  value: {
-                    type: "sum",
-                    values: [
-                      { type: "box_reference", box: "2" },
-                      { type: "box_reference", box: "3" },
-                    ],
-                  },
-                },
+                type: "sum",
+                values: [
+                  { type: "box_reference", box: "2" },
+                  { type: "box_reference", box: "3" },
+                ],
               },
             },
           },
@@ -359,19 +387,13 @@ export const Form8995: FormSpecification = {
           box: {
             identifier: "17",
             value: {
-              type: "numerical_negation",
+              type: "non_positive_clamp",
               value: {
-                type: "non_negative_clamp",
-                value: {
-                  type: "numerical_negation",
-                  value: {
-                    type: "sum",
-                    values: [
-                      { type: "box_reference", box: "6" },
-                      { type: "box_reference", box: "7" },
-                    ],
-                  },
-                },
+                type: "sum",
+                values: [
+                  { type: "box_reference", box: "6" },
+                  { type: "box_reference", box: "7" },
+                ],
               },
             },
           },

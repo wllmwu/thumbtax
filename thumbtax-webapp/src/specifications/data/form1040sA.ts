@@ -24,7 +24,12 @@ export const Form1040SA: FormSpecification = {
           description: "Enter amount from Form 1040 or 1040-SR, line 11b",
           box: {
             identifier: "2",
-            value: { type: "box_reference", form: "f1040", box: "11b" },
+            value: {
+              type: "box_reference",
+              form: "f1040",
+              box: "11b",
+              required: true,
+            },
           },
         },
         {

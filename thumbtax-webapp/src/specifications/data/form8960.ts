@@ -16,7 +16,12 @@ export const Form8960: FormSpecification = {
           description: "Taxable interest (see instructions)",
           box: {
             identifier: "1",
-            value: { type: "box_reference", form: "f1040", box: "2b" },
+            value: {
+              type: "box_reference",
+              form: "f1040",
+              box: "2b",
+              required: true,
+            },
           },
         },
         {
@@ -24,7 +29,12 @@ export const Form8960: FormSpecification = {
           description: "Ordinary dividends (see instructions)",
           box: {
             identifier: "2",
-            value: { type: "box_reference", form: "f1040", box: "3b" },
+            value: {
+              type: "box_reference",
+              form: "f1040",
+              box: "3b",
+              required: true,
+            },
           },
         },
         {
@@ -225,7 +235,12 @@ export const Form8960: FormSpecification = {
           description: "Modified adjusted gross income (see instructions)",
           box: {
             identifier: "13",
-            value: { type: "box_reference", form: "f1040", box: "11a" },
+            value: {
+              type: "box_reference",
+              form: "f1040",
+              box: "11a",
+              required: true,
+            },
           },
         },
         {

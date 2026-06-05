@@ -260,6 +260,7 @@ export const Form1040: FormSpecification = {
                 type: "box_reference",
                 form: "f1040sD",
                 box: "virtual_f1040_7a",
+                required: true,
               },
             },
           },
@@ -298,7 +299,12 @@ export const Form1040: FormSpecification = {
           description: "Additional income from Schedule 1, line 10",
           box: {
             identifier: "8",
-            value: { type: "box_reference", form: "f1040s1", box: "10" },
+            value: {
+              type: "box_reference",
+              form: "f1040s1",
+              box: "10",
+              required: true,
+            },
           },
         },
         {
@@ -327,7 +333,12 @@ export const Form1040: FormSpecification = {
           description: "Adjustments to income from Schedule 1, line 26",
           box: {
             identifier: "10",
-            value: { type: "box_reference", form: "f1040s1", box: "26" },
+            value: {
+              type: "box_reference",
+              form: "f1040s1",
+              box: "26",
+              required: true,
+            },
           },
         },
         {
@@ -438,13 +449,13 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          // TODO: Form 8995, Form 8995-A
+          // TODO: Form 8995-A
           index: "13a",
           description:
             "Qualified business income deduction from Form 8995 or Form 8995-A",
           box: {
             identifier: "13a",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f8995", box: "15" },
           },
         },
         {
@@ -452,7 +463,12 @@ export const Form1040: FormSpecification = {
           description: "Additional deductions from Schedule 1-A, line 38",
           box: {
             identifier: "13b",
-            value: { type: "box_reference", form: "f1040s1A", box: "38" },
+            value: {
+              type: "box_reference",
+              form: "f1040s1A",
+              box: "38",
+              required: true,
+            },
           },
         },
         {
@@ -654,7 +670,12 @@ export const Form1040: FormSpecification = {
           description: "Amount from Schedule 2, line 3",
           box: {
             identifier: "17",
-            value: { type: "box_reference", form: "f1040s2", box: "3" },
+            value: {
+              type: "box_reference",
+              form: "f1040s2",
+              box: "3",
+              required: true,
+            },
           },
         },
         {
@@ -685,7 +706,12 @@ export const Form1040: FormSpecification = {
           description: "Amount from Schedule 3, line 8",
           box: {
             identifier: "20",
-            value: { type: "box_reference", form: "f1040s3", box: "8" },
+            value: {
+              type: "box_reference",
+              form: "f1040s3",
+              box: "8",
+              required: true,
+            },
           },
         },
         {
@@ -724,7 +750,12 @@ export const Form1040: FormSpecification = {
             "Other taxes, including self-employment tax, from Schedule 2, line 21",
           box: {
             identifier: "23",
-            value: { type: "box_reference", form: "f1040s2", box: "21" },
+            value: {
+              type: "box_reference",
+              form: "f1040s2",
+              box: "21",
+              required: true,
+            },
           },
         },
         {
@@ -789,6 +820,7 @@ export const Form1040: FormSpecification = {
                 type: "box_reference",
                 form: "f8959",
                 box: "24",
+                required: true,
               },
             },
           },
@@ -869,7 +901,12 @@ export const Form1040: FormSpecification = {
           description: "Amount from Schedule 3, line 15",
           box: {
             identifier: "31",
-            value: { type: "box_reference", form: "f1040s3", box: "15" },
+            value: {
+              type: "box_reference",
+              form: "f1040s3",
+              box: "15",
+              required: true,
+            },
           },
         },
         {

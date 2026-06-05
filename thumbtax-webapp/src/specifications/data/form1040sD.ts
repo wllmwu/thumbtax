@@ -639,7 +639,12 @@ export const Form1040SD: FormSpecification = {
           box: {
             identifier: "22",
             format: "yes_no",
-            value: { type: "box_reference", form: "f1040", box: "3a" },
+            value: {
+              type: "box_reference",
+              form: "f1040",
+              box: "3a",
+              required: true,
+            },
           },
         },
         {

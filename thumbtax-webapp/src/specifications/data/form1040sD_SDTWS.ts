@@ -23,6 +23,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
                 type: "box_reference",
                 form: "f1040",
                 box: "15",
+                required: true,
               },
             },
           },
@@ -33,7 +34,12 @@ export const Form1040SD_SDTWS: FormSpecification = {
             "Enter your qualified dividends from Form 1040, 1040-SR, or 1040-NR, line 3a",
           box: {
             identifier: "2",
-            value: { type: "box_reference", form: "f1040", box: "3a" },
+            value: {
+              type: "box_reference",
+              form: "f1040",
+              box: "3a",
+              required: true,
+            },
           },
         },
         {
@@ -151,8 +157,18 @@ export const Form1040SD_SDTWS: FormSpecification = {
             value: {
               type: "sum",
               values: [
-                { type: "box_reference", form: "f1040sD", box: "18" },
-                { type: "box_reference", form: "f1040sD", box: "19" },
+                {
+                  type: "box_reference",
+                  form: "f1040sD",
+                  box: "18",
+                  required: true,
+                },
+                {
+                  type: "box_reference",
+                  form: "f1040sD",
+                  box: "19",
+                  required: true,
+                },
               ],
             },
           },
