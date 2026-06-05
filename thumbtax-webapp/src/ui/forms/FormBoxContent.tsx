@@ -2,7 +2,7 @@ import { absurd } from "#src/common/utils/absurd";
 import { useStore } from "#src/state/useStore";
 import { AmountListInput } from "#src/ui/forms/AmountListInput";
 import { SelectInstanceBoxesInput } from "#src/ui/forms/SelectInstanceBoxesInput";
-import { CheckboxInput } from "#src/ui/primitives/CheckboxInput";
+import { CheckboxField } from "#src/ui/primitives/CheckboxField";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 
@@ -36,7 +36,7 @@ export function FormBoxContent({ instance, box }: Props) {
       const input = instance.inputs[box.identifier];
       const value = input?.type === "number" && input.value !== 0;
       return (
-        <CheckboxInput
+        <CheckboxField
           aria-label={inputLabel}
           value={value}
           onChange={(newValue) =>
@@ -89,7 +89,7 @@ export function FormBoxContent({ instance, box }: Props) {
       const value = resolvedBox.value;
       return (
         <div>
-          <CheckboxInput
+          <CheckboxField
             label={`Override box ${box.identifier}`}
             value={isOverridden}
             onChange={(newIsOverridden) =>
@@ -172,6 +172,8 @@ export function FormBoxContent({ instance, box }: Props) {
     case "box_reference":
     case "comparison":
     case "conditional":
+    case "conjunction":
+    case "disjunction":
     case "difference":
     case "filing_status_map":
     case "form_instance_count":
@@ -179,6 +181,7 @@ export function FormBoxContent({ instance, box }: Props) {
     case "maximum":
     case "minimum":
     case "non_negative_clamp":
+    case "non_positive_clamp":
     case "number_constant":
     case "numerical_negation":
     case "piecewise_function":

@@ -23,6 +23,9 @@ function FormLineTableRow({
   line: FormLine<boolean>;
   instance: FormInstance;
 }) {
+  if (line.virtual) {
+    return null;
+  }
   return (
     <div className={styles.formTableRow}>
       <span className={styles.formTableRowHeader}>{line.index}</span>
