@@ -210,12 +210,16 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
-          // TODO: Form 8960
           index: "12",
           description: "Net investment income tax. Attach Form 8960",
           box: {
             identifier: "12",
-            value: { type: "number_input" },
+            value: {
+              type: "box_reference",
+              form: "f8960",
+              box: "17",
+              required: true,
+            },
           },
         },
         {

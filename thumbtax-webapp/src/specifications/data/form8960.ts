@@ -3,23 +3,29 @@ import type { FormSpecification } from "#src/specifications/types/formSpecificat
 export const Form8960: FormSpecification = {
   class: "f8960",
   title: "Form 8960",
-  subtitle: "Net Investment Income Tax—Individuals, Estates, and Trusts",
+  subtitle: "Net Investment Income Tax\u2014Individuals, Estates, and Trusts",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8960",
   category: "taxes",
   maxInstances: 1,
   sections: [
     {
-      heading: "Part I Investment Income",
+      heading: "Part I. Investment Income",
       lines: [
         {
           index: "1",
           description: "Taxable interest (see instructions)",
-          box: { identifier: "1", value: { type: "number_input" } },
+          box: {
+            identifier: "1",
+            value: { type: "box_reference", form: "f1040", box: "2b" },
+          },
         },
         {
           index: "2",
           description: "Ordinary dividends (see instructions)",
-          box: { identifier: "2", value: { type: "number_input" } },
+          box: {
+            identifier: "2",
+            value: { type: "box_reference", form: "f1040", box: "3b" },
+          },
         },
         {
           index: "3",
@@ -30,12 +36,22 @@ export const Form8960: FormSpecification = {
           index: "4a",
           description:
             "Rental real estate, royalties, partnerships, S corporations, trusts, trades or businesses, etc. (see instructions)",
-          box: { identifier: "4a", value: { type: "number_input" } },
+          box: {
+            identifier: "4a",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", form: "f1040s1", box: "3" },
+                { type: "box_reference", form: "f1040s1", box: "5" },
+                { type: "box_reference", form: "f1040s1", box: "6" },
+              ],
+            },
+          },
         },
         {
           index: "4b",
           description:
-            "Adjustment for net income or loss derived in the ordinary course of a nonsection 1411 trade or business (see instructions)",
+            "Adjustment for net income or loss derived in the ordinary course of a non-section 1411 trade or business (see instructions)",
           box: { identifier: "4b", value: { type: "number_input" } },
         },
         {
@@ -56,7 +72,16 @@ export const Form8960: FormSpecification = {
           index: "5a",
           description:
             "Net gain or loss from disposition of property (see instructions)",
-          box: { identifier: "5a", value: { type: "number_input" } },
+          box: {
+            identifier: "5a",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", form: "f1040", box: "7a" },
+                { type: "box_reference", form: "f1040s1", box: "4" },
+              ],
+            },
+          },
         },
         {
           index: "5b",
@@ -121,7 +146,7 @@ export const Form8960: FormSpecification = {
     },
     {
       heading:
-        "Part II Investment Expenses Allocable to Investment Income and Modifications",
+        "Part II. Investment Expenses Allocable to Investment Income and Modifications",
       lines: [
         {
           index: "9a",
@@ -177,12 +202,12 @@ export const Form8960: FormSpecification = {
       ],
     },
     {
-      heading: "Part III Tax Computation",
+      heading: "Part III. Tax Computation",
       lines: [
         {
           index: "12",
           description:
-            "Net investment income. Subtract Part II, line 11, from Part I, line 8. Individuals, complete lines 13–17. Estates and trusts, complete lines 18a–21. If zero or less, enter -0-",
+            "Net investment income. Subtract Part II, line 11, from Part I, line 8. Individuals, complete lines 13\u201317. Estates and trusts, complete lines 18a\u201321. If zero or less, enter -0-",
           box: {
             identifier: "12",
             value: {
@@ -198,13 +223,36 @@ export const Form8960: FormSpecification = {
         {
           index: "13",
           description: "Modified adjusted gross income (see instructions)",
-          box: { identifier: "13", value: { type: "number_input" } },
+          box: {
+            identifier: "13",
+            value: { type: "box_reference", form: "f1040", box: "11a" },
+          },
         },
         {
           index: "14",
           description: "Threshold based on filing status (see instructions)",
-          // Gap: filing-status-dependent threshold constant; using number_input as fallback
-          box: { identifier: "14", value: { type: "number_input" } },
+          box: {
+            identifier: "14",
+            value: {
+              type: "filing_status_map",
+              values: {
+                head_of_household: { type: "number_constant", value: 200000 },
+                married_filing_jointly: {
+                  type: "number_constant",
+                  value: 250000,
+                },
+                married_filing_separately: {
+                  type: "number_constant",
+                  value: 125000,
+                },
+                qualifying_surviving_spouse: {
+                  type: "number_constant",
+                  value: 250000,
+                },
+                single: { type: "number_constant", value: 200000 },
+              },
+            },
+          },
         },
         {
           index: "15",
@@ -254,89 +302,47 @@ export const Form8960: FormSpecification = {
         {
           index: "18a",
           description: "Net investment income (line 12 above)",
-          box: {
-            identifier: "18a",
-            value: { type: "box_reference", box: "12" },
-          },
+          box: { identifier: "18a", value: { type: "unsupported" } },
         },
         {
           index: "18b",
           description:
             "Deductions for distributions of net investment income and charitable deductions (see instructions)",
-          box: { identifier: "18b", value: { type: "number_input" } },
+          box: { identifier: "18b", value: { type: "unsupported" } },
         },
         {
           index: "18c",
           description:
             "Undistributed net investment income. Subtract line 18b from line 18a (see instructions). If zero or less, enter -0-",
-          box: {
-            identifier: "18c",
-            value: {
-              type: "non_negative_clamp",
-              value: {
-                type: "difference",
-                minuend: { type: "box_reference", box: "18a" },
-                subtrahend: { type: "box_reference", box: "18b" },
-              },
-            },
-          },
+          box: { identifier: "18c", value: { type: "unsupported" } },
         },
         {
           index: "19a",
           description: "Adjusted gross income (see instructions)",
-          box: { identifier: "19a", value: { type: "number_input" } },
+          box: { identifier: "19a", value: { type: "unsupported" } },
         },
         {
           index: "19b",
           description:
             "Highest tax bracket for estates and trusts for the year (see instructions)",
-          // Gap: this is a tax-law constant for the year, not a user input; using number_input as fallback
-          box: { identifier: "19b", value: { type: "number_input" } },
+          box: { identifier: "19b", value: { type: "unsupported" } },
         },
         {
           index: "19c",
           description:
             "Subtract line 19b from line 19a. If zero or less, enter -0-",
-          box: {
-            identifier: "19c",
-            value: {
-              type: "non_negative_clamp",
-              value: {
-                type: "difference",
-                minuend: { type: "box_reference", box: "19a" },
-                subtrahend: { type: "box_reference", box: "19b" },
-              },
-            },
-          },
+          box: { identifier: "19c", value: { type: "unsupported" } },
         },
         {
           index: "20",
           description: "Enter the smaller of line 18c or line 19c",
-          box: {
-            identifier: "20",
-            value: {
-              type: "minimum",
-              values: [
-                { type: "box_reference", box: "18c" },
-                { type: "box_reference", box: "19c" },
-              ],
-            },
-          },
+          box: { identifier: "20", value: { type: "unsupported" } },
         },
         {
           index: "21",
           description:
             "Net investment income tax for estates and trusts. Multiply line 20 by 3.8% (0.038). Enter here and include on your tax return (see instructions)",
-          box: {
-            identifier: "21",
-            value: {
-              type: "product",
-              values: [
-                { type: "box_reference", box: "20" },
-                { type: "number_constant", value: 0.038 },
-              ],
-            },
-          },
+          box: { identifier: "21", value: { type: "unsupported" } },
         },
       ],
     },
