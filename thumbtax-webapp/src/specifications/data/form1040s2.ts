@@ -197,12 +197,16 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
-          // TODO: Form 8959
           index: "11",
           description: "Additional Medicare Tax. Attach Form 8959",
           box: {
             identifier: "11",
-            value: { type: "number_input" },
+            value: {
+              type: "box_reference",
+              form: "f8959",
+              box: "18",
+              required: true,
+            },
           },
         },
         {

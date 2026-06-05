@@ -772,12 +772,18 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          // TODO: Form 8959
           index: "25c",
           description: "Other forms (see instructions)",
           box: {
             identifier: "25c",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "box_reference",
+                form: "f8959",
+                box: "24",
+              },
+            },
           },
         },
         {
