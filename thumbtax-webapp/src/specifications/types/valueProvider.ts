@@ -80,9 +80,12 @@ export type ComputedValueProvider =
 
 type UserInputValueProvider =
   | { type: "checkbox_input" }
-  | { type: "conditional_number_input"; skipCondition: ComputedValueProvider }
   | { type: "list_amounts_input" }
-  | { type: "number_input"; coerceSign?: "negative" | "positive" }
+  | {
+      type: "number_input";
+      coerceSign?: "negative" | "positive";
+      skipCondition?: ComputedValueProvider;
+    }
   | {
       type: "override_number_input";
       computedValue: ComputedValueProvider;

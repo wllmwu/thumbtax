@@ -46,12 +46,15 @@ function resolveDependencies(
           ? instances.map(({ id }) => ({ instance: id, box }))
           : [];
       });
-    case "conditional_number_input":
-      return resolveDependencies(
-        address,
-        provider.skipCondition,
-        instanceRegistry,
-      );
+    case "number_input":
+      if (provider.skipCondition) {
+        return resolveDependencies(
+          address,
+          provider.skipCondition,
+          instanceRegistry,
+        );
+      }
+      return [];
     case "conjunction":
     case "disjunction":
     case "maximum":
@@ -104,7 +107,6 @@ function resolveDependencies(
     case "form_instance_count":
     case "list_amounts_input":
     case "number_constant":
-    case "number_input":
     case "unsupported":
     case "unused":
       return [];
@@ -241,21 +243,6 @@ function resolveValue(
         errors: [...condition.errors, ...result.errors],
       };
     }
-    case "conditional_number_input": {
-      const resolvedSkip = resolveRecursive(provider.skipCondition);
-      if (resolvedSkip.value !== 0) {
-        return {
-          value: 0,
-          errors: resolvedSkip.errors,
-        };
-      }
-      const formInstance = instances.get(address.instance);
-      const userInput = formInstance?.inputs[address.box];
-      if (userInput && userInput.type === "number") {
-        return { value: userInput.value, errors: resolvedSkip.errors };
-      }
-      return { value: 0, errors: resolvedSkip.errors };
-    }
     case "conjunction": {
       const resolved = provider.values.map(resolveRecursive);
       return resolved.reduce<ResolvedBox>(
@@ -349,12 +336,20 @@ function resolveValue(
       return { value: provider.value, errors: [] };
     }
     case "number_input": {
+      const resolvedSkip = provider.skipCondition
+        ? resolveRecursive(provider.skipCondition)
+        : undefined;
+      const skipValue = resolvedSkip?.value ?? 0;
+      const skipErrors = resolvedSkip?.errors ?? [];
+      if (skipValue !== 0) {
+        return { value: 0, errors: skipErrors, skipped: true };
+      }
       const formInstance = instances.get(address.instance);
       const userInput = formInstance?.inputs[address.box];
       if (userInput && userInput.type === "number") {
         return { value: userInput.value, errors: [] };
       }
-      return { value: 0, errors: [] };
+      return { value: 0, errors: skipErrors };
     }
     case "numerical_negation": {
       const { value, errors } = resolveRecursive(provider.value);

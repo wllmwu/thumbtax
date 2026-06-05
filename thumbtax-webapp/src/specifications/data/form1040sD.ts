@@ -533,7 +533,7 @@ export const Form1040SD: FormSpecification = {
           box: {
             identifier: "18",
             value: {
-              type: "conditional_number_input",
+              type: "number_input",
               skipCondition: {
                 type: "disjunction",
                 values: [
@@ -558,7 +558,7 @@ export const Form1040SD: FormSpecification = {
           box: {
             identifier: "19",
             value: {
-              type: "conditional_number_input",
+              type: "number_input",
               skipCondition: {
                 type: "disjunction",
                 values: [

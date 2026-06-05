@@ -11,6 +11,7 @@ export type Workbook = Record<
 export type ResolvedBox = {
   value: number;
   errors: BoxError[];
+  skipped?: boolean;
 };
 
 export type BoxError =
