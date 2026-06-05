@@ -1,11 +1,11 @@
 import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FormClass } from "#src/common/types/formClass";
-import type { ValueProvider } from "#src/specifications/types/valueProvider";
+import type { ComputedValueProvider } from "#src/specifications/types/valueProvider";
 
 export function taxComputation(taxableIncome: {
   form?: FormClass;
   box: BoxIdentifier;
-}): ValueProvider {
+}): ComputedValueProvider {
   const input = { type: "box_reference" as const, ...taxableIncome };
   return {
     type: "filing_status_map",

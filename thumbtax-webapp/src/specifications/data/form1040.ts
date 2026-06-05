@@ -1,3 +1,5 @@
+import { taxComputation } from "#src/specifications/data/taxComputation";
+
 import type { FormSpecification } from "#src/specifications/types/formSpecification";
 
 export const Form1040: FormSpecification = {
@@ -606,12 +608,36 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          // TODO: piecewise provider, tax computation worksheet, Schedule D, qualified dividends and capital gain tax worksheet, Form 2555, foreign earned income tax worksheet
+          // TODO: Form 2555, foreign earned income tax worksheet
           index: "16",
           description: "**Tax** (see instructions)",
           box: {
             identifier: "16",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "conditional",
+                condition: { type: "box_reference", box: "virtual_16_SDTWS" },
+                trueValue: {
+                  type: "box_reference",
+                  form: "f1040sD_SDTWS",
+                  box: "47",
+                },
+                falseValue: {
+                  type: "conditional",
+                  condition: {
+                    type: "box_reference",
+                    box: "virtual_16_QDCGTWS",
+                  },
+                  trueValue: {
+                    type: "box_reference",
+                    form: "f1040_QDCGTWS",
+                    box: "25",
+                  },
+                  falseValue: taxComputation({ box: "15" }),
+                },
+              },
+            },
           },
         },
         {

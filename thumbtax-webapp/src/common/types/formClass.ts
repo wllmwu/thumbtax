@@ -1,5 +1,6 @@
 export const FORM_CLASSES = [
   "f1040",
+  "f1040_QDCGTWS",
   "f1040s1",
   "f1040s1A",
   "f1040s2",

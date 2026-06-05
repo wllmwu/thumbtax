@@ -1,4 +1,5 @@
 import { Form1040 } from "#src/specifications/data/form1040";
+import { Form1040_QDCGTWS } from "#src/specifications/data/form1040_QDCGTWS";
 import { Form1040S1 } from "#src/specifications/data/form1040s1";
 import { Form1040S1A } from "#src/specifications/data/form1040s1A";
 import { Form1040S2 } from "#src/specifications/data/form1040s2";
@@ -26,6 +27,7 @@ import type { SpecificationRegistry } from "#src/specifications/types/specificat
 
 const allSpecifications: SpecificationRegistry = {
   f1040: Form1040,
+  f1040_QDCGTWS: Form1040_QDCGTWS,
   f1040s1: Form1040S1,
   f1040s1A: Form1040S1A,
   f1040s2: Form1040S2,
