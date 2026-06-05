@@ -100,12 +100,16 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
-          // TODO: Form 6251
           index: "2",
           description: "Alternative minimum tax. Attach Form 6251",
           box: {
             identifier: "2",
-            value: { type: "number_input" },
+            value: {
+              type: "box_reference",
+              form: "f6251",
+              box: "11",
+              required: true,
+            },
           },
         },
         {

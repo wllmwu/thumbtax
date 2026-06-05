@@ -1,9 +1,55 @@
+import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FormSpecification } from "#src/specifications/types/formSpecification";
+import type { ComputedValueProvider } from "#src/specifications/types/valueProvider";
+
+function alternativeMinimumTaxComputation(
+  box: BoxIdentifier,
+): ComputedValueProvider {
+  const input = { type: "box_reference" as const, box };
+  return {
+    type: "conditional",
+    condition: {
+      type: "comparison",
+      value: input,
+      maximum: {
+        type: "filing_status_map",
+        values: {
+          married_filing_separately: {
+            type: "number_constant",
+            value: 119550,
+          },
+        },
+        default: { type: "number_constant", value: 239100 },
+      },
+    },
+    trueValue: {
+      type: "product",
+      values: [input, { type: "number_constant", value: 0.26 }],
+    },
+    falseValue: {
+      type: "difference",
+      minuend: {
+        type: "product",
+        values: [input, { type: "number_constant", value: 0.28 }],
+      },
+      subtrahend: {
+        type: "filing_status_map",
+        values: {
+          married_filing_separately: {
+            type: "number_constant",
+            value: 2391,
+          },
+        },
+        default: { type: "number_constant", value: 4782 },
+      },
+    },
+  };
+}
 
 export const Form6251: FormSpecification = {
   class: "f6251",
   title: "Form 6251",
-  subtitle: "Alternative Minimum Tax—Individuals",
+  subtitle: "Alternative Minimum Tax\u2014Individuals",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-6251",
   category: "taxes",
   maxInstances: 1,
@@ -17,7 +63,21 @@ export const Form6251: FormSpecification = {
             "Subtract Schedule 1-A (Form 1040), line 37, from Form 1040, 1040-SR, or 1040-NR, line 14",
           box: {
             identifier: "1a",
-            value: { type: "number_input" },
+            value: {
+              type: "difference",
+              minuend: {
+                type: "box_reference",
+                form: "f1040",
+                box: "14",
+                required: true,
+              },
+              subtrahend: {
+                type: "box_reference",
+                form: "f1040s1A",
+                box: "37",
+                required: true,
+              },
+            },
           },
         },
         {
@@ -26,7 +86,16 @@ export const Form6251: FormSpecification = {
             "Subtract line 1a from Form 1040, 1040-SR, or 1040-NR, line 11b (if less than zero, enter as a negative amount)",
           box: {
             identifier: "1b",
-            value: { type: "number_input" },
+            value: {
+              type: "difference",
+              minuend: {
+                type: "box_reference",
+                form: "f1040",
+                box: "11b",
+                required: true,
+              },
+              subtrahend: { type: "box_reference", box: "1a" },
+            },
           },
         },
         {
@@ -35,7 +104,17 @@ export const Form6251: FormSpecification = {
             "If filing Schedule A (Form 1040), enter the taxes from Schedule A, line 7; otherwise, enter the amount from Form 1040 or 1040-SR, line 12e",
           box: {
             identifier: "2a",
-            value: { type: "number_input" },
+            value: {
+              type: "conditional",
+              condition: { type: "form_instance_count", form: "f1040sA" },
+              trueValue: { type: "box_reference", form: "f1040sA", box: "7" },
+              falseValue: {
+                type: "box_reference",
+                form: "f1040",
+                box: "12e",
+                required: true,
+              },
+            },
           },
         },
         {
@@ -44,8 +123,16 @@ export const Form6251: FormSpecification = {
             "Tax refund from Schedule 1 (Form 1040), line 1 or line 8z",
           box: {
             identifier: "2b",
-            // Parenthesized (negative) on the form
-            value: { type: "number_input", coerceSign: "negative" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "box_reference",
+                form: "f1040s1",
+                box: "1",
+                required: true,
+              },
+              coerceSign: "negative",
+            },
           },
         },
         {
@@ -71,7 +158,15 @@ export const Form6251: FormSpecification = {
             "Net operating loss deduction from Schedule 1 (Form 1040), line 8a. Enter as a positive amount",
           box: {
             identifier: "2e",
-            value: { type: "number_input", coerceSign: "positive" },
+            value: {
+              type: "absolute_value",
+              value: {
+                type: "box_reference",
+                form: "f1040s1",
+                box: "8a",
+                required: true,
+              },
+            },
           },
         },
         {
@@ -79,7 +174,6 @@ export const Form6251: FormSpecification = {
           description: "Alternative tax net operating loss deduction",
           box: {
             identifier: "2f",
-            // Parenthesized (negative) on the form
             value: { type: "number_input", coerceSign: "negative" },
           },
         },
@@ -119,6 +213,7 @@ export const Form6251: FormSpecification = {
           },
         },
         {
+          // TODO: adjusted basis for AMT
           index: "2k",
           description:
             "Disposition of property (difference between AMT and regular tax gain or loss)",
@@ -195,7 +290,6 @@ export const Form6251: FormSpecification = {
             "Income from certain installment sales before January 1, 1987",
           box: {
             identifier: "2s",
-            // Parenthesized (negative) on the form
             value: { type: "number_input", coerceSign: "negative" },
           },
         },
@@ -217,11 +311,10 @@ export const Form6251: FormSpecification = {
           },
         },
         {
-          index: "4",
-          description:
-            "Alternative minimum taxable income. Combine lines 1b through 3. (If married filing separately and line 4 is more than $900,350, see instructions.)",
+          index: "virtual_4_before_additional",
+          virtual: true,
           box: {
-            identifier: "4",
+            identifier: "virtual_4_before_additional",
             value: {
               type: "sum",
               values: [
@@ -251,6 +344,55 @@ export const Form6251: FormSpecification = {
             },
           },
         },
+        {
+          index: "4",
+          description:
+            "**Alternative minimum taxable income.** Combine lines 1b through 3. (If married filing separately and line 4 is more than $900,350, see instructions.)",
+          box: {
+            identifier: "4",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "virtual_4_before_additional" },
+                {
+                  type: "filing_status_map",
+                  values: {
+                    married_filing_separately: {
+                      type: "conditional",
+                      condition: {
+                        type: "comparison",
+                        value: {
+                          type: "box_reference",
+                          box: "virtual_4_before_additional",
+                        },
+                        minimum: { type: "number_constant", value: 1174350 },
+                      },
+                      trueValue: { type: "number_constant", value: 68500 },
+                      falseValue: {
+                        type: "product",
+                        values: [
+                          {
+                            type: "difference",
+                            minuend: {
+                              type: "box_reference",
+                              box: "virtual_4_before_additional",
+                            },
+                            subtrahend: {
+                              type: "number_constant",
+                              value: 900350,
+                            },
+                          },
+                          { type: "number_constant", value: 0.25 },
+                        ],
+                      },
+                    },
+                  },
+                  default: { type: "number_constant", value: 0 },
+                },
+              ],
+            },
+          },
+        },
       ],
     },
     {
@@ -258,17 +400,190 @@ export const Form6251: FormSpecification = {
       lines: [
         {
           index: "5",
-          description:
-            "Exemption. IF your filing status is... AND line 4 is not over... THEN enter on line 5...: Single or head of household: $626,350 → $88,100; Married filing jointly or qualifying surviving spouse: $1,252,700 → $137,000; Married filing separately: $626,350 → $68,500. If line 4 is over the amount shown above for your filing status, see instructions.",
+          description: "Exemption. See instructions.",
           box: {
-            // NOTE: Schema gap — this line involves a lookup table based on
-            // filing status and line 4 amount, with a phase-out above the
-            // thresholds. The selection_input options below represent the
-            // standard (non-phase-out) amounts; a full computation would
-            // require a conditional / phase-out formula not yet expressible
-            // in the schema, so we fall back to number_input.
             identifier: "5",
-            value: { type: "number_input" },
+            value: {
+              type: "filing_status_map",
+              values: {
+                married_filing_jointly: {
+                  type: "piecewise_function",
+                  input: { type: "box_reference", box: "4" },
+                  pieces: [
+                    {
+                      inputUpperBound: {
+                        type: "number_constant",
+                        value: 1252700,
+                      },
+                      output: { type: "number_constant", value: 137000 },
+                    },
+                    {
+                      inputUpperBound: {
+                        type: "number_constant",
+                        value: 1800700,
+                      },
+                      output: {
+                        type: "non_negative_clamp",
+                        value: {
+                          type: "difference",
+                          minuend: { type: "number_constant", value: 137000 },
+                          subtrahend: {
+                            type: "product",
+                            values: [
+                              {
+                                type: "non_negative_clamp",
+                                value: {
+                                  type: "difference",
+                                  minuend: { type: "box_reference", box: "4" },
+                                  subtrahend: {
+                                    type: "number_constant",
+                                    value: 1252700,
+                                  },
+                                },
+                              },
+                              { type: "number_constant", value: 0.25 },
+                            ],
+                          },
+                        },
+                      },
+                    },
+                  ],
+                  lastOutput: { type: "number_constant", value: 0 },
+                },
+                married_filing_separately: {
+                  type: "piecewise_function",
+                  input: { type: "box_reference", box: "4" },
+                  pieces: [
+                    {
+                      inputUpperBound: {
+                        type: "number_constant",
+                        value: 626350,
+                      },
+                      output: { type: "number_constant", value: 68500 },
+                    },
+                    {
+                      inputUpperBound: {
+                        type: "number_constant",
+                        value: 900350,
+                      },
+                      output: {
+                        type: "non_negative_clamp",
+                        value: {
+                          type: "difference",
+                          minuend: { type: "number_constant", value: 68500 },
+                          subtrahend: {
+                            type: "product",
+                            values: [
+                              {
+                                type: "non_negative_clamp",
+                                value: {
+                                  type: "difference",
+                                  minuend: { type: "box_reference", box: "4" },
+                                  subtrahend: {
+                                    type: "number_constant",
+                                    value: 626350,
+                                  },
+                                },
+                              },
+                              { type: "number_constant", value: 0.25 },
+                            ],
+                          },
+                        },
+                      },
+                    },
+                  ],
+                  lastOutput: { type: "number_constant", value: 0 },
+                },
+                qualifying_surviving_spouse: {
+                  type: "piecewise_function",
+                  input: { type: "box_reference", box: "4" },
+                  pieces: [
+                    {
+                      inputUpperBound: {
+                        type: "number_constant",
+                        value: 1252700,
+                      },
+                      output: { type: "number_constant", value: 137000 },
+                    },
+                    {
+                      inputUpperBound: {
+                        type: "number_constant",
+                        value: 1800700,
+                      },
+                      output: {
+                        type: "non_negative_clamp",
+                        value: {
+                          type: "difference",
+                          minuend: { type: "number_constant", value: 137000 },
+                          subtrahend: {
+                            type: "product",
+                            values: [
+                              {
+                                type: "non_negative_clamp",
+                                value: {
+                                  type: "difference",
+                                  minuend: { type: "box_reference", box: "4" },
+                                  subtrahend: {
+                                    type: "number_constant",
+                                    value: 1252700,
+                                  },
+                                },
+                              },
+                              { type: "number_constant", value: 0.25 },
+                            ],
+                          },
+                        },
+                      },
+                    },
+                  ],
+                  lastOutput: { type: "number_constant", value: 0 },
+                },
+              },
+              default: {
+                type: "piecewise_function",
+                input: { type: "box_reference", box: "4" },
+                pieces: [
+                  {
+                    inputUpperBound: {
+                      type: "number_constant",
+                      value: 626350,
+                    },
+                    output: { type: "number_constant", value: 88100 },
+                  },
+                  {
+                    inputUpperBound: {
+                      type: "number_constant",
+                      value: 978750,
+                    },
+                    output: {
+                      type: "non_negative_clamp",
+                      value: {
+                        type: "difference",
+                        minuend: { type: "number_constant", value: 88100 },
+                        subtrahend: {
+                          type: "product",
+                          values: [
+                            {
+                              type: "non_negative_clamp",
+                              value: {
+                                type: "difference",
+                                minuend: { type: "box_reference", box: "4" },
+                                subtrahend: {
+                                  type: "number_constant",
+                                  value: 626350,
+                                },
+                              },
+                            },
+                            { type: "number_constant", value: 0.25 },
+                          ],
+                        },
+                      },
+                    },
+                  },
+                ],
+                lastOutput: { type: "number_constant", value: 0 },
+              },
+            },
           },
         },
         {
@@ -288,17 +603,60 @@ export const Form6251: FormSpecification = {
           },
         },
         {
+          index: "flag_7_part_iii",
+          virtual: true,
+          description: "Flag for whether to use Part III to compute line 7",
+          box: {
+            identifier: "flag_7_part_iii",
+            value: {
+              type: "disjunction",
+              values: [
+                { type: "box_reference", form: "f1040", box: "7a" },
+                { type: "box_reference", form: "f1040", box: "3a" },
+                {
+                  type: "conjunction",
+                  values: [
+                    {
+                      type: "comparison",
+                      value: {
+                        type: "box_reference",
+                        form: "f1040sD",
+                        box: "15",
+                      },
+                      minimum: { type: "number_constant", value: 0 },
+                      strict: true,
+                    },
+                    {
+                      type: "comparison",
+                      value: {
+                        type: "box_reference",
+                        form: "f1040sD",
+                        box: "16",
+                      },
+                      minimum: { type: "number_constant", value: 0 },
+                      strict: true,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        },
+        {
           index: "7",
           description:
-            "If you are filing Form 2555, see instructions for the amount to enter. If you reported capital gain distributions directly on Form 1040 or 1040-SR, line 7; you reported qualified dividends on Form 1040 or 1040-SR, line 3a; or you had a gain on both lines 15 and 16 of Schedule D (Form 1040) (as refigured for the AMT, if necessary), complete Part III on the back and enter the amount from line 40 here. All others: If line 6 is $239,100 or less ($119,550 or less if married filing separately), multiply line 6 by 26% (0.26). Otherwise, multiply line 6 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result.",
+            "- If you are filing Form 2555, see instructions for the amount to enter.\n- If you reported capital gain distributions directly on Form 1040 or 1040-SR, line 7; you reported qualified dividends on Form 1040 or 1040-SR, line 3a; or you had a gain on both lines 15 and 16 of Schedule D (Form 1040) (as refigured for the AMT, if necessary), complete Part III on the back and enter the amount from line 40 here.\n- All others: If line 6 is $239,100 or less ($119,550 or less if married filing separately), multiply line 6 by 26% (0.26). Otherwise, multiply line 6 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result.",
           box: {
-            // NOTE: Schema gap — this line has three separate computation
-            // paths (Form 2555 filers, capital-gains/qualified-dividends
-            // filers who use Part III, and all others with a two-bracket
-            // AMT rate schedule). The current schema cannot fully express
-            // the conditional rate-bracket logic, so we use number_input.
             identifier: "7",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "conditional",
+                condition: { type: "box_reference", box: "flag_7_part_iii" },
+                trueValue: { type: "box_reference", box: "40" },
+                falseValue: alternativeMinimumTaxComputation("6"),
+              },
+            },
           },
         },
         {
@@ -327,20 +685,44 @@ export const Form6251: FormSpecification = {
           description:
             "Add Form 1040 or 1040-SR, line 16 (minus any tax from Form 4972), and Schedule 2 (Form 1040), line 1z. Subtract from the result Schedule 3 (Form 1040), line 1 and any negative amount reported on Form 8978, line 14 (treated as a positive number). If zero or less, enter -0-. If you used Schedule J to figure your tax on Form 1040 or 1040-SR, line 16, refigure that tax without using Schedule J before completing this line. See instructions",
           box: {
-            // NOTE: Schema gap — this line references multiple cross-form
-            // values (Form 1040 line 16 minus Form 4972 tax, Schedule 2
-            // line 1z, Schedule 3 line 1, Form 8978 line 14) and applies
-            // a non_negative_clamp. Full computation requires cross-form
-            // references not all of which are currently modeled; using
-            // number_input as a fallback.
             identifier: "10",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "non_negative_clamp",
+                value: {
+                  type: "difference",
+                  minuend: {
+                    type: "sum",
+                    values: [
+                      {
+                        type: "box_reference",
+                        form: "f1040",
+                        box: "16",
+                        required: true,
+                      },
+                      {
+                        type: "box_reference",
+                        form: "f1040s2",
+                        box: "1z",
+                        required: true,
+                      },
+                    ],
+                  },
+                  subtrahend: {
+                    type: "box_reference",
+                    form: "f1040s3",
+                    box: "1",
+                  },
+                },
+              },
+            },
           },
         },
         {
           index: "11",
           description:
-            "AMT. Subtract line 10 from line 9. If zero or less, enter -0-. Enter here and on Schedule 2 (Form 1040), line 2",
+            "**AMT.** Subtract line 10 from line 9. If zero or less, enter -0-. Enter here and on Schedule 2 (Form 1040), line 2",
           box: {
             identifier: "11",
             value: {
@@ -364,7 +746,10 @@ export const Form6251: FormSpecification = {
             "Enter the amount from Form 6251, line 6. If you are filing Form 2555, enter the amount from line 3 of the worksheet in the instructions for line 7",
           box: {
             identifier: "12",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: { type: "box_reference", box: "6" },
+            },
           },
         },
         {
@@ -373,7 +758,40 @@ export const Form6251: FormSpecification = {
             "Enter the amount from line 4 of the Qualified Dividends and Capital Gain Tax Worksheet in the Instructions for Form 1040 or the amount from line 13 of the Schedule D Tax Worksheet in the Instructions for Schedule D (Form 1040), whichever applies (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter",
           box: {
             identifier: "13",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "conditional",
+                condition: {
+                  type: "box_reference",
+                  form: "f1040",
+                  box: "flag_16_SDTWS",
+                  required: true,
+                },
+                trueValue: {
+                  type: "box_reference",
+                  form: "f1040sD_SDTWS",
+                  box: "13",
+                  required: true,
+                },
+                falseValue: {
+                  type: "conditional",
+                  condition: {
+                    type: "box_reference",
+                    form: "f1040",
+                    box: "flag_16_QDCGTWS",
+                    required: true,
+                  },
+                  trueValue: {
+                    type: "box_reference",
+                    form: "f1040_QDCGTWS",
+                    box: "4",
+                    required: true,
+                  },
+                  falseValue: { type: "number_constant", value: 0 },
+                },
+              },
+            },
           },
         },
         {
@@ -382,7 +800,15 @@ export const Form6251: FormSpecification = {
             "Enter the amount from Schedule D (Form 1040), line 19 (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter",
           box: {
             identifier: "14",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "box_reference",
+                form: "f1040sD",
+                box: "19",
+                required: true,
+              },
+            },
           },
         },
         {
@@ -390,12 +816,31 @@ export const Form6251: FormSpecification = {
           description:
             "If you did not complete a Schedule D Tax Worksheet for the regular tax or the AMT, enter the amount from line 13. Otherwise, add lines 13 and 14, and enter the smaller of that result or the amount from line 10 of the Schedule D Tax Worksheet (as refigured for the AMT, if necessary). If you are filing Form 2555, see instructions for the amount to enter",
           box: {
-            // NOTE: Schema gap — this requires a conditional choice between
-            // entering line 13 directly or computing min(13+14, SchedD line
-            // 10). The conditional depends on whether the taxpayer completed
-            // a Schedule D Tax Worksheet, which is not currently expressible.
             identifier: "15",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "conditional",
+                condition: {
+                  type: "form_instance_count",
+                  form: "f1040sD_SDTWS",
+                },
+                trueValue: {
+                  type: "minimum",
+                  values: [
+                    {
+                      type: "sum",
+                      values: [
+                        { type: "box_reference", box: "13" },
+                        { type: "box_reference", box: "14" },
+                      ],
+                    },
+                    { type: "box_reference", form: "f1040sD_SDTWS", box: "10" },
+                  ],
+                },
+                falseValue: { type: "box_reference", box: "13" },
+              },
+            },
           },
         },
         {
@@ -429,36 +874,33 @@ export const Form6251: FormSpecification = {
           description:
             "If line 17 is $239,100 or less ($119,550 or less if married filing separately), multiply line 17 by 26% (0.26). Otherwise, multiply line 17 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result",
           box: {
-            // NOTE: Schema gap — two-bracket rate schedule conditional on
-            // line 17 amount and filing status. Not fully expressible; using
-            // number_input.
             identifier: "18",
-            value: { type: "number_input" },
+            value: alternativeMinimumTaxComputation("17"),
           },
         },
         {
           index: "19",
           description:
-            "Enter: $96,700 if married filing jointly or qualifying surviving spouse; $48,350 if single or married filing separately; or $64,750 if head of household.",
+            "Enter:\n- $96,700 if married filing jointly or qualifying surviving spouse;\n- $48,350 if single or married filing separately; or\n- $64,750 if head of household.",
           box: {
             identifier: "19",
             value: {
               type: "filing_status_map",
               values: {
+                head_of_household: { type: "number_constant", value: 64750 },
                 married_filing_jointly: {
                   type: "number_constant",
                   value: 96700,
+                },
+                married_filing_separately: {
+                  type: "number_constant",
+                  value: 48350,
                 },
                 qualifying_surviving_spouse: {
                   type: "number_constant",
                   value: 96700,
                 },
                 single: { type: "number_constant", value: 48350 },
-                married_filing_separately: {
-                  type: "number_constant",
-                  value: 48350,
-                },
-                head_of_household: { type: "number_constant", value: 64750 },
               },
             },
           },
@@ -469,7 +911,48 @@ export const Form6251: FormSpecification = {
             "Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 14 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter",
           box: {
             identifier: "20",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "non_negative_clamp",
+                value: {
+                  type: "conditional",
+                  condition: {
+                    type: "box_reference",
+                    form: "f1040",
+                    box: "flag_16_SDTWS",
+                    required: true,
+                  },
+                  trueValue: {
+                    type: "box_reference",
+                    form: "f1040sD_SDTWS",
+                    box: "14",
+                    required: true,
+                  },
+                  falseValue: {
+                    type: "conditional",
+                    condition: {
+                      type: "box_reference",
+                      form: "f1040",
+                      box: "flag_16_QDCGTWS",
+                      required: true,
+                    },
+                    trueValue: {
+                      type: "box_reference",
+                      form: "f1040_QDCGTWS",
+                      box: "5",
+                      required: true,
+                    },
+                    falseValue: {
+                      type: "box_reference",
+                      form: "f1040",
+                      box: "15",
+                      required: true,
+                    },
+                  },
+                },
+              },
+            },
           },
         },
         {
@@ -532,27 +1015,20 @@ export const Form6251: FormSpecification = {
         {
           index: "25",
           description:
-            "Enter: $533,400 if single; $300,000 if married filing separately; $600,050 if married filing jointly or qualifying surviving spouse; or $566,700 if head of household.",
+            "Enter:\n- $533,400 if single;\n- $300,000 if married filing separately;\n- $600,050 if married filing jointly or qualifying surviving spouse;\n- or $566,700 if head of household.",
           box: {
             identifier: "25",
             value: {
               type: "filing_status_map",
               values: {
-                single: { type: "number_constant", value: 533400 },
+                head_of_household: { type: "number_constant", value: 566700 },
                 married_filing_separately: {
                   type: "number_constant",
                   value: 300000,
                 },
-                married_filing_jointly: {
-                  type: "number_constant",
-                  value: 600050,
-                },
-                qualifying_surviving_spouse: {
-                  type: "number_constant",
-                  value: 600050,
-                },
-                head_of_household: { type: "number_constant", value: 566700 },
+                single: { type: "number_constant", value: 533400 },
               },
+              default: { type: "number_constant", value: 600050 },
             },
           },
         },
@@ -570,7 +1046,48 @@ export const Form6251: FormSpecification = {
             "Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 21 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter",
           box: {
             identifier: "27",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "non_negative_clamp",
+                value: {
+                  type: "conditional",
+                  condition: {
+                    type: "box_reference",
+                    form: "f1040",
+                    box: "flag_16_SDTWS",
+                    required: true,
+                  },
+                  trueValue: {
+                    type: "box_reference",
+                    form: "f1040sD_SDTWS",
+                    box: "21",
+                    required: true,
+                  },
+                  falseValue: {
+                    type: "conditional",
+                    condition: {
+                      type: "box_reference",
+                      form: "f1040",
+                      box: "flag_16_QDCGTWS",
+                      required: true,
+                    },
+                    trueValue: {
+                      type: "box_reference",
+                      form: "f1040_QDCGTWS",
+                      box: "5",
+                      required: true,
+                    },
+                    falseValue: {
+                      type: "box_reference",
+                      form: "f1040",
+                      box: "15",
+                      required: true,
+                    },
+                  },
+                },
+              },
+            },
           },
         },
         {
@@ -633,7 +1150,8 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "32",
-          description: "Add lines 23 and 30",
+          description:
+            "Add lines 23 and 30\nIf lines 32 and 12 are the same, skip lines 33 through 37 and go to line 38. Otherwise, go to line 33.",
           box: {
             identifier: "32",
             value: {
@@ -647,8 +1165,7 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "33",
-          description:
-            "Subtract line 32 from line 22 (skip if lines 32 and 12 are the same)",
+          description: "Subtract line 32 from line 22",
           box: {
             identifier: "33",
             value: {
@@ -660,7 +1177,8 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "34",
-          description: "Multiply line 33 by 20% (0.20)",
+          description:
+            "Multiply line 33 by 20% (0.20)\nIf line 14 is zero or blank, skip lines 35 through 37 and go to line 38. Otherwise, go to line 35.",
           box: {
             identifier: "34",
             value: {
@@ -674,8 +1192,7 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "35",
-          description:
-            "Add lines 17, 32, and 33 (skip if line 14 is zero or blank)",
+          description: "Add lines 17, 32, and 33",
           box: {
             identifier: "35",
             value: {
@@ -735,11 +1252,8 @@ export const Form6251: FormSpecification = {
           description:
             "If line 12 is $239,100 or less ($119,550 or less if married filing separately), multiply line 12 by 26% (0.26). Otherwise, multiply line 12 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result",
           box: {
-            // NOTE: Schema gap — two-bracket rate schedule conditional on
-            // line 12 amount and filing status. Not fully expressible; using
-            // number_input.
             identifier: "39",
-            value: { type: "number_input" },
+            value: alternativeMinimumTaxComputation("12"),
           },
         },
         {

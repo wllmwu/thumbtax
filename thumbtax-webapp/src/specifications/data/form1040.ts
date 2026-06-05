@@ -396,7 +396,6 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          // TODO: Schedule A
           index: "12e",
           description:
             "**Standard deduction or itemized deductions** (from Schedule A)",

@@ -83,7 +83,11 @@ type UserInputValueProvider =
   | { type: "conditional_number_input"; skipCondition: ComputedValueProvider }
   | { type: "list_amounts_input" }
   | { type: "number_input"; coerceSign?: "negative" | "positive" }
-  | { type: "override_number_input"; computedValue: ComputedValueProvider }
+  | {
+      type: "override_number_input";
+      computedValue: ComputedValueProvider;
+      coerceSign?: "negative" | "positive";
+    }
   | {
       type: "select_instance_boxes_input";
       options: Array<{ form: FormClass; box: BoxIdentifier }>;
