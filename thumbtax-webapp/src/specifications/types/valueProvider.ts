@@ -31,6 +31,7 @@ type ArithmeticValueProvider =
   | { type: "maximum"; values: Array<ComputedValueProvider> }
   | { type: "absolute_value"; value: ComputedValueProvider }
   | { type: "non_negative_clamp"; value: ComputedValueProvider }
+  | { type: "non_positive_clamp"; value: ComputedValueProvider }
   | { type: "numerical_negation"; value: ComputedValueProvider };
 
 type BooleanValueProvider =

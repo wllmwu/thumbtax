@@ -25,6 +25,7 @@ import { logical_negation } from "#src/engine/test/logical_negation.fixture";
 import { maximum } from "#src/engine/test/maximum.fixture";
 import { minimum } from "#src/engine/test/minimum.fixture";
 import { non_negative_clamp } from "#src/engine/test/non_negative_clamp.fixture";
+import { non_positive_clamp } from "#src/engine/test/non_positive_clamp.fixture";
 import { number_constant } from "#src/engine/test/number_constant.fixture";
 import { number_input } from "#src/engine/test/number_input.fixture";
 import { numerical_negation } from "#src/engine/test/numerical_negation.fixture";
@@ -113,6 +114,7 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
     maximum,
     minimum,
     non_negative_clamp,
+    non_positive_clamp,
     number_constant,
     number_input,
     numerical_negation,

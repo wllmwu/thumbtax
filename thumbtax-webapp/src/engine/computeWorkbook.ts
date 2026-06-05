@@ -66,6 +66,7 @@ function resolveDependencies(
     case "absolute_value":
     case "logical_negation":
     case "non_negative_clamp":
+    case "non_positive_clamp":
     case "numerical_negation":
       return resolveDependencies(address, provider.value, instanceRegistry);
     case "select_value_input":
@@ -339,6 +340,10 @@ function resolveValue(
     case "non_negative_clamp": {
       const { value, errors } = resolveRecursive(provider.value);
       return { value: Math.max(0, value), errors };
+    }
+    case "non_positive_clamp": {
+      const { value, errors } = resolveRecursive(provider.value);
+      return { value: Math.min(0, value), errors };
     }
     case "number_constant": {
       return { value: provider.value, errors: [] };
