@@ -622,6 +622,7 @@ export const Form1040: FormSpecification = {
                   type: "box_reference",
                   form: "f1040sD_SDTWS",
                   box: "47",
+                  required: true,
                 },
                 falseValue: {
                   type: "conditional",
@@ -633,6 +634,7 @@ export const Form1040: FormSpecification = {
                     type: "box_reference",
                     form: "f1040_QDCGTWS",
                     box: "25",
+                    required: true,
                   },
                   falseValue: taxComputation({ box: "15" }),
                 },

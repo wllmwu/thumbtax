@@ -201,6 +201,51 @@ export const box_reference: ValueProviderFixture[] = [
     expected: { value: 20, errors: [] },
   },
   {
+    description:
+      "resolves with required_form_missing error when required is true and no instances of the form exist",
+    specificationRegistry: makeRegistryFixture({
+      [TEST_CLASS]: makeSpecificationFixture({
+        class: TEST_CLASS,
+        sections: [
+          makeSectionFixture({
+            lines: [
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: BOX_UNDER_TEST_ID,
+                  value: {
+                    type: "box_reference",
+                    form: "f1040",
+                    box: "box-2",
+                    required: true,
+                  },
+                }),
+              }),
+            ],
+          }),
+        ],
+      }),
+      f1040: makeSpecificationFixture({
+        class: "f1040",
+        sections: [
+          makeSectionFixture({
+            lines: [
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: "box-2",
+                  value: { type: "number_constant", value: 20 },
+                }),
+              }),
+            ],
+          }),
+        ],
+      }),
+    }),
+    expected: {
+      value: 0,
+      errors: [{ type: "required_form_missing", form: "f1040" }],
+    },
+  },
+  {
     description: "propagates errors from the referenced box",
     specificationRegistry: makeRegistryFixture({
       [TEST_CLASS]: makeSpecificationFixture({

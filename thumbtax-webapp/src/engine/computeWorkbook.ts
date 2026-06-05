@@ -145,7 +145,9 @@ function resolveValue(
         if (!addresses || addresses.length === 0) {
           return {
             value: 0,
-            errors: [],
+            errors: provider.required
+              ? [{ type: "required_form_missing", form: provider.form }]
+              : [],
           };
         }
 

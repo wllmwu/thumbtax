@@ -5,7 +5,12 @@ import type { FormClass } from "#src/common/types/formClass";
 type ConstantValueProvider = { type: "number_constant"; value: number };
 
 type ReferenceValueProvider =
-  | { type: "box_reference"; form?: FormClass; box: BoxIdentifier }
+  | {
+      type: "box_reference";
+      form?: FormClass;
+      box: BoxIdentifier;
+      required?: boolean;
+    }
   | { type: "form_instance_count"; form: FormClass };
 
 type ArithmeticValueProvider =
