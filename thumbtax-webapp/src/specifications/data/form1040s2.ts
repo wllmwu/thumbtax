@@ -293,12 +293,11 @@ export const Form1040S2: FormSpecification = {
           },
         },
         {
-          // TODO: Form 8889
           index: "17c",
           description: "Additional tax on HSA distributions. Attach Form 8889",
           box: {
             identifier: "17c",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f8889", box: "17b" },
           },
         },
         {
@@ -307,7 +306,7 @@ export const Form1040S2: FormSpecification = {
             "Additional tax on an HSA because you didn't remain an eligible individual. Attach Form 8889",
           box: {
             identifier: "17d",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f8889", box: "21" },
           },
         },
         {

@@ -6,20 +6,16 @@ export const Form8889: FormSpecification = {
   subtitle: "Health Savings Accounts (HSAs)",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8889",
   category: "taxes",
-  maxInstances: null,
+  maxInstances: 1,
   sections: [
     {
-      heading: "Part I — HSA Contributions and Deduction",
+      heading: "Part I. HSA Contributions and Deduction",
       lines: [
         {
           index: "1",
           description:
             "Check the box to indicate your coverage under a high-deductible health plan (HDHP) during 2025. See instructions",
-          // Gap: line 1 is a radio/checkbox selection between "Self-only" and "Family"; using number_input as a placeholder.
-          box: {
-            identifier: "1",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "1", value: { type: "unused" } },
         },
         {
           index: "2",
@@ -36,7 +32,10 @@ export const Form8889: FormSpecification = {
             "If you were under age 55 at the end of 2025 and, on the first day of every month during 2025, you were, or were considered, an eligible individual with the same coverage, enter $4,300 ($8,550 for family coverage). All others, see the instructions for the amount to enter",
           box: {
             identifier: "3",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: { type: "number_constant", value: 4300 },
+            },
           },
         },
         {
@@ -70,7 +69,10 @@ export const Form8889: FormSpecification = {
             "Enter the amount from line 5. But if you and your spouse each have separate HSAs and had family coverage under an HDHP at any time during 2025, see the instructions for the amount to enter",
           box: {
             identifier: "6",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: { type: "box_reference", box: "5" },
+            },
           },
         },
         {
@@ -144,18 +146,41 @@ export const Form8889: FormSpecification = {
         },
         {
           index: "13",
-          description: "HSA deduction (see instructions)",
+          description: "**HSA deduction** (see instructions)",
           box: {
             identifier: "13",
-            value: { type: "number_input" },
+            value: {
+              type: "minimum",
+              values: [
+                { type: "box_reference", box: "2" },
+                { type: "box_reference", box: "12" },
+              ],
+            },
+          },
+        },
+        {
+          index: "flag_f5329",
+          virtual: true,
+          description:
+            "Flag for whether to file Form 5329 due to excess HSA contributions",
+          box: {
+            identifier: "flag_f5329",
+            format: "yes_no",
+            value: {
+              type: "comparison",
+              value: { type: "box_reference", box: "2" },
+              minimum: { type: "box_reference", box: "13" },
+              strict: true,
+            },
           },
         },
       ],
     },
     {
-      heading: "Part II — HSA Distributions",
+      heading: "Part II. HSA Distributions",
       lines: [
         {
+          // TODO: Form 1099-SA
           index: "14a",
           description:
             "Total distributions you received in 2025 from all HSAs (see instructions)",
@@ -197,7 +222,7 @@ export const Form8889: FormSpecification = {
         {
           index: "16",
           description:
-            "Taxable HSA distributions. Subtract line 15 from line 14c. If zero or less, enter -0-. Also, include this amount in the total on Schedule 1 (Form 1040), Part I, line 8f",
+            "**Taxable HSA distributions.** Subtract line 15 from line 14c. If zero or less, enter -0-. Also, include this amount in the total on Schedule 1 (Form 1040), Part I, line 8f",
           box: {
             identifier: "16",
             value: {
@@ -213,8 +238,7 @@ export const Form8889: FormSpecification = {
         {
           index: "17a",
           description:
-            "If any of the distributions included on line 16 meet any of the Exceptions to the Additional 20% Tax (see instructions), check here",
-          // Gap: line 17a is a standalone checkbox with no numeric value; using number_input as a placeholder.
+            "If any of the distributions included on line 16 meet any of the **Exceptions to the Additional 20% Tax** (see instructions), check here",
           box: {
             identifier: "17a",
             value: { type: "checkbox_input" },
@@ -223,17 +247,26 @@ export const Form8889: FormSpecification = {
         {
           index: "17b",
           description:
-            "Additional 20% tax (see instructions). Enter 20% (0.20) of the distributions included on line 16 that are subject to the additional 20% tax. Also, include this amount in the total on Schedule 2 (Form 1040), Part II, line 17c",
+            "**Additional 20% tax** (see instructions). Enter 20% (0.20) of the distributions included on line 16 that are subject to the additional 20% tax. Also, include this amount in the total on Schedule 2 (Form 1040), Part II, line 17c",
           box: {
             identifier: "17b",
-            value: { type: "number_input" },
+            value: {
+              type: "override_number_input",
+              computedValue: {
+                type: "product",
+                values: [
+                  { type: "box_reference", box: "16" },
+                  { type: "number_constant", value: 0.2 },
+                ],
+              },
+            },
           },
         },
       ],
     },
     {
       heading:
-        "Part III — Income and Additional Tax for Failure To Maintain HDHP Coverage",
+        "Part III. Income and Additional Tax for Failure To Maintain HDHP Coverage",
       lines: [
         {
           index: "18",
@@ -254,7 +287,7 @@ export const Form8889: FormSpecification = {
         {
           index: "20",
           description:
-            "Total income. Add lines 18 and 19. Include this amount on Schedule 1 (Form 1040), Part I, line 8f",
+            "**Total income.** Add lines 18 and 19. Include this amount on Schedule 1 (Form 1040), Part I, line 8f",
           box: {
             identifier: "20",
             value: {
@@ -269,7 +302,7 @@ export const Form8889: FormSpecification = {
         {
           index: "21",
           description:
-            "Additional tax. Multiply line 20 by 10% (0.10). Include this amount in the total on Schedule 2 (Form 1040), Part II, line 17d",
+            "**Additional tax.** Multiply line 20 by 10% (0.10). Include this amount in the total on Schedule 2 (Form 1040), Part II, line 17d",
           box: {
             identifier: "21",
             value: {

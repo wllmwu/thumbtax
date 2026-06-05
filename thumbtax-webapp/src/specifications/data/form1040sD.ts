@@ -645,6 +645,7 @@ export const Form1040SD: FormSpecification = {
         {
           index: "virtual_f1040_7a",
           virtual: true,
+          description: "Value to enter on Form 1040, line 7a",
           box: {
             identifier: "virtual_f1040_7a",
             value: {

@@ -487,9 +487,12 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          index: "virtual_16_SDTWS",
+          index: "flag_16_SDTWS",
+          virtual: true,
+          description: "Flag for whether to use the Schedule D Tax Worksheet",
           box: {
-            identifier: "virtual_16_SDTWS",
+            identifier: "flag_16_SDTWS",
+            format: "yes_no",
             value: {
               type: "conjunction",
               values: [
@@ -539,15 +542,19 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          index: "virtual_16_QDCGTWS",
+          index: "flag_16_QDCGTWS",
+          virtual: true,
+          description:
+            "Flag for whether to use the Qualified Dividends and Capital Gain Tax Worksheet",
           box: {
-            identifier: "virtual_16_QDCGTWS",
+            identifier: "flag_16_QDCGTWS",
+            format: "yes_no",
             value: {
               type: "conjunction",
               values: [
                 {
                   type: "logical_negation",
-                  value: { type: "box_reference", box: "virtual_16_SDTWS" },
+                  value: { type: "box_reference", box: "flag_16_SDTWS" },
                 },
                 {
                   type: "disjunction",
@@ -617,7 +624,7 @@ export const Form1040: FormSpecification = {
               type: "override_number_input",
               computedValue: {
                 type: "conditional",
-                condition: { type: "box_reference", box: "virtual_16_SDTWS" },
+                condition: { type: "box_reference", box: "flag_16_SDTWS" },
                 trueValue: {
                   type: "box_reference",
                   form: "f1040sD_SDTWS",
@@ -628,7 +635,7 @@ export const Form1040: FormSpecification = {
                   type: "conditional",
                   condition: {
                     type: "box_reference",
-                    box: "virtual_16_QDCGTWS",
+                    box: "flag_16_QDCGTWS",
                   },
                   trueValue: {
                     type: "box_reference",

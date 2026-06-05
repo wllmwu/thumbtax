@@ -128,12 +128,17 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
-          // TODO: Form 8889
           index: "8f",
           description: "Income from Form 8889",
           box: {
             identifier: "8f",
-            value: { type: "number_input" },
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", form: "f8889", box: "16" },
+                { type: "box_reference", form: "f8889", box: "20" },
+              ],
+            },
           },
         },
         {
@@ -362,12 +367,11 @@ export const Form1040S1: FormSpecification = {
           },
         },
         {
-          // TODO: Form 8889
           index: "13",
           description: "Health savings account deduction. Attach Form 8889",
           box: {
             identifier: "13",
-            value: { type: "number_input" },
+            value: { type: "box_reference", form: "f8889", box: "13" },
           },
         },
         {
