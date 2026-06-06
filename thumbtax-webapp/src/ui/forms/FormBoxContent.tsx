@@ -1,3 +1,5 @@
+import React from "react";
+
 import { absurd } from "#src/common/utils/absurd";
 import { useStore } from "#src/state/useStore";
 import { AmountListField } from "#src/ui/forms/AmountListField";
@@ -24,6 +26,27 @@ export function FormBoxContent({ instance, box }: Props) {
   );
   const setBoxInput = useStore((state) => state.setBoxInput);
 
+  const errorMessage = React.useMemo<React.ReactNode>(() => {
+    if (resolvedBox.errors.length === 0) {
+      return null;
+    }
+    const firstError = resolvedBox.errors[0];
+    const errorType = firstError.type;
+    switch (errorType) {
+      case "divide_by_zero":
+        return "Divide by zero error";
+      case "required_form_missing": {
+        const formTitle =
+          specifications?.[firstError.form]?.title ?? firstError.form;
+        return `Requires ${formTitle}`;
+      }
+      case "upstream":
+        return null;
+      default:
+        absurd(errorType);
+    }
+  }, [resolvedBox.errors, specifications]);
+
   if (!specifications) {
     return null;
   }
@@ -38,6 +61,7 @@ export function FormBoxContent({ instance, box }: Props) {
       return (
         <CheckboxField
           aria-label={inputLabel}
+          errorMessage={errorMessage}
           value={value}
           onChange={(newValue) =>
             setBoxInput(instance.class, instance.id, box.identifier, {
@@ -53,9 +77,7 @@ export function FormBoxContent({ instance, box }: Props) {
       const list = input?.type === "amount_list" ? input.value : [];
       return (
         <AmountListField
-          formTitle={specifications[instance.class].title}
-          instanceLabel={instance.label}
-          boxIdentifier={box.identifier}
+          aria-label={inputLabel}
           list={list}
           onChange={(newList) =>
             setBoxInput(instance.class, instance.id, box.identifier, {
@@ -73,6 +95,7 @@ export function FormBoxContent({ instance, box }: Props) {
         <NumberField
           aria-label={inputLabel}
           disabled={resolvedBox.skipped}
+          errorMessage={errorMessage}
           value={value}
           onChange={(newValue) =>
             setBoxInput(instance.class, instance.id, box.identifier, {
@@ -103,6 +126,7 @@ export function FormBoxContent({ instance, box }: Props) {
           {isOverridden ? (
             <NumberField
               aria-label={inputLabel}
+              errorMessage={errorMessage}
               value={value}
               onChange={(newValue) =>
                 setBoxInput(instance.class, instance.id, box.identifier, {
@@ -112,7 +136,10 @@ export function FormBoxContent({ instance, box }: Props) {
               }
             />
           ) : (
-            <span>{value}</span>
+            <>
+              <span>{value}</span>
+              {errorMessage && <span>{errorMessage}</span>}
+            </>
           )}
         </div>
       );
@@ -123,6 +150,7 @@ export function FormBoxContent({ instance, box }: Props) {
         input?.type === "instance_box_selections" ? input.selected : [];
       return (
         <SelectInstanceBoxesField
+          aria-label={inputLabel}
           specifications={specifications}
           instanceRegistry={instanceRegistry}
           boxAddress={{ instance: instance.id, box: box.identifier }}
@@ -149,6 +177,7 @@ export function FormBoxContent({ instance, box }: Props) {
       return (
         <SelectField
           aria-label={inputLabel}
+          errorMessage={errorMessage}
           value={selectedId}
           onChange={(newSelectedId) => {
             for (const [index, option] of options.entries()) {
@@ -189,7 +218,12 @@ export function FormBoxContent({ instance, box }: Props) {
     case "product":
     case "quotient":
     case "sum":
-      return resolvedBox.value;
+      return (
+        <>
+          <span>{resolvedBox.value}</span>
+          {errorMessage && <span>{errorMessage}</span>}
+        </>
+      );
     case "unsupported":
     case "unused":
       return null;

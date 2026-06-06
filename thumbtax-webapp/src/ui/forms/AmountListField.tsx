@@ -6,23 +6,20 @@ import { Button, Group } from "react-aria-components";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { TextField } from "#src/ui/primitives/TextField";
 
-import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { UserInput } from "#src/common/types/userInput";
 
 type AmountList = Extract<UserInput, { type: "amount_list" }>["value"];
 
 type Props = {
-  formTitle: string;
-  instanceLabel: string;
-  boxIdentifier: BoxIdentifier;
+  "aria-label": string;
+  errorMessage?: React.ReactNode;
   list: AmountList;
   onChange: (list: AmountList) => void;
 };
 
 export function AmountListField({
-  formTitle,
-  instanceLabel,
-  boxIdentifier,
+  "aria-label": ariaLabel,
+  errorMessage,
   list,
   onChange,
 }: Props) {
@@ -68,9 +65,7 @@ export function AmountListField({
   );
 
   return (
-    <Group
-      aria-label={`${formTitle} (${instanceLabel}) box ${boxIdentifier} list of amounts`}
-    >
+    <Group aria-label={ariaLabel} isInvalid={!!errorMessage}>
       {list.map(({ label, amount }, index) => (
         <div key={index}>
           <TextField
@@ -87,6 +82,7 @@ export function AmountListField({
         </div>
       ))}
       <Button onPress={onAddEntry}>Add</Button>
+      {errorMessage && <span>{errorMessage}</span>}
     </Group>
   );
 }

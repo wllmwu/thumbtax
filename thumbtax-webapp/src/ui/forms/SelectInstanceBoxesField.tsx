@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   Button,
+  FieldError,
   type Key,
   ListBox,
   ListBoxItem,
@@ -15,6 +16,7 @@ import type { SpecificationRegistry } from "#src/specifications/types/specificat
 import type { ValueProvider } from "#src/specifications/types/valueProvider";
 
 type Props = {
+  "aria-label": string;
   specifications: SpecificationRegistry;
   instanceRegistry: InstanceRegistry;
   boxAddress: BoxAddress;
@@ -22,6 +24,7 @@ type Props = {
     ValueProvider,
     { type: "select_instance_boxes_input" }
   >;
+  errorMessage?: React.ReactNode;
   selectedAddresses: BoxAddress[];
   onChange: (newAddresses: BoxAddress[]) => void;
 };
@@ -38,10 +41,12 @@ function makeOptionItemId(boxAddress: BoxAddress, optionAddress: BoxAddress) {
 }
 
 export function SelectInstanceBoxesField({
+  "aria-label": ariaLabel,
   specifications,
   instanceRegistry,
   boxAddress,
   valueProvider,
+  errorMessage,
   selectedAddresses,
   onChange,
 }: Props) {
@@ -93,11 +98,14 @@ export function SelectInstanceBoxesField({
 
   return (
     <Select
+      aria-label={ariaLabel}
       selectionMode="multiple"
+      isInvalid={!!errorMessage}
       value={selectedKeys}
       onChange={handleChange}
     >
       <Button>{`${selectedKeys.length} form(s) selected`}</Button>
+      {errorMessage && <FieldError>{errorMessage}</FieldError>}
       <Popover>
         <ListBox items={options}>{renderOptionItem}</ListBox>
       </Popover>

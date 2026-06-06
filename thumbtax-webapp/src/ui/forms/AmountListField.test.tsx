@@ -11,9 +11,7 @@ function renderComponent(
 ) {
   return render(
     <AmountListField
-      formTitle="W-2"
-      instanceLabel="Employer 1"
-      boxIdentifier="12a"
+      aria-label="Test field"
       list={[]}
       onChange={vi.fn()}
       {...props}
@@ -30,13 +28,23 @@ describe("AmountListField", () => {
       ],
     });
 
-    expect(
-      await screen.findByLabelText("W-2 (Employer 1) box 12a list of amounts"),
-    ).toBeInTheDocument();
+    expect(await screen.findByLabelText("Test field")).toBeInTheDocument();
     expect(await screen.findByLabelText("Entry 1 label")).toHaveValue("Code A");
     expect(await screen.findByLabelText("Entry 1 amount")).toHaveValue("100");
     expect(await screen.findByLabelText("Entry 2 label")).toHaveValue("Code B");
     expect(await screen.findByLabelText("Entry 2 amount")).toHaveValue("200");
+  });
+
+  it("renders error message when provided", async () => {
+    renderComponent({
+      list: [
+        { label: "test1", amount: 100 },
+        { label: "test2", amount: 200 },
+      ],
+      errorMessage: "Test error message",
+    });
+
+    expect(await screen.findByText("Test error message")).toBeInTheDocument();
   });
 
   it("calls onChange when changing an entry's label", async () => {
