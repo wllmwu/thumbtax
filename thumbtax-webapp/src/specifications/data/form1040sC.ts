@@ -509,5 +509,31 @@ export const Form1040SC: FormSpecification = {
         },
       ],
     },
+    {
+      heading: "Part IV. Information on Your Vehicle",
+      lines: [
+        {
+          index: "43\u201347b",
+          description: "Unused",
+          box: {
+            identifier: "43",
+            value: { type: "unused" },
+          },
+        },
+      ],
+    },
+    {
+      heading: "Part V. Other Expenses",
+      lines: [
+        {
+          index: "48",
+          description: "**Total other expenses.** Enter here and on line 27b",
+          box: {
+            identifier: "48",
+            value: { type: "list_amounts_input" },
+          },
+        },
+      ],
+    },
   ],
 };
