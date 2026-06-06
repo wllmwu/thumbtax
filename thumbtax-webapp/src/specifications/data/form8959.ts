@@ -125,7 +125,7 @@ export const Form8959: FormSpecification = {
           description:
             "Enter the following amount for your filing status:\nMarried filing jointly $250,000\nMarried filing separately $125,000\nSingle, Head of household, or Qualifying surviving spouse $200,000",
           box: {
-            identifier: "5",
+            identifier: "9",
             value: {
               type: "filing_status_map",
               values: {
