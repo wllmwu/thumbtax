@@ -28,6 +28,7 @@ export function SelectField({
   label,
   "aria-label": ariaLabel,
   description,
+  disabled,
   errorMessage,
   value,
   onChange,
@@ -47,6 +48,7 @@ export function SelectField({
       aria-label={!label ? ariaLabel : undefined}
       value={value}
       onChange={handleChange}
+      isDisabled={disabled}
       isInvalid={!!errorMessage}
     >
       {label && <Label>{label}</Label>}

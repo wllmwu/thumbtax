@@ -49,6 +49,15 @@ describe("TextField", () => {
     expect(await screen.findByText("Name is required")).toBeInTheDocument();
   });
 
+  it("renders disabled state", async () => {
+    renderComponent({
+      label: "Name",
+      disabled: true,
+    });
+
+    expect(await screen.findByLabelText("Name")).toBeDisabled();
+  });
+
   it("calls onChange when value changes", async () => {
     const onChange = vi.fn();
     renderComponent({ label: "Name", value: "test", onChange });

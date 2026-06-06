@@ -60,6 +60,15 @@ describe("SearchField", () => {
     ).toBeInTheDocument();
   });
 
+  it("renders disabled state", async () => {
+    renderComponent({
+      label: "Search",
+      disabled: true,
+    });
+
+    expect(await screen.findByLabelText("Search")).toBeDisabled();
+  });
+
   it("calls onChange when value changes", async () => {
     const onChange = vi.fn();
     renderComponent({ label: "Search", value: "test", onChange });

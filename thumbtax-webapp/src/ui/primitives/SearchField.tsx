@@ -17,6 +17,7 @@ export function SearchField({
   "aria-label": ariaLabel,
   placeholder,
   description,
+  disabled,
   errorMessage,
   value,
   onChange,
@@ -28,6 +29,7 @@ export function SearchField({
       value={value}
       onChange={onChange}
       autoFocus={autoFocus}
+      isDisabled={disabled}
       isInvalid={!!errorMessage}
     >
       {label && <Label>{label}</Label>}

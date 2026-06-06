@@ -49,6 +49,15 @@ describe("NumberField", () => {
     expect(await screen.findByText("Invalid amount")).toBeInTheDocument();
   });
 
+  it("renders disabled state", async () => {
+    renderComponent({
+      label: "Amount",
+      disabled: true,
+    });
+
+    expect(await screen.findByLabelText("Amount")).toBeDisabled();
+  });
+
   it("calls onChange when value changes and input blurs", async () => {
     const onChange = vi.fn();
     renderComponent({ label: "Amount", value: 0, onChange });

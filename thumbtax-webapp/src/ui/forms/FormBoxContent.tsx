@@ -72,6 +72,7 @@ export function FormBoxContent({ instance, box }: Props) {
       return (
         <NumberField
           aria-label={inputLabel}
+          disabled={resolvedBox.skipped}
           value={value}
           onChange={(newValue) =>
             setBoxInput(instance.class, instance.id, box.identifier, {

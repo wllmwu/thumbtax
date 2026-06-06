@@ -58,6 +58,15 @@ describe("SelectField", () => {
     expect(await screen.findByText("Selection required")).toBeInTheDocument();
   });
 
+  it("renders disabled state", async () => {
+    renderComponent({
+      label: "Fruit",
+      disabled: true,
+    });
+
+    expect(await screen.findByLabelText("Fruit")).toBeDisabled();
+  });
+
   it("opens popover with provided options when button is pressed", async () => {
     renderComponent({ label: "Fruit", value: "apple" });
     const user = userEvent.setup();

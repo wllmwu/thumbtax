@@ -13,6 +13,7 @@ export function CheckboxField({
   label,
   "aria-label": ariaLabel,
   description,
+  disabled,
   errorMessage,
   value,
   onChange,
@@ -22,6 +23,7 @@ export function CheckboxField({
       aria-label={!label ? ariaLabel : undefined}
       isSelected={value}
       onChange={onChange}
+      isDisabled={disabled}
       isInvalid={!!errorMessage}
     >
       <CheckboxButton>

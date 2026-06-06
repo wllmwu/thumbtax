@@ -75,6 +75,15 @@ describe("CheckboxField", () => {
     expect(await screen.findByText("Test error message")).toBeInTheDocument();
   });
 
+  it("renders disabled state", async () => {
+    renderComponent({
+      label: "Test label",
+      disabled: true,
+    });
+
+    expect(await screen.findByRole("checkbox")).toBeDisabled();
+  });
+
   it("calls onChange when changing from unchecked to checked", async () => {
     const onChange = vi.fn();
     renderComponent({

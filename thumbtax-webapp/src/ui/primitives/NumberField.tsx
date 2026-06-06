@@ -15,6 +15,7 @@ export function NumberField({
   "aria-label": ariaLabel,
   placeholder,
   description,
+  disabled,
   errorMessage,
   value,
   onChange,
@@ -24,6 +25,7 @@ export function NumberField({
       aria-label={!label ? ariaLabel : undefined}
       value={value}
       onChange={onChange}
+      isDisabled={disabled}
       isInvalid={!!errorMessage}
     >
       {label && <Label>{label}</Label>}
