@@ -1,7 +1,7 @@
 import { absurd } from "#src/common/utils/absurd";
 import { useStore } from "#src/state/useStore";
-import { AmountListInput } from "#src/ui/forms/AmountListInput";
-import { SelectInstanceBoxesInput } from "#src/ui/forms/SelectInstanceBoxesInput";
+import { AmountListField } from "#src/ui/forms/AmountListField";
+import { SelectInstanceBoxesField } from "#src/ui/forms/SelectInstanceBoxesField";
 import { CheckboxField } from "#src/ui/primitives/CheckboxField";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
@@ -52,7 +52,7 @@ export function FormBoxContent({ instance, box }: Props) {
       const input = instance.inputs[box.identifier];
       const list = input?.type === "amount_list" ? input.value : [];
       return (
-        <AmountListInput
+        <AmountListField
           formTitle={specifications[instance.class].title}
           instanceLabel={instance.label}
           boxIdentifier={box.identifier}
@@ -122,7 +122,7 @@ export function FormBoxContent({ instance, box }: Props) {
       const selectedAddresses =
         input?.type === "instance_box_selections" ? input.selected : [];
       return (
-        <SelectInstanceBoxesInput
+        <SelectInstanceBoxesField
           specifications={specifications}
           instanceRegistry={instanceRegistry}
           boxAddress={{ instance: instance.id, box: box.identifier }}

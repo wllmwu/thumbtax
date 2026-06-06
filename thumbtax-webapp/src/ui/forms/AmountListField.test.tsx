@@ -2,15 +2,15 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { AmountListInput } from "#src/ui/forms/AmountListInput";
+import { AmountListField } from "#src/ui/forms/AmountListField";
 
 import type React from "react";
 
 function renderComponent(
-  props?: Partial<React.ComponentProps<typeof AmountListInput>>,
+  props?: Partial<React.ComponentProps<typeof AmountListField>>,
 ) {
   return render(
-    <AmountListInput
+    <AmountListField
       formTitle="W-2"
       instanceLabel="Employer 1"
       boxIdentifier="12a"
@@ -21,7 +21,7 @@ function renderComponent(
   );
 }
 
-describe("AmountListInput", () => {
+describe("AmountListField", () => {
   it("renders current list entries with accessible input labels", async () => {
     renderComponent({
       list: [

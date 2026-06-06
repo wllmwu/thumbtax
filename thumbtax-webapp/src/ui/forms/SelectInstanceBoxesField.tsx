@@ -37,7 +37,7 @@ function makeOptionItemId(boxAddress: BoxAddress, optionAddress: BoxAddress) {
   return `${boxAddress.instance}_${boxAddress.box}_option_${optionAddress.instance}_${optionAddress.box}`;
 }
 
-export function SelectInstanceBoxesInput({
+export function SelectInstanceBoxesField({
   specifications,
   instanceRegistry,
   boxAddress,

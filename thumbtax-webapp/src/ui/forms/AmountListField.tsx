@@ -19,7 +19,7 @@ type Props = {
   onChange: (list: AmountList) => void;
 };
 
-export function AmountListInput({
+export function AmountListField({
   formTitle,
   instanceLabel,
   boxIdentifier,
