@@ -38,7 +38,7 @@ function readLocalStorageJson(key: string): {
   } catch {
     return {
       parsed: null,
-      errors: [{ type: "invalid_value", path: key, reason: "invalid JSON" }],
+      errors: [{ type: "invalid_json" }],
       present: false,
     };
   }
@@ -63,11 +63,11 @@ export function usePersistence(
     allErrors.push(...prefsRead.errors);
     let preferences = DEFAULT_USER_PREFERENCES;
     if (prefsRead.present) {
-      const { preferences: parsed, errors } = deserializeUserPreferences(
-        prefsRead.parsed,
-      );
-      preferences = parsed;
-      allErrors.push(...errors);
+      const result = deserializeUserPreferences(prefsRead.parsed);
+      if (result.ok) {
+        preferences = result.value;
+      }
+      allErrors.push(...result.errors);
     }
 
     // Application state.
@@ -75,11 +75,11 @@ export function usePersistence(
     allErrors.push(...savedRead.errors);
     let applicationState = DEFAULT_APPLICATION_STATE;
     if (savedRead.present) {
-      const { applicationState: parsed, errors } = deserializePersistedState(
-        savedRead.parsed,
-      );
-      applicationState = parsed;
-      allErrors.push(...errors);
+      const result = deserializePersistedState(savedRead.parsed);
+      if (result.ok) {
+        applicationState = result.value;
+      }
+      allErrors.push(...result.errors);
     }
 
     // UI state.
@@ -87,9 +87,11 @@ export function usePersistence(
     allErrors.push(...uiRead.errors);
     let uiState = DEFAULT_UI_STATE;
     if (uiRead.present) {
-      const { uiState: parsed, errors } = deserializeUiState(uiRead.parsed);
-      uiState = parsed;
-      allErrors.push(...errors);
+      const result = deserializeUiState(uiRead.parsed);
+      if (result.ok) {
+        uiState = result.value;
+      }
+      allErrors.push(...result.errors);
     }
 
     initialize(applicationState, uiState, preferences, specifications);

@@ -16,26 +16,17 @@ export async function parseUploadedFile(
   try {
     parsed = JSON.parse(text);
   } catch {
-    return {
-      kind: "structural_failure",
-      errors: [{ type: "invalid_value", path: "", reason: "invalid JSON" }],
-    };
+    return { kind: "structural_failure", errors: [{ type: "invalid_json" }] };
   }
 
-  const { applicationState, errors } = deserializePersistedState(parsed);
-
-  // If the raw payload was structurally invalid (e.g. not an object), the
-  // deserializer returns the default ApplicationState. Surface the errors
-  // and let the caller skip replacing the user's session.
-  const structuralFailure = errors.some(
-    (error) =>
-      error.type === "invalid_value" &&
-      error.path === "" &&
-      error.reason === "expected object",
-  );
-  if (structuralFailure) {
-    return { kind: "structural_failure", errors };
+  const result = deserializePersistedState(parsed);
+  if (!result.ok) {
+    return { kind: "structural_failure", errors: result.errors };
   }
 
-  return { kind: "ok", applicationState, errors };
+  return {
+    kind: "ok",
+    applicationState: result.value,
+    errors: result.errors,
+  };
 }

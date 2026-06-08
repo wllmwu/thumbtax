@@ -44,7 +44,7 @@ describe("parseUploadedFile", () => {
     expect(result.errors).toEqual([]);
   });
 
-  it("returns kind:'ok' with non-fatal errors alongside the application state", async () => {
+  it("returns kind:'ok' with a non-fatal tax-year notice", async () => {
     const file = fileFromJson({
       applicationState: {
         filingStatus: "single",
@@ -72,9 +72,7 @@ describe("parseUploadedFile", () => {
     const result = await parseUploadedFile(file);
 
     expect(result.kind).toBe("structural_failure");
-    expect(result.errors).toEqual([
-      { type: "invalid_value", path: "", reason: "invalid JSON" },
-    ]);
+    expect(result.errors).toEqual([{ type: "invalid_json" }]);
   });
 
   it("returns kind:'structural_failure' for a non-object JSON payload", async () => {
@@ -83,10 +81,25 @@ describe("parseUploadedFile", () => {
     const result = await parseUploadedFile(file);
 
     expect(result.kind).toBe("structural_failure");
-    expect(result.errors).toContainEqual({
-      type: "invalid_value",
-      path: "",
-      reason: "expected object",
+    expect(result.errors).toEqual([{ type: "not_an_object" }]);
+  });
+
+  it("returns kind:'structural_failure' for a structurally invalid file", async () => {
+    const file = fileFromJson({
+      applicationState: {
+        filingStatus: "martian",
+        formClasses: [],
+        formInstances: {},
+      },
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+      taxYear: CURRENT_TAX_YEAR,
     });
+
+    const result = await parseUploadedFile(file);
+
+    expect(result.kind).toBe("structural_failure");
+    if (result.kind !== "structural_failure")
+      throw new Error("expected failure");
+    expect(result.errors[0].type).toBe("validation_failed");
   });
 });

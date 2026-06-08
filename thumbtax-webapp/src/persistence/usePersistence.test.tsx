@@ -122,7 +122,7 @@ describe("usePersistence", () => {
       expect(result.current.loadErrors).toEqual([]);
     });
 
-    it("surfaces a JSON parse failure as an invalid_value at the key root path", () => {
+    it("surfaces a JSON parse failure as invalid_json", () => {
       localStorage.setItem(SAVED_STATE_KEY, "{ not json");
 
       const { result, rerender } = renderHook(() => useStore());
@@ -130,10 +130,34 @@ describe("usePersistence", () => {
       rerender();
 
       expect(result.current.loadErrors).toContainEqual({
-        type: "invalid_value",
-        path: SAVED_STATE_KEY,
-        reason: "invalid JSON",
+        type: "invalid_json",
       });
+    });
+
+    it("boots with defaults and surfaces validation_failed when stored state is valid JSON but fails the schema", () => {
+      localStorage.setItem(
+        SAVED_STATE_KEY,
+        JSON.stringify({
+          applicationState: {
+            filingStatus: "martian",
+            formClasses: [],
+            formInstances: {},
+          },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
+          taxYear: CURRENT_TAX_YEAR,
+        }),
+      );
+
+      const { result, rerender } = renderHook(() => useStore());
+      render(<Harness />);
+      rerender();
+
+      expect(result.current.applicationState.filingStatus).toBe("single");
+      expect(
+        result.current.loadErrors.some(
+          (error) => error.type === "validation_failed",
+        ),
+      ).toBe(true);
     });
   });
 
@@ -336,9 +360,7 @@ describe("usePersistence", () => {
       });
 
       expect(store.current.applicationState).toBe(before);
-      expect(store.current.loadErrors).toEqual([
-        { type: "invalid_value", path: "", reason: "invalid JSON" },
-      ]);
+      expect(store.current.loadErrors).toEqual([{ type: "invalid_json" }]);
     });
   });
 });

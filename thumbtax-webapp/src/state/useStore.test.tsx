@@ -1258,9 +1258,7 @@ describe("useStore", () => {
 
     it("setLoadErrors replaces the current array", () => {
       const { result, rerender } = renderHook(() => useStore());
-      const errors: LoadError[] = [
-        { type: "invalid_value", path: "x", reason: "bad" },
-      ];
+      const errors: LoadError[] = [{ type: "not_an_object" }];
       result.current.setLoadErrors(errors);
       rerender();
       expect(result.current.loadErrors).toEqual(errors);
@@ -1268,9 +1266,7 @@ describe("useStore", () => {
 
     it("clearLoadErrors empties the array", () => {
       const { result, rerender } = renderHook(() => useStore());
-      result.current.setLoadErrors([
-        { type: "invalid_value", path: "x", reason: "bad" },
-      ]);
+      result.current.setLoadErrors([{ type: "not_an_object" }]);
       rerender();
       result.current.clearLoadErrors();
       rerender();

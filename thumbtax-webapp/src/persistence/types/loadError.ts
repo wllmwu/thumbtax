@@ -1,5 +1,11 @@
 export type LoadError =
-  | { type: "tax_year_mismatch"; saved: number; current: number }
-  | { type: "schema_version_newer"; saved: number; current: number }
-  | { type: "unknown_field"; path: string }
-  | { type: "invalid_value"; path: string; reason: string };
+  | { type: "not_an_object" }
+  | { type: "missing_schema_version" }
+  | { type: "unsupported_schema_version"; saved: number }
+  | {
+      type: "validation_failed";
+      issues: Array<{ path: string; message: string }>;
+    }
+  | { type: "migration_failed"; reason: string }
+  | { type: "invalid_json" }
+  | { type: "tax_year_mismatch"; saved: number; current: number };
