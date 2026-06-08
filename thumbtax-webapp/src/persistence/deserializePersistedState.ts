@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { FILING_STATUSES } from "#src/common/types/filingStatus";
 import { FORM_CLASSES } from "#src/common/types/formClass";
+import { absurd } from "#src/common/utils/absurd";
 import {
   CURRENT_SCHEMA_VERSION,
   CURRENT_TAX_YEAR,
@@ -10,6 +11,7 @@ import { DEFAULT_PERSISTED_STATE } from "#src/persistence/defaults";
 import { applyMigrations } from "#src/persistence/migrations";
 import { DEFAULT_APPLICATION_STATE } from "#src/state/defaults";
 
+import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FilingStatus } from "#src/common/types/filingStatus";
 import type { FormClass } from "#src/common/types/formClass";
@@ -17,6 +19,8 @@ import type { FormInstance } from "#src/common/types/formInstance";
 import type { UserInput } from "#src/common/types/userInput";
 import type { LoadError } from "#src/persistence/types/loadError";
 import type { ApplicationState } from "#src/state/types/applicationState";
+
+const KNOWN_FILING_STATUSES = new Set<string>(FILING_STATUSES);
 
 const KNOWN_FORM_CLASSES = new Set<string>(FORM_CLASSES);
 
@@ -44,7 +48,21 @@ function isKnownFormClass(value: string): value is FormClass {
 }
 
 function isFilingStatus(value: string): value is FilingStatus {
-  return (FILING_STATUSES as readonly string[]).includes(value);
+  return KNOWN_FILING_STATUSES.has(value);
+}
+
+type UserInputType = UserInput["type"];
+
+const USER_INPUT_TYPES = {
+  amount_list: true,
+  instance_box_selections: true,
+  number: true,
+  override: true,
+  selection: true,
+} satisfies Record<UserInputType, true>;
+
+function isUserInputType(value: string): value is UserInputType {
+  return value in USER_INPUT_TYPES;
 }
 
 function parseUserInput(
@@ -57,6 +75,14 @@ function parseUserInput(
       type: "invalid_value",
       path,
       reason: "expected user input object",
+    });
+    return undefined;
+  }
+  if (!isUserInputType(raw.type)) {
+    errors.push({
+      type: "invalid_value",
+      path,
+      reason: "unknown input type",
     });
     return undefined;
   }
@@ -114,14 +140,46 @@ function parseUserInput(
       }
       return { type: "selection", selectedIndex: raw.selectedIndex };
     }
-    default: {
-      errors.push({
-        type: "invalid_value",
-        path,
-        reason: "unknown input type",
-      });
-      return undefined;
+    case "override": {
+      if (raw.override !== null && typeof raw.override !== "number") {
+        errors.push({
+          type: "invalid_value",
+          path,
+          reason: "expected number or null override",
+        });
+        return undefined;
+      }
+      return { type: "override", override: raw.override };
     }
+    case "instance_box_selections": {
+      if (!Array.isArray(raw.selected)) {
+        errors.push({
+          type: "invalid_value",
+          path,
+          reason: "expected array value",
+        });
+        return undefined;
+      }
+      const selected: BoxAddress[] = [];
+      raw.selected.forEach((item, index) => {
+        if (
+          !isPlainObject(item) ||
+          typeof item.instance !== "string" ||
+          typeof item.box !== "string"
+        ) {
+          errors.push({
+            type: "invalid_value",
+            path: `${path}.selected[${index}]`,
+            reason: "expected { instance: string, box: string }",
+          });
+          return;
+        }
+        selected.push({ instance: item.instance, box: item.box });
+      });
+      return { type: "instance_box_selections", selected };
+    }
+    default:
+      return absurd(raw.type);
   }
 }
 

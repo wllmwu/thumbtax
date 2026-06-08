@@ -319,6 +319,105 @@ describe("deserializePersistedState", () => {
       });
       expect(errors).toEqual([]);
     });
+
+    it("accepts override inputs with a number or null override", () => {
+      const { applicationState, errors } = deserializePersistedState({
+        applicationState: {
+          filingStatus: "single",
+          formClasses: ["fW2"],
+          formInstances: {
+            fW2: [
+              {
+                id: "x",
+                class: "fW2",
+                label: "L",
+                inputs: {
+                  set: { type: "override", override: 100 },
+                  unset: { type: "override", override: null },
+                },
+              },
+            ],
+          },
+        },
+        schemaVersion: CURRENT_SCHEMA_VERSION,
+        taxYear: CURRENT_TAX_YEAR,
+      });
+      const inputs = applicationState.formInstances.fW2?.[0].inputs;
+      expect(inputs).toEqual({
+        set: { type: "override", override: 100 },
+        unset: { type: "override", override: null },
+      });
+      expect(errors).toEqual([]);
+    });
+
+    it("drops override inputs whose override is neither a number nor null", () => {
+      const { applicationState, errors } = deserializePersistedState({
+        applicationState: {
+          filingStatus: "single",
+          formClasses: ["fW2"],
+          formInstances: {
+            fW2: [
+              {
+                id: "x",
+                class: "fW2",
+                label: "L",
+                inputs: {
+                  bad: { type: "override", override: "not a number" },
+                },
+              },
+            ],
+          },
+        },
+        schemaVersion: CURRENT_SCHEMA_VERSION,
+        taxYear: CURRENT_TAX_YEAR,
+      });
+      const inputs = applicationState.formInstances.fW2?.[0].inputs;
+      expect(inputs).toEqual({});
+      expect(errors).toContainEqual({
+        type: "invalid_value",
+        path: "applicationState.formInstances.fW2[0].inputs.bad",
+        reason: "expected number or null override",
+      });
+    });
+
+    it("accepts instance_box_selections inputs and drops malformed entries within", () => {
+      const { applicationState, errors } = deserializePersistedState({
+        applicationState: {
+          filingStatus: "single",
+          formClasses: ["fW2"],
+          formInstances: {
+            fW2: [
+              {
+                id: "x",
+                class: "fW2",
+                label: "L",
+                inputs: {
+                  picks: {
+                    type: "instance_box_selections",
+                    selected: [
+                      { instance: "abc", box: "box1" },
+                      { instance: "abc", box: 5 },
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        },
+        schemaVersion: CURRENT_SCHEMA_VERSION,
+        taxYear: CURRENT_TAX_YEAR,
+      });
+      const inputs = applicationState.formInstances.fW2?.[0].inputs;
+      expect(inputs?.picks).toEqual({
+        type: "instance_box_selections",
+        selected: [{ instance: "abc", box: "box1" }],
+      });
+      expect(errors).toContainEqual({
+        type: "invalid_value",
+        path: "applicationState.formInstances.fW2[0].inputs.picks.selected[1]",
+        reason: "expected { instance: string, box: string }",
+      });
+    });
   });
 
   describe("formClasses reconciliation", () => {
