@@ -2,14 +2,16 @@ import { describe, expect, expectTypeOf, it } from "vitest";
 import { z } from "zod";
 
 import { currentPersistedStateSchema } from "#src/persistence/schemas/persistedStateSchemas";
-import { uiStateSchema } from "#src/persistence/schemas/uiStateSchema";
-import { userPreferencesSchema } from "#src/persistence/schemas/userPreferencesSchema";
+import { currentPersistedUiStateSchema } from "#src/persistence/schemas/uiStateSchemas";
+import { currentPersistedUserPreferencesSchema } from "#src/persistence/schemas/userPreferencesSchemas";
 import { applicationStateSchema } from "#src/persistence/schemas/v1/applicationStateSchema";
 import { boxAddressSchema } from "#src/persistence/schemas/v1/boxAddressSchema";
 import { filingStatusSchema } from "#src/persistence/schemas/v1/filingStatusSchema";
 import { formClassSchema } from "#src/persistence/schemas/v1/formClassSchema";
 import { formInstanceSchema } from "#src/persistence/schemas/v1/formInstanceSchema";
+import { uiStateSchema } from "#src/persistence/schemas/v1/uiStateSchema";
 import { userInputSchema } from "#src/persistence/schemas/v1/userInputSchema";
+import { userPreferencesSchema } from "#src/persistence/schemas/v1/userPreferencesSchema";
 
 import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { FilingStatus } from "#src/common/types/filingStatus";
@@ -17,6 +19,8 @@ import type { FormClass } from "#src/common/types/formClass";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { UserInput } from "#src/common/types/userInput";
 import type { PersistedState } from "#src/persistence/types/persistedState";
+import type { PersistedUiState } from "#src/persistence/types/persistedUiState";
+import type { PersistedUserPreferences } from "#src/persistence/types/persistedUserPreferences";
 import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
 import type { UserPreferences } from "#src/state/types/userPreferences";
@@ -44,6 +48,12 @@ describe("schema/type conformance", () => {
     expectTypeOf<
       z.infer<typeof currentPersistedStateSchema>
     >().toEqualTypeOf<PersistedState>();
+    expectTypeOf<
+      z.infer<typeof currentPersistedUiStateSchema>
+    >().toEqualTypeOf<PersistedUiState>();
+    expectTypeOf<
+      z.infer<typeof currentPersistedUserPreferencesSchema>
+    >().toEqualTypeOf<PersistedUserPreferences>();
   });
 
   it("parses a representative valid persisted state", () => {

@@ -72,7 +72,10 @@ describe("usePersistence", () => {
     it("initializes the store from values present in localStorage", () => {
       localStorage.setItem(
         PREFERENCES_KEY,
-        JSON.stringify({ browserSaveEnabled: false, maximumHistorySize: 7 }),
+        JSON.stringify({
+          preferences: { browserSaveEnabled: false, maximumHistorySize: 7 },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
+        }),
       );
       localStorage.setItem(
         SAVED_STATE_KEY,
@@ -98,7 +101,10 @@ describe("usePersistence", () => {
       localStorage.setItem(
         UI_STATE_KEY,
         JSON.stringify({
-          connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
+          uiState: {
+            connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
+          },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
         }),
       );
 
@@ -165,7 +171,10 @@ describe("usePersistence", () => {
     it("writes applicationState changes to SAVED_STATE_KEY after debounce", () => {
       localStorage.setItem(
         PREFERENCES_KEY,
-        JSON.stringify({ browserSaveEnabled: true, maximumHistorySize: 50 }),
+        JSON.stringify({
+          preferences: { browserSaveEnabled: true, maximumHistorySize: 50 },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
+        }),
       );
 
       const { result } = renderHook(() => useStore());
@@ -199,7 +208,7 @@ describe("usePersistence", () => {
       expect(saved).not.toBeNull();
       if (saved === null) throw new Error("expected saved preferences");
       const parsed = JSON.parse(saved);
-      expect(parsed.maximumHistorySize).toBe(99);
+      expect(parsed.preferences.maximumHistorySize).toBe(99);
     });
   });
 
@@ -207,7 +216,10 @@ describe("usePersistence", () => {
     it("does not write applicationState or uiState while disabled", () => {
       localStorage.setItem(
         PREFERENCES_KEY,
-        JSON.stringify({ browserSaveEnabled: false, maximumHistorySize: 50 }),
+        JSON.stringify({
+          preferences: { browserSaveEnabled: false, maximumHistorySize: 50 },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
+        }),
       );
 
       const { result } = renderHook(() => useStore());
@@ -230,13 +242,19 @@ describe("usePersistence", () => {
       // Pre-seed preferences with browserSaveEnabled: true so autosave is active from the start.
       localStorage.setItem(
         PREFERENCES_KEY,
-        JSON.stringify({ browserSaveEnabled: true, maximumHistorySize: 50 }),
+        JSON.stringify({
+          preferences: { browserSaveEnabled: true, maximumHistorySize: 50 },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
+        }),
       );
       // Pre-seed UI state in localStorage so the hook loads it on mount.
       localStorage.setItem(
         UI_STATE_KEY,
         JSON.stringify({
-          connectionsGraphNodePositions: { fW2: { x: 1, y: 1 } },
+          uiState: {
+            connectionsGraphNodePositions: { fW2: { x: 1, y: 1 } },
+          },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
         }),
       );
 

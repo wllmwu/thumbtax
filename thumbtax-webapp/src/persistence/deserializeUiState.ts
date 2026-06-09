@@ -1,13 +1,23 @@
-import { uiStateSchema } from "#src/persistence/schemas/uiStateSchema";
-import { validationFailed } from "#src/persistence/zodIssuesToLoadError";
+import { deserializeVersioned } from "#src/persistence/deserializeVersioned";
+import { uiStateMigrations } from "#src/persistence/migrations";
+import {
+  currentPersistedUiStateSchema,
+  uiStateSchemas,
+} from "#src/persistence/schemas/uiStateSchemas";
 
 import type { DeserializeResult } from "#src/persistence/types/deserializeResult";
 import type { UiState } from "#src/state/types/uiState";
 
 export function deserializeUiState(raw: unknown): DeserializeResult<UiState> {
-  const parsed = uiStateSchema.safeParse(raw);
-  if (!parsed.success) {
-    return { ok: false, errors: [validationFailed(parsed.error)] };
+  const result = deserializeVersioned(
+    raw,
+    uiStateSchemas,
+    currentPersistedUiStateSchema,
+    uiStateMigrations,
+  );
+  if (!result.ok) {
+    return result;
   }
-  return { ok: true, value: parsed.data, errors: [] };
+
+  return { ok: true, value: result.value.uiState, errors: [] };
 }

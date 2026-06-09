@@ -11,7 +11,11 @@ import {
   UI_STATE_KEY,
 } from "#src/persistence/localStorageKeys";
 import { parseUploadedFile } from "#src/persistence/parseUploadedFile";
-import { serialize } from "#src/persistence/serialize";
+import {
+  serialize,
+  serializeUiState,
+  serializeUserPreferences,
+} from "#src/persistence/serialize";
 import {
   DEFAULT_APPLICATION_STATE,
   DEFAULT_UI_STATE,
@@ -113,7 +117,10 @@ export function usePersistence(
 
     const writeUiState = debounce(() => {
       if (!latestPreferences.browserSaveEnabled) return;
-      localStorage.setItem(UI_STATE_KEY, JSON.stringify(latestUiState));
+      localStorage.setItem(
+        UI_STATE_KEY,
+        JSON.stringify(serializeUiState(latestUiState)),
+      );
     }, AUTOSAVE_DEBOUNCE_MS);
 
     const unsubApp = subscribeToStore(
@@ -136,7 +143,10 @@ export function usePersistence(
       (state) => state.userPreferences,
       (current, previous) => {
         latestPreferences = current;
-        localStorage.setItem(PREFERENCES_KEY, JSON.stringify(current));
+        localStorage.setItem(
+          PREFERENCES_KEY,
+          JSON.stringify(serializeUserPreferences(current)),
+        );
         if (
           previous.browserSaveEnabled === true &&
           current.browserSaveEnabled === false
@@ -150,7 +160,10 @@ export function usePersistence(
     );
 
     // Persist the initial preferences value so the key always exists.
-    localStorage.setItem(PREFERENCES_KEY, JSON.stringify(preferences));
+    localStorage.setItem(
+      PREFERENCES_KEY,
+      JSON.stringify(serializeUserPreferences(preferences)),
+    );
 
     return () => {
       unsubApp();

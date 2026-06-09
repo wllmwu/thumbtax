@@ -1,5 +1,9 @@
-import { userPreferencesSchema } from "#src/persistence/schemas/userPreferencesSchema";
-import { validationFailed } from "#src/persistence/zodIssuesToLoadError";
+import { deserializeVersioned } from "#src/persistence/deserializeVersioned";
+import { userPreferencesMigrations } from "#src/persistence/migrations";
+import {
+  currentPersistedUserPreferencesSchema,
+  userPreferencesSchemas,
+} from "#src/persistence/schemas/userPreferencesSchemas";
 
 import type { DeserializeResult } from "#src/persistence/types/deserializeResult";
 import type { UserPreferences } from "#src/state/types/userPreferences";
@@ -7,9 +11,15 @@ import type { UserPreferences } from "#src/state/types/userPreferences";
 export function deserializeUserPreferences(
   raw: unknown,
 ): DeserializeResult<UserPreferences> {
-  const parsed = userPreferencesSchema.safeParse(raw);
-  if (!parsed.success) {
-    return { ok: false, errors: [validationFailed(parsed.error)] };
+  const result = deserializeVersioned(
+    raw,
+    userPreferencesSchemas,
+    currentPersistedUserPreferencesSchema,
+    userPreferencesMigrations,
+  );
+  if (!result.ok) {
+    return result;
   }
-  return { ok: true, value: parsed.data, errors: [] };
+
+  return { ok: true, value: result.value.preferences, errors: [] };
 }
