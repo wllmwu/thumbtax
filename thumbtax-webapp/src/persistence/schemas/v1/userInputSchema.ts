@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { boxAddressSchema } from "#src/persistence/schemas/boxAddressSchema";
+import { boxAddressSchema } from "#src/persistence/schemas/v1/boxAddressSchema";
 
 export const userInputSchema = z.discriminatedUnion("type", [
   z

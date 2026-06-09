@@ -1,15 +1,15 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 import { z } from "zod";
 
-import { applicationStateSchema } from "#src/persistence/schemas/applicationStateSchema";
-import { boxAddressSchema } from "#src/persistence/schemas/boxAddressSchema";
-import { filingStatusSchema } from "#src/persistence/schemas/filingStatusSchema";
-import { formClassSchema } from "#src/persistence/schemas/formClassSchema";
-import { formInstanceSchema } from "#src/persistence/schemas/formInstanceSchema";
 import { currentPersistedStateSchema } from "#src/persistence/schemas/persistedStateSchemas";
 import { uiStateSchema } from "#src/persistence/schemas/uiStateSchema";
-import { userInputSchema } from "#src/persistence/schemas/userInputSchema";
 import { userPreferencesSchema } from "#src/persistence/schemas/userPreferencesSchema";
+import { applicationStateSchema } from "#src/persistence/schemas/v1/applicationStateSchema";
+import { boxAddressSchema } from "#src/persistence/schemas/v1/boxAddressSchema";
+import { filingStatusSchema } from "#src/persistence/schemas/v1/filingStatusSchema";
+import { formClassSchema } from "#src/persistence/schemas/v1/formClassSchema";
+import { formInstanceSchema } from "#src/persistence/schemas/v1/formInstanceSchema";
+import { userInputSchema } from "#src/persistence/schemas/v1/userInputSchema";
 
 import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { FilingStatus } from "#src/common/types/filingStatus";

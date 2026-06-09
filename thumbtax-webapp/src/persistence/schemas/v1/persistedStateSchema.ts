@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { applicationStateSchema } from "#src/persistence/schemas/applicationStateSchema";
+import { applicationStateSchema } from "#src/persistence/schemas/v1/applicationStateSchema";
 
 export const persistedStateSchema = z
   .object({

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { formClassSchema } from "#src/persistence/schemas/formClassSchema";
-import { userInputSchema } from "#src/persistence/schemas/userInputSchema";
+import { formClassSchema } from "#src/persistence/schemas/v1/formClassSchema";
+import { userInputSchema } from "#src/persistence/schemas/v1/userInputSchema";
 
 export const formInstanceSchema = z
   .object({
