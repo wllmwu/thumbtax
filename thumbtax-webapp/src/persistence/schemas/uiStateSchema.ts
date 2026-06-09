@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-import { formClassSchema } from "#src/persistence/schemas/formClassSchema";
+import { FORM_CLASSES } from "#src/common/types/formClass";
 
 export const uiStateSchema = z
   .object({
     connectionsGraphNodePositions: z.partialRecord(
-      formClassSchema,
+      z.enum(FORM_CLASSES),
       z.object({ x: z.number(), y: z.number() }).strict(),
     ),
   })
