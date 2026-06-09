@@ -5,9 +5,7 @@ import { validationFailed } from "#src/persistence/zodIssuesToLoadError";
 
 describe("validationFailed", () => {
   it("maps a ZodError into a validation_failed LoadError with dotted paths", () => {
-    const schema = z
-      .object({ a: z.object({ b: z.number() }).strict() })
-      .strict();
+    const schema = z.strictObject({ a: z.strictObject({ b: z.number() }) });
     const parsed = schema.safeParse({ a: { b: "nope" } });
     expect(parsed.success).toBe(false);
     if (parsed.success) throw new Error("expected failure");

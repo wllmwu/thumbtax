@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-export const userPreferencesSchema = z
-  .object({
-    browserSaveEnabled: z.boolean(),
-    maximumHistorySize: z.number(),
-  })
-  .strict();
+export const userPreferencesSchema = z.strictObject({
+  browserSaveEnabled: z.boolean(),
+  maximumHistorySize: z.number(),
+});

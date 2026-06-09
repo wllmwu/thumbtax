@@ -3,25 +3,18 @@ import { z } from "zod";
 import { boxAddressSchema } from "#src/persistence/schemas/v1/boxAddressSchema";
 
 export const userInputSchema = z.discriminatedUnion("type", [
-  z
-    .object({
-      type: z.literal("amount_list"),
-      value: z.array(
-        z.object({ label: z.string(), amount: z.number() }).strict(),
-      ),
-    })
-    .strict(),
-  z
-    .object({
-      type: z.literal("instance_box_selections"),
-      selected: z.array(boxAddressSchema),
-    })
-    .strict(),
-  z.object({ type: z.literal("number"), value: z.number() }).strict(),
-  z
-    .object({ type: z.literal("override"), override: z.number().nullable() })
-    .strict(),
-  z
-    .object({ type: z.literal("selection"), selectedIndex: z.number() })
-    .strict(),
+  z.strictObject({
+    type: z.literal("amount_list"),
+    value: z.array(z.strictObject({ label: z.string(), amount: z.number() })),
+  }),
+  z.strictObject({
+    type: z.literal("instance_box_selections"),
+    selected: z.array(boxAddressSchema),
+  }),
+  z.strictObject({ type: z.literal("number"), value: z.number() }),
+  z.strictObject({
+    type: z.literal("override"),
+    override: z.number().nullable(),
+  }),
+  z.strictObject({ type: z.literal("selection"), selectedIndex: z.number() }),
 ]);
