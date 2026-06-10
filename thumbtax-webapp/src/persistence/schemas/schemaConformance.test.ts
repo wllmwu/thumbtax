@@ -28,32 +28,42 @@ import type { UserPreferences } from "#src/state/types/userPreferences";
 describe("schema/type conformance", () => {
   it("infers types that exactly match the hand-written persistence types", () => {
     expectTypeOf<
-      z.infer<typeof filingStatusSchema>
-    >().toEqualTypeOf<FilingStatus>();
-    expectTypeOf<z.infer<typeof formClassSchema>>().toEqualTypeOf<FormClass>();
-    expectTypeOf<
-      z.infer<typeof boxAddressSchema>
-    >().toEqualTypeOf<BoxAddress>();
-    expectTypeOf<z.infer<typeof userInputSchema>>().toEqualTypeOf<UserInput>();
-    expectTypeOf<
-      z.infer<typeof formInstanceSchema>
-    >().toEqualTypeOf<FormInstance>();
-    expectTypeOf<
-      z.infer<typeof applicationStateSchema>
-    >().toEqualTypeOf<ApplicationState>();
-    expectTypeOf<z.infer<typeof uiStateSchema>>().toEqualTypeOf<UiState>();
-    expectTypeOf<
-      z.infer<typeof userPreferencesSchema>
-    >().toEqualTypeOf<UserPreferences>();
-    expectTypeOf<
       z.infer<typeof currentPersistedStateSchema>
     >().toEqualTypeOf<PersistedState>();
+
     expectTypeOf<
       z.infer<typeof currentPersistedUiStateSchema>
     >().toEqualTypeOf<PersistedUiState>();
+
     expectTypeOf<
       z.infer<typeof currentPersistedUserPreferencesSchema>
     >().toEqualTypeOf<PersistedUserPreferences>();
+
+    expectTypeOf<
+      z.infer<typeof applicationStateSchema>
+    >().toEqualTypeOf<ApplicationState>();
+
+    expectTypeOf<
+      z.infer<typeof boxAddressSchema>
+    >().toEqualTypeOf<BoxAddress>();
+
+    expectTypeOf<
+      z.infer<typeof filingStatusSchema>
+    >().toEqualTypeOf<FilingStatus>();
+
+    expectTypeOf<z.infer<typeof formClassSchema>>().toEqualTypeOf<FormClass>();
+
+    expectTypeOf<
+      z.infer<typeof formInstanceSchema>
+    >().toEqualTypeOf<FormInstance>();
+
+    expectTypeOf<z.infer<typeof uiStateSchema>>().toEqualTypeOf<UiState>();
+
+    expectTypeOf<z.infer<typeof userInputSchema>>().toEqualTypeOf<UserInput>();
+
+    expectTypeOf<
+      z.infer<typeof userPreferencesSchema>
+    >().toEqualTypeOf<UserPreferences>();
   });
 
   it("parses a representative valid persisted state", () => {
@@ -74,6 +84,24 @@ describe("schema/type conformance", () => {
       },
       schemaVersion: 1,
       taxYear: 2025,
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("parses a representative valid persisted ui state", () => {
+    const result = currentPersistedUiStateSchema.safeParse({
+      uiState: {
+        connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
+      },
+      schemaVersion: 1,
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("parses a representative valid persisted user preferences", () => {
+    const result = currentPersistedUserPreferencesSchema.safeParse({
+      preferences: { browserSaveEnabled: true, maximumHistorySize: 50 },
+      schemaVersion: 1,
     });
     expect(result.success).toBe(true);
   });
