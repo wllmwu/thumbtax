@@ -1,4 +1,4 @@
-import { serialize } from "#src/persistence/serialize";
+import { serializePersistedState } from "#src/persistence/serialize";
 
 import type { ApplicationState } from "#src/state/types/applicationState";
 
@@ -14,7 +14,7 @@ export function downloadSaveFile(
   applicationState: ApplicationState,
   filename: string = defaultFilename(),
 ): void {
-  const payload = serialize(applicationState);
+  const payload = serializePersistedState(applicationState);
   const json = JSON.stringify(payload, null, 2);
   const blob = new Blob([json], { type: "application/json" });
   const url = URL.createObjectURL(blob);

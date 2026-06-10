@@ -10,7 +10,9 @@ import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
 import type { UserPreferences } from "#src/state/types/userPreferences";
 
-export function serialize(applicationState: ApplicationState): PersistedState {
+export function serializePersistedState(
+  applicationState: ApplicationState,
+): PersistedState {
   return {
     applicationState,
     schemaVersion: CURRENT_SCHEMA_VERSION,

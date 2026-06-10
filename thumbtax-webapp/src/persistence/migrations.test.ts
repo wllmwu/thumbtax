@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vitest } from "vitest";
 
 import {
   applyMigrations,
@@ -33,14 +33,11 @@ describe("migrations", () => {
   });
 
   it("does not invoke a migration when fromVersion is already at or above CURRENT_SCHEMA_VERSION", () => {
-    let called = false;
+    const migrationFn = vitest.fn((raw) => raw);
     const migrations: Migrations = {
-      0: (raw) => {
-        called = true;
-        return raw;
-      },
+      0: migrationFn,
     };
     applyMigrations({}, 1, migrations);
-    expect(called).toBe(false);
+    expect(migrationFn).not.toHaveBeenCalled();
   });
 });

@@ -45,7 +45,7 @@ describe("deserializePersistedState", () => {
     expect(result.errors).toEqual([{ type: "not_an_object" }]);
   });
 
-  it("rejects a missing/non-numeric schemaVersion", () => {
+  it("rejects a missing schemaVersion", () => {
     const result = deserializePersistedState({
       applicationState: validApplicationState,
       taxYear: CURRENT_TAX_YEAR,

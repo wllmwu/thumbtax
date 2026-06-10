@@ -5,7 +5,7 @@ import {
   CURRENT_TAX_YEAR,
 } from "#src/persistence/config";
 import {
-  serialize,
+  serializePersistedState,
   serializeUiState,
   serializeUserPreferences,
 } from "#src/persistence/serialize";
@@ -14,14 +14,14 @@ import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
 import type { UserPreferences } from "#src/state/types/userPreferences";
 
-describe("serialize", () => {
+describe("serializePersistedState", () => {
   it("wraps the application state with the current schema version and tax year", () => {
     const applicationState: ApplicationState = {
       filingStatus: "single",
       formClasses: [],
       formInstances: {},
     };
-    expect(serialize(applicationState)).toEqual({
+    expect(serializePersistedState(applicationState)).toEqual({
       applicationState,
       schemaVersion: CURRENT_SCHEMA_VERSION,
       taxYear: CURRENT_TAX_YEAR,

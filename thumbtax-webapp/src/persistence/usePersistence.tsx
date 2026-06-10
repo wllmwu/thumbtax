@@ -12,7 +12,7 @@ import {
 } from "#src/persistence/localStorageKeys";
 import { parseUploadedFile } from "#src/persistence/parseUploadedFile";
 import {
-  serialize,
+  serializePersistedState,
   serializeUiState,
   serializeUserPreferences,
 } from "#src/persistence/serialize";
@@ -111,7 +111,7 @@ export function usePersistence(
       if (!latestPreferences.browserSaveEnabled) return;
       localStorage.setItem(
         SAVED_STATE_KEY,
-        JSON.stringify(serialize(latestApplicationState)),
+        JSON.stringify(serializePersistedState(latestApplicationState)),
       );
     }, AUTOSAVE_DEBOUNCE_MS);
 
@@ -151,6 +151,7 @@ export function usePersistence(
           previous.browserSaveEnabled === true &&
           current.browserSaveEnabled === false
         ) {
+          // Remove other keys from local storage when turning off browser save.
           writeApplicationState.cancel();
           writeUiState.cancel();
           localStorage.removeItem(SAVED_STATE_KEY);
