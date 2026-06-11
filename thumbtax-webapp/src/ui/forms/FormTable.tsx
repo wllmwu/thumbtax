@@ -1,7 +1,9 @@
 import React from "react";
 
 import classNames from "classnames";
+import { Button } from "react-aria-components";
 
+import { useStore } from "#src/state/useStore";
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import styles from "#src/ui/forms/FormTable.module.css";
 
@@ -55,6 +57,8 @@ function FormLineTableRow({
 }
 
 export function FormTable({ specification, instances }: Props) {
+  const moveFormInstance = useStore((state) => state.moveFormInstance);
+
   const allowsMultipleInstances =
     specification.maxInstances === null || specification.maxInstances > 1;
 
@@ -85,12 +89,28 @@ export function FormTable({ specification, instances }: Props) {
         } as React.CSSProperties
       }
     >
-      {instances.map((instance) => (
+      {instances.map((instance, index) => (
         <div key={instance.id} className={styles.formInstance}>
           {allowsMultipleInstances && (
             <div className={styles.formTableRow}>
               <div className={styles.formInstanceLabelCell}>
-                {instance.label}
+                <span>{instance.label}</span>
+                <Button
+                  isDisabled={index <= 0}
+                  onPress={() =>
+                    moveFormInstance(instance.class, instance.id, -1)
+                  }
+                >
+                  Move left
+                </Button>
+                <Button
+                  isDisabled={index >= instances.length - 1}
+                  onPress={() =>
+                    moveFormInstance(instance.class, instance.id, 1)
+                  }
+                >
+                  Move right
+                </Button>
               </div>
             </div>
           )}

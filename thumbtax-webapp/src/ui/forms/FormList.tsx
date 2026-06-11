@@ -9,13 +9,15 @@ export function FormList() {
   const formClasses = useStore((state) => state.applicationState.formClasses);
   const instances = useStore((state) => state.applicationState.formInstances);
 
+  const moveFormClass = useStore((state) => state.moveFormClass);
+
   if (!specifications) {
     return null;
   }
 
   return (
     <ul>
-      {formClasses.map((formClass) => {
+      {formClasses.map((formClass, index) => {
         const specification = specifications[formClass];
         const formInstances = instances[specification.class];
 
@@ -26,10 +28,22 @@ export function FormList() {
           <li key={formClass}>
             <span>
               <h2>{specification.title}</h2>
-              <Badge>{specification.category}</Badge>{" "}
+              <Badge>{specification.category}</Badge>
               {specification.maxInstances !== 1 && (
                 <Badge>{formInstances.length}</Badge>
               )}
+              <Button
+                isDisabled={index <= 0}
+                onPress={() => moveFormClass(formClass, -1)}
+              >
+                Move up
+              </Button>
+              <Button
+                isDisabled={index >= formClasses.length - 1}
+                onPress={() => moveFormClass(formClass, 1)}
+              >
+                Move down
+              </Button>
             </span>
             {specification.subtitle && <p>{specification.subtitle}</p>}
             <Disclosure>
