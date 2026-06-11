@@ -1,5 +1,5 @@
 import { act, render, renderHook } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import {
   CURRENT_SCHEMA_VERSION,
@@ -48,18 +48,14 @@ function Harness() {
   return null;
 }
 
-beforeEach(() => {
-  vi.useFakeTimers();
-});
-
-afterEach(() => {
-  vi.useRealTimers();
-});
+function renderUseStore() {
+  return renderHook(() => useStore((state) => state));
+}
 
 describe("usePersistence", () => {
   describe("load on mount", () => {
     it("initializes the store with defaults when localStorage is empty", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       render(<Harness />);
       rerender();
       expect(result.current.applicationState.filingStatus).toBe("single");
@@ -108,7 +104,7 @@ describe("usePersistence", () => {
         }),
       );
 
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       render(<Harness />);
       rerender();
 
@@ -131,7 +127,7 @@ describe("usePersistence", () => {
     it("surfaces a JSON parse failure as invalid_json", () => {
       localStorage.setItem(SAVED_STATE_KEY, "{ not json");
 
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       render(<Harness />);
       rerender();
 
@@ -154,7 +150,7 @@ describe("usePersistence", () => {
         }),
       );
 
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       render(<Harness />);
       rerender();
 
@@ -169,6 +165,8 @@ describe("usePersistence", () => {
 
   describe("autosave (browserSaveEnabled true)", () => {
     it("writes applicationState changes to SAVED_STATE_KEY after debounce", () => {
+      vi.useFakeTimers();
+
       localStorage.setItem(
         PREFERENCES_KEY,
         JSON.stringify({
@@ -177,7 +175,7 @@ describe("usePersistence", () => {
         }),
       );
 
-      const { result } = renderHook(() => useStore());
+      const { result } = renderUseStore();
       render(<Harness />);
 
       act(() => {
@@ -194,10 +192,12 @@ describe("usePersistence", () => {
       if (saved === null) throw new Error("expected saved state");
       const parsed = JSON.parse(saved);
       expect(parsed.applicationState.formClasses).toEqual(["fW2"]);
+
+      vi.useRealTimers();
     });
 
     it("writes preferences changes immediately to PREFERENCES_KEY", () => {
-      const { result } = renderHook(() => useStore());
+      const { result } = renderUseStore();
       render(<Harness />);
 
       act(() => {
@@ -214,6 +214,8 @@ describe("usePersistence", () => {
 
   describe("autosave (browserSaveEnabled false)", () => {
     it("does not write applicationState or uiState while disabled", () => {
+      vi.useFakeTimers();
+
       localStorage.setItem(
         PREFERENCES_KEY,
         JSON.stringify({
@@ -222,7 +224,7 @@ describe("usePersistence", () => {
         }),
       );
 
-      const { result } = renderHook(() => useStore());
+      const { result } = renderUseStore();
       render(<Harness />);
 
       act(() => {
@@ -234,11 +236,15 @@ describe("usePersistence", () => {
 
       expect(localStorage.getItem(SAVED_STATE_KEY)).toBeNull();
       expect(localStorage.getItem(UI_STATE_KEY)).toBeNull();
+
+      vi.useRealTimers();
     });
   });
 
   describe("toggle-off reconciliation", () => {
     it("clears SAVED_STATE_KEY and UI_STATE_KEY when browserSaveEnabled flips true -> false", () => {
+      vi.useFakeTimers();
+
       // Pre-seed preferences with browserSaveEnabled: true so autosave is active from the start.
       localStorage.setItem(
         PREFERENCES_KEY,
@@ -258,7 +264,7 @@ describe("usePersistence", () => {
         }),
       );
 
-      const { result } = renderHook(() => useStore());
+      const { result } = renderUseStore();
       render(<Harness />);
 
       // Trigger an applicationState autosave so SAVED_STATE_KEY exists.
@@ -280,12 +286,16 @@ describe("usePersistence", () => {
       expect(localStorage.getItem(UI_STATE_KEY)).toBeNull();
       // Preferences itself is still written.
       expect(localStorage.getItem(PREFERENCES_KEY)).not.toBeNull();
+
+      vi.useRealTimers();
     });
   });
 
   describe("unmount", () => {
     it("does not write store changes that happen after unmount", () => {
-      const { result } = renderHook(() => useStore());
+      vi.useFakeTimers();
+
+      const { result } = renderUseStore();
       const { unmount } = render(<Harness />);
 
       unmount();
@@ -300,6 +310,8 @@ describe("usePersistence", () => {
         const parsed = JSON.parse(saved);
         expect(parsed.applicationState.formClasses).not.toContain("fW2");
       }
+
+      vi.useRealTimers();
     });
   });
 
@@ -315,7 +327,7 @@ describe("usePersistence", () => {
       const { result: persistence } = renderHook(() =>
         usePersistence(registry),
       );
-      const { result: store } = renderHook(() => useStore());
+      const { result: store } = renderUseStore();
 
       act(() => {
         store.current.initialize(
@@ -367,7 +379,7 @@ describe("usePersistence", () => {
       const { result: persistence } = renderHook(() =>
         usePersistence(registry),
       );
-      const { result: store } = renderHook(() => useStore());
+      const { result: store } = renderUseStore();
 
       const before = store.current.applicationState;
 

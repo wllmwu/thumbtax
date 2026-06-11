@@ -346,17 +346,7 @@ const useStoreInner = create<StoreState>((set) => ({
   },
 }));
 
-const wholeStateSelector = (state: StoreState): StoreState => state;
-
-// Pass the selector through to Zustand so we only re-render on slice changes.
-// Calling useStoreInner() with no selector subscribes to the whole state and
-// re-renders on every change — which can trivially cause infinite render
-// loops in components that recompute non-stable inputs on each render.
-export function useStore(): StoreState;
-export function useStore<U>(selector: (state: StoreState) => U): U;
-export function useStore(
-  selector: (state: StoreState) => unknown = wholeStateSelector,
-): unknown {
+export function useStore<U>(selector: (state: StoreState) => U): U {
   return useStoreInner(selector);
 }
 

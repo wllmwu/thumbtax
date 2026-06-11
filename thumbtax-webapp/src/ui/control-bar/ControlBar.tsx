@@ -5,7 +5,8 @@ import { AddFormMenu } from "#src/ui/control-bar/AddFormMenu";
 import { FilingStatusSelector } from "#src/ui/control-bar/FilingStatusSelector";
 
 export function ControlBar() {
-  const { undo, redo } = useStore();
+  const undo = useStore((state) => state.undo);
+  const redo = useStore((state) => state.redo);
 
   return (
     <Toolbar aria-label="App controls">

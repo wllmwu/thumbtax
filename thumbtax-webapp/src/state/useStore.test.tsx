@@ -102,8 +102,12 @@ const DEFAULT_PREFERENCES: UserPreferences = {
   maximumHistorySize: 50,
 };
 
+function renderUseStore() {
+  return renderHook(() => useStore((state) => state));
+}
+
 beforeEach(() => {
-  const { result } = renderHook(() => useStore());
+  const { result } = renderUseStore();
   result.current.initialize(
     DEFAULT_APPLICATION_STATE,
     DEFAULT_UI_STATE,
@@ -115,7 +119,7 @@ beforeEach(() => {
 describe("useStore", () => {
   describe("initialize", () => {
     it("populates applicationState, uiState, userPreferences, and specifications from arguments", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const applicationState: ApplicationState = {
         filingStatus: "head_of_household",
@@ -149,7 +153,7 @@ describe("useStore", () => {
     });
 
     it("resets history when called on a store that already has history", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.setFilingStatus("married_filing_jointly");
       result.current.setFilingStatus("head_of_household");
@@ -171,7 +175,7 @@ describe("useStore", () => {
     });
 
     it("computes the workbook from the provided applicationState", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const applicationState: ApplicationState = {
         filingStatus: "single",
@@ -203,7 +207,7 @@ describe("useStore", () => {
     });
 
     it("replaces previously loaded state when called twice (no merging)", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const firstApplicationState: ApplicationState = {
         filingStatus: "single",
@@ -244,7 +248,7 @@ describe("useStore", () => {
 
   describe("setFilingStatus", () => {
     it("updates applicationState.filingStatus", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.setFilingStatus("married_filing_jointly");
 
@@ -255,7 +259,7 @@ describe("useStore", () => {
     });
 
     it("pushes the prior applicationState onto history.past and clears history.future", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       const before = result.current.applicationState;
 
       result.current.setFilingStatus("married_filing_jointly");
@@ -272,7 +276,7 @@ describe("useStore", () => {
     });
 
     it("recomputes the workbook to reflect the new filing status", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       const id = result.current.addFormInstance(TEST_CLASS);
 
       rerender();
@@ -287,7 +291,7 @@ describe("useStore", () => {
 
   describe("addFormInstance", () => {
     it("returns a non-empty string id", () => {
-      const { result } = renderHook(() => useStore());
+      const { result } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
@@ -296,7 +300,7 @@ describe("useStore", () => {
     });
 
     it("returns a distinct id on each call", () => {
-      const { result } = renderHook(() => useStore());
+      const { result } = renderUseStore();
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       const id2 = result.current.addFormInstance(TEST_CLASS);
@@ -305,7 +309,7 @@ describe("useStore", () => {
     });
 
     it("appends an instance with empty inputs, default label, and matching class/id", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
@@ -316,7 +320,7 @@ describe("useStore", () => {
     });
 
     it("appends formClass to formClasses when first added", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       expect(result.current.applicationState.formClasses).toEqual([]);
 
@@ -327,7 +331,7 @@ describe("useStore", () => {
     });
 
     it("does not duplicate the formClass entry when another instance of the same class exists", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.addFormInstance(TEST_CLASS);
       result.current.addFormInstance(TEST_CLASS);
@@ -337,7 +341,7 @@ describe("useStore", () => {
     });
 
     it("preserves the order of existing instances", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       const id2 = result.current.addFormInstance(TEST_CLASS);
@@ -352,7 +356,7 @@ describe("useStore", () => {
     });
 
     it("pushes the prior applicationState onto history.past and clears history.future", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       const before = result.current.applicationState;
 
       result.current.addFormInstance(TEST_CLASS);
@@ -369,7 +373,7 @@ describe("useStore", () => {
     });
 
     it("workbook contains entries for the new instance", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
@@ -384,7 +388,7 @@ describe("useStore", () => {
 
   describe("removeFormInstance", () => {
     it("removes the specified instance while preserving other instances of the same class", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       const id2 = result.current.addFormInstance(TEST_CLASS);
@@ -401,7 +405,7 @@ describe("useStore", () => {
     });
 
     it("deletes the class key from formInstances and removes the class from formClasses when removing the last instance", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
       result.current.addFormInstance(OTHER_CLASS);
@@ -418,7 +422,7 @@ describe("useStore", () => {
     });
 
     it("keeps formClasses unchanged when other instances of the class remain", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       result.current.addFormInstance(TEST_CLASS);
@@ -433,7 +437,7 @@ describe("useStore", () => {
     });
 
     it("pushes the prior applicationState onto history.past and clears history.future on a successful removal", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
@@ -455,7 +459,7 @@ describe("useStore", () => {
     });
 
     it("does nothing (state and history unchanged) when the class is not present or the instance id is not found", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
@@ -487,7 +491,7 @@ describe("useStore", () => {
     });
 
     it("removes the workbook entries for the removed instance", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
@@ -503,7 +507,7 @@ describe("useStore", () => {
 
   describe("setFormInstanceLabel", () => {
     it("updates the instance's label while preserving its inputs", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
       result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
@@ -524,7 +528,7 @@ describe("useStore", () => {
     });
 
     it("preserves the labels of other instances in the same and other classes", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       const id2 = result.current.addFormInstance(TEST_CLASS);
@@ -545,7 +549,7 @@ describe("useStore", () => {
     });
 
     it("pushes the prior applicationState onto history.past and clears history.future", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
@@ -567,7 +571,7 @@ describe("useStore", () => {
     });
 
     it("does nothing (state and history unchanged) when the class is not present or the instance id is not found", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.addFormInstance(TEST_CLASS);
 
@@ -594,7 +598,7 @@ describe("useStore", () => {
 
   describe("moveFormInstance", () => {
     it("swaps with the next instance when direction is 1 and pushes history", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       const id2 = result.current.addFormInstance(TEST_CLASS);
@@ -616,7 +620,7 @@ describe("useStore", () => {
     });
 
     it("swaps with the previous instance when direction is -1 and pushes history", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       const id2 = result.current.addFormInstance(TEST_CLASS);
@@ -638,7 +642,7 @@ describe("useStore", () => {
     });
 
     it("does nothing at the start boundary (first instance, direction=-1) and at the end boundary (last instance, direction=1)", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       const id2 = result.current.addFormInstance(TEST_CLASS);
@@ -664,7 +668,7 @@ describe("useStore", () => {
     });
 
     it("does nothing (state and history unchanged) when the class is not present or the instance id is not found", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.addFormInstance(TEST_CLASS);
 
@@ -691,7 +695,7 @@ describe("useStore", () => {
 
   describe("moveFormClass", () => {
     it("swaps with the next class when direction is 1 and pushes history", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.addFormInstance(TEST_CLASS);
       result.current.addFormInstance(OTHER_CLASS);
@@ -711,7 +715,7 @@ describe("useStore", () => {
     });
 
     it("swaps with the previous class when direction is -1 and pushes history", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.addFormInstance(TEST_CLASS);
       result.current.addFormInstance(OTHER_CLASS);
@@ -731,7 +735,7 @@ describe("useStore", () => {
     });
 
     it("does nothing at the start boundary (first class, direction=-1) and at the end boundary (last class, direction=1)", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.addFormInstance(TEST_CLASS);
       result.current.addFormInstance(OTHER_CLASS);
@@ -757,7 +761,7 @@ describe("useStore", () => {
     });
 
     it("does nothing (state and history unchanged) when the class is not present", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.addFormInstance(TEST_CLASS);
 
@@ -776,7 +780,7 @@ describe("useStore", () => {
 
   describe("setBoxInput", () => {
     it("stores a number input on the specified box", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
       const value: UserInput = { type: "number", value: 42 };
@@ -790,7 +794,7 @@ describe("useStore", () => {
     });
 
     it("stores an amount_list input on the specified box", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
       const value: UserInput = {
@@ -810,7 +814,7 @@ describe("useStore", () => {
     });
 
     it("stores a selection input on the specified box", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
       const value: UserInput = { type: "selection", selectedIndex: 1 };
@@ -824,7 +828,7 @@ describe("useStore", () => {
     });
 
     it("overwrites a prior input on the same box", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
       result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
@@ -847,7 +851,7 @@ describe("useStore", () => {
     });
 
     it("preserves other inputs on the same instance", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
       result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
@@ -870,7 +874,7 @@ describe("useStore", () => {
     });
 
     it("preserves inputs on other instances", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       const id2 = result.current.addFormInstance(TEST_CLASS);
@@ -893,7 +897,7 @@ describe("useStore", () => {
     });
 
     it("recomputes the workbook to reflect the new input value", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
@@ -910,7 +914,7 @@ describe("useStore", () => {
     });
 
     it("pushes the prior applicationState onto history.past and clears history.future", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
 
@@ -935,7 +939,7 @@ describe("useStore", () => {
     });
 
     it("does nothing (state and history unchanged) when the class is not present or the instance id is not found", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.addFormInstance(TEST_CLASS);
 
@@ -973,7 +977,7 @@ describe("useStore", () => {
 
   describe("updatePreferences", () => {
     it("updates a single field, preserving others", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.updatePreferences({ browserSaveEnabled: false });
 
@@ -985,7 +989,7 @@ describe("useStore", () => {
     });
 
     it("updates multiple fields at once", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.updatePreferences({
         browserSaveEnabled: false,
@@ -1000,7 +1004,7 @@ describe("useStore", () => {
     });
 
     it("does not change history.past or history.future", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.setFilingStatus("married_filing_jointly");
       result.current.undo();
@@ -1015,7 +1019,7 @@ describe("useStore", () => {
     });
 
     it("does not change applicationState or workbook", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.addFormInstance(TEST_CLASS);
 
@@ -1033,7 +1037,7 @@ describe("useStore", () => {
 
   describe("undo", () => {
     it("restores the prior applicationState", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       const before = result.current.applicationState;
 
       result.current.setFilingStatus("married_filing_jointly");
@@ -1044,7 +1048,7 @@ describe("useStore", () => {
     });
 
     it("moves the current applicationState onto history.future", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.setFilingStatus("married_filing_jointly");
 
@@ -1058,7 +1062,7 @@ describe("useStore", () => {
     });
 
     it("recomputes the workbook to match the restored state", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
       result.current.setFilingStatus("married_filing_jointly");
@@ -1073,7 +1077,7 @@ describe("useStore", () => {
     });
 
     it("does nothing when history.past is empty", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       const stateBefore = result.current;
 
       result.current.undo();
@@ -1087,7 +1091,7 @@ describe("useStore", () => {
     });
 
     it("walks back through multiple history entries on sequential calls", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       const initial = result.current.applicationState;
 
       result.current.setFilingStatus("married_filing_jointly");
@@ -1111,7 +1115,7 @@ describe("useStore", () => {
 
   describe("redo", () => {
     it("restores the next applicationState from history.future", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.setFilingStatus("married_filing_jointly");
 
@@ -1126,7 +1130,7 @@ describe("useStore", () => {
     });
 
     it("moves the current applicationState onto history.past", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.setFilingStatus("married_filing_jointly");
       result.current.undo();
@@ -1142,7 +1146,7 @@ describe("useStore", () => {
     });
 
     it("recomputes the workbook to match the restored state", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
       result.current.setFilingStatus("married_filing_jointly");
@@ -1158,7 +1162,7 @@ describe("useStore", () => {
     });
 
     it("does nothing when history.future is empty", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.setFilingStatus("married_filing_jointly");
 
@@ -1179,7 +1183,7 @@ describe("useStore", () => {
 
   describe("history size", () => {
     it("truncates history.past from the front when maximumHistorySize is exceeded after an action", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
 
       result.current.initialize(
         DEFAULT_APPLICATION_STATE,
@@ -1210,7 +1214,7 @@ describe("useStore", () => {
 
   describe("selectors", () => {
     it("returns selector output when selector is provided", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       const instanceId = result.current.addFormInstance(TEST_CLASS);
       rerender();
 
@@ -1236,7 +1240,7 @@ describe("useStore", () => {
     });
 
     it("returns entire state when no selector is provided", () => {
-      const { result } = renderHook(() => useStore());
+      const { result } = renderUseStore();
       expect(result.current).toEqual(
         expect.objectContaining({
           applicationState: expect.any(Object),
@@ -1252,12 +1256,12 @@ describe("useStore", () => {
 
   describe("loadErrors", () => {
     it("defaults to an empty array", () => {
-      const { result } = renderHook(() => useStore());
+      const { result } = renderUseStore();
       expect(result.current.loadErrors).toEqual([]);
     });
 
     it("setLoadErrors replaces the current array", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       const errors: LoadError[] = [{ type: "not_an_object" }];
       result.current.setLoadErrors(errors);
       rerender();
@@ -1265,7 +1269,7 @@ describe("useStore", () => {
     });
 
     it("clearLoadErrors empties the array", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       result.current.setLoadErrors([{ type: "not_an_object" }]);
       rerender();
       result.current.clearLoadErrors();
@@ -1276,7 +1280,7 @@ describe("useStore", () => {
 
   describe("setApplicationState", () => {
     it("replaces applicationState while preserving uiState and userPreferences", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       result.current.initialize(
         DEFAULT_APPLICATION_STATE,
         { connectionsGraphNodePositions: { [TEST_CLASS]: { x: 5, y: 6 } } },
@@ -1308,7 +1312,7 @@ describe("useStore", () => {
     });
 
     it("clears undo and redo history", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       result.current.initialize(
         DEFAULT_APPLICATION_STATE,
         DEFAULT_UI_STATE,
@@ -1331,7 +1335,7 @@ describe("useStore", () => {
     });
 
     it("recomputes the workbook", () => {
-      const { result, rerender } = renderHook(() => useStore());
+      const { result, rerender } = renderUseStore();
       result.current.initialize(
         DEFAULT_APPLICATION_STATE,
         DEFAULT_UI_STATE,
@@ -1369,7 +1373,7 @@ describe("useStore", () => {
 
   describe("subscribeToStore", () => {
     it("invokes the listener with new and previous slice values on change", () => {
-      const { result } = renderHook(() => useStore());
+      const { result } = renderUseStore();
       const observed: Array<{ current: string; previous: string }> = [];
       const unsubscribe = subscribeToStore(
         (state) => state.applicationState.filingStatus,
