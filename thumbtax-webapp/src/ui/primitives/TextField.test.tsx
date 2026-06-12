@@ -67,4 +67,10 @@ describe("TextField", () => {
 
     expect(onChange).toHaveBeenCalledWith("test1");
   });
+
+  it("is focused on render when autoFocus is true", async () => {
+    renderComponent({ label: "Name", autoFocus: true });
+
+    expect(await screen.findByLabelText("Name")).toHaveFocus();
+  });
 });

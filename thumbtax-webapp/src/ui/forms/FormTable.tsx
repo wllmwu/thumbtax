@@ -1,10 +1,11 @@
 import React from "react";
 
 import classNames from "classnames";
-import { Button } from "react-aria-components";
+import { Button, DialogTrigger, Modal } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
+import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
 import styles from "#src/ui/forms/FormTable.module.css";
 
 import type { FormInstance } from "#src/common/types/formInstance";
@@ -95,6 +96,15 @@ export function FormTable({ specification, instances }: Props) {
             <div className={styles.formTableRow}>
               <div className={styles.formInstanceLabelCell}>
                 <span>{instance.label}</span>
+                <DialogTrigger>
+                  <Button>Edit</Button>
+                  <Modal isDismissable>
+                    <FormLabelDialog
+                      formClass={instance.class}
+                      instanceId={instance.id}
+                    />
+                  </Modal>
+                </DialogTrigger>
                 <Button
                   isDisabled={index <= 0}
                   onPress={() =>

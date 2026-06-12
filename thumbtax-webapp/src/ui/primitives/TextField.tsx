@@ -8,7 +8,9 @@ import {
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
 
-type Props = FieldProps<string>;
+type Props = FieldProps<string> & {
+  autoFocus?: boolean;
+};
 
 export function TextField({
   label,
@@ -19,6 +21,7 @@ export function TextField({
   errorMessage,
   value,
   onChange,
+  autoFocus,
 }: Props) {
   return (
     <AriaTextField
@@ -27,6 +30,7 @@ export function TextField({
       onChange={onChange}
       isDisabled={disabled}
       isInvalid={!!errorMessage}
+      autoFocus={autoFocus}
     >
       {label && <Label>{label}</Label>}
       <Input placeholder={placeholder} />
