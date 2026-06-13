@@ -13,7 +13,7 @@ import {
 
 import { FILING_STATUSES } from "#src/common/types/filingStatus";
 import { useStore } from "#src/state/useStore";
-import { formatFilingStatus } from "#src/ui/formatters/formatFilingStatus";
+import { formatFilingStatus } from "#src/ui/formatting/formatFilingStatus";
 
 export function FilingStatusSelector() {
   const filingStatus = useStore((state) => state.applicationState.filingStatus);
