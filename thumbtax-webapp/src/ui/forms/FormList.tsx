@@ -10,6 +10,7 @@ export function FormList() {
   const instances = useStore((state) => state.applicationState.formInstances);
 
   const moveFormClass = useStore((state) => state.moveFormClass);
+  const removeFormInstance = useStore((state) => state.removeFormInstance);
 
   if (!specifications) {
     return null;
@@ -44,6 +45,15 @@ export function FormList() {
               >
                 Move down
               </Button>
+              {specification.maxInstances === 1 && (
+                <Button
+                  onPress={() =>
+                    removeFormInstance(formClass, formInstances[0].id)
+                  }
+                >
+                  Delete
+                </Button>
+              )}
             </span>
             {specification.subtitle && <p>{specification.subtitle}</p>}
             <Disclosure>

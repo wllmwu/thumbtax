@@ -59,6 +59,7 @@ function FormLineTableRow({
 
 export function FormTable({ specification, instances }: Props) {
   const moveFormInstance = useStore((state) => state.moveFormInstance);
+  const removeFormInstance = useStore((state) => state.removeFormInstance);
 
   const allowsMultipleInstances =
     specification.maxInstances === null || specification.maxInstances > 1;
@@ -120,6 +121,13 @@ export function FormTable({ specification, instances }: Props) {
                   }
                 >
                   Move right
+                </Button>
+                <Button
+                  onPress={() =>
+                    removeFormInstance(instance.class, instance.id)
+                  }
+                >
+                  Delete
                 </Button>
               </div>
             </div>
