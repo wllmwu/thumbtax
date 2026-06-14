@@ -9,12 +9,20 @@ import type React from "react";
 function renderComponent(
   props?: Partial<React.ComponentProps<typeof NumberField>>,
 ) {
-  return render(<NumberField value={0} onChange={vi.fn()} {...props} />);
+  return render(
+    <NumberField
+      label="Test"
+      format="plain"
+      value={0}
+      onChange={vi.fn()}
+      {...props}
+    />,
+  );
 }
 
 describe("NumberField", () => {
   it("renders input field with provided value", async () => {
-    renderComponent({ label: "Amount", value: 42 });
+    renderComponent({ value: 42 });
 
     expect(await screen.findByRole("textbox")).toHaveValue("42");
   });
@@ -26,44 +34,41 @@ describe("NumberField", () => {
   });
 
   it("renders aria-label when provided", async () => {
-    renderComponent({ "aria-label": "Amount", value: 42 });
+    renderComponent({ label: null, "aria-label": "Amount", value: 42 });
 
     expect(await screen.findByLabelText("Amount")).toHaveValue("42");
   });
 
   it("renders placeholder when provided", async () => {
-    renderComponent({ label: "Amount", placeholder: "Amount", value: 42 });
+    renderComponent({ placeholder: "Amount", value: 42 });
 
     expect(await screen.findByPlaceholderText("Amount")).toHaveValue("42");
   });
 
   it("renders description when provided", async () => {
-    renderComponent({ label: "Amount", description: "Enter an amount" });
+    renderComponent({ description: "Enter an amount" });
 
     expect(await screen.findByText("Enter an amount")).toBeInTheDocument();
   });
 
   it("renders error message when provided", async () => {
-    renderComponent({ label: "Amount", errorMessage: "Invalid amount" });
+    renderComponent({ errorMessage: "Invalid amount" });
 
     expect(await screen.findByText("Invalid amount")).toBeInTheDocument();
   });
 
   it("renders disabled state", async () => {
-    renderComponent({
-      label: "Amount",
-      disabled: true,
-    });
+    renderComponent({ disabled: true });
 
-    expect(await screen.findByLabelText("Amount")).toBeDisabled();
+    expect(await screen.findByRole("textbox")).toBeDisabled();
   });
 
-  it("calls onChange when value changes and input blurs", async () => {
+  it("calls onChange only when input blurs", async () => {
     const onChange = vi.fn();
-    renderComponent({ label: "Amount", value: 0, onChange });
+    renderComponent({ value: 0, onChange });
     const user = userEvent.setup();
 
-    const input = await screen.findByLabelText("Amount");
+    const input = await screen.findByRole("textbox");
     await user.clear(input);
     await user.type(input, "50");
 
@@ -73,5 +78,57 @@ describe("NumberField", () => {
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith(50);
+  });
+
+  it("formats value as financial", async () => {
+    renderComponent({ format: "financial", value: -1234.5 });
+
+    expect(await screen.findByRole("textbox")).toHaveValue("(1,234.50)");
+  });
+
+  it("formats value as percentage", async () => {
+    renderComponent({ format: "percentage", value: 0.125 });
+
+    expect(await screen.findByRole("textbox")).toHaveValue("12.5%");
+  });
+
+  it("formats value as plain", async () => {
+    renderComponent({ format: "plain", value: -1234.5 });
+
+    expect(await screen.findByRole("textbox")).toHaveValue("-1,234.5");
+  });
+
+  it("removes formatting when focused", async () => {
+    renderComponent({ format: "financial", value: -1234.5 });
+    const user = userEvent.setup();
+
+    const input = await screen.findByRole("textbox");
+    await user.click(input);
+
+    expect(input).toHaveValue("-1234.5");
+  });
+
+  it("does not allow non-numeric inputs", async () => {
+    renderComponent({ format: "financial", value: -1234.5 });
+    const user = userEvent.setup();
+
+    const input = await screen.findByRole("textbox");
+    await user.click(input);
+    await user.type(input, "a");
+    await user.type(input, "e");
+
+    expect(input).toHaveValue("-1234.5");
+  });
+
+  it("formats value again when blurred", async () => {
+    renderComponent({ format: "financial", value: -1234.5 });
+    const user = userEvent.setup();
+
+    const input = await screen.findByRole("textbox");
+    await user.click(input);
+    await user.type(input, "6");
+    await user.tab();
+
+    expect(input).toHaveValue("(1,234.56)");
   });
 });

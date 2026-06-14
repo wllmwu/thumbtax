@@ -75,6 +75,7 @@ export function AmountListField({
           />
           <NumberField
             aria-label={`Entry ${index + 1} amount`}
+            format="financial"
             value={amount}
             onChange={(newAmount) => onChangeAmount(index, newAmount)}
           />

@@ -96,6 +96,7 @@ export function FormBoxContent({ instance, box }: Props) {
           aria-label={inputLabel}
           disabled={resolvedBox.skipped}
           errorMessage={errorMessage}
+          format={box.format ?? "financial"}
           value={value}
           onChange={(newValue) =>
             setBoxInput(instance.class, instance.id, box.identifier, {
@@ -127,6 +128,7 @@ export function FormBoxContent({ instance, box }: Props) {
             <NumberField
               aria-label={inputLabel}
               errorMessage={errorMessage}
+              format={box.format ?? "financial"}
               value={value}
               onChange={(newValue) =>
                 setBoxInput(instance.class, instance.id, box.identifier, {
