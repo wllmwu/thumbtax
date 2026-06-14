@@ -9,22 +9,64 @@ import { CheckboxField } from "#src/ui/primitives/CheckboxField";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 
+import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormBox } from "#src/specifications/types/formSpecification";
+import type { ValueProvider } from "#src/specifications/types/valueProvider";
 
 type Props = {
   instance: FormInstance;
   box: FormBox<boolean>;
 };
 
+function SelectInstanceBoxesInputBox({
+  boxIdentifier,
+  boxValue,
+  inputLabel,
+  instance,
+}: {
+  boxIdentifier: BoxIdentifier;
+  boxValue: Extract<ValueProvider, { type: "select_instance_boxes_input" }>;
+  inputLabel: string;
+  instance: FormInstance;
+}) {
+  const specifications = useStore((state) => state.specifications);
+  const instanceRegistry = useStore(
+    (state) => state.applicationState.formInstances,
+  );
+  const setBoxInput = useStore((state) => state.setBoxInput);
+
+  if (!specifications) {
+    return null;
+  }
+
+  const input = instance.inputs[boxIdentifier];
+  const selectedAddresses =
+    input?.type === "instance_box_selections" ? input.selected : [];
+
+  return (
+    <SelectInstanceBoxesField
+      aria-label={inputLabel}
+      specifications={specifications}
+      instanceRegistry={instanceRegistry}
+      boxAddress={{ instance: instance.id, box: boxIdentifier }}
+      valueProvider={boxValue}
+      selectedAddresses={selectedAddresses}
+      onChange={(newSelectedAddresses) =>
+        setBoxInput(instance.class, instance.id, boxIdentifier, {
+          type: "instance_box_selections",
+          selected: newSelectedAddresses,
+        })
+      }
+    />
+  );
+}
+
 export function FormBoxContent({ instance, box }: Props) {
   const resolvedBox = useStore(
     (state) => state.workbook[instance.id][box.identifier],
   );
   const specifications = useStore((state) => state.specifications);
-  const instanceRegistry = useStore(
-    (state) => state.applicationState.formInstances,
-  );
   const setBoxInput = useStore((state) => state.setBoxInput);
 
   const formatBoxValue = useFormatBoxValue({
@@ -155,27 +197,15 @@ export function FormBoxContent({ instance, box }: Props) {
         </div>
       );
     }
-    case "select_instance_boxes_input": {
-      const input = instance.inputs[box.identifier];
-      const selectedAddresses =
-        input?.type === "instance_box_selections" ? input.selected : [];
+    case "select_instance_boxes_input":
       return (
-        <SelectInstanceBoxesField
-          aria-label={inputLabel}
-          specifications={specifications}
-          instanceRegistry={instanceRegistry}
-          boxAddress={{ instance: instance.id, box: box.identifier }}
-          valueProvider={box.value}
-          selectedAddresses={selectedAddresses}
-          onChange={(newSelectedAddresses) =>
-            setBoxInput(instance.class, instance.id, box.identifier, {
-              type: "instance_box_selections",
-              selected: newSelectedAddresses,
-            })
-          }
+        <SelectInstanceBoxesInputBox
+          boxIdentifier={box.identifier}
+          boxValue={box.value}
+          inputLabel={inputLabel}
+          instance={instance}
         />
       );
-    }
     case "select_value_input": {
       const input = instance.inputs[box.identifier];
       const selectedIndex =
