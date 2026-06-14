@@ -13,6 +13,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@internationalized/number": "^3.6.7",
     "@types/lodash": "^4.17.24",
     "classnames": "^2.5.1",
     "immer": "^11.1.8",
