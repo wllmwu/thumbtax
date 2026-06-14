@@ -12,6 +12,7 @@ import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 import { TextField } from "#src/ui/primitives/TextField";
 
+import type { BoxFormat } from "#src/common/types/boxFormat";
 import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormBox } from "#src/specifications/types/formSpecification";
@@ -22,16 +23,160 @@ type Props = {
   box: FormBox<boolean>;
 };
 
+type InputBoxProps = {
+  boxIdentifier: BoxIdentifier;
+  format?: BoxFormat;
+  inputLabel: string;
+  instance: FormInstance;
+};
+
+function CheckboxInputBox({
+  boxIdentifier,
+  errorMessage,
+  inputLabel,
+  instance,
+}: InputBoxProps & { errorMessage: React.ReactNode }) {
+  const setBoxInput = useStore((state) => state.setBoxInput);
+
+  const input = instance.inputs[boxIdentifier];
+  const value = input?.type === "number" && input.value !== 0;
+
+  return (
+    <CheckboxField
+      aria-label={inputLabel}
+      errorMessage={errorMessage}
+      value={value}
+      onChange={(newValue) =>
+        setBoxInput(instance.class, instance.id, boxIdentifier, {
+          type: "number",
+          value: newValue ? 1 : 0,
+        })
+      }
+    />
+  );
+}
+
+function ListAmountsInputBox({
+  boxIdentifier,
+  inputLabel,
+  instance,
+}: InputBoxProps) {
+  const setBoxInput = useStore((state) => state.setBoxInput);
+
+  const input = instance.inputs[boxIdentifier];
+  const list = input?.type === "amount_list" ? input.value : [];
+
+  return (
+    <AmountListField
+      aria-label={inputLabel}
+      list={list}
+      onChange={(newList) =>
+        setBoxInput(instance.class, instance.id, boxIdentifier, {
+          type: "amount_list",
+          value: newList,
+        })
+      }
+    />
+  );
+}
+
+function NumberInputBox({
+  boxIdentifier,
+  errorMessage,
+  format,
+  inputLabel,
+  instance,
+  skipped,
+}: InputBoxProps & {
+  errorMessage: React.ReactNode;
+  skipped?: boolean;
+}) {
+  const setBoxInput = useStore((state) => state.setBoxInput);
+
+  const input = instance.inputs[boxIdentifier];
+  const value = input?.type === "number" ? input.value : 0;
+
+  return (
+    <NumberField
+      aria-label={inputLabel}
+      disabled={skipped}
+      errorMessage={errorMessage}
+      format={format ?? "financial"}
+      value={value}
+      onChange={(newValue) =>
+        setBoxInput(instance.class, instance.id, boxIdentifier, {
+          type: "number",
+          value: newValue,
+        })
+      }
+    />
+  );
+}
+
+function OverrideNumberInputBox({
+  boxIdentifier,
+  errorMessage,
+  format,
+  formattedValue,
+  inputLabel,
+  instance,
+  value,
+}: InputBoxProps & {
+  errorMessage: React.ReactNode;
+  formattedValue: string;
+  value: number;
+}) {
+  const setBoxInput = useStore((state) => state.setBoxInput);
+
+  const input = instance.inputs[boxIdentifier];
+  const isOverridden =
+    input?.type === "override" ? input.override !== null : false;
+
+  return (
+    <div>
+      <CheckboxField
+        label={`Override box ${boxIdentifier}`}
+        value={isOverridden}
+        onChange={(newIsOverridden) =>
+          setBoxInput(instance.class, instance.id, boxIdentifier, {
+            type: "override",
+            override: newIsOverridden ? value : null,
+          })
+        }
+      />
+      {isOverridden ? (
+        <NumberField
+          aria-label={inputLabel}
+          errorMessage={errorMessage}
+          format={format ?? "financial"}
+          value={value}
+          onChange={(newValue) =>
+            setBoxInput(instance.class, instance.id, boxIdentifier, {
+              type: "override",
+              override: newValue,
+            })
+          }
+        />
+      ) : (
+        <TextField
+          aria-label={inputLabel}
+          readOnly
+          errorMessage={errorMessage}
+          value={formattedValue}
+          onChange={noop}
+        />
+      )}
+    </div>
+  );
+}
+
 function SelectInstanceBoxesInputBox({
   boxIdentifier,
   boxValue,
   inputLabel,
   instance,
-}: {
-  boxIdentifier: BoxIdentifier;
+}: InputBoxProps & {
   boxValue: Extract<ValueProvider, { type: "select_instance_boxes_input" }>;
-  inputLabel: string;
-  instance: FormInstance;
 }) {
   const specifications = useStore((state) => state.specifications);
   const instanceRegistry = useStore(
@@ -65,12 +210,56 @@ function SelectInstanceBoxesInputBox({
   );
 }
 
+function SelectValueInputBox({
+  boxIdentifier,
+  boxValue,
+  errorMessage,
+  inputLabel,
+  instance,
+}: InputBoxProps & {
+  boxValue: Extract<ValueProvider, { type: "select_value_input" }>;
+  errorMessage: React.ReactNode;
+}) {
+  const setBoxInput = useStore((state) => state.setBoxInput);
+
+  const input = instance.inputs[boxIdentifier];
+  const selectedIndex = input?.type === "selection" ? input.selectedIndex : 0;
+  const options = boxValue.options.map(({ label }, index) => ({
+    id: `${instance.id}-${boxIdentifier}-option-${index}`,
+    label,
+  }));
+  const selectedId = options[selectedIndex].id;
+
+  return (
+    <SelectField
+      aria-label={inputLabel}
+      errorMessage={errorMessage}
+      value={selectedId}
+      onChange={(newSelectedId) => {
+        for (const [index, option] of options.entries()) {
+          if (option.id === newSelectedId) {
+            setBoxInput(instance.class, instance.id, boxIdentifier, {
+              type: "selection",
+              selectedIndex: index,
+            });
+          }
+        }
+      }}
+    >
+      {options.map(({ id, label }) => (
+        <SelectFieldItem key={id} id={id}>
+          {label}
+        </SelectFieldItem>
+      ))}
+    </SelectField>
+  );
+}
+
 export function FormBoxContent({ instance, box }: Props) {
   const resolvedBox = useStore(
     (state) => state.workbook[instance.id][box.identifier],
   );
   const specifications = useStore((state) => state.specifications);
-  const setBoxInput = useStore((state) => state.setBoxInput);
 
   const formatBoxValue = useFormatBoxValue({
     format: box.format ?? "financial",
@@ -109,100 +298,46 @@ export function FormBoxContent({ instance, box }: Props) {
 
   const valueType = box.value.type;
   switch (valueType) {
-    case "checkbox_input": {
-      const input = instance.inputs[box.identifier];
-      const value = input?.type === "number" && input.value !== 0;
+    case "checkbox_input":
       return (
-        <CheckboxField
-          aria-label={inputLabel}
+        <CheckboxInputBox
+          boxIdentifier={box.identifier}
+          inputLabel={inputLabel}
+          instance={instance}
           errorMessage={errorMessage}
-          value={value}
-          onChange={(newValue) =>
-            setBoxInput(instance.class, instance.id, box.identifier, {
-              type: "number",
-              value: newValue ? 1 : 0,
-            })
-          }
         />
       );
-    }
-    case "list_amounts_input": {
-      const input = instance.inputs[box.identifier];
-      const list = input?.type === "amount_list" ? input.value : [];
+    case "list_amounts_input":
       return (
-        <AmountListField
-          aria-label={inputLabel}
-          list={list}
-          onChange={(newList) =>
-            setBoxInput(instance.class, instance.id, box.identifier, {
-              type: "amount_list",
-              value: newList,
-            })
-          }
+        <ListAmountsInputBox
+          boxIdentifier={box.identifier}
+          inputLabel={inputLabel}
+          instance={instance}
         />
       );
-    }
-    case "number_input": {
-      const input = instance.inputs[box.identifier];
-      const value = input?.type === "number" ? input.value : 0;
+    case "number_input":
       return (
-        <NumberField
-          aria-label={inputLabel}
-          disabled={resolvedBox.skipped}
+        <NumberInputBox
+          boxIdentifier={box.identifier}
           errorMessage={errorMessage}
-          format={box.format ?? "financial"}
-          value={value}
-          onChange={(newValue) =>
-            setBoxInput(instance.class, instance.id, box.identifier, {
-              type: "number",
-              value: newValue,
-            })
-          }
+          format={box.format}
+          inputLabel={inputLabel}
+          instance={instance}
+          skipped={resolvedBox.skipped}
         />
       );
-    }
-    case "override_number_input": {
-      const input = instance.inputs[box.identifier];
-      const isOverridden =
-        input?.type === "override" ? input.override !== null : false;
-      const value = resolvedBox.value;
+    case "override_number_input":
       return (
-        <div>
-          <CheckboxField
-            label={`Override box ${box.identifier}`}
-            value={isOverridden}
-            onChange={(newIsOverridden) =>
-              setBoxInput(instance.class, instance.id, box.identifier, {
-                type: "override",
-                override: newIsOverridden ? value : null,
-              })
-            }
-          />
-          {isOverridden ? (
-            <NumberField
-              aria-label={inputLabel}
-              errorMessage={errorMessage}
-              format={box.format ?? "financial"}
-              value={value}
-              onChange={(newValue) =>
-                setBoxInput(instance.class, instance.id, box.identifier, {
-                  type: "override",
-                  override: newValue,
-                })
-              }
-            />
-          ) : (
-            <TextField
-              aria-label={inputLabel}
-              readOnly
-              errorMessage={errorMessage}
-              value={formattedValue}
-              onChange={noop}
-            />
-          )}
-        </div>
+        <OverrideNumberInputBox
+          boxIdentifier={box.identifier}
+          errorMessage={errorMessage}
+          format={box.format}
+          formattedValue={formattedValue}
+          inputLabel={inputLabel}
+          instance={instance}
+          value={resolvedBox.value}
+        />
       );
-    }
     case "select_instance_boxes_input":
       return (
         <SelectInstanceBoxesInputBox
@@ -212,39 +347,16 @@ export function FormBoxContent({ instance, box }: Props) {
           instance={instance}
         />
       );
-    case "select_value_input": {
-      const input = instance.inputs[box.identifier];
-      const selectedIndex =
-        input?.type === "selection" ? input.selectedIndex : 0;
-      const options = box.value.options.map(({ label }, index) => ({
-        id: `${instance.id}-${box.identifier}-option-${index}`,
-        label,
-      }));
-      const selectedId = options[selectedIndex].id;
+    case "select_value_input":
       return (
-        <SelectField
-          aria-label={inputLabel}
+        <SelectValueInputBox
+          boxIdentifier={box.identifier}
+          boxValue={box.value}
           errorMessage={errorMessage}
-          value={selectedId}
-          onChange={(newSelectedId) => {
-            for (const [index, option] of options.entries()) {
-              if (option.id === newSelectedId) {
-                setBoxInput(instance.class, instance.id, box.identifier, {
-                  type: "selection",
-                  selectedIndex: index,
-                });
-              }
-            }
-          }}
-        >
-          {options.map(({ id, label }) => (
-            <SelectFieldItem key={id} id={id}>
-              {label}
-            </SelectFieldItem>
-          ))}
-        </SelectField>
+          instance={instance}
+          inputLabel={inputLabel}
+        />
       );
-    }
     case "absolute_value":
     case "box_reference":
     case "comparison":
