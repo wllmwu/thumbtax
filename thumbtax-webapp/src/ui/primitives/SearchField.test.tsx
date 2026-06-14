@@ -9,12 +9,14 @@ import type React from "react";
 function renderComponent(
   props?: Partial<React.ComponentProps<typeof SearchField>>,
 ) {
-  return render(<SearchField value="" onChange={vi.fn()} {...props} />);
+  return render(
+    <SearchField label="Test label" value="" onChange={vi.fn()} {...props} />,
+  );
 }
 
 describe("SearchField", () => {
   it("renders input field with provided value", async () => {
-    renderComponent({ label: "Search", value: "hello" });
+    renderComponent({ value: "hello" });
 
     expect(await screen.findByRole("searchbox")).toHaveValue("hello");
   });
@@ -26,17 +28,13 @@ describe("SearchField", () => {
   });
 
   it("renders aria-label when provided", async () => {
-    renderComponent({ "aria-label": "Search", value: "hello" });
+    renderComponent({ label: null, "aria-label": "Search", value: "hello" });
 
     expect(await screen.findByLabelText("Search")).toHaveValue("hello");
   });
 
   it("renders placeholder when provided", async () => {
-    renderComponent({
-      label: "Search",
-      placeholder: "Type here",
-      value: "hello",
-    });
+    renderComponent({ placeholder: "Type here", value: "hello" });
 
     expect(await screen.findByPlaceholderText("Type here")).toHaveValue(
       "hello",
@@ -44,16 +42,13 @@ describe("SearchField", () => {
   });
 
   it("renders description when provided", async () => {
-    renderComponent({ label: "Search", description: "Search for items" });
+    renderComponent({ description: "Search for items" });
 
     expect(await screen.findByText("Search for items")).toBeInTheDocument();
   });
 
   it("renders error message when provided", async () => {
-    renderComponent({
-      label: "Search",
-      errorMessage: "Search query is required",
-    });
+    renderComponent({ errorMessage: "Search query is required" });
 
     expect(
       await screen.findByText("Search query is required"),
@@ -61,26 +56,29 @@ describe("SearchField", () => {
   });
 
   it("renders disabled state", async () => {
-    renderComponent({
-      label: "Search",
-      disabled: true,
-    });
+    renderComponent({ disabled: true });
 
-    expect(await screen.findByLabelText("Search")).toBeDisabled();
+    expect(await screen.findByRole("searchbox")).toBeDisabled();
+  });
+
+  it("renders read-only state", async () => {
+    renderComponent({ readOnly: true });
+
+    expect(await screen.findByRole("searchbox")).toHaveAttribute("readonly");
   });
 
   it("calls onChange when value changes", async () => {
     const onChange = vi.fn();
-    renderComponent({ label: "Search", value: "test", onChange });
+    renderComponent({ value: "test", onChange });
     const user = userEvent.setup();
 
-    await user.type(await screen.findByLabelText("Search"), "1");
+    await user.type(await screen.findByRole("searchbox"), "1");
 
     expect(onChange).toHaveBeenCalledWith("test1");
   });
 
   it("is focused on render when autoFocus is true", async () => {
-    renderComponent({ label: "Search", autoFocus: true });
+    renderComponent({ autoFocus: true });
 
     expect(await screen.findByRole("searchbox")).toHaveFocus();
   });

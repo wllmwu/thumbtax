@@ -9,15 +9,19 @@ import type React from "react";
 function renderComponent(
   props?: Partial<React.ComponentProps<typeof CheckboxField>>,
 ) {
-  return render(<CheckboxField value={false} onChange={vi.fn()} {...props} />);
+  return render(
+    <CheckboxField
+      label="Test label"
+      value={false}
+      onChange={vi.fn()}
+      {...props}
+    />,
+  );
 }
 
 describe("CheckboxField", () => {
   it("renders unchecked state with label", async () => {
-    renderComponent({
-      label: "Test",
-      value: false,
-    });
+    renderComponent({ label: "Test", value: false });
 
     expect(await screen.findByRole("checkbox")).toHaveAccessibleName(
       "falseTest",
@@ -26,20 +30,14 @@ describe("CheckboxField", () => {
   });
 
   it("renders unchecked state with aria-label", async () => {
-    renderComponent({
-      "aria-label": "Test",
-      value: false,
-    });
+    renderComponent({ label: null, "aria-label": "Test", value: false });
 
     expect(await screen.findByRole("checkbox")).toHaveAccessibleName("Test");
     expect(await screen.findByRole("checkbox")).not.toBeChecked();
   });
 
   it("renders checked state with label", async () => {
-    renderComponent({
-      label: "Test",
-      value: true,
-    });
+    renderComponent({ label: "Test", value: true });
 
     expect(await screen.findByRole("checkbox")).toHaveAccessibleName(
       "trueTest",
@@ -48,48 +46,42 @@ describe("CheckboxField", () => {
   });
 
   it("renders checked state with aria-label", async () => {
-    renderComponent({
-      "aria-label": "Test",
-      value: true,
-    });
+    renderComponent({ label: null, "aria-label": "Test", value: true });
 
     expect(await screen.findByRole("checkbox")).toHaveAccessibleName("Test");
     expect(await screen.findByRole("checkbox")).toBeChecked();
   });
 
   it("renders description when provided", async () => {
-    renderComponent({
-      label: "Test label",
-      description: "Test description",
-    });
+    renderComponent({ description: "Test description" });
 
     expect(await screen.findByText("Test description")).toBeInTheDocument();
   });
 
   it("renders error message when provided", async () => {
-    renderComponent({
-      label: "Test label",
-      errorMessage: "Test error message",
-    });
+    renderComponent({ errorMessage: "Test error message" });
 
     expect(await screen.findByText("Test error message")).toBeInTheDocument();
   });
 
   it("renders disabled state", async () => {
-    renderComponent({
-      label: "Test label",
-      disabled: true,
-    });
+    renderComponent({ disabled: true });
 
     expect(await screen.findByRole("checkbox")).toBeDisabled();
   });
 
+  it("renders read-only state", async () => {
+    renderComponent({ readOnly: true });
+
+    expect(await screen.findByRole("checkbox")).toHaveAttribute(
+      "aria-readonly",
+      "true",
+    );
+  });
+
   it("calls onChange when changing from unchecked to checked", async () => {
     const onChange = vi.fn();
-    renderComponent({
-      value: false,
-      onChange,
-    });
+    renderComponent({ value: false, onChange });
     const user = userEvent.setup();
 
     await user.click(await screen.findByRole("checkbox"));
@@ -99,10 +91,7 @@ describe("CheckboxField", () => {
 
   it("calls onChange when changing from checked to unchecked", async () => {
     const onChange = vi.fn();
-    renderComponent({
-      value: true,
-      onChange,
-    });
+    renderComponent({ value: true, onChange });
     const user = userEvent.setup();
 
     await user.click(await screen.findByRole("checkbox"));

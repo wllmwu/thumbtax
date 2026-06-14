@@ -11,7 +11,7 @@ function renderComponent(
 ) {
   return render(
     <NumberField
-      label="Test"
+      label="Test label"
       format="plain"
       value={0}
       onChange={vi.fn()}
@@ -61,6 +61,12 @@ describe("NumberField", () => {
     renderComponent({ disabled: true });
 
     expect(await screen.findByRole("textbox")).toBeDisabled();
+  });
+
+  it("renders read-only state", async () => {
+    renderComponent({ readOnly: true });
+
+    expect(await screen.findByRole("textbox")).toHaveAttribute("readonly");
   });
 
   it("calls onChange only when input blurs", async () => {

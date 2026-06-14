@@ -18,6 +18,7 @@ export function SearchField({
   placeholder,
   description,
   disabled,
+  readOnly,
   errorMessage,
   value,
   onChange,
@@ -30,6 +31,7 @@ export function SearchField({
       onChange={onChange}
       autoFocus={autoFocus}
       isDisabled={disabled}
+      isReadOnly={readOnly}
       isInvalid={!!errorMessage}
     >
       {label && <Label>{label}</Label>}

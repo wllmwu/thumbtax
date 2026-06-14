@@ -6,6 +6,7 @@ export type FieldProps<TValue> = {
   placeholder?: string;
   description?: React.ReactNode;
   disabled?: boolean;
+  readOnly?: boolean;
   errorMessage?: React.ReactNode;
   value: TValue;
   onChange: (value: TValue) => void;

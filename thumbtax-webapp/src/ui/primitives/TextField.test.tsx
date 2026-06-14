@@ -9,12 +9,14 @@ import type React from "react";
 function renderComponent(
   props?: Partial<React.ComponentProps<typeof TextField>>,
 ) {
-  return render(<TextField value="" onChange={vi.fn()} {...props} />);
+  return render(
+    <TextField label="Test label" value="" onChange={vi.fn()} {...props} />,
+  );
 }
 
 describe("TextField", () => {
   it("renders input field with provided value", async () => {
-    renderComponent({ label: "Name", value: "hello" });
+    renderComponent({ value: "hello" });
 
     expect(await screen.findByRole("textbox")).toHaveValue("hello");
   });
@@ -26,70 +28,73 @@ describe("TextField", () => {
   });
 
   it("renders aria-label when provided", async () => {
-    renderComponent({ "aria-label": "Name", value: "hello" });
+    renderComponent({ label: null, "aria-label": "Name", value: "hello" });
 
     expect(await screen.findByLabelText("Name")).toHaveValue("hello");
   });
 
   it("renders placeholder when provided", async () => {
-    renderComponent({ label: "Name", placeholder: "John", value: "hello" });
+    renderComponent({ placeholder: "John", value: "hello" });
 
     expect(await screen.findByPlaceholderText("John")).toHaveValue("hello");
   });
 
   it("renders description when provided", async () => {
-    renderComponent({ label: "Name", description: "Enter your name" });
+    renderComponent({ description: "Enter your name" });
 
     expect(await screen.findByText("Enter your name")).toBeInTheDocument();
   });
 
   it("renders error message when provided", async () => {
-    renderComponent({ label: "Name", errorMessage: "Name is required" });
+    renderComponent({ errorMessage: "Name is required" });
 
     expect(await screen.findByText("Name is required")).toBeInTheDocument();
   });
 
   it("renders disabled state", async () => {
-    renderComponent({
-      label: "Name",
-      disabled: true,
-    });
+    renderComponent({ disabled: true });
 
-    expect(await screen.findByLabelText("Name")).toBeDisabled();
+    expect(await screen.findByRole("textbox")).toBeDisabled();
+  });
+
+  it("renders read-only state", async () => {
+    renderComponent({ readOnly: true });
+
+    expect(await screen.findByRole("textbox")).toHaveAttribute("readonly");
   });
 
   it("calls onChange when value changes", async () => {
     const onChange = vi.fn();
-    renderComponent({ label: "Name", value: "test", onChange });
+    renderComponent({ value: "test", onChange });
     const user = userEvent.setup();
 
-    await user.type(await screen.findByLabelText("Name"), "1");
+    await user.type(await screen.findByRole("textbox"), "1");
 
     expect(onChange).toHaveBeenCalledWith("test1");
   });
 
   it("is focused on render when autoFocus is true", async () => {
-    renderComponent({ label: "Name", autoFocus: true });
+    renderComponent({ autoFocus: true });
 
-    expect(await screen.findByLabelText("Name")).toHaveFocus();
+    expect(await screen.findByRole("textbox")).toHaveFocus();
   });
 
   it("calls onFocus when the field is focused", async () => {
     const onFocus = vi.fn();
-    renderComponent({ label: "Name", onFocus });
+    renderComponent({ onFocus });
     const user = userEvent.setup();
 
-    await user.click(await screen.findByLabelText("Name"));
+    await user.click(await screen.findByRole("textbox"));
 
     expect(onFocus).toHaveBeenCalled();
   });
 
   it("calls onBlur when the field loses focus", async () => {
     const onBlur = vi.fn();
-    renderComponent({ label: "Name", onBlur });
+    renderComponent({ onBlur });
     const user = userEvent.setup();
 
-    await user.click(await screen.findByLabelText("Name"));
+    await user.click(await screen.findByRole("textbox"));
     await user.tab();
 
     expect(onBlur).toHaveBeenCalled();

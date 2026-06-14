@@ -17,6 +17,7 @@ export function TextField({
   placeholder,
   description,
   disabled,
+  readOnly,
   errorMessage,
   value,
   onChange,
@@ -30,6 +31,7 @@ export function TextField({
       value={value}
       onChange={onChange}
       isDisabled={disabled}
+      isReadOnly={readOnly}
       isInvalid={!!errorMessage}
       autoFocus={autoFocus}
       onFocus={onFocus}
