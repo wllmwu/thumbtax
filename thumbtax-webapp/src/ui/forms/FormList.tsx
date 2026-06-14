@@ -4,13 +4,70 @@ import { useStore } from "#src/state/useStore";
 import { FormTable } from "#src/ui/forms/FormTable";
 import { Badge } from "#src/ui/primitives/Badge";
 
-export function FormList() {
-  const specifications = useStore((state) => state.specifications);
-  const formClasses = useStore((state) => state.applicationState.formClasses);
-  const instances = useStore((state) => state.applicationState.formInstances);
+import type { FormSpecification } from "#src/specifications/types/formSpecification";
+
+function FormListItem({
+  specification,
+  index,
+  numFormClasses,
+}: {
+  specification: FormSpecification;
+  index: number;
+  numFormClasses: number;
+}) {
+  const instances = useStore(
+    (state) => state.applicationState.formInstances[specification.class],
+  );
 
   const moveFormClass = useStore((state) => state.moveFormClass);
   const removeFormInstance = useStore((state) => state.removeFormInstance);
+
+  if (!instances) {
+    return null;
+  }
+
+  return (
+    <li>
+      <span>
+        <h2>{specification.title}</h2>
+        <Badge>{specification.category}</Badge>
+        {specification.maxInstances !== 1 && <Badge>{instances.length}</Badge>}
+        <Button
+          isDisabled={index <= 0}
+          onPress={() => moveFormClass(specification.class, -1)}
+        >
+          Move up
+        </Button>
+        <Button
+          isDisabled={index >= numFormClasses - 1}
+          onPress={() => moveFormClass(specification.class, 1)}
+        >
+          Move down
+        </Button>
+        {specification.maxInstances === 1 && (
+          <Button
+            onPress={() =>
+              removeFormInstance(specification.class, instances[0].id)
+            }
+          >
+            Delete
+          </Button>
+        )}
+      </span>
+      {specification.subtitle && <p>{specification.subtitle}</p>}
+      <Disclosure>
+        <Button slot="trigger">Show/hide {specification.title}</Button>
+        <DisclosurePanel>
+          <FormTable specification={specification} instances={instances} />
+        </DisclosurePanel>
+      </Disclosure>
+    </li>
+  );
+}
+
+export function FormList() {
+  const specifications = useStore((state) => state.specifications);
+  const formClasses = useStore((state) => state.applicationState.formClasses);
 
   if (!specifications) {
     return null;
@@ -18,56 +75,14 @@ export function FormList() {
 
   return (
     <ul>
-      {formClasses.map((formClass, index) => {
-        const specification = specifications[formClass];
-        const formInstances = instances[specification.class];
-
-        if (!formInstances) {
-          return null;
-        }
-        return (
-          <li key={formClass}>
-            <span>
-              <h2>{specification.title}</h2>
-              <Badge>{specification.category}</Badge>
-              {specification.maxInstances !== 1 && (
-                <Badge>{formInstances.length}</Badge>
-              )}
-              <Button
-                isDisabled={index <= 0}
-                onPress={() => moveFormClass(formClass, -1)}
-              >
-                Move up
-              </Button>
-              <Button
-                isDisabled={index >= formClasses.length - 1}
-                onPress={() => moveFormClass(formClass, 1)}
-              >
-                Move down
-              </Button>
-              {specification.maxInstances === 1 && (
-                <Button
-                  onPress={() =>
-                    removeFormInstance(formClass, formInstances[0].id)
-                  }
-                >
-                  Delete
-                </Button>
-              )}
-            </span>
-            {specification.subtitle && <p>{specification.subtitle}</p>}
-            <Disclosure>
-              <Button slot="trigger">Show/hide {specification.title}</Button>
-              <DisclosurePanel>
-                <FormTable
-                  specification={specification}
-                  instances={formInstances}
-                />
-              </DisclosurePanel>
-            </Disclosure>
-          </li>
-        );
-      })}
+      {formClasses.map((formClass, index) => (
+        <FormListItem
+          key={formClass}
+          specification={specifications[formClass]}
+          index={index}
+          numFormClasses={formClasses.length}
+        />
+      ))}
     </ul>
   );
 }
