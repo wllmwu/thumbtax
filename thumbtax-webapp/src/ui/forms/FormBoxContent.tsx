@@ -1,5 +1,7 @@
 import React from "react";
 
+import { noop } from "lodash";
+
 import { absurd } from "#src/common/utils/absurd";
 import { useStore } from "#src/state/useStore";
 import { useFormatBoxValue } from "#src/ui/formatting/useFormatBoxValue";
@@ -8,6 +10,7 @@ import { SelectInstanceBoxesField } from "#src/ui/forms/SelectInstanceBoxesField
 import { CheckboxField } from "#src/ui/primitives/CheckboxField";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
+import { TextField } from "#src/ui/primitives/TextField";
 
 import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FormInstance } from "#src/common/types/formInstance";
@@ -189,10 +192,13 @@ export function FormBoxContent({ instance, box }: Props) {
               }
             />
           ) : (
-            <>
-              <span>{value}</span>
-              {errorMessage && <span>{errorMessage}</span>}
-            </>
+            <TextField
+              aria-label={inputLabel}
+              readOnly
+              errorMessage={errorMessage}
+              value={formattedValue}
+              onChange={noop}
+            />
           )}
         </div>
       );
@@ -260,10 +266,13 @@ export function FormBoxContent({ instance, box }: Props) {
     case "quotient":
     case "sum":
       return (
-        <>
-          <span>{formattedValue}</span>
-          {errorMessage && <span>{errorMessage}</span>}
-        </>
+        <TextField
+          aria-label={inputLabel}
+          readOnly
+          errorMessage={errorMessage}
+          value={formattedValue}
+          onChange={noop}
+        />
       );
     case "unsupported":
     case "unused":
