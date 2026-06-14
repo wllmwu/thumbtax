@@ -73,4 +73,25 @@ describe("TextField", () => {
 
     expect(await screen.findByLabelText("Name")).toHaveFocus();
   });
+
+  it("calls onFocus when the field is focused", async () => {
+    const onFocus = vi.fn();
+    renderComponent({ label: "Name", onFocus });
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByLabelText("Name"));
+
+    expect(onFocus).toHaveBeenCalled();
+  });
+
+  it("calls onBlur when the field loses focus", async () => {
+    const onBlur = vi.fn();
+    renderComponent({ label: "Name", onBlur });
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByLabelText("Name"));
+    await user.tab();
+
+    expect(onBlur).toHaveBeenCalled();
+  });
 });

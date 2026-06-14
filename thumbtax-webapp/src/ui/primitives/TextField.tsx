@@ -7,10 +7,9 @@ import {
 } from "react-aria-components";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
+import type { InputProps } from "#src/ui/types/inputProps";
 
-type Props = FieldProps<string> & {
-  autoFocus?: boolean;
-};
+type Props = FieldProps<string> & InputProps;
 
 export function TextField({
   label,
@@ -22,6 +21,8 @@ export function TextField({
   value,
   onChange,
   autoFocus,
+  onFocus,
+  onBlur,
 }: Props) {
   return (
     <AriaTextField
@@ -31,6 +32,8 @@ export function TextField({
       isDisabled={disabled}
       isInvalid={!!errorMessage}
       autoFocus={autoFocus}
+      onFocus={onFocus}
+      onBlur={onBlur}
     >
       {label && <Label>{label}</Label>}
       <Input placeholder={placeholder} />
