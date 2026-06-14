@@ -2,6 +2,7 @@ import React from "react";
 
 import { absurd } from "#src/common/utils/absurd";
 import { useStore } from "#src/state/useStore";
+import { useFormatBoxValue } from "#src/ui/formatting/useFormatBoxValue";
 import { AmountListField } from "#src/ui/forms/AmountListField";
 import { SelectInstanceBoxesField } from "#src/ui/forms/SelectInstanceBoxesField";
 import { CheckboxField } from "#src/ui/primitives/CheckboxField";
@@ -25,6 +26,14 @@ export function FormBoxContent({ instance, box }: Props) {
     (state) => state.applicationState.formInstances,
   );
   const setBoxInput = useStore((state) => state.setBoxInput);
+
+  const formatBoxValue = useFormatBoxValue({
+    format: box.format ?? "financial",
+  });
+  const formattedValue = React.useMemo(
+    () => formatBoxValue(resolvedBox.value),
+    [formatBoxValue, resolvedBox.value],
+  );
 
   const errorMessage = React.useMemo<React.ReactNode>(() => {
     if (resolvedBox.errors.length === 0) {
@@ -222,7 +231,7 @@ export function FormBoxContent({ instance, box }: Props) {
     case "sum":
       return (
         <>
-          <span>{resolvedBox.value}</span>
+          <span>{formattedValue}</span>
           {errorMessage && <span>{errorMessage}</span>}
         </>
       );
