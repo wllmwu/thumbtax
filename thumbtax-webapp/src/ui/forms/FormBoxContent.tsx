@@ -9,6 +9,7 @@ import { AmountListField } from "#src/ui/forms/AmountListField";
 import { SelectInstanceBoxesField } from "#src/ui/forms/SelectInstanceBoxesField";
 import { CheckboxField } from "#src/ui/primitives/CheckboxField";
 import { NumberField } from "#src/ui/primitives/NumberField";
+import { RadioGroup, type RadioOption } from "#src/ui/primitives/RadioGroup";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 import { TextField } from "#src/ui/primitives/TextField";
 
@@ -24,6 +25,11 @@ type Props = {
   instance: FormInstance;
   box: FormBox<boolean>;
 };
+
+const YES_NO_RADIO_OPTIONS: Array<RadioOption<"yes" | "no">> = [
+  { value: "yes", label: "Yes" },
+  { value: "no", label: "No" },
+];
 
 function ValueDisplay({
   boxFormat,
@@ -44,15 +50,42 @@ function ValueDisplay({
     [formatBoxValue, resolvedValue],
   );
 
-  return (
-    <TextField
-      aria-label={inputLabel}
-      readOnly
-      errorMessage={errorMessage}
-      value={formattedValue}
-      onChange={noop}
-    />
-  );
+  switch (boxFormat) {
+    case "checkbox":
+      return (
+        <CheckboxField
+          aria-label={inputLabel}
+          readOnly
+          value={resolvedValue !== 0}
+          onChange={noop}
+        />
+      );
+    case "financial":
+    case "percentage":
+    case "plain":
+      return (
+        <TextField
+          aria-label={inputLabel}
+          readOnly
+          errorMessage={errorMessage}
+          value={formattedValue}
+          onChange={noop}
+        />
+      );
+    case "yes_no":
+      return (
+        <RadioGroup
+          aria-label={inputLabel}
+          readOnly
+          errorMessage={errorMessage}
+          value={resolvedValue === 0 ? "no" : "yes"}
+          onChange={noop}
+          options={YES_NO_RADIO_OPTIONS}
+        />
+      );
+    default:
+      absurd(boxFormat);
+  }
 }
 
 type InputBoxProps = {
@@ -63,26 +96,38 @@ type InputBoxProps = {
 };
 
 function CheckboxInputBox({
+  boxFormat,
   boxIdentifier,
   errorMessage,
   inputLabel,
   instance,
-}: InputBoxProps) {
+}: InputBoxProps & {
+  boxFormat: BoxFormat;
+}) {
   const setBoxInput = useStore((state) => state.setBoxInput);
 
   const input = instance.inputs[boxIdentifier];
   const value = input?.type === "number" && input.value !== 0;
 
   const onChange = React.useCallback(
-    (newValue: boolean) =>
+    (newValue: boolean | "yes" | "no") =>
       setBoxInput(instance.class, instance.id, boxIdentifier, {
         type: "number",
-        value: newValue ? 1 : 0,
+        value: newValue === true || newValue === "yes" ? 1 : 0,
       }),
     [boxIdentifier, instance.class, instance.id, setBoxInput],
   );
 
-  return (
+  return boxFormat === "yes_no" ? (
+    <RadioGroup
+      aria-label={inputLabel}
+      readOnly
+      errorMessage={errorMessage}
+      value={value ? "yes" : "no"}
+      onChange={onChange}
+      options={YES_NO_RADIO_OPTIONS}
+    />
+  ) : (
     <CheckboxField
       aria-label={inputLabel}
       errorMessage={errorMessage}
@@ -355,6 +400,7 @@ export function FormBoxContent({ instance, box }: Props) {
     case "checkbox_input":
       return (
         <CheckboxInputBox
+          boxFormat={boxFormat}
           boxIdentifier={box.identifier}
           inputLabel={inputLabel}
           instance={instance}
