@@ -12,20 +12,52 @@ import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 import { TextField } from "#src/ui/primitives/TextField";
 
+import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { BoxFormat } from "#src/common/types/boxFormat";
 import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormBox } from "#src/specifications/types/formSpecification";
 import type { ValueProvider } from "#src/specifications/types/valueProvider";
+import type { Key } from "react-aria-components";
 
 type Props = {
   instance: FormInstance;
   box: FormBox<boolean>;
 };
 
+function ValueDisplay({
+  boxFormat,
+  errorMessage,
+  inputLabel,
+  resolvedValue,
+}: {
+  boxFormat: BoxFormat;
+  errorMessage: React.ReactNode;
+  inputLabel: string;
+  resolvedValue: number;
+}) {
+  const formatBoxValue = useFormatBoxValue({
+    format: boxFormat,
+  });
+  const formattedValue = React.useMemo(
+    () => formatBoxValue(resolvedValue),
+    [formatBoxValue, resolvedValue],
+  );
+
+  return (
+    <TextField
+      aria-label={inputLabel}
+      readOnly
+      errorMessage={errorMessage}
+      value={formattedValue}
+      onChange={noop}
+    />
+  );
+}
+
 type InputBoxProps = {
   boxIdentifier: BoxIdentifier;
-  format?: BoxFormat;
+  errorMessage: React.ReactNode;
   inputLabel: string;
   instance: FormInstance;
 };
@@ -35,29 +67,34 @@ function CheckboxInputBox({
   errorMessage,
   inputLabel,
   instance,
-}: InputBoxProps & { errorMessage: React.ReactNode }) {
+}: InputBoxProps) {
   const setBoxInput = useStore((state) => state.setBoxInput);
 
   const input = instance.inputs[boxIdentifier];
   const value = input?.type === "number" && input.value !== 0;
+
+  const onChange = React.useCallback(
+    (newValue: boolean) =>
+      setBoxInput(instance.class, instance.id, boxIdentifier, {
+        type: "number",
+        value: newValue ? 1 : 0,
+      }),
+    [boxIdentifier, instance.class, instance.id, setBoxInput],
+  );
 
   return (
     <CheckboxField
       aria-label={inputLabel}
       errorMessage={errorMessage}
       value={value}
-      onChange={(newValue) =>
-        setBoxInput(instance.class, instance.id, boxIdentifier, {
-          type: "number",
-          value: newValue ? 1 : 0,
-        })
-      }
+      onChange={onChange}
     />
   );
 }
 
 function ListAmountsInputBox({
   boxIdentifier,
+  errorMessage,
   inputLabel,
   instance,
 }: InputBoxProps) {
@@ -66,29 +103,34 @@ function ListAmountsInputBox({
   const input = instance.inputs[boxIdentifier];
   const list = input?.type === "amount_list" ? input.value : [];
 
+  const onChange = React.useCallback(
+    (newList: Array<{ label: string; amount: number }>) =>
+      setBoxInput(instance.class, instance.id, boxIdentifier, {
+        type: "amount_list",
+        value: newList,
+      }),
+    [boxIdentifier, instance.class, instance.id, setBoxInput],
+  );
+
   return (
     <AmountListField
       aria-label={inputLabel}
+      errorMessage={errorMessage}
       list={list}
-      onChange={(newList) =>
-        setBoxInput(instance.class, instance.id, boxIdentifier, {
-          type: "amount_list",
-          value: newList,
-        })
-      }
+      onChange={onChange}
     />
   );
 }
 
 function NumberInputBox({
+  boxFormat,
   boxIdentifier,
   errorMessage,
-  format,
   inputLabel,
   instance,
   skipped,
 }: InputBoxProps & {
-  errorMessage: React.ReactNode;
+  boxFormat: BoxFormat;
   skipped?: boolean;
 }) {
   const setBoxInput = useStore((state) => state.setBoxInput);
@@ -96,34 +138,36 @@ function NumberInputBox({
   const input = instance.inputs[boxIdentifier];
   const value = input?.type === "number" ? input.value : 0;
 
+  const onChange = React.useCallback(
+    (newValue: number) =>
+      setBoxInput(instance.class, instance.id, boxIdentifier, {
+        type: "number",
+        value: newValue,
+      }),
+    [boxIdentifier, instance.class, instance.id, setBoxInput],
+  );
+
   return (
     <NumberField
       aria-label={inputLabel}
       disabled={skipped}
       errorMessage={errorMessage}
-      format={format ?? "financial"}
+      format={boxFormat}
       value={value}
-      onChange={(newValue) =>
-        setBoxInput(instance.class, instance.id, boxIdentifier, {
-          type: "number",
-          value: newValue,
-        })
-      }
+      onChange={onChange}
     />
   );
 }
 
 function OverrideNumberInputBox({
+  boxFormat,
   boxIdentifier,
   errorMessage,
-  format,
-  formattedValue,
   inputLabel,
   instance,
   value,
 }: InputBoxProps & {
-  errorMessage: React.ReactNode;
-  formattedValue: string;
+  boxFormat: BoxFormat;
   value: number;
 }) {
   const setBoxInput = useStore((state) => state.setBoxInput);
@@ -132,38 +176,45 @@ function OverrideNumberInputBox({
   const isOverridden =
     input?.type === "override" ? input.override !== null : false;
 
+  const onChangeIsOverridden = React.useCallback(
+    (newIsOverridden: boolean) =>
+      setBoxInput(instance.class, instance.id, boxIdentifier, {
+        type: "override",
+        override: newIsOverridden ? value : null,
+      }),
+    [boxIdentifier, instance.class, instance.id, setBoxInput, value],
+  );
+
+  const onChangeOverrideValue = React.useCallback(
+    (newValue: number) =>
+      setBoxInput(instance.class, instance.id, boxIdentifier, {
+        type: "override",
+        override: newValue,
+      }),
+    [boxIdentifier, instance.class, instance.id, setBoxInput],
+  );
+
   return (
     <div>
       <CheckboxField
         label={`Override box ${boxIdentifier}`}
         value={isOverridden}
-        onChange={(newIsOverridden) =>
-          setBoxInput(instance.class, instance.id, boxIdentifier, {
-            type: "override",
-            override: newIsOverridden ? value : null,
-          })
-        }
+        onChange={onChangeIsOverridden}
       />
       {isOverridden ? (
         <NumberField
           aria-label={inputLabel}
           errorMessage={errorMessage}
-          format={format ?? "financial"}
+          format={boxFormat}
           value={value}
-          onChange={(newValue) =>
-            setBoxInput(instance.class, instance.id, boxIdentifier, {
-              type: "override",
-              override: newValue,
-            })
-          }
+          onChange={onChangeOverrideValue}
         />
       ) : (
-        <TextField
-          aria-label={inputLabel}
-          readOnly
+        <ValueDisplay
+          boxFormat={boxFormat}
           errorMessage={errorMessage}
-          value={formattedValue}
-          onChange={noop}
+          inputLabel={inputLabel}
+          resolvedValue={value}
         />
       )}
     </div>
@@ -173,6 +224,7 @@ function OverrideNumberInputBox({
 function SelectInstanceBoxesInputBox({
   boxIdentifier,
   boxValue,
+  errorMessage,
   inputLabel,
   instance,
 }: InputBoxProps & {
@@ -184,28 +236,33 @@ function SelectInstanceBoxesInputBox({
   );
   const setBoxInput = useStore((state) => state.setBoxInput);
 
-  if (!specifications) {
-    return null;
-  }
-
   const input = instance.inputs[boxIdentifier];
   const selectedAddresses =
     input?.type === "instance_box_selections" ? input.selected : [];
 
+  const onChange = React.useCallback(
+    (newSelectedAddresses: BoxAddress[]) =>
+      setBoxInput(instance.class, instance.id, boxIdentifier, {
+        type: "instance_box_selections",
+        selected: newSelectedAddresses,
+      }),
+    [boxIdentifier, instance.class, instance.id, setBoxInput],
+  );
+
+  if (!specifications) {
+    return null;
+  }
+
   return (
     <SelectInstanceBoxesField
       aria-label={inputLabel}
+      errorMessage={errorMessage}
       specifications={specifications}
       instanceRegistry={instanceRegistry}
       boxAddress={{ instance: instance.id, box: boxIdentifier }}
       valueProvider={boxValue}
       selectedAddresses={selectedAddresses}
-      onChange={(newSelectedAddresses) =>
-        setBoxInput(instance.class, instance.id, boxIdentifier, {
-          type: "instance_box_selections",
-          selected: newSelectedAddresses,
-        })
-      }
+      onChange={onChange}
     />
   );
 }
@@ -218,7 +275,6 @@ function SelectValueInputBox({
   instance,
 }: InputBoxProps & {
   boxValue: Extract<ValueProvider, { type: "select_value_input" }>;
-  errorMessage: React.ReactNode;
 }) {
   const setBoxInput = useStore((state) => state.setBoxInput);
 
@@ -230,21 +286,26 @@ function SelectValueInputBox({
   }));
   const selectedId = options[selectedIndex].id;
 
+  const onChange = React.useCallback(
+    (newSelectedId: Key) => {
+      for (const [index, option] of options.entries()) {
+        if (option.id === newSelectedId) {
+          setBoxInput(instance.class, instance.id, boxIdentifier, {
+            type: "selection",
+            selectedIndex: index,
+          });
+        }
+      }
+    },
+    [boxIdentifier, instance.class, instance.id, options, setBoxInput],
+  );
+
   return (
     <SelectField
       aria-label={inputLabel}
       errorMessage={errorMessage}
       value={selectedId}
-      onChange={(newSelectedId) => {
-        for (const [index, option] of options.entries()) {
-          if (option.id === newSelectedId) {
-            setBoxInput(instance.class, instance.id, boxIdentifier, {
-              type: "selection",
-              selectedIndex: index,
-            });
-          }
-        }
-      }}
+      onChange={onChange}
     >
       {options.map(({ id, label }) => (
         <SelectFieldItem key={id} id={id}>
@@ -260,14 +321,6 @@ export function FormBoxContent({ instance, box }: Props) {
     (state) => state.workbook[instance.id][box.identifier],
   );
   const specifications = useStore((state) => state.specifications);
-
-  const formatBoxValue = useFormatBoxValue({
-    format: box.format ?? "financial",
-  });
-  const formattedValue = React.useMemo(
-    () => formatBoxValue(resolvedBox.value),
-    [formatBoxValue, resolvedBox.value],
-  );
 
   const errorMessage = React.useMemo<React.ReactNode>(() => {
     if (resolvedBox.errors.length === 0) {
@@ -294,6 +347,7 @@ export function FormBoxContent({ instance, box }: Props) {
     return null;
   }
 
+  const boxFormat = box.format ?? "financial";
   const inputLabel = `${specifications[instance.class].title} (${instance.label}) box ${box.identifier}`;
 
   const valueType = box.value.type;
@@ -311,6 +365,7 @@ export function FormBoxContent({ instance, box }: Props) {
       return (
         <ListAmountsInputBox
           boxIdentifier={box.identifier}
+          errorMessage={errorMessage}
           inputLabel={inputLabel}
           instance={instance}
         />
@@ -318,9 +373,9 @@ export function FormBoxContent({ instance, box }: Props) {
     case "number_input":
       return (
         <NumberInputBox
+          boxFormat={boxFormat}
           boxIdentifier={box.identifier}
           errorMessage={errorMessage}
-          format={box.format}
           inputLabel={inputLabel}
           instance={instance}
           skipped={resolvedBox.skipped}
@@ -329,10 +384,9 @@ export function FormBoxContent({ instance, box }: Props) {
     case "override_number_input":
       return (
         <OverrideNumberInputBox
+          boxFormat={boxFormat}
           boxIdentifier={box.identifier}
           errorMessage={errorMessage}
-          format={box.format}
-          formattedValue={formattedValue}
           inputLabel={inputLabel}
           instance={instance}
           value={resolvedBox.value}
@@ -343,6 +397,7 @@ export function FormBoxContent({ instance, box }: Props) {
         <SelectInstanceBoxesInputBox
           boxIdentifier={box.identifier}
           boxValue={box.value}
+          errorMessage={errorMessage}
           inputLabel={inputLabel}
           instance={instance}
         />
@@ -378,12 +433,11 @@ export function FormBoxContent({ instance, box }: Props) {
     case "quotient":
     case "sum":
       return (
-        <TextField
-          aria-label={inputLabel}
-          readOnly
+        <ValueDisplay
+          boxFormat={boxFormat}
           errorMessage={errorMessage}
-          value={formattedValue}
-          onChange={noop}
+          inputLabel={inputLabel}
+          resolvedValue={resolvedBox.value}
         />
       );
     case "unsupported":
