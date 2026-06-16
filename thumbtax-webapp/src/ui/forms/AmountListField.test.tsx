@@ -30,9 +30,13 @@ describe("AmountListField", () => {
 
     expect(await screen.findByLabelText("Test field")).toBeInTheDocument();
     expect(await screen.findByLabelText("Entry 1 label")).toHaveValue("Code A");
-    expect(await screen.findByLabelText("Entry 1 amount")).toHaveValue("100");
+    expect(await screen.findByLabelText("Entry 1 amount")).toHaveValue(
+      "100.00",
+    );
     expect(await screen.findByLabelText("Entry 2 label")).toHaveValue("Code B");
-    expect(await screen.findByLabelText("Entry 2 amount")).toHaveValue("200");
+    expect(await screen.findByLabelText("Entry 2 amount")).toHaveValue(
+      "200.00",
+    );
   });
 
   it("renders error message when provided", async () => {
