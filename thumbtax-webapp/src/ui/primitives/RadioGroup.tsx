@@ -25,6 +25,8 @@ type Props<TValue extends string> = Omit<FieldProps<TValue>, "placeholder"> & {
 export function RadioGroup<TValue extends string>({
   label,
   "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   description,
   disabled,
   readOnly,
@@ -45,7 +47,9 @@ export function RadioGroup<TValue extends string>({
 
   return (
     <AriaRadioGroup
-      aria-label={!label ? ariaLabel : undefined}
+      aria-label={!label && !ariaLabelledBy ? ariaLabel : undefined}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       isDisabled={disabled}
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}

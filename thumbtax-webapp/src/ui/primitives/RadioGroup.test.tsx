@@ -164,4 +164,25 @@ describe("RadioGroup", () => {
 
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  it("uses aria-labelledby for the accessible name", async () => {
+    render(
+      <>
+        <span id="ext-label">External label</span>
+        <RadioGroup
+          aria-labelledby="ext-label"
+          value="yes"
+          onChange={vi.fn()}
+          options={[
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ]}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("radiogroup")).toHaveAccessibleName(
+      "External label",
+    );
+  });
 });

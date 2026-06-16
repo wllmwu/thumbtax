@@ -14,9 +14,9 @@ import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { InstanceRegistry } from "#src/common/types/formInstance";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ValueProvider } from "#src/specifications/types/valueProvider";
+import type { LabelingProps } from "#src/ui/types/labelingProps";
 
-type Props = {
-  "aria-label": string;
+type Props = LabelingProps & {
   specifications: SpecificationRegistry;
   instanceRegistry: InstanceRegistry;
   boxAddress: BoxAddress;
@@ -42,6 +42,8 @@ function makeOptionItemId(boxAddress: BoxAddress, optionAddress: BoxAddress) {
 
 export function SelectInstanceBoxesField({
   "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   specifications,
   instanceRegistry,
   boxAddress,
@@ -99,6 +101,8 @@ export function SelectInstanceBoxesField({
   return (
     <Select
       aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       selectionMode="multiple"
       isInvalid={!!errorMessage}
       value={selectedKeys}

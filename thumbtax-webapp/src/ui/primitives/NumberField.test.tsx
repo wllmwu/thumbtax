@@ -137,4 +137,22 @@ describe("NumberField", () => {
 
     expect(input).toHaveValue("(1,234.56)");
   });
+
+  it("forwards aria-labelledby to the input", async () => {
+    render(
+      <>
+        <span id="ext-label">Number label</span>
+        <NumberField
+          aria-labelledby="ext-label"
+          format="financial"
+          value={0}
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("textbox")).toHaveAccessibleName(
+      "Number label",
+    );
+  });
 });

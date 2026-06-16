@@ -99,4 +99,54 @@ describe("TextField", () => {
 
     expect(onBlur).toHaveBeenCalled();
   });
+
+  it("uses aria-labelledby for the accessible name", async () => {
+    render(
+      <>
+        <span id="ext-label">External label</span>
+        <TextField aria-labelledby="ext-label" value="" onChange={vi.fn()} />
+      </>,
+    );
+
+    expect(await screen.findByRole("textbox")).toHaveAccessibleName(
+      "External label",
+    );
+  });
+
+  it("uses aria-describedby for the accessible description", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <TextField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          value=""
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("textbox")).toHaveAccessibleDescription(
+      "External description",
+    );
+  });
+
+  it("merges aria-describedby with the error message", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <TextField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          errorMessage="Bad value"
+          value=""
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    const input = await screen.findByRole("textbox");
+    expect(input).toHaveAccessibleDescription(/External description/);
+    expect(input).toHaveAccessibleDescription(/Bad value/);
+  });
 });

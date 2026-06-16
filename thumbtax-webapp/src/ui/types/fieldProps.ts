@@ -1,8 +1,8 @@
+import type { LabelingProps } from "#src/ui/types/labelingProps";
 import type React from "react";
 
-export type FieldProps<TValue> = {
+export type FieldProps<TValue> = LabelingProps & {
   label?: React.ReactNode;
-  "aria-label"?: string;
   placeholder?: string;
   description?: React.ReactNode;
   disabled?: boolean;

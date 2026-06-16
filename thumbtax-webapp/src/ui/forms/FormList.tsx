@@ -1,6 +1,7 @@
 import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
+import { formTitleId } from "#src/ui/forms/formAccessibilityIds";
 import { FormTable } from "#src/ui/forms/FormTable";
 import { Badge } from "#src/ui/primitives/Badge";
 
@@ -29,16 +30,20 @@ function FormListItem({
   return (
     <li>
       <span>
-        <h2>{specification.title}</h2>
+        <h2 id={formTitleId(specification.class)}>{specification.title}</h2>
         <Badge>{specification.category}</Badge>
         {specification.maxInstances !== 1 && <Badge>{instances.length}</Badge>}
         <Button
+          id={`${formTitleId(specification.class)}-move-up`}
+          aria-labelledby={`${formTitleId(specification.class)}-move-up ${formTitleId(specification.class)}`}
           isDisabled={index <= 0}
           onPress={() => moveFormClass(specification.class, -1)}
         >
           Move up
         </Button>
         <Button
+          id={`${formTitleId(specification.class)}-move-down`}
+          aria-labelledby={`${formTitleId(specification.class)}-move-down ${formTitleId(specification.class)}`}
           isDisabled={index >= numFormClasses - 1}
           onPress={() => moveFormClass(specification.class, 1)}
         >

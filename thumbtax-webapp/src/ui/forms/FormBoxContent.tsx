@@ -24,6 +24,8 @@ import type { Key } from "react-aria-components";
 type Props = {
   instance: FormInstance;
   box: FormBox<boolean>;
+  ariaLabelledBy?: string;
+  ariaDescribedBy?: string;
 };
 
 const YES_NO_RADIO_OPTIONS: Array<RadioOption<"yes" | "no">> = [
@@ -34,12 +36,14 @@ const YES_NO_RADIO_OPTIONS: Array<RadioOption<"yes" | "no">> = [
 function ValueDisplay({
   boxFormat,
   errorMessage,
-  inputLabel,
+  ariaLabelledBy,
+  ariaDescribedBy,
   resolvedValue,
 }: {
   boxFormat: BoxFormat;
   errorMessage: React.ReactNode;
-  inputLabel: string;
+  ariaLabelledBy?: string;
+  ariaDescribedBy?: string;
   resolvedValue: number;
 }) {
   const formatBoxValue = useFormatBoxValue({
@@ -54,7 +58,8 @@ function ValueDisplay({
     case "checkbox":
       return (
         <CheckboxField
-          aria-label={inputLabel}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={ariaDescribedBy}
           readOnly
           value={resolvedValue !== 0}
           onChange={noop}
@@ -65,7 +70,8 @@ function ValueDisplay({
     case "plain":
       return (
         <TextField
-          aria-label={inputLabel}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={ariaDescribedBy}
           readOnly
           errorMessage={errorMessage}
           value={formattedValue}
@@ -75,7 +81,8 @@ function ValueDisplay({
     case "yes_no":
       return (
         <RadioGroup
-          aria-label={inputLabel}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={ariaDescribedBy}
           readOnly
           errorMessage={errorMessage}
           value={resolvedValue === 0 ? "no" : "yes"}
@@ -91,7 +98,8 @@ function ValueDisplay({
 type InputBoxProps = {
   boxIdentifier: BoxIdentifier;
   errorMessage: React.ReactNode;
-  inputLabel: string;
+  ariaLabelledBy?: string;
+  ariaDescribedBy?: string;
   instance: FormInstance;
 };
 
@@ -99,7 +107,8 @@ function CheckboxInputBox({
   boxFormat,
   boxIdentifier,
   errorMessage,
-  inputLabel,
+  ariaLabelledBy,
+  ariaDescribedBy,
   instance,
 }: InputBoxProps & {
   boxFormat: BoxFormat;
@@ -120,7 +129,8 @@ function CheckboxInputBox({
 
   return boxFormat === "yes_no" ? (
     <RadioGroup
-      aria-label={inputLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       readOnly
       errorMessage={errorMessage}
       value={value ? "yes" : "no"}
@@ -129,7 +139,8 @@ function CheckboxInputBox({
     />
   ) : (
     <CheckboxField
-      aria-label={inputLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       errorMessage={errorMessage}
       value={value}
       onChange={onChange}
@@ -140,7 +151,8 @@ function CheckboxInputBox({
 function ListAmountsInputBox({
   boxIdentifier,
   errorMessage,
-  inputLabel,
+  ariaLabelledBy,
+  ariaDescribedBy,
   instance,
 }: InputBoxProps) {
   const setBoxInput = useStore((state) => state.setBoxInput);
@@ -159,7 +171,8 @@ function ListAmountsInputBox({
 
   return (
     <AmountListField
-      aria-label={inputLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       errorMessage={errorMessage}
       list={list}
       onChange={onChange}
@@ -171,7 +184,8 @@ function NumberInputBox({
   boxFormat,
   boxIdentifier,
   errorMessage,
-  inputLabel,
+  ariaLabelledBy,
+  ariaDescribedBy,
   instance,
   skipped,
 }: InputBoxProps & {
@@ -194,7 +208,8 @@ function NumberInputBox({
 
   return (
     <NumberField
-      aria-label={inputLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       disabled={skipped}
       errorMessage={errorMessage}
       format={boxFormat}
@@ -208,7 +223,8 @@ function OverrideNumberInputBox({
   boxFormat,
   boxIdentifier,
   errorMessage,
-  inputLabel,
+  ariaLabelledBy,
+  ariaDescribedBy,
   instance,
   value,
 }: InputBoxProps & {
@@ -216,6 +232,7 @@ function OverrideNumberInputBox({
   value: number;
 }) {
   const setBoxInput = useStore((state) => state.setBoxInput);
+  const overrideLabelId = React.useId();
 
   const input = instance.inputs[boxIdentifier];
   const isOverridden =
@@ -242,13 +259,19 @@ function OverrideNumberInputBox({
   return (
     <div>
       <CheckboxField
-        label={`Override box ${boxIdentifier}`}
+        label={<span id={overrideLabelId}>Override</span>}
+        aria-labelledby={
+          ariaLabelledBy
+            ? `${overrideLabelId} ${ariaLabelledBy}`
+            : overrideLabelId
+        }
         value={isOverridden}
         onChange={onChangeIsOverridden}
       />
       {isOverridden ? (
         <NumberField
-          aria-label={inputLabel}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={ariaDescribedBy}
           errorMessage={errorMessage}
           format={boxFormat}
           value={value}
@@ -258,7 +281,8 @@ function OverrideNumberInputBox({
         <ValueDisplay
           boxFormat={boxFormat}
           errorMessage={errorMessage}
-          inputLabel={inputLabel}
+          ariaLabelledBy={ariaLabelledBy}
+          ariaDescribedBy={ariaDescribedBy}
           resolvedValue={value}
         />
       )}
@@ -270,7 +294,8 @@ function SelectInstanceBoxesInputBox({
   boxIdentifier,
   boxValue,
   errorMessage,
-  inputLabel,
+  ariaLabelledBy,
+  ariaDescribedBy,
   instance,
 }: InputBoxProps & {
   boxValue: Extract<ValueProvider, { type: "select_instance_boxes_input" }>;
@@ -300,7 +325,8 @@ function SelectInstanceBoxesInputBox({
 
   return (
     <SelectInstanceBoxesField
-      aria-label={inputLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       errorMessage={errorMessage}
       specifications={specifications}
       instanceRegistry={instanceRegistry}
@@ -316,7 +342,8 @@ function SelectValueInputBox({
   boxIdentifier,
   boxValue,
   errorMessage,
-  inputLabel,
+  ariaLabelledBy,
+  ariaDescribedBy,
   instance,
 }: InputBoxProps & {
   boxValue: Extract<ValueProvider, { type: "select_value_input" }>;
@@ -347,7 +374,8 @@ function SelectValueInputBox({
 
   return (
     <SelectField
-      aria-label={inputLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       errorMessage={errorMessage}
       value={selectedId}
       onChange={onChange}
@@ -361,7 +389,12 @@ function SelectValueInputBox({
   );
 }
 
-export function FormBoxContent({ instance, box }: Props) {
+export function FormBoxContent({
+  instance,
+  box,
+  ariaLabelledBy,
+  ariaDescribedBy,
+}: Props) {
   const resolvedBox = useStore(
     (state) => state.workbook[instance.id][box.identifier],
   );
@@ -393,7 +426,6 @@ export function FormBoxContent({ instance, box }: Props) {
   }
 
   const boxFormat = box.format ?? "financial";
-  const inputLabel = `${specifications[instance.class].title} (${instance.label}) box ${box.identifier}`;
 
   const valueType = box.value.type;
   switch (valueType) {
@@ -402,7 +434,8 @@ export function FormBoxContent({ instance, box }: Props) {
         <CheckboxInputBox
           boxFormat={boxFormat}
           boxIdentifier={box.identifier}
-          inputLabel={inputLabel}
+          ariaLabelledBy={ariaLabelledBy}
+          ariaDescribedBy={ariaDescribedBy}
           instance={instance}
           errorMessage={errorMessage}
         />
@@ -412,7 +445,8 @@ export function FormBoxContent({ instance, box }: Props) {
         <ListAmountsInputBox
           boxIdentifier={box.identifier}
           errorMessage={errorMessage}
-          inputLabel={inputLabel}
+          ariaLabelledBy={ariaLabelledBy}
+          ariaDescribedBy={ariaDescribedBy}
           instance={instance}
         />
       );
@@ -422,7 +456,8 @@ export function FormBoxContent({ instance, box }: Props) {
           boxFormat={boxFormat}
           boxIdentifier={box.identifier}
           errorMessage={errorMessage}
-          inputLabel={inputLabel}
+          ariaLabelledBy={ariaLabelledBy}
+          ariaDescribedBy={ariaDescribedBy}
           instance={instance}
           skipped={resolvedBox.skipped}
         />
@@ -433,7 +468,8 @@ export function FormBoxContent({ instance, box }: Props) {
           boxFormat={boxFormat}
           boxIdentifier={box.identifier}
           errorMessage={errorMessage}
-          inputLabel={inputLabel}
+          ariaLabelledBy={ariaLabelledBy}
+          ariaDescribedBy={ariaDescribedBy}
           instance={instance}
           value={resolvedBox.value}
         />
@@ -444,7 +480,8 @@ export function FormBoxContent({ instance, box }: Props) {
           boxIdentifier={box.identifier}
           boxValue={box.value}
           errorMessage={errorMessage}
-          inputLabel={inputLabel}
+          ariaLabelledBy={ariaLabelledBy}
+          ariaDescribedBy={ariaDescribedBy}
           instance={instance}
         />
       );
@@ -454,8 +491,9 @@ export function FormBoxContent({ instance, box }: Props) {
           boxIdentifier={box.identifier}
           boxValue={box.value}
           errorMessage={errorMessage}
+          ariaLabelledBy={ariaLabelledBy}
+          ariaDescribedBy={ariaDescribedBy}
           instance={instance}
-          inputLabel={inputLabel}
         />
       );
     case "absolute_value":
@@ -482,7 +520,8 @@ export function FormBoxContent({ instance, box }: Props) {
         <ValueDisplay
           boxFormat={boxFormat}
           errorMessage={errorMessage}
-          inputLabel={inputLabel}
+          ariaLabelledBy={ariaLabelledBy}
+          ariaDescribedBy={ariaDescribedBy}
           resolvedValue={resolvedBox.value}
         />
       );

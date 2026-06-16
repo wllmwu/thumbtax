@@ -7,11 +7,11 @@ import { NumberField } from "#src/ui/primitives/NumberField";
 import { TextField } from "#src/ui/primitives/TextField";
 
 import type { UserInput } from "#src/common/types/userInput";
+import type { LabelingProps } from "#src/ui/types/labelingProps";
 
 type AmountList = Extract<UserInput, { type: "amount_list" }>["value"];
 
-type Props = {
-  "aria-label": string;
+type Props = LabelingProps & {
   errorMessage?: React.ReactNode;
   list: AmountList;
   onChange: (list: AmountList) => void;
@@ -19,6 +19,8 @@ type Props = {
 
 export function AmountListField({
   "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   errorMessage,
   list,
   onChange,
@@ -65,7 +67,12 @@ export function AmountListField({
   );
 
   return (
-    <Group aria-label={ariaLabel} isInvalid={!!errorMessage}>
+    <Group
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
+      isInvalid={!!errorMessage}
+    >
       {list.map(({ label, amount }, index) => (
         <div key={index}>
           <TextField

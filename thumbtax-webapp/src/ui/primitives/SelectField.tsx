@@ -27,6 +27,8 @@ export const SelectFieldSection = ListBoxSection;
 export function SelectField({
   label,
   "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   description,
   disabled,
   errorMessage,
@@ -45,7 +47,9 @@ export function SelectField({
 
   return (
     <Select
-      aria-label={!label ? ariaLabel : undefined}
+      aria-label={!label && !ariaLabelledBy ? ariaLabel : undefined}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       value={value}
       onChange={handleChange}
       isDisabled={disabled}

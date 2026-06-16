@@ -148,4 +148,19 @@ describe("SelectField", () => {
       "Select an item",
     );
   });
+
+  it("uses aria-labelledby for the accessible name", async () => {
+    render(
+      <>
+        <span id="ext-label">External label</span>
+        <SelectField aria-labelledby="ext-label" value="a" onChange={vi.fn()}>
+          <SelectFieldItem id="a">A</SelectFieldItem>
+        </SelectField>
+      </>,
+    );
+
+    expect(await screen.findByRole("button")).toHaveAccessibleName(
+      /External label/,
+    );
+  });
 });

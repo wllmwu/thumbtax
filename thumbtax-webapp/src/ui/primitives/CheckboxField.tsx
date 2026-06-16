@@ -12,6 +12,8 @@ type Props = Omit<FieldProps<boolean>, "placeholder">;
 export function CheckboxField({
   label,
   "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   description,
   disabled,
   readOnly,
@@ -21,7 +23,9 @@ export function CheckboxField({
 }: Props) {
   return (
     <AriaCheckboxField
-      aria-label={!label ? ariaLabel : undefined}
+      aria-label={!label && !ariaLabelledBy ? ariaLabel : undefined}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       isSelected={value}
       onChange={onChange}
       isDisabled={disabled}

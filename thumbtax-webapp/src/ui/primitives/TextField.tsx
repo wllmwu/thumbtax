@@ -14,6 +14,8 @@ type Props = FieldProps<string> & InputProps;
 export function TextField({
   label,
   "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   placeholder,
   description,
   disabled,
@@ -27,7 +29,9 @@ export function TextField({
 }: Props) {
   return (
     <AriaTextField
-      aria-label={!label ? ariaLabel : undefined}
+      aria-label={!label && !ariaLabelledBy ? ariaLabel : undefined}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       value={value}
       onChange={onChange}
       isDisabled={disabled}

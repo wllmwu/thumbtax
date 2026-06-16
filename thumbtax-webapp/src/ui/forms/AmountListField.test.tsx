@@ -119,4 +119,21 @@ describe("AmountListField", () => {
 
     expect(onChange).toHaveBeenCalledWith([{ label: "second", amount: 200 }]);
   });
+
+  it("uses aria-labelledby for the group's accessible name", async () => {
+    render(
+      <>
+        <span id="ext-label">External label</span>
+        <AmountListField
+          aria-labelledby="ext-label"
+          list={[]}
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("group")).toHaveAccessibleName(
+      "External label",
+    );
+  });
 });
