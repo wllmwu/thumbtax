@@ -185,4 +185,43 @@ describe("RadioGroup", () => {
       "External label",
     );
   });
+
+  it("uses aria-describedby for the accessible description", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <RadioGroup
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          value="apple"
+          onChange={vi.fn()}
+          options={defaultOptions}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("radiogroup")).toHaveAccessibleDescription(
+      "External description",
+    );
+  });
+
+  it("merges aria-describedby with the error message", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <RadioGroup
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          errorMessage="Bad value"
+          value="apple"
+          onChange={vi.fn()}
+          options={defaultOptions}
+        />
+      </>,
+    );
+
+    const group = await screen.findByRole("radiogroup");
+    expect(group).toHaveAccessibleDescription(/External description/);
+    expect(group).toHaveAccessibleDescription(/Bad value/);
+  });
 });

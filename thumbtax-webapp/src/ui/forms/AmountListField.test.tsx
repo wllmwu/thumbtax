@@ -140,4 +140,41 @@ describe("AmountListField", () => {
       "External label",
     );
   });
+
+  it("uses aria-describedby for the group's accessible description", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <AmountListField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          list={[]}
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("group")).toHaveAccessibleDescription(
+      "External description",
+    );
+  });
+
+  it("merges aria-describedby with the error message", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <AmountListField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          errorMessage="Bad value"
+          list={[]}
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    const group = await screen.findByRole("group");
+    expect(group).toHaveAccessibleDescription(/External description/);
+    expect(group).toHaveAccessibleDescription(/Bad value/);
+  });
 });

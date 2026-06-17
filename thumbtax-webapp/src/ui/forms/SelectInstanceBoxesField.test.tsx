@@ -240,4 +240,37 @@ describe("SelectInstanceBoxesField", () => {
 
     expect(onChange).toHaveBeenCalledWith([{ instance: "w2-b", box: "1" }]);
   });
+
+  it("uses aria-labelledby for the accessible name", async () => {
+    render(<span id="ext-label">External label</span>);
+    renderComponent({
+      "aria-label": undefined,
+      "aria-labelledby": "ext-label",
+    });
+
+    expect(await screen.findByRole("button")).toHaveAccessibleName(
+      /External label/,
+    );
+  });
+
+  it("uses aria-describedby for the accessible description", async () => {
+    render(<span id="ext-desc">External description</span>);
+    renderComponent({ "aria-describedby": "ext-desc" });
+
+    expect(await screen.findByRole("button")).toHaveAccessibleDescription(
+      "External description",
+    );
+  });
+
+  it("merges aria-describedby with the error message", async () => {
+    render(<span id="ext-desc">External description</span>);
+    renderComponent({
+      "aria-describedby": "ext-desc",
+      errorMessage: "Bad value",
+    });
+
+    const button = await screen.findByRole("button");
+    expect(button).toHaveAccessibleDescription(/External description/);
+    expect(button).toHaveAccessibleDescription(/Bad value/);
+  });
 });

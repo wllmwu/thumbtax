@@ -155,4 +155,43 @@ describe("NumberField", () => {
       "Number label",
     );
   });
+
+  it("uses aria-describedby for the accessible description", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <NumberField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          format="financial"
+          value={0}
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("textbox")).toHaveAccessibleDescription(
+      "External description",
+    );
+  });
+
+  it("merges aria-describedby with the error message", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <NumberField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          errorMessage="Bad value"
+          format="financial"
+          value={0}
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    const input = await screen.findByRole("textbox");
+    expect(input).toHaveAccessibleDescription(/External description/);
+    expect(input).toHaveAccessibleDescription(/Bad value/);
+  });
 });

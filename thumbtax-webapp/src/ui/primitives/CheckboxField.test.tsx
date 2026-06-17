@@ -132,4 +132,43 @@ describe("CheckboxField", () => {
 
     expect(await screen.findByRole("checkbox")).toHaveAccessibleName("Line 7");
   });
+
+  it("uses aria-describedby for the accessible description", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <CheckboxField
+          label={null}
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          value={false}
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("checkbox")).toHaveAccessibleDescription(
+      "External description",
+    );
+  });
+
+  it("merges aria-describedby with the error message", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <CheckboxField
+          label={null}
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          errorMessage="Bad value"
+          value={false}
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    const checkbox = await screen.findByRole("checkbox");
+    expect(checkbox).toHaveAccessibleDescription(/External description/);
+    expect(checkbox).toHaveAccessibleDescription(/Bad value/);
+  });
 });

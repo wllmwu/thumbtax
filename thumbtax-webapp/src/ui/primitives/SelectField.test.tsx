@@ -163,4 +163,45 @@ describe("SelectField", () => {
       /External label/,
     );
   });
+
+  it("uses aria-describedby for the accessible description", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <SelectField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          value="a"
+          onChange={vi.fn()}
+        >
+          <SelectFieldItem id="a">A</SelectFieldItem>
+        </SelectField>
+      </>,
+    );
+
+    expect(await screen.findByRole("button")).toHaveAccessibleDescription(
+      "External description",
+    );
+  });
+
+  it("merges aria-describedby with the error message", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <SelectField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          errorMessage="Bad value"
+          value="a"
+          onChange={vi.fn()}
+        >
+          <SelectFieldItem id="a">A</SelectFieldItem>
+        </SelectField>
+      </>,
+    );
+
+    const button = await screen.findByRole("button");
+    expect(button).toHaveAccessibleDescription(/External description/);
+    expect(button).toHaveAccessibleDescription(/Bad value/);
+  });
 });
