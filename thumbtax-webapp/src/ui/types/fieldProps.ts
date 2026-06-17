@@ -1,7 +1,7 @@
-import type { LabelingProps } from "#src/ui/types/labelingProps";
+import type { AccessibleLabelProps } from "#src/ui/types/accessibleLabelProps";
 import type React from "react";
 
-export type FieldProps<TValue> = LabelingProps & {
+export type FieldProps<TValue> = AccessibleLabelProps & {
   label?: React.ReactNode;
   placeholder?: string;
   description?: React.ReactNode;

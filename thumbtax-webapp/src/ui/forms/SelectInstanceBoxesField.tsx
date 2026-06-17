@@ -14,9 +14,9 @@ import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { InstanceRegistry } from "#src/common/types/formInstance";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ValueProvider } from "#src/specifications/types/valueProvider";
-import type { LabelingProps } from "#src/ui/types/labelingProps";
+import type { AccessibleLabelProps } from "#src/ui/types/accessibleLabelProps";
 
-type Props = LabelingProps & {
+type Props = AccessibleLabelProps & {
   specifications: SpecificationRegistry;
   instanceRegistry: InstanceRegistry;
   boxAddress: BoxAddress;

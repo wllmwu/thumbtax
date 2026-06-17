@@ -7,11 +7,11 @@ import { NumberField } from "#src/ui/primitives/NumberField";
 import { TextField } from "#src/ui/primitives/TextField";
 
 import type { UserInput } from "#src/common/types/userInput";
-import type { LabelingProps } from "#src/ui/types/labelingProps";
+import type { AccessibleLabelProps } from "#src/ui/types/accessibleLabelProps";
 
 type AmountList = Extract<UserInput, { type: "amount_list" }>["value"];
 
-type Props = LabelingProps & {
+type Props = AccessibleLabelProps & {
   errorMessage?: React.ReactNode;
   list: AmountList;
   onChange: (list: AmountList) => void;
