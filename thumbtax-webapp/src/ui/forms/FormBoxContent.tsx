@@ -24,8 +24,8 @@ import type { Key } from "react-aria-components";
 type Props = {
   instance: FormInstance;
   box: FormBox<boolean>;
-  ariaLabelledBy?: string;
-  ariaDescribedBy?: string;
+  "aria-labelledby": string;
+  "aria-describedby": string;
 };
 
 const YES_NO_RADIO_OPTIONS: Array<RadioOption<"yes" | "no">> = [
@@ -98,8 +98,8 @@ function ValueDisplay({
 type InputBoxProps = {
   boxIdentifier: BoxIdentifier;
   errorMessage: React.ReactNode;
-  ariaLabelledBy?: string;
-  ariaDescribedBy?: string;
+  ariaLabelledBy: string;
+  ariaDescribedBy: string;
   instance: FormInstance;
 };
 
@@ -232,7 +232,6 @@ function OverrideNumberInputBox({
   value: number;
 }) {
   const setBoxInput = useStore((state) => state.setBoxInput);
-  const overrideLabelId = React.useId();
 
   const input = instance.inputs[boxIdentifier];
   const isOverridden =
@@ -256,15 +255,13 @@ function OverrideNumberInputBox({
     [boxIdentifier, instance.class, instance.id, setBoxInput],
   );
 
+  const overrideLabelId = React.useId();
+
   return (
     <div>
       <CheckboxField
         label={<span id={overrideLabelId}>Override</span>}
-        aria-labelledby={
-          ariaLabelledBy
-            ? `${overrideLabelId} ${ariaLabelledBy}`
-            : overrideLabelId
-        }
+        aria-labelledby={`${overrideLabelId} ${ariaLabelledBy}`}
         value={isOverridden}
         onChange={onChangeIsOverridden}
       />
@@ -392,8 +389,8 @@ function SelectValueInputBox({
 export function FormBoxContent({
   instance,
   box,
-  ariaLabelledBy,
-  ariaDescribedBy,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
 }: Props) {
   const resolvedBox = useStore(
     (state) => state.workbook[instance.id][box.identifier],
