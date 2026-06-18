@@ -23,7 +23,7 @@ export function CheckboxField({
 }: Props) {
   return (
     <AriaCheckboxField
-      aria-label={!label && !ariaLabelledBy ? ariaLabel : undefined}
+      aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       isSelected={value}

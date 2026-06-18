@@ -47,7 +47,7 @@ export function RadioGroup<TValue extends string>({
 
   return (
     <AriaRadioGroup
-      aria-label={!label && !ariaLabelledBy ? ariaLabel : undefined}
+      aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       isDisabled={disabled}
@@ -59,7 +59,11 @@ export function RadioGroup<TValue extends string>({
       {label && <Label>{label}</Label>}
       <div>
         {options.map((option) => (
-          <RadioField isDisabled={option.disabled} value={option.value}>
+          <RadioField
+            key={option.value}
+            isDisabled={option.disabled}
+            value={option.value}
+          >
             <RadioButton>
               {`${option.value === selectedValue}`}
               {option.label}

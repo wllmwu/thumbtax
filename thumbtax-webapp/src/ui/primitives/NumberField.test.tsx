@@ -138,7 +138,7 @@ describe("NumberField", () => {
     expect(input).toHaveValue("(1,234.56)");
   });
 
-  it("forwards aria-labelledby to the input", async () => {
+  it("uses aria-labelledby for the accessible name", async () => {
     render(
       <>
         <span id="ext-label">Number label</span>

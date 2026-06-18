@@ -82,4 +82,58 @@ describe("SearchField", () => {
 
     expect(await screen.findByRole("searchbox")).toHaveFocus();
   });
+
+  it("uses aria-labelledby for the accessible name", async () => {
+    render(
+      <>
+        <span id="ext-label">Search label</span>
+        <SearchField
+          aria-labelledby="ext-label"
+          value="text"
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("searchbox")).toHaveAccessibleName(
+      "Search label",
+    );
+  });
+
+  it("uses aria-describedby for the accessible description", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <SearchField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          value="text"
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    expect(await screen.findByRole("searchbox")).toHaveAccessibleDescription(
+      "External description",
+    );
+  });
+
+  it("merges aria-describedby with the error message", async () => {
+    render(
+      <>
+        <span id="ext-desc">External description</span>
+        <SearchField
+          aria-label="Field"
+          aria-describedby="ext-desc"
+          errorMessage="Bad value"
+          value="text"
+          onChange={vi.fn()}
+        />
+      </>,
+    );
+
+    const input = await screen.findByRole("searchbox");
+    expect(input).toHaveAccessibleDescription(/External description/);
+    expect(input).toHaveAccessibleDescription(/Bad value/);
+  });
 });

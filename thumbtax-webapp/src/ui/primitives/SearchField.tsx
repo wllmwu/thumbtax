@@ -15,6 +15,8 @@ type Props = FieldProps<string> & {
 export function SearchField({
   label,
   "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
   placeholder,
   description,
   disabled,
@@ -26,7 +28,9 @@ export function SearchField({
 }: Props) {
   return (
     <AriaSearchField
-      aria-label={!label ? ariaLabel : undefined}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
       value={value}
       onChange={onChange}
       autoFocus={autoFocus}

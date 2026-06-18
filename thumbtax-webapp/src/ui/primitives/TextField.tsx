@@ -29,7 +29,7 @@ export function TextField({
 }: Props) {
   return (
     <AriaTextField
-      aria-label={!label && !ariaLabelledBy ? ariaLabel : undefined}
+      aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       value={value}

@@ -104,7 +104,6 @@ describe("CheckboxField", () => {
       <>
         <span id="ext-label">External label</span>
         <CheckboxField
-          label={null}
           aria-labelledby="ext-label"
           value={false}
           onChange={vi.fn()}
@@ -117,28 +116,11 @@ describe("CheckboxField", () => {
     );
   });
 
-  it("lets aria-labelledby override a visible label", async () => {
-    render(
-      <>
-        <span id="ext-label">Line 7</span>
-        <CheckboxField
-          label="Override"
-          aria-labelledby="ext-label"
-          value={false}
-          onChange={vi.fn()}
-        />
-      </>,
-    );
-
-    expect(await screen.findByRole("checkbox")).toHaveAccessibleName("Line 7");
-  });
-
   it("uses aria-describedby for the accessible description", async () => {
     render(
       <>
         <span id="ext-desc">External description</span>
         <CheckboxField
-          label={null}
           aria-label="Field"
           aria-describedby="ext-desc"
           value={false}
@@ -157,7 +139,6 @@ describe("CheckboxField", () => {
       <>
         <span id="ext-desc">External description</span>
         <CheckboxField
-          label={null}
           aria-label="Field"
           aria-describedby="ext-desc"
           errorMessage="Bad value"

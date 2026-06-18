@@ -47,7 +47,7 @@ export function SelectField({
 
   return (
     <Select
-      aria-label={!label && !ariaLabelledBy ? ariaLabel : undefined}
+      aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       value={value}
