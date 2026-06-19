@@ -61,6 +61,7 @@ export function NumberField({ format, value, onChange, ...props }: Props) {
   return (
     <TextField
       {...props}
+      inputMode="decimal"
       value={textValue}
       onChange={onChangeText}
       onFocus={onFocus}

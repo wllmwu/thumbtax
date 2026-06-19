@@ -1,8 +1,9 @@
-import { Button, Toolbar } from "react-aria-components";
+import { Button, DialogTrigger, Modal, Toolbar } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { AddFormMenu } from "#src/ui/control-bar/AddFormMenu";
 import { FilingStatusSelector } from "#src/ui/control-bar/FilingStatusSelector";
+import { SettingsDialog } from "#src/ui/control-bar/SettingsDialog";
 
 export function ControlBar() {
   const undo = useStore((state) => state.undo);
@@ -14,6 +15,12 @@ export function ControlBar() {
       <Button onPress={undo}>Undo</Button>
       <Button onPress={redo}>Redo</Button>
       <AddFormMenu />
+      <DialogTrigger>
+        <Button>Settings</Button>
+        <Modal isDismissable>
+          <SettingsDialog />
+        </Modal>
+      </DialogTrigger>
     </Toolbar>
   );
 }
