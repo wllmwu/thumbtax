@@ -1,0 +1,12 @@
+[
+  {
+    "id": "thumbtax-forms",
+    "path": "thumbtax-webapp/forms",
+    "schema": {
+      "path": "thumbtax-webapp/forms/schema.ts",
+      "type": "esm",
+      "property": "config",
+      "watch": true
+    }
+  }
+]
