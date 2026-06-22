@@ -13,9 +13,8 @@ import { uiStateSchema } from "#src/persistence/schemas/v1/uiStateSchema";
 import { userInputSchema } from "#src/persistence/schemas/v1/userInputSchema";
 import { userPreferencesSchema } from "#src/persistence/schemas/v1/userPreferencesSchema";
 
+import type { FilingStatus, FormClass } from "@thumbtax/common";
 import type { BoxAddress } from "#src/common/types/boxAddress";
-import type { FilingStatus } from "#src/common/types/filingStatus";
-import type { FormClass } from "#src/common/types/formClass";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { UserInput } from "#src/common/types/userInput";
 import type { PersistedState } from "#src/persistence/types/persistedState";

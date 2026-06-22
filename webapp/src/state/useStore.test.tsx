@@ -10,7 +10,7 @@ import {
 } from "#src/specifications/test/fixtures";
 import { subscribeToStore, useStore } from "#src/state/useStore";
 
-import type { FormClass } from "#src/common/types/formClass";
+import type { FormClass } from "@thumbtax/common";
 import type { UserInput } from "#src/common/types/userInput";
 import type { LoadError } from "#src/persistence/types/loadError";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";

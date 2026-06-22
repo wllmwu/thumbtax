@@ -5,7 +5,7 @@ import { Button, Dialog, Form, Heading } from "react-aria-components";
 import { useStore } from "#src/state/useStore";
 import { TextField } from "#src/ui/primitives/TextField";
 
-import type { FormClass } from "#src/common/types/formClass";
+import type { FormClass } from "@thumbtax/common";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 
 type Props = {

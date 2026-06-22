@@ -1,6 +1,5 @@
+import { FORM_CLASSES } from "@thumbtax/common";
 import { z } from "zod";
-
-import { FORM_CLASSES } from "#src/common/types/formClass";
 
 // The v1 snapshot of the form-class set, used by the versioned persistedState
 // schema. It derives from the live FORM_CLASSES constant on purpose: adding a

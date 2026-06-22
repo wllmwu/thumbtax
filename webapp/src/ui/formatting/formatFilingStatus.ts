@@ -1,6 +1,6 @@
-import { absurd } from "#src/common/utils/absurd";
+import { absurd } from "@thumbtax/common";
 
-import type { FilingStatus } from "#src/common/types/filingStatus";
+import type { FilingStatus } from "@thumbtax/common";
 
 export function formatFilingStatus(filingStatus: FilingStatus): string {
   switch (filingStatus) {

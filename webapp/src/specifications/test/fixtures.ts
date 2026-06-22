@@ -1,4 +1,4 @@
-import { FORM_CLASSES } from "#src/common/types/formClass";
+import { FORM_CLASSES } from "@thumbtax/common";
 
 import type {
   FormBox,

@@ -9,9 +9,7 @@ import {
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
 
-import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
-import type { FilingStatus } from "#src/common/types/filingStatus";
-import type { FormClass } from "#src/common/types/formClass";
+import type { BoxIdentifier, FilingStatus, FormClass } from "@thumbtax/common";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { UserInput } from "#src/common/types/userInput";

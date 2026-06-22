@@ -1,6 +1,4 @@
-import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
-import type { FilingStatus } from "#src/common/types/filingStatus";
-import type { FormClass } from "#src/common/types/formClass";
+import type { BoxIdentifier, FilingStatus, FormClass } from "@thumbtax/common";
 
 type ConstantValueProvider = { type: "number_constant"; value: number };
 

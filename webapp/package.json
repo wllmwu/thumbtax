@@ -9,11 +9,12 @@
     "fixlint": "eslint --fix",
     "lint": "eslint",
     "preview": "vite preview",
-    "typecheck": "tsc --build --noEmit",
+    "typecheck": "tsc --build",
     "test": "vitest"
   },
   "dependencies": {
     "@internationalized/number": "^3.6.7",
+    "@thumbtax/common": "^0.0.0",
     "classnames": "^2.5.1",
     "immer": "^11.1.8",
     "lodash": "^4.18.1",

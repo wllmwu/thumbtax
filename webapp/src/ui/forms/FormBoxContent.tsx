@@ -1,8 +1,8 @@
 import React from "react";
 
+import { absurd } from "@thumbtax/common";
 import { noop } from "lodash";
 
-import { absurd } from "#src/common/utils/absurd";
 import { useStore } from "#src/state/useStore";
 import { useFormatBoxValue } from "#src/ui/formatting/useFormatBoxValue";
 import { AmountListField } from "#src/ui/forms/AmountListField";
@@ -13,9 +13,8 @@ import { RadioGroup, type RadioOption } from "#src/ui/primitives/RadioGroup";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 import { TextField } from "#src/ui/primitives/TextField";
 
+import type { BoxFormat, BoxIdentifier } from "@thumbtax/common";
 import type { BoxAddress } from "#src/common/types/boxAddress";
-import type { BoxFormat } from "#src/common/types/boxFormat";
-import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormBox } from "#src/specifications/types/formSpecification";
 import type { ValueProvider } from "#src/specifications/types/valueProvider";

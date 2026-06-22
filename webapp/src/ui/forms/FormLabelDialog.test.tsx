@@ -11,7 +11,7 @@ import {
 import { useStore } from "#src/state/useStore";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
 
-import type { FormClass } from "#src/common/types/formClass";
+import type { FormClass } from "@thumbtax/common";
 import type { ApplicationState } from "#src/state/types/applicationState";
 
 const TEST_CLASS: FormClass = "fW2";

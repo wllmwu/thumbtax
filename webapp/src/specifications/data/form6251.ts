@@ -1,4 +1,4 @@
-import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
+import type { BoxIdentifier } from "@thumbtax/common";
 import type { FormSpecification } from "#src/specifications/types/formSpecification";
 import type { ComputedValueProvider } from "#src/specifications/types/valueProvider";
 

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { absurd } from "@thumbtax/common";
 import {
   Autocomplete,
   Button,
@@ -13,7 +14,6 @@ import {
   useFilter,
 } from "react-aria-components";
 
-import { absurd } from "#src/common/utils/absurd";
 import { useStore } from "#src/state/useStore";
 import { SearchField } from "#src/ui/primitives/SearchField";
 

@@ -1,4 +1,4 @@
-import type { FormClass } from "#src/common/types/formClass";
+import type { FormClass } from "@thumbtax/common";
 
 type NodePosition = { x: number; y: number };
 

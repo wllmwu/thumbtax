@@ -1,6 +1,4 @@
-import type { BoxFormat } from "#src/common/types/boxFormat";
-import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
-import type { FormClass } from "#src/common/types/formClass";
+import type { BoxFormat, BoxIdentifier, FormClass } from "@thumbtax/common";
 import type { ValueProvider } from "#src/specifications/types/valueProvider";
 
 type LineIndex = string;

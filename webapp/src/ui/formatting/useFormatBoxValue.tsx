@@ -1,11 +1,10 @@
 import React from "react";
 
 import { NumberFormatter } from "@internationalized/number";
+import { absurd } from "@thumbtax/common";
 import { useLocale } from "react-aria-components";
 
-import { absurd } from "#src/common/utils/absurd";
-
-import type { BoxFormat } from "#src/common/types/boxFormat";
+import type { BoxFormat } from "@thumbtax/common";
 
 type Props = {
   format: BoxFormat;

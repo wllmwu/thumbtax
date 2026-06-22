@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { useFormatBoxValue } from "#src/ui/formatting/useFormatBoxValue";
 
-import type { BoxFormat } from "#src/common/types/boxFormat";
+import type { BoxFormat } from "@thumbtax/common";
 
 function renderFormatBoxValue(format: BoxFormat) {
   const { result } = renderHook(() => useFormatBoxValue({ format }), {

@@ -46,7 +46,7 @@ import {
   makeSpecificationFixture,
 } from "#src/specifications/test/fixtures";
 
-import type { FilingStatus } from "#src/common/types/filingStatus";
+import type { FilingStatus } from "@thumbtax/common";
 import type { InstanceRegistry } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { ResolvedBox, Workbook } from "#src/common/types/workbook";

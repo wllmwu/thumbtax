@@ -1,4 +1,4 @@
-import type { FormClass } from "#src/common/types/formClass";
+import type { FormClass } from "@thumbtax/common";
 
 export type ConnectionsGraph = {
   nodes: ConnectionsNode[];

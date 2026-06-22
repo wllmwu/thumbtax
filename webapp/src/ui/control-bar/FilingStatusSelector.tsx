@@ -1,5 +1,6 @@
 import React from "react";
 
+import { FILING_STATUSES } from "@thumbtax/common";
 import {
   Button,
   Collection,
@@ -11,7 +12,6 @@ import {
   Popover,
 } from "react-aria-components";
 
-import { FILING_STATUSES } from "#src/common/types/filingStatus";
 import { useStore } from "#src/state/useStore";
 import { formatFilingStatus } from "#src/ui/formatting/formatFilingStatus";
 

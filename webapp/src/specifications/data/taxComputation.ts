@@ -1,5 +1,4 @@
-import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
-import type { FormClass } from "#src/common/types/formClass";
+import type { BoxIdentifier, FormClass } from "@thumbtax/common";
 import type { ComputedValueProvider } from "#src/specifications/types/valueProvider";
 
 export function taxComputation(taxableIncome: {

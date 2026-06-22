@@ -1,5 +1,4 @@
-import type { BoxIdentifier } from "#src/common/types/boxIdentifier";
-import type { FormClass } from "#src/common/types/formClass";
+import type { BoxIdentifier, FormClass } from "@thumbtax/common";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { UserInput } from "#src/common/types/userInput";
 

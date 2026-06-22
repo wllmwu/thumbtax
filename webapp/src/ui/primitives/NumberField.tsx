@@ -6,7 +6,7 @@ import { useLocale } from "react-aria-components";
 import { useFormatBoxValue } from "#src/ui/formatting/useFormatBoxValue";
 import { TextField } from "#src/ui/primitives/TextField";
 
-import type { BoxFormat } from "#src/common/types/boxFormat";
+import type { BoxFormat } from "@thumbtax/common";
 import type { FieldProps } from "#src/ui/types/fieldProps";
 import type { InputProps } from "#src/ui/types/inputProps";
 
