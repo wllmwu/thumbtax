@@ -1,6 +1,7 @@
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
 import { validateChildren } from "./validateChildren";
+import { optionTag, pieceTag, valueTag } from "./valueTag";
 
 import type { Config } from "@markdoc/markdoc";
 
@@ -187,13 +188,9 @@ export const config: Config = {
         ]);
       },
     },
-    value: {
-      attributes: {
-        type: {
-          type: "String",
-        },
-      },
-    },
+    value: valueTag,
+    piece: pieceTag,
+    option: optionTag,
     subtitle: {
       validate(node) {
         return validateChildren(node, [

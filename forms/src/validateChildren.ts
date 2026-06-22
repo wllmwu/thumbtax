@@ -86,10 +86,15 @@ export function validateChildren(
     }
   }
 
+  const remainingSpecs = specs.slice(specIndex);
+  const currentGreedySpecAlreadyMatched =
+    remainingSpecs[0]?.greedy && didSpecMatchPreviousChild;
   if (
     specIndex < specs.length &&
-    !specs[specIndex].greedy &&
-    specs.slice(specIndex).some(({ optional }) => !optional)
+    remainingSpecs.some(
+      (spec, index) =>
+        !spec.optional && !(index === 0 && currentGreedySpecAlreadyMatched),
+    )
   ) {
     return [
       {
