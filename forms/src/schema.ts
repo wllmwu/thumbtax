@@ -187,7 +187,13 @@ export const config: Config = {
         ]);
       },
     },
-    value: {},
+    value: {
+      attributes: {
+        type: {
+          type: "String",
+        },
+      },
+    },
     subtitle: {
       validate(node) {
         return validateChildren(node, [
