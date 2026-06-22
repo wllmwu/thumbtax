@@ -1,4 +1,4 @@
-import { FORM_CLASSES } from "@thumbtax/common";
+import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
 import { validateChildren } from "./validateChildren";
 
@@ -177,7 +177,7 @@ export const config: Config = {
         },
         format: {
           type: "String",
-          matches: ["checkbox", "financial", "percentage", "plain", "yes_no"],
+          matches: [...BOX_FORMATS],
           errorLevel: "error",
         },
       },
