@@ -1,4 +1,4 @@
-import { validateChildren } from "#src/validateChildren";
+import { validateChildren } from "./validateChildren";
 
 import type { Config } from "@markdoc/markdoc";
 
