@@ -3,10 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "exports": "./src/index.ts",
+  "exports": "./dist/src/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "fixlint": "eslint --fix",
     "lint": "eslint",
+    "prepare": "tsc --build && tsc-alias",
     "typecheck": "tsc --build --noEmit"
   },
   "devDependencies": {
@@ -17,6 +21,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "prettier": "3.8.3",
+    "tsc-alias": "^1.8.17",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.0"
   }
