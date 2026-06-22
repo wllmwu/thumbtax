@@ -25,7 +25,7 @@ export default defineConfig([
       "simple-import-sort/imports": [
         "error",
         {
-          groups: [["^@?\\w"], ["^#src", "^.+\\.css"], ["^.*\\u0000$"]],
+          groups: [["^@?\\w"], ["^#src"], ["^.*\\u0000$"]],
         },
       ],
     },
