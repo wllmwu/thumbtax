@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import { defineConfig, globalIgnores } from "eslint/config";
+import noRelativeImportPaths from "eslint-plugin-no-relative-import-paths";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import tseslint from "typescript-eslint";
@@ -16,13 +17,15 @@ export default defineConfig([
       },
     },
     plugins: {
+      "no-relative-import-paths": noRelativeImportPaths,
       "simple-import-sort": simpleImportSort,
     },
     rules: {
+      "no-relative-import-paths/no-relative-import-paths": "error",
       "simple-import-sort/imports": [
         "error",
         {
-          groups: [["^@?\\w"], ["^.*\\u0000$"]],
+          groups: [["^@?\\w"], ["^#src", "^.+\\.css"], ["^.*\\u0000$"]],
         },
       ],
     },
