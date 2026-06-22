@@ -1,3 +1,5 @@
+import { FORM_CLASSES } from "@thumbtax/common";
+
 import { validateChildren } from "./validateChildren";
 
 import type { Config } from "@markdoc/markdoc";
@@ -9,6 +11,7 @@ export const config: Config = {
         class: {
           type: "String",
           required: true,
+          matches: [...FORM_CLASSES],
           errorLevel: "error",
         },
         irsPageUrl: {

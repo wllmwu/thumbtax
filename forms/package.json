@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "build:schema": "tsdown",
     "fixlint": "eslint --fix",
     "lint": "eslint",
     "typecheck": "tsc --build --noEmit"
@@ -11,11 +12,13 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@markdoc/markdoc": "^0.5.7",
+    "@thumbtax/common": "file:../common",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "prettier": "3.8.3",
+    "tsdown": "^0.22.3",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.0"
   }
