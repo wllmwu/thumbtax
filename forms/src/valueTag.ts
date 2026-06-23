@@ -1,12 +1,15 @@
-import { FILING_STATUSES } from "@thumbtax/common";
+import { FILING_STATUSES, FORM_CLASSES } from "@thumbtax/common";
 
+import {
+  isValueProviderType,
+  VALUE_PROVIDER_TYPES,
+  type ValueProviderType,
+} from "./types/valueProviderType";
+import { VALUE_SLOTS, type ValueSlot } from "./types/valueSlot";
 import { validateChildren } from "./validateChildren";
-import { VALUE_PROVIDER_TYPES } from "./valueProviderType";
 
 import type { Node, Schema, ValidationError } from "@markdoc/markdoc";
 
-// Attributes whose validity depends on the parent node's structure rather
-// than on this node's own "type" - they're always allowed regardless of type.
 const STRUCTURAL_ATTRIBUTES = ["type", "slot", "filingStatusKey", "label"];
 
 function validateAttributes(
@@ -46,7 +49,7 @@ function validateAttributes(
   return [];
 }
 
-function valueChildSpec(slot?: string) {
+function valueChildSpec(slot?: ValueSlot) {
   return {
     nodeType: "tag" as const,
     tag: "value",
@@ -83,7 +86,7 @@ const unslottedValues = (node: Node): ValidationError[] => {
   return errors.length > 0 ? errors : unexpectedSlotErrors(node.children);
 };
 
-function orderedSlots(slots: Array<{ slot: string; optional?: boolean }>) {
+function orderedSlots(slots: Array<{ slot: ValueSlot; optional?: boolean }>) {
   return (node: Node) =>
     validateChildren(
       node,
@@ -193,7 +196,7 @@ type TypeSpec = {
   validateChildren: (node: Node) => ValidationError[];
 };
 
-const TYPE_SPECS: Record<string, TypeSpec> = {
+const TYPE_SPECS: Record<ValueProviderType, TypeSpec> = {
   absolute_value: {
     requiredAttributes: [],
     optionalAttributes: [],
@@ -360,25 +363,7 @@ export const valueTag: Schema = {
     },
     slot: {
       type: "String",
-      matches: [
-        "comparison.maximum",
-        "comparison.minimum",
-        "conditional.condition",
-        "conditional.falseValue",
-        "conditional.trueValue",
-        "difference.minuend",
-        "difference.subtrahend",
-        "filing_status_map.default",
-        "number_input.skipCondition",
-        "override_number_input.computedValue",
-        "piecewise_function.input",
-        "piecewise_function.lastOutput",
-        "piecewise_function.pieces.inputUpperBound",
-        "piecewise_function.pieces.output",
-        "quotient.dividend",
-        "quotient.divisor",
-        "select_value_input.options",
-      ],
+      matches: [...VALUE_SLOTS],
       errorLevel: "error",
     },
     box: {
@@ -397,6 +382,7 @@ export const valueTag: Schema = {
     },
     form: {
       type: "String",
+      matches: [...FORM_CLASSES],
       errorLevel: "error",
     },
     label: {
@@ -422,7 +408,11 @@ export const valueTag: Schema = {
     },
   },
   validate(node) {
-    const spec = TYPE_SPECS[node.attributes.type];
+    const valueType = node.attributes.type;
+    if (!isValueProviderType(valueType)) {
+      return [];
+    }
+    const spec = TYPE_SPECS[valueType];
     if (!spec) {
       return [];
     }
@@ -461,6 +451,7 @@ export const optionTag: Schema = {
     form: {
       type: "String",
       required: true,
+      matches: [...FORM_CLASSES],
       errorLevel: "error",
     },
     box: {

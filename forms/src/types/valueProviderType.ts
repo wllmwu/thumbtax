@@ -27,6 +27,10 @@ export const VALUE_PROVIDER_TYPES = [
   "sum",
   "unsupported",
   "unused",
-];
+] as const;
 
 export type ValueProviderType = (typeof VALUE_PROVIDER_TYPES)[number];
+
+export function isValueProviderType(s: string): s is ValueProviderType {
+  return VALUE_PROVIDER_TYPES.findIndex((t) => t === s) !== -1;
+}
