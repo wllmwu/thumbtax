@@ -3,10 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "exports": "./dist/src/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build:schema": "tsdown",
     "fixlint": "eslint --fix",
     "lint": "eslint",
+    "prepare": "tsc --build",
     "typecheck": "tsc --build --noEmit"
   },
   "devDependencies": {
