@@ -4,8 +4,8 @@ import {
   isValueProviderType,
   VALUE_PROVIDER_TYPES,
   type ValueProviderType,
-} from "./types/valueProviderType";
-import { VALUE_SLOTS, type ValueSlot } from "./types/valueSlot";
+} from "../types/valueProviderType";
+import { VALUE_SLOTS, type ValueSlot } from "../types/valueSlot";
 import { validateChildren } from "./validateChildren";
 
 import type { Node, Schema, ValidationError } from "@markdoc/markdoc";

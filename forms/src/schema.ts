@@ -1,7 +1,7 @@
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
-import { validateChildren } from "./validateChildren";
-import { optionTag, pieceTag, valueTag } from "./valueTag";
+import { validateChildren } from "./schema/validateChildren";
+import { optionTag, pieceTag, valueTag } from "./schema/valueTag";
 
 import type { Config } from "@markdoc/markdoc";
 
