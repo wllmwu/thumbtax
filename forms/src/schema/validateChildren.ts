@@ -6,6 +6,24 @@ type ChildSpec = {
   attributes?: Record<string, unknown>;
 };
 
+/**
+ * Validates the given Markdoc node's children.
+ *
+ * The `specs` parameter acts like a regular expression matching against `node.children`.
+ * Each element of `specs` describes what child nodes are allowed at that position.
+ *
+ * The `options` field specifies the allowed child types and required attributes.
+ * The actual attributes must be a superset of the specified attributes.
+ * When the type is `"tag"`, it can further specify what kind of tag.
+ * When multiple options are provided, a child at that position is accepted if it matches any of them.
+ *
+ * The `optional` and `greedy` fields set the allowed cardinality:
+ *
+ * | | optional=false | optional=true |
+ * | --- | --- | --- |
+ * | greedy=false | exactly 1 | 0 or 1 |
+ * | greedy=true | 1 or more | 0 or more |
+ */
 export function validateChildren(
   node: Node,
   specs: Array<{
