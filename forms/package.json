@@ -12,6 +12,7 @@
     "fixlint": "eslint --fix",
     "lint": "eslint",
     "prepare": "tsc --build",
+    "test": "vitest",
     "typecheck": "tsc --build --noEmit"
   },
   "devDependencies": {
