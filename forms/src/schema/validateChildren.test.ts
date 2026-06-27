@@ -11,443 +11,557 @@ const text = (content = "text") => new Node("text", { content });
 const parent = (children: Node[]) => new Node("tag", {}, children, "container");
 
 describe("validateChildren", () => {
-  describe("exactly 1 (optional=false, greedy=false)", () => {
-    it("matches a single child with the right type and tag", () => {
-      const node = parent([tag("value")]);
-      const errors = validateChildren(node, [
-        { options: [{ nodeType: "tag", tag: "value" }] },
-      ]);
-      expect(errors).toEqual([]);
-    });
+  it("accepts children that match nodeType", () => {
+    const node = parent([text(), tag("test-tag", { attr1: "foo" })]);
+    const errors = validateChildren(node, [
+      { options: [{ nodeType: "text" }] },
+      { options: [{ nodeType: "tag" }] },
+    ]);
+    expect(errors).toEqual([]);
+  });
 
-    it("errors when the child has the wrong node type", () => {
+  it("accepts children that match nodeType and attributes", () => {
+    const node = parent([
+      text("foo"),
+      tag("test-tag", { attr1: "bar", attr2: 2 }),
+      tag("test-tag", { attr3: "abc", attr4: 4 }),
+    ]);
+    const errors = validateChildren(node, [
+      { options: [{ nodeType: "text", attributes: { content: "foo" } }] },
+      {
+        options: [{ nodeType: "tag", attributes: { attr1: "bar" } }],
+      },
+      {
+        options: [{ nodeType: "tag", attributes: { attr3: "abc", attr4: 4 } }],
+      },
+    ]);
+    expect(errors).toEqual([]);
+  });
+
+  it("accepts children that match nodeType and tag", () => {
+    const node = parent([tag("test-tag1"), tag("test-tag2", { attr1: "foo" })]);
+    const errors = validateChildren(node, [
+      { options: [{ nodeType: "tag", tag: "test-tag1" }] },
+      { options: [{ nodeType: "tag", tag: "test-tag2" }] },
+    ]);
+    expect(errors).toEqual([]);
+  });
+
+  it("accepts children that match nodeType and tag and attributes", () => {
+    const node = parent([
+      tag("test-tag1", { attr1: "foo", attr2: 2 }),
+      tag("test-tag2", { attr3: "abc", attr4: 4 }),
+    ]);
+    const errors = validateChildren(node, [
+      {
+        options: [
+          { nodeType: "tag", tag: "test-tag1", attributes: { attr2: 2 } },
+        ],
+      },
+      {
+        options: [
+          {
+            nodeType: "tag",
+            tag: "test-tag2",
+            attributes: { attr4: 4, attr3: "abc" },
+          },
+        ],
+      },
+    ]);
+    expect(errors).toEqual([]);
+  });
+
+  it("accepts when any of multiple options is matched", () => {
+    const node = parent([
+      text("foo"),
+      text("bar"),
+      tag("test-tag1"),
+      tag("test-tag2", { x: "y" }),
+    ]);
+    const errors = validateChildren(node, [
+      { options: [{ nodeType: "text" }, { nodeType: "heading" }] },
+      {
+        options: [
+          { nodeType: "paragraph" },
+          { nodeType: "text", attributes: { x: "y" } },
+          { nodeType: "text" },
+        ],
+      },
+      {
+        options: [
+          { nodeType: "tag", tag: "test-tag3" },
+          { nodeType: "tag", tag: "test-tag1" },
+          { nodeType: "tag" },
+        ],
+      },
+      {
+        options: [
+          { nodeType: "text", attributes: { x: "y" } },
+          { nodeType: "tag" },
+        ],
+      },
+    ]);
+    expect(errors).toEqual([]);
+  });
+
+  it("rejects children that don't match nodeType", () => {
+    const node1 = parent([text()]);
+    const errors1 = validateChildren(node1, [
+      { options: [{ nodeType: "heading" }] },
+    ]);
+    expect(errors1).toEqual([
+      {
+        id: "child-type",
+        level: "error",
+        message: "Child number 1 should have type heading",
+      },
+    ]);
+
+    const node2 = parent([tag("heading")]);
+    const errors2 = validateChildren(node2, [
+      { options: [{ nodeType: "heading" }] },
+    ]);
+    expect(errors2).toEqual([
+      {
+        id: "child-type",
+        level: "error",
+        message: "Child number 1 should have type heading",
+      },
+    ]);
+
+    const node3 = parent([text()]);
+    const errors3 = validateChildren(node3, [
+      { options: [{ nodeType: "tag" }] },
+    ]);
+    expect(errors3).toEqual([
+      {
+        id: "child-type",
+        level: "error",
+        message: "Child number 1 should have type tag",
+      },
+    ]);
+  });
+
+  it("rejects children that match nodeType but not tag", () => {
+    const node = parent([tag("foo")]);
+    const errors = validateChildren(node, [
+      { options: [{ nodeType: "tag", tag: "bar" }] },
+    ]);
+    expect(errors).toEqual([
+      {
+        id: "child-type",
+        level: "error",
+        message: "Child number 1 should have type tag(bar)",
+      },
+    ]);
+  });
+
+  it("rejects children that match nodeType but not attributes", () => {
+    const node1 = parent([text("foo")]);
+    const errors1 = validateChildren(node1, [
+      {
+        options: [{ nodeType: "text", attributes: { content: "bar" } }],
+      },
+    ]);
+    expect(errors1).toEqual([
+      {
+        id: "child-attributes",
+        level: "error",
+        message: 'Child number 1 should contain attributes {"content":"bar"}',
+      },
+    ]);
+
+    const node2 = parent([tag("test-tag", { attr2: "y" })]);
+    const errors2 = validateChildren(node2, [
+      {
+        options: [
+          {
+            nodeType: "tag",
+            attributes: { attr2: "y", attr3: "z" },
+          },
+        ],
+      },
+    ]);
+    expect(errors2).toEqual([
+      {
+        id: "child-attributes",
+        level: "error",
+        message:
+          'Child number 1 should contain attributes {"attr2":"y","attr3":"z"}',
+      },
+    ]);
+  });
+
+  it("rejects children that match nodeType and tag but not attributes", () => {
+    const node1 = parent([tag("test-tag", { attr1: "a" })]);
+    const errors1 = validateChildren(node1, [
+      {
+        options: [
+          { nodeType: "tag", tag: "test-tag", attributes: { attr1: "x" } },
+        ],
+      },
+    ]);
+    expect(errors1).toEqual([
+      {
+        id: "child-attributes",
+        level: "error",
+        message: 'Child number 1 should contain attributes {"attr1":"x"}',
+      },
+    ]);
+
+    const node2 = parent([tag("test-tag", { attr2: "y" })]);
+    const errors2 = validateChildren(node2, [
+      {
+        options: [
+          {
+            nodeType: "tag",
+            tag: "test-tag",
+            attributes: { attr2: "y", attr3: "z" },
+          },
+        ],
+      },
+    ]);
+    expect(errors2).toEqual([
+      {
+        id: "child-attributes",
+        level: "error",
+        message:
+          'Child number 1 should contain attributes {"attr2":"y","attr3":"z"}',
+      },
+    ]);
+  });
+
+  it("rejects when none of multiple options are matched", () => {
+    const node = parent([text("foo")]);
+    const errors = validateChildren(node, [
+      {
+        options: [
+          { nodeType: "blockquote" },
+          { nodeType: "tag", attributes: { content: "foo" } },
+          { nodeType: "text", attributes: { content: "bar" } },
+        ],
+      },
+    ]);
+    expect(errors).toEqual([
+      {
+        id: "child-attributes",
+        level: "error",
+        message: 'Child number 1 should contain attributes {"content":"bar"}',
+      },
+    ]);
+  });
+
+  it("rejects when node has extra children", () => {
+    const node = parent([text(), text(), text()]);
+    const errors = validateChildren(node, [
+      { options: [{ nodeType: "text" }] },
+    ]);
+    expect(errors).toEqual([
+      {
+        id: "extra-child",
+        level: "error",
+        message: "Node has unexpected children starting with child number 2",
+      },
+    ]);
+  });
+
+  it("rejects when node doesn't have enough children", () => {
+    const node = parent([text()]);
+    const errors = validateChildren(node, [
+      { options: [{ nodeType: "text" }] },
+      { options: [{ nodeType: "text" }] },
+    ]);
+    expect(errors).toEqual([
+      {
+        id: "missing-required-child",
+        level: "error",
+        message: "Missing at least one required child",
+      },
+    ]);
+  });
+
+  describe("default spec", () => {
+    it("accepts when next child matches", () => {
       const node = parent([text()]);
       const errors = validateChildren(node, [
-        { options: [{ nodeType: "tag", tag: "value" }] },
+        { options: [{ nodeType: "text" }] },
       ]);
-      expect(errors).toEqual([
-        {
-          id: "child-type",
-          level: "error",
-          message: "Child number 1 should have type tag(value)",
-        },
-      ]);
+      expect(errors).toEqual([]);
     });
 
-    it("errors when the child has the same node type but the wrong tag", () => {
-      const node = parent([tag("piece")]);
-      const errors = validateChildren(node, [
-        { options: [{ nodeType: "tag", tag: "value" }] },
+    it("consumes matched child", () => {
+      const node = parent([
+        text("foo"),
+        tag("test-tag", { attr1: "x", attr2: "y" }),
+        text("bar"),
       ]);
-      expect(errors).toEqual([
-        {
-          id: "child-type",
-          level: "error",
-          message: "Child number 1 should have type tag(value)",
-        },
-      ]);
-    });
-
-    it("errors when a required attribute is missing", () => {
-      const node = parent([tag("value")]);
       const errors = validateChildren(node, [
+        { options: [{ nodeType: "text" }] },
         {
           options: [
-            { nodeType: "tag", tag: "value", attributes: { slot: "x" } },
+            { nodeType: "tag", tag: "test-tag", attributes: { attr1: "x" } },
           ],
         },
+        { options: [{ nodeType: "text", attributes: { content: "bar" } }] },
       ]);
-      expect(errors).toHaveLength(1);
-      expect(errors[0].id).toBe("child-attributes");
-      expect(errors[0].level).toBe("error");
-      expect(errors[0].message).toContain(
-        "Child number 1 should have attributes",
-      );
+      expect(errors).toEqual([]);
     });
 
-    it("errors when an attribute value doesn't match", () => {
-      const node = parent([tag("value", { slot: "y" })]);
+    it("doesn't consume more than 1 child", () => {
+      const node = parent([text("foo"), text("bar")]);
       const errors = validateChildren(node, [
-        {
-          options: [
-            { nodeType: "tag", tag: "value", attributes: { slot: "x" } },
-          ],
-        },
+        { options: [{ nodeType: "text" }] },
       ]);
-      expect(errors).toHaveLength(1);
-      expect(errors[0].id).toBe("child-attributes");
+      expect(errors).toEqual([
+        expect.objectContaining({
+          id: "extra-child",
+          message: "Node has unexpected children starting with child number 2",
+        }),
+      ]);
     });
 
-    it("matches when the child has extra attributes beyond what the spec requires", () => {
-      const node = parent([tag("value", { slot: "x", label: "Foo" })]);
+    it("rejects when next child doesn't match", () => {
+      const node = parent([text("foo")]);
       const errors = validateChildren(node, [
+        { options: [{ nodeType: "text", attributes: { content: "bar" } }] },
+      ]);
+      expect(errors).toEqual([
+        expect.objectContaining({ id: "child-attributes" }),
+      ]);
+    });
+  });
+
+  describe("optional spec", () => {
+    it("accepts when next child matches", () => {
+      const node = parent([text(), tag("test-tag", { x: "y" })]);
+      const errors = validateChildren(node, [
+        { optional: true, options: [{ nodeType: "text" }] },
         {
+          optional: true,
           options: [
-            { nodeType: "tag", tag: "value", attributes: { slot: "x" } },
+            { nodeType: "tag", tag: "test-tag", attributes: { x: "y" } },
           ],
         },
       ]);
       expect(errors).toEqual([]);
     });
 
-    it("errors when a required child is missing entirely", () => {
+    it("accepts when next child doesn't exist", () => {
       const node = parent([]);
       const errors = validateChildren(node, [
-        { options: [{ nodeType: "tag", tag: "value" }] },
-      ]);
-      expect(errors).toEqual([
+        { optional: true, options: [{ nodeType: "text" }] },
         {
-          id: "missing-required-child",
-          level: "error",
-          message: "Missing at least one required child",
+          optional: true,
+          options: [
+            { nodeType: "tag", tag: "test-tag", attributes: { x: "y" } },
+          ],
         },
       ]);
-    });
-  });
-
-  describe("0 or 1 (optional=true, greedy=false)", () => {
-    it("matches when the optional child is present", () => {
-      const node = parent([tag("value")]);
-      const errors = validateChildren(node, [
-        { optional: true, options: [{ nodeType: "tag", tag: "value" }] },
-      ]);
       expect(errors).toEqual([]);
     });
 
-    it("skips a non-matching child and lets the next spec match it", () => {
-      const node = parent([tag("b")]);
-      const errors = validateChildren(node, [
-        { optional: true, options: [{ nodeType: "tag", tag: "a" }] },
-        { options: [{ nodeType: "tag", tag: "b" }] },
+    it("consumes matched child", () => {
+      const node = parent([
+        text("foo"),
+        tag("test-tag", { attr1: "x", attr2: "y" }),
+        text("bar"),
       ]);
-      expect(errors).toEqual([]);
-    });
-
-    it("is satisfied when there are no children at all", () => {
-      const node = parent([]);
       const errors = validateChildren(node, [
-        { optional: true, options: [{ nodeType: "tag", tag: "a" }] },
-        { optional: true, options: [{ nodeType: "tag", tag: "b" }] },
-      ]);
-      expect(errors).toEqual([]);
-    });
-  });
-
-  describe("1 or more (optional=false, greedy=true)", () => {
-    it("matches a single child", () => {
-      const node = parent([tag("value")]);
-      const errors = validateChildren(node, [
-        { greedy: true, options: [{ nodeType: "tag", tag: "value" }] },
-      ]);
-      expect(errors).toEqual([]);
-    });
-
-    it("matches several consecutive matching children", () => {
-      const node = parent([tag("value"), tag("value"), tag("value")]);
-      const errors = validateChildren(node, [
-        { greedy: true, options: [{ nodeType: "tag", tag: "value" }] },
-      ]);
-      expect(errors).toEqual([]);
-    });
-
-    it("errors when there are zero matching children", () => {
-      const node = parent([tag("piece")]);
-      const errors = validateChildren(node, [
-        { greedy: true, options: [{ nodeType: "tag", tag: "value" }] },
-      ]);
-      expect(errors).toEqual([
+        { optional: true, options: [{ nodeType: "text" }] },
         {
-          id: "child-type",
-          level: "error",
-          message: "Child number 1 should have type tag(value)",
+          optional: true,
+          options: [
+            { nodeType: "tag", tag: "test-tag", attributes: { attr1: "x" } },
+          ],
+        },
+        {
+          optional: true,
+          options: [{ nodeType: "text", attributes: { content: "bar" } }],
         },
       ]);
+      expect(errors).toEqual([]);
     });
 
-    it("stops consuming at the first non-matching child and hands it to the next spec", () => {
-      const node = parent([tag("value"), tag("value"), tag("piece")]);
+    it("doesn't consume non-matching child", () => {
+      const node = parent([text("bar")]);
       const errors = validateChildren(node, [
-        { greedy: true, options: [{ nodeType: "tag", tag: "value" }] },
-        { options: [{ nodeType: "tag", tag: "piece" }] },
+        {
+          optional: true,
+          options: [{ nodeType: "text", attributes: { content: "foo" } }],
+        },
+        {
+          optional: true,
+          options: [
+            { nodeType: "tag", tag: "test-tag", attributes: { attr1: "x" } },
+          ],
+        },
+        { options: [{ nodeType: "text", attributes: { content: "bar" } }] },
       ]);
       expect(errors).toEqual([]);
     });
+
+    it("doesn't consume more than 1 child", () => {
+      const node = parent([text("foo"), text("bar")]);
+      const errors = validateChildren(node, [
+        { optional: true, options: [{ nodeType: "text" }] },
+      ]);
+      expect(errors).toEqual([
+        expect.objectContaining({
+          id: "extra-child",
+          message: "Node has unexpected children starting with child number 2",
+        }),
+      ]);
+    });
   });
 
-  describe("0 or more (optional=true, greedy=true)", () => {
-    it("is satisfied with zero children", () => {
+  describe("greedy spec", () => {
+    it("accepts when next 1 child matches and consumes it", () => {
+      const node = parent([text(), tag("test-tag", { x: "y" })]);
+      const errors = validateChildren(node, [
+        { greedy: true, options: [{ nodeType: "text" }] },
+        {
+          greedy: true,
+          options: [
+            { nodeType: "tag", tag: "test-tag", attributes: { x: "y" } },
+          ],
+        },
+      ]);
+      expect(errors).toEqual([]);
+    });
+
+    it("accepts when next >1 children match and consumes all matched children", () => {
+      const node = parent([
+        text("foo"),
+        text("bar"),
+        text("baz"),
+        tag("test-tag1", { x: "y" }),
+        tag("test-tag2", { x: "y" }),
+      ]);
+      const errors = validateChildren(node, [
+        { greedy: true, options: [{ nodeType: "text" }] },
+        {
+          greedy: true,
+          options: [{ nodeType: "tag", attributes: { x: "y" } }],
+        },
+      ]);
+      expect(errors).toEqual([]);
+    });
+
+    it("doesn't consume first non-matching child", () => {
+      const node = parent([text("foo"), text("foo"), text("bar")]);
+      const errors = validateChildren(node, [
+        {
+          greedy: true,
+          options: [{ nodeType: "text", attributes: { content: "foo" } }],
+        },
+      ]);
+      expect(errors).toEqual([
+        expect.objectContaining({
+          id: "extra-child",
+          message: "Node has unexpected children starting with child number 3",
+        }),
+      ]);
+    });
+
+    it("rejects when next child doesn't match", () => {
+      const node = parent([text("foo")]);
+      const errors = validateChildren(node, [
+        {
+          greedy: true,
+          options: [{ nodeType: "text", attributes: { content: "bar" } }],
+        },
+      ]);
+      expect(errors).toEqual([
+        expect.objectContaining({ id: "child-attributes" }),
+      ]);
+    });
+  });
+
+  describe("optional and greedy spec", () => {
+    it("accepts when next 1 child matches and consumes it", () => {
+      const node = parent([text(), tag("test-tag", { x: "y" })]);
+      const errors = validateChildren(node, [
+        { optional: true, greedy: true, options: [{ nodeType: "text" }] },
+        {
+          optional: true,
+          greedy: true,
+          options: [
+            { nodeType: "tag", tag: "test-tag", attributes: { x: "y" } },
+          ],
+        },
+      ]);
+      expect(errors).toEqual([]);
+    });
+
+    it("accepts when next >1 children match and consumes all matched children", () => {
+      const node = parent([
+        text("foo"),
+        text("bar"),
+        text("baz"),
+        tag("test-tag1", { x: "y" }),
+        tag("test-tag2", { x: "y" }),
+      ]);
+      const errors = validateChildren(node, [
+        { optional: true, greedy: true, options: [{ nodeType: "text" }] },
+        {
+          optional: true,
+          greedy: true,
+          options: [{ nodeType: "tag", attributes: { x: "y" } }],
+        },
+      ]);
+      expect(errors).toEqual([]);
+    });
+
+    it("accepts when next child doesn't exist", () => {
       const node = parent([]);
+      const errors = validateChildren(node, [
+        { optional: true, greedy: true, options: [{ nodeType: "text" }] },
+        {
+          optional: true,
+          greedy: true,
+          options: [
+            { nodeType: "tag", tag: "test-tag", attributes: { x: "y" } },
+          ],
+        },
+      ]);
+      expect(errors).toEqual([]);
+    });
+
+    it("doesn't consume next child when it doesn't match", () => {
+      const node = parent([text("bar")]);
       const errors = validateChildren(node, [
         {
           optional: true,
           greedy: true,
-          options: [{ nodeType: "tag", tag: "value" }],
+          options: [{ nodeType: "text", attributes: { content: "foo" } }],
         },
+        {
+          optional: true,
+          greedy: true,
+          options: [
+            { nodeType: "tag", tag: "test-tag", attributes: { attr1: "x" } },
+          ],
+        },
+        { options: [{ nodeType: "text", attributes: { content: "bar" } }] },
       ]);
       expect(errors).toEqual([]);
     });
 
-    it("matches many children", () => {
-      const node = parent([tag("value"), tag("value")]);
+    it("doesn't consume first non-matching child", () => {
+      const node = parent([text("foo"), text("foo"), text("bar")]);
       const errors = validateChildren(node, [
         {
           optional: true,
           greedy: true,
-          options: [{ nodeType: "tag", tag: "value" }],
-        },
-      ]);
-      expect(errors).toEqual([]);
-    });
-  });
-
-  describe("multiple options in one spec", () => {
-    it("matches the first option", () => {
-      const node = parent([tag("value")]);
-      const errors = validateChildren(node, [
-        {
-          options: [
-            { nodeType: "tag", tag: "value" },
-            { nodeType: "tag", tag: "piece" },
-          ],
-        },
-      ]);
-      expect(errors).toEqual([]);
-    });
-
-    it("matches the second option", () => {
-      const node = parent([tag("piece")]);
-      const errors = validateChildren(node, [
-        {
-          options: [
-            { nodeType: "tag", tag: "value" },
-            { nodeType: "tag", tag: "piece" },
-          ],
-        },
-      ]);
-      expect(errors).toEqual([]);
-    });
-
-    it("errors listing every option when none match", () => {
-      const node = parent([text()]);
-      const errors = validateChildren(node, [
-        {
-          options: [
-            { nodeType: "tag", tag: "value" },
-            { nodeType: "tag", tag: "piece" },
-          ],
+          options: [{ nodeType: "text", attributes: { content: "foo" } }],
         },
       ]);
       expect(errors).toEqual([
-        {
-          id: "child-type",
-          level: "error",
-          message: "Child number 1 should have type tag(value) | tag(piece)",
-        },
-      ]);
-    });
-  });
-
-  describe("multi-spec ordered sequences", () => {
-    it("matches a 3-step ordered sequence (ordered slots)", () => {
-      const node = parent([
-        tag("value", { slot: "condition" }),
-        tag("value", { slot: "trueValue" }),
-        tag("value", { slot: "falseValue" }),
-      ]);
-      const errors = validateChildren(node, [
-        {
-          options: [
-            {
-              nodeType: "tag",
-              tag: "value",
-              attributes: { slot: "condition" },
-            },
-          ],
-        },
-        {
-          options: [
-            {
-              nodeType: "tag",
-              tag: "value",
-              attributes: { slot: "trueValue" },
-            },
-          ],
-        },
-        {
-          options: [
-            {
-              nodeType: "tag",
-              tag: "value",
-              attributes: { slot: "falseValue" },
-            },
-          ],
-        },
-      ]);
-      expect(errors).toEqual([]);
-    });
-
-    it("fails fast on the first mismatched child in the sequence", () => {
-      const node = parent([
-        tag("value", { slot: "condition" }),
-        tag("piece"),
-        tag("value", { slot: "falseValue" }),
-      ]);
-      const errors = validateChildren(node, [
-        {
-          options: [
-            {
-              nodeType: "tag",
-              tag: "value",
-              attributes: { slot: "condition" },
-            },
-          ],
-        },
-        {
-          options: [
-            {
-              nodeType: "tag",
-              tag: "value",
-              attributes: { slot: "trueValue" },
-            },
-          ],
-        },
-        {
-          options: [
-            {
-              nodeType: "tag",
-              tag: "value",
-              attributes: { slot: "falseValue" },
-            },
-          ],
-        },
-      ]);
-      expect(errors).toEqual([
-        {
-          id: "child-type",
-          level: "error",
-          message: "Child number 2 should have type tag(value)",
-        },
-      ]);
-    });
-
-    it("matches required + trailing optional specs when only the required one is present", () => {
-      const node = parent([tag("value")]);
-      const errors = validateChildren(node, [
-        { options: [{ nodeType: "tag", tag: "value" }] },
-        { optional: true, options: [{ nodeType: "tag", tag: "piece" }] },
-        { optional: true, options: [{ nodeType: "tag", tag: "option" }] },
-      ]);
-      expect(errors).toEqual([]);
-    });
-
-    it("matches required + trailing optional specs skipping an absent middle optional", () => {
-      const node = parent([tag("value"), tag("option")]);
-      const errors = validateChildren(node, [
-        { options: [{ nodeType: "tag", tag: "value" }] },
-        { optional: true, options: [{ nodeType: "tag", tag: "piece" }] },
-        { optional: true, options: [{ nodeType: "tag", tag: "option" }] },
-      ]);
-      expect(errors).toEqual([]);
-    });
-
-    it("errors when the required greedy middle spec has zero matches", () => {
-      const node = parent([
-        tag("value", { slot: "input" }),
-        tag("value", { slot: "lastOutput" }),
-      ]);
-      const errors = validateChildren(node, [
-        {
-          options: [
-            { nodeType: "tag", tag: "value", attributes: { slot: "input" } },
-          ],
-        },
-        { greedy: true, options: [{ nodeType: "tag", tag: "piece" }] },
-        {
-          options: [
-            {
-              nodeType: "tag",
-              tag: "value",
-              attributes: { slot: "lastOutput" },
-            },
-          ],
-        },
-      ]);
-      expect(errors).toEqual([
-        {
-          id: "child-type",
-          level: "error",
-          message: "Child number 2 should have type tag(piece)",
-        },
-      ]);
-    });
-
-    it("matches required, greedy middle, required tail with several middle matches", () => {
-      const node = parent([
-        tag("value", { slot: "input" }),
-        tag("piece"),
-        tag("piece"),
-        tag("value", { slot: "lastOutput" }),
-      ]);
-      const errors = validateChildren(node, [
-        {
-          options: [
-            { nodeType: "tag", tag: "value", attributes: { slot: "input" } },
-          ],
-        },
-        { greedy: true, options: [{ nodeType: "tag", tag: "piece" }] },
-        {
-          options: [
-            {
-              nodeType: "tag",
-              tag: "value",
-              attributes: { slot: "lastOutput" },
-            },
-          ],
-        },
-      ]);
-      expect(errors).toEqual([]);
-    });
-  });
-
-  describe("extra children", () => {
-    it("errors when specs are empty but the node has children", () => {
-      const node = parent([tag("value")]);
-      const errors = validateChildren(node, []);
-      expect(errors).toEqual([
-        {
+        expect.objectContaining({
           id: "extra-child",
-          level: "error",
-          message: "Node has unexpected children starting with child number 1",
-        },
+          message: "Node has unexpected children starting with child number 3",
+        }),
       ]);
-    });
-
-    it("errors at the correct index when children remain after specs are satisfied", () => {
-      const node = parent([
-        tag("value"),
-        tag("piece"),
-        tag("piece"),
-        tag("option"),
-      ]);
-      const errors = validateChildren(node, [
-        { options: [{ nodeType: "tag", tag: "value" }] },
-        { greedy: true, options: [{ nodeType: "tag", tag: "piece" }] },
-      ]);
-      expect(errors).toEqual([
-        {
-          id: "extra-child",
-          level: "error",
-          message: "Node has unexpected children starting with child number 4",
-        },
-      ]);
-    });
-  });
-
-  describe("degenerate case", () => {
-    it("returns no errors for empty specs and empty children", () => {
-      const node = parent([]);
-      const errors = validateChildren(node, []);
-      expect(errors).toEqual([]);
     });
   });
 });

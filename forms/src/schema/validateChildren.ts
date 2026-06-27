@@ -40,7 +40,7 @@ export function validateChildren(
     const specItem = specs[specIndex];
     const optionTypes = specItem.options
       .map(({ nodeType, tag }) => {
-        if (nodeType === "tag") {
+        if (nodeType === "tag" && tag) {
           return `tag(${tag})`;
         } else {
           return nodeType;
@@ -50,7 +50,8 @@ export function validateChildren(
 
     let error: ValidationError | undefined = undefined;
     const matchingTypeAndTag = specItem.options.filter(
-      ({ nodeType, tag }) => nodeType === child.type && tag === child.tag,
+      ({ nodeType, tag }) =>
+        nodeType === child.type && (!tag || tag === child.tag),
     );
     if (matchingTypeAndTag.length === 0) {
       error = {
@@ -72,7 +73,7 @@ export function validateChildren(
       error = {
         id: "child-attributes",
         level: "error",
-        message: `Child number ${childIndex + 1} should have attributes ${matchingTypeAndTag[0].attributes}`,
+        message: `Child number ${childIndex + 1} should contain attributes ${JSON.stringify(matchingTypeAndTag[0].attributes)}`,
       };
     }
 
