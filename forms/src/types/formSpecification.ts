@@ -1,4 +1,5 @@
 import type { ValueProvider } from "./valueProvider";
+import type { RenderableTreeNodes } from "@markdoc/markdoc";
 import type { BoxFormat, BoxIdentifier, FormClass } from "@thumbtax/common";
 
 type LineIndex = string;
@@ -6,23 +7,26 @@ type ColumnIndex = string;
 
 export type FormSpecification = {
   class: FormClass;
-  title: string;
-  subtitle?: string;
-  description?: string;
   irsPageUrl: string;
   category: "income" | "taxes";
   maxInstances: number | null;
+  title: string;
+  subtitle?: string;
+  instructions?: RenderableTreeNodes;
+  commentary?: RenderableTreeNodes;
   sections: Array<FormSection<false> | FormSection<true>>;
 };
 
 export type FormSection<MultiColumns extends boolean> = {
   heading?: string;
+  instructions?: RenderableTreeNodes;
+  commentary?: RenderableTreeNodes;
   lines: Array<FormLine<MultiColumns>>;
 } & (MultiColumns extends true
   ? {
       columns: Array<{
         index: ColumnIndex;
-        description?: string;
+        instructions?: RenderableTreeNodes;
       }>;
     }
   : {
@@ -31,8 +35,9 @@ export type FormSection<MultiColumns extends boolean> = {
 
 export type FormLine<MultiColumns extends boolean> = {
   index: LineIndex;
-  description?: string;
   virtual?: boolean;
+  instructions?: RenderableTreeNodes;
+  commentary?: RenderableTreeNodes;
 } & (MultiColumns extends true
   ? {
       boxes: Array<FormBox<MultiColumns>>;
@@ -45,7 +50,6 @@ export type FormBox<MultiColumns extends boolean> = {
   identifier: BoxIdentifier;
   value: ValueProvider;
   format?: BoxFormat;
-  helpText?: string;
 } & (MultiColumns extends true
   ? {
       column: ColumnIndex;

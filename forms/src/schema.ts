@@ -10,6 +10,12 @@ export const config: Config = {
   tags: {
     form: {
       attributes: {
+        category: {
+          type: "String",
+          required: true,
+          matches: ["income", "taxes"],
+          errorLevel: "error",
+        },
         class: {
           type: "String",
           required: true,
@@ -19,12 +25,6 @@ export const config: Config = {
         irsPageUrl: {
           type: "String",
           required: true,
-          errorLevel: "error",
-        },
-        category: {
-          type: "String",
-          required: true,
-          matches: ["income", "taxes"],
           errorLevel: "error",
         },
         maxInstances: {
@@ -47,7 +47,15 @@ export const config: Config = {
     section: {
       validate(node) {
         const childErrors = validateChildren(unwrapInlineTags(node.children), [
-          { options: [{ nodeType: "heading", attributes: { level: 2 } }] },
+          {
+            optional: true,
+            options: [{ nodeType: "heading", attributes: { level: 2 } }],
+          },
+          {
+            optional: true,
+            options: [{ nodeType: "tag", tag: "instructions" }],
+          },
+          { optional: true, options: [{ nodeType: "tag", tag: "commentary" }] },
           { optional: true, options: [{ nodeType: "tag", tag: "columns" }] },
           { greedy: true, options: [{ nodeType: "tag", tag: "line" }] },
         ]);
@@ -137,6 +145,14 @@ export const config: Config = {
           required: true,
           errorLevel: "error",
         },
+      },
+      validate(node) {
+        return validateChildren(unwrapInlineTags(node.children), [
+          {
+            optional: true,
+            options: [{ nodeType: "tag", tag: "instructions" }],
+          },
+        ]);
       },
     },
     line: {
