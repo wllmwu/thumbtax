@@ -10,10 +10,10 @@ import {
   Select,
 } from "react-aria-components";
 
+import type { ValueProvider } from "@thumbtax/forms";
 import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { InstanceRegistry } from "#src/common/types/formInstance";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
-import type { ValueProvider } from "#src/specifications/types/valueProvider";
 import type { AccessibleLabelProps } from "#src/ui/types/accessibleLabelProps";
 
 type Props = AccessibleLabelProps & {

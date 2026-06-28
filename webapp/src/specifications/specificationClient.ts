@@ -22,7 +22,7 @@ import { FormW2 } from "#src/specifications/data/formW2";
 import { FormW2_12_codes } from "#src/specifications/data/formW2_12_codes";
 
 import type { FormClass } from "@thumbtax/common";
-import type { FormSpecification } from "#src/specifications/types/formSpecification";
+import type { FormSpecification } from "@thumbtax/forms";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 
 const allSpecifications: SpecificationRegistry = {

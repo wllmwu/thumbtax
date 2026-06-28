@@ -3,7 +3,7 @@
     "id": "thumbtax-forms",
     "path": "forms/src",
     "schema": {
-      "path": "forms/dist/schema.mjs",
+      "path": "forms/schema-dist/schema.mjs",
       "type": "esm",
       "property": "config",
       "watch": true

@@ -8,12 +8,9 @@ import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
 import styles from "#src/ui/forms/FormTable.module.css";
 
+import type { FormLine, FormSpecification } from "@thumbtax/forms";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
-import type {
-  FormLine,
-  FormSpecification,
-} from "#src/specifications/types/formSpecification";
 
 type Props = {
   specification: FormSpecification;

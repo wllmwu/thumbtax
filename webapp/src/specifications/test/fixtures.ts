@@ -5,7 +5,7 @@ import type {
   FormLine,
   FormSection,
   FormSpecification,
-} from "#src/specifications/types/formSpecification";
+} from "@thumbtax/forms";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 
 export function makeBoxFixture(

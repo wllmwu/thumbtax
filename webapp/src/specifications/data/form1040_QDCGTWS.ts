@@ -1,6 +1,6 @@
 import { taxComputation } from "#src/specifications/data/taxComputation";
 
-import type { FormSpecification } from "#src/specifications/types/formSpecification";
+import type { FormSpecification } from "@thumbtax/forms";
 
 export const Form1040_QDCGTWS: FormSpecification = {
   class: "f1040_QDCGTWS",

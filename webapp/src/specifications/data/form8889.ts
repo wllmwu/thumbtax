@@ -1,4 +1,4 @@
-import type { FormSpecification } from "#src/specifications/types/formSpecification";
+import type { FormSpecification } from "@thumbtax/forms";
 
 export const Form8889: FormSpecification = {
   class: "f8889",

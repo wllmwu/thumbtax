@@ -17,7 +17,7 @@ import {
 import { useStore } from "#src/state/useStore";
 import { SearchField } from "#src/ui/primitives/SearchField";
 
-import type { FormSpecification } from "#src/specifications/types/formSpecification";
+import type { FormSpecification } from "@thumbtax/forms";
 
 type FormOption = {
   id: string;

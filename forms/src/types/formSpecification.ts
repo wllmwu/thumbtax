@@ -1,5 +1,5 @@
+import type { ValueProvider } from "./valueProvider";
 import type { BoxFormat, BoxIdentifier, FormClass } from "@thumbtax/common";
-import type { ValueProvider } from "#src/specifications/types/valueProvider";
 
 type LineIndex = string;
 type ColumnIndex = string;

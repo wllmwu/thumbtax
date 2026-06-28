@@ -1,4 +1,4 @@
-import type { FormSpecification } from "#src/specifications/types/formSpecification";
+import type { FormSpecification } from "@thumbtax/forms";
 
 export const Form1099NEC: FormSpecification = {
   class: "f1099NEC",

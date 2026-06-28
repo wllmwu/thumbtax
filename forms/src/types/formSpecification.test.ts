@@ -5,8 +5,8 @@ import type {
   FormLine,
   FormSection,
   FormSpecification,
-} from "#src/specifications/types/formSpecification";
-import type { ValueProvider } from "#src/specifications/types/valueProvider";
+} from "./formSpecification";
+import type { ValueProvider } from "./valueProvider";
 
 const value: ValueProvider = { type: "number_constant", value: 1 };
 

@@ -4,7 +4,7 @@ import { useStore } from "#src/state/useStore";
 import { FormTable } from "#src/ui/forms/FormTable";
 import { Badge } from "#src/ui/primitives/Badge";
 
-import type { FormSpecification } from "#src/specifications/types/formSpecification";
+import type { FormSpecification } from "@thumbtax/forms";
 
 function FormListItem({
   specification,

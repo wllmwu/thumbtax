@@ -4,6 +4,7 @@ import { isEqual } from "lodash";
 import { DependencyGraph } from "#src/engine/dependencyGraph";
 
 import type { FilingStatus } from "@thumbtax/common";
+import type { ValueProvider } from "@thumbtax/forms";
 import type { BoxAddress } from "#src/common/types/boxAddress";
 import type {
   FormInstance,
@@ -12,7 +13,6 @@ import type {
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { ResolvedBox, Workbook } from "#src/common/types/workbook";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
-import type { ValueProvider } from "#src/specifications/types/valueProvider";
 
 type NodeData = {
   address: BoxAddress;

@@ -1,14 +1,11 @@
 import type { FilingStatus, FormClass } from "@thumbtax/common";
+import type { ComputedValueProvider, ValueProvider } from "@thumbtax/forms";
 import type {
   FormInstance,
   InstanceRegistry,
 } from "#src/common/types/formInstance";
 import type { ResolvedBox } from "#src/common/types/workbook";
 import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
-import type {
-  ComputedValueProvider,
-  ValueProvider,
-} from "#src/specifications/types/valueProvider";
 
 export function makeInstanceFixture(
   overrides?: Partial<FormInstance>,

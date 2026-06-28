@@ -1,6 +1,5 @@
 import type { BoxIdentifier } from "@thumbtax/common";
-import type { FormSpecification } from "#src/specifications/types/formSpecification";
-import type { ComputedValueProvider } from "#src/specifications/types/valueProvider";
+import type { ComputedValueProvider, FormSpecification } from "@thumbtax/forms";
 
 function alternativeMinimumTaxComputation(
   box: BoxIdentifier,

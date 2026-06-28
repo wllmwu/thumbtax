@@ -14,10 +14,9 @@ import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 import { TextField } from "#src/ui/primitives/TextField";
 
 import type { BoxFormat, BoxIdentifier } from "@thumbtax/common";
+import type { FormBox, ValueProvider } from "@thumbtax/forms";
 import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { FormInstance } from "#src/common/types/formInstance";
-import type { FormBox } from "#src/specifications/types/formSpecification";
-import type { ValueProvider } from "#src/specifications/types/valueProvider";
 import type { Key } from "react-aria-components";
 
 type Props = {
