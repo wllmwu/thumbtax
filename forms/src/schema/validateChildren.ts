@@ -7,9 +7,9 @@ type ChildSpec = {
 };
 
 /**
- * Validates the given Markdoc node's children.
+ * Validates the given Markdoc nodes.
  *
- * The `specs` parameter acts like a regular expression matching against `node.children`.
+ * The `specs` parameter acts like a regular expression matching against `children`.
  * Each element of `specs` describes what child nodes are allowed at that position.
  *
  * The `options` field specifies the allowed child types and required attributes.
@@ -25,7 +25,7 @@ type ChildSpec = {
  * | greedy=true | 1 or more | 0 or more |
  */
 export function validateChildren(
-  node: Node,
+  children: Node[],
   specs: Array<{
     optional?: boolean;
     greedy?: boolean;
@@ -35,8 +35,8 @@ export function validateChildren(
   let childIndex = 0;
   let specIndex = 0;
   let didSpecMatchPreviousChild = false;
-  while (childIndex < node.children.length && specIndex < specs.length) {
-    const child = node.children[childIndex];
+  while (childIndex < children.length && specIndex < specs.length) {
+    const child = children[childIndex];
     const specItem = specs[specIndex];
     const optionTypes = specItem.options
       .map(({ nodeType, tag }) => {
@@ -122,7 +122,7 @@ export function validateChildren(
         message: "Missing at least one required child",
       },
     ];
-  } else if (childIndex < node.children.length) {
+  } else if (childIndex < children.length) {
     return [
       {
         id: "extra-child",

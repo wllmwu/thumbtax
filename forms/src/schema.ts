@@ -31,7 +31,7 @@ export const config: Config = {
         },
       },
       validate(node) {
-        return validateChildren(node, [
+        return validateChildren(node.children, [
           { options: [{ nodeType: "heading", attributes: { level: 1 } }] },
           { optional: true, options: [{ nodeType: "tag", tag: "subtitle" }] },
           {
@@ -45,7 +45,7 @@ export const config: Config = {
     },
     section: {
       validate(node) {
-        const childErrors = validateChildren(node, [
+        const childErrors = validateChildren(node.children, [
           { options: [{ nodeType: "heading", attributes: { level: 2 } }] },
           { optional: true, options: [{ nodeType: "tag", tag: "columns" }] },
           { greedy: true, options: [{ nodeType: "tag", tag: "line" }] },
@@ -124,7 +124,7 @@ export const config: Config = {
     },
     columns: {
       validate(node) {
-        return validateChildren(node, [
+        return validateChildren(node.children, [
           { greedy: true, options: [{ nodeType: "tag", tag: "column" }] },
         ]);
       },
@@ -138,7 +138,7 @@ export const config: Config = {
         },
       },
       validate(node) {
-        return validateChildren(node, [
+        return validateChildren(node.children, [
           { options: [{ nodeType: "paragraph" }] },
         ]);
       },
@@ -156,7 +156,7 @@ export const config: Config = {
         },
       },
       validate(node) {
-        return validateChildren(node, [
+        return validateChildren(node.children, [
           {
             optional: true,
             options: [{ nodeType: "tag", tag: "instructions" }],
@@ -183,7 +183,7 @@ export const config: Config = {
         },
       },
       validate(node) {
-        return validateChildren(node, [
+        return validateChildren(node.children, [
           { options: [{ nodeType: "tag", tag: "value" }] },
         ]);
       },
@@ -193,7 +193,7 @@ export const config: Config = {
     option: optionTag,
     subtitle: {
       validate(node) {
-        return validateChildren(node, [
+        return validateChildren(node.children, [
           { options: [{ nodeType: "paragraph" }] },
         ]);
       },

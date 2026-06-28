@@ -72,15 +72,17 @@ function unexpectedSlotErrors(children: Node[]): ValidationError[] {
   return [];
 }
 
-const noChildren = (node: Node) => validateChildren(node, []);
+const noChildren = (node: Node) => validateChildren(node.children, []);
 
 const oneUnslottedValue = (node: Node): ValidationError[] => {
-  const errors = validateChildren(node, [{ options: [valueChildSpec()] }]);
+  const errors = validateChildren(node.children, [
+    { options: [valueChildSpec()] },
+  ]);
   return errors.length > 0 ? errors : unexpectedSlotErrors(node.children);
 };
 
 const unslottedValues = (node: Node): ValidationError[] => {
-  const errors = validateChildren(node, [
+  const errors = validateChildren(node.children, [
     { greedy: true, options: [valueChildSpec()] },
   ]);
   return errors.length > 0 ? errors : unexpectedSlotErrors(node.children);
@@ -89,7 +91,7 @@ const unslottedValues = (node: Node): ValidationError[] => {
 function orderedSlots(slots: Array<{ slot: ValueSlot; optional?: boolean }>) {
   return (node: Node) =>
     validateChildren(
-      node,
+      node.children,
       slots.map(({ slot, optional }) => ({
         optional,
         options: [valueChildSpec(slot)],
@@ -98,7 +100,7 @@ function orderedSlots(slots: Array<{ slot: ValueSlot; optional?: boolean }>) {
 }
 
 const comparisonChildren = (node: Node): ValidationError[] => {
-  const errors = validateChildren(node, [
+  const errors = validateChildren(node.children, [
     { options: [valueChildSpec()] },
     { optional: true, options: [valueChildSpec("comparison.minimum")] },
     { optional: true, options: [valueChildSpec("comparison.maximum")] },
@@ -109,7 +111,7 @@ const comparisonChildren = (node: Node): ValidationError[] => {
 };
 
 const piecewiseFunctionChildren = (node: Node): ValidationError[] =>
-  validateChildren(node, [
+  validateChildren(node.children, [
     { options: [valueChildSpec("piecewise_function.input")] },
     { greedy: true, options: [{ nodeType: "tag", tag: "piece" }] },
     { options: [valueChildSpec("piecewise_function.lastOutput")] },
@@ -164,12 +166,12 @@ const filingStatusMapChildren = (node: Node): ValidationError[] => {
 };
 
 const selectInstanceBoxesInputChildren = (node: Node): ValidationError[] =>
-  validateChildren(node, [
+  validateChildren(node.children, [
     { greedy: true, options: [{ nodeType: "tag", tag: "option" }] },
   ]);
 
 const selectValueInputChildren = (node: Node): ValidationError[] => {
-  const errors = validateChildren(node, [
+  const errors = validateChildren(node.children, [
     { greedy: true, options: [valueChildSpec("select_value_input.options")] },
   ]);
   if (errors.length > 0) {
@@ -437,7 +439,7 @@ export const pieceTag: Schema = {
       return attributeErrors;
     }
 
-    return validateChildren(node, [
+    return validateChildren(node.children, [
       {
         options: [valueChildSpec("piecewise_function.pieces.inputUpperBound")],
       },
@@ -466,6 +468,6 @@ export const optionTag: Schema = {
       return attributeErrors;
     }
 
-    return validateChildren(node, []);
+    return validateChildren(node.children, []);
   },
 };

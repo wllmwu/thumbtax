@@ -8,12 +8,10 @@ const tag = (tagName: string, attributes: Record<string, unknown> = {}) =>
 
 const text = (content = "text") => new Node("text", { content });
 
-const parent = (children: Node[]) => new Node("tag", {}, children, "container");
-
 describe("validateChildren", () => {
   it("accepts children that match nodeType", () => {
-    const node = parent([text(), tag("test-tag", { attr1: "foo" })]);
-    const errors = validateChildren(node, [
+    const nodes = [text(), tag("test-tag", { attr1: "foo" })];
+    const errors = validateChildren(nodes, [
       { options: [{ nodeType: "text" }] },
       { options: [{ nodeType: "tag" }] },
     ]);
@@ -21,12 +19,12 @@ describe("validateChildren", () => {
   });
 
   it("accepts children that match nodeType and attributes", () => {
-    const node = parent([
+    const nodes = [
       text("foo"),
       tag("test-tag", { attr1: "bar", attr2: 2 }),
       tag("test-tag", { attr3: "abc", attr4: 4 }),
-    ]);
-    const errors = validateChildren(node, [
+    ];
+    const errors = validateChildren(nodes, [
       { options: [{ nodeType: "text", attributes: { content: "foo" } }] },
       {
         options: [{ nodeType: "tag", attributes: { attr1: "bar" } }],
@@ -39,8 +37,8 @@ describe("validateChildren", () => {
   });
 
   it("accepts children that match nodeType and tag", () => {
-    const node = parent([tag("test-tag1"), tag("test-tag2", { attr1: "foo" })]);
-    const errors = validateChildren(node, [
+    const nodes = [tag("test-tag1"), tag("test-tag2", { attr1: "foo" })];
+    const errors = validateChildren(nodes, [
       { options: [{ nodeType: "tag", tag: "test-tag1" }] },
       { options: [{ nodeType: "tag", tag: "test-tag2" }] },
     ]);
@@ -48,11 +46,11 @@ describe("validateChildren", () => {
   });
 
   it("accepts children that match nodeType and tag and attributes", () => {
-    const node = parent([
+    const nodes = [
       tag("test-tag1", { attr1: "foo", attr2: 2 }),
       tag("test-tag2", { attr3: "abc", attr4: 4 }),
-    ]);
-    const errors = validateChildren(node, [
+    ];
+    const errors = validateChildren(nodes, [
       {
         options: [
           { nodeType: "tag", tag: "test-tag1", attributes: { attr2: 2 } },
@@ -72,13 +70,13 @@ describe("validateChildren", () => {
   });
 
   it("accepts when any of multiple options is matched", () => {
-    const node = parent([
+    const nodes = [
       text("foo"),
       text("bar"),
       tag("test-tag1"),
       tag("test-tag2", { x: "y" }),
-    ]);
-    const errors = validateChildren(node, [
+    ];
+    const errors = validateChildren(nodes, [
       { options: [{ nodeType: "text" }, { nodeType: "heading" }] },
       {
         options: [
@@ -105,8 +103,8 @@ describe("validateChildren", () => {
   });
 
   it("rejects children that don't match nodeType", () => {
-    const node1 = parent([text()]);
-    const errors1 = validateChildren(node1, [
+    const nodes1 = [text()];
+    const errors1 = validateChildren(nodes1, [
       { options: [{ nodeType: "heading" }] },
     ]);
     expect(errors1).toEqual([
@@ -117,8 +115,8 @@ describe("validateChildren", () => {
       },
     ]);
 
-    const node2 = parent([tag("heading")]);
-    const errors2 = validateChildren(node2, [
+    const nodes2 = [tag("heading")];
+    const errors2 = validateChildren(nodes2, [
       { options: [{ nodeType: "heading" }] },
     ]);
     expect(errors2).toEqual([
@@ -129,8 +127,8 @@ describe("validateChildren", () => {
       },
     ]);
 
-    const node3 = parent([text()]);
-    const errors3 = validateChildren(node3, [
+    const nodes3 = [text()];
+    const errors3 = validateChildren(nodes3, [
       { options: [{ nodeType: "tag" }] },
     ]);
     expect(errors3).toEqual([
@@ -143,8 +141,8 @@ describe("validateChildren", () => {
   });
 
   it("rejects children that match nodeType but not tag", () => {
-    const node = parent([tag("foo")]);
-    const errors = validateChildren(node, [
+    const nodes = [tag("foo")];
+    const errors = validateChildren(nodes, [
       { options: [{ nodeType: "tag", tag: "bar" }] },
     ]);
     expect(errors).toEqual([
@@ -157,8 +155,8 @@ describe("validateChildren", () => {
   });
 
   it("rejects children that match nodeType but not attributes", () => {
-    const node1 = parent([text("foo")]);
-    const errors1 = validateChildren(node1, [
+    const nodes1 = [text("foo")];
+    const errors1 = validateChildren(nodes1, [
       {
         options: [{ nodeType: "text", attributes: { content: "bar" } }],
       },
@@ -171,8 +169,8 @@ describe("validateChildren", () => {
       },
     ]);
 
-    const node2 = parent([tag("test-tag", { attr2: "y" })]);
-    const errors2 = validateChildren(node2, [
+    const nodes2 = [tag("test-tag", { attr2: "y" })];
+    const errors2 = validateChildren(nodes2, [
       {
         options: [
           {
@@ -193,8 +191,8 @@ describe("validateChildren", () => {
   });
 
   it("rejects children that match nodeType and tag but not attributes", () => {
-    const node1 = parent([tag("test-tag", { attr1: "a" })]);
-    const errors1 = validateChildren(node1, [
+    const nodes1 = [tag("test-tag", { attr1: "a" })];
+    const errors1 = validateChildren(nodes1, [
       {
         options: [
           { nodeType: "tag", tag: "test-tag", attributes: { attr1: "x" } },
@@ -209,8 +207,8 @@ describe("validateChildren", () => {
       },
     ]);
 
-    const node2 = parent([tag("test-tag", { attr2: "y" })]);
-    const errors2 = validateChildren(node2, [
+    const nodes2 = [tag("test-tag", { attr2: "y" })];
+    const errors2 = validateChildren(nodes2, [
       {
         options: [
           {
@@ -232,8 +230,8 @@ describe("validateChildren", () => {
   });
 
   it("rejects when none of multiple options are matched", () => {
-    const node = parent([text("foo")]);
-    const errors = validateChildren(node, [
+    const nodes = [text("foo")];
+    const errors = validateChildren(nodes, [
       {
         options: [
           { nodeType: "blockquote" },
@@ -252,8 +250,8 @@ describe("validateChildren", () => {
   });
 
   it("rejects when node has extra children", () => {
-    const node = parent([text(), text(), text()]);
-    const errors = validateChildren(node, [
+    const nodes = [text(), text(), text()];
+    const errors = validateChildren(nodes, [
       { options: [{ nodeType: "text" }] },
     ]);
     expect(errors).toEqual([
@@ -266,8 +264,8 @@ describe("validateChildren", () => {
   });
 
   it("rejects when node doesn't have enough children", () => {
-    const node = parent([text()]);
-    const errors = validateChildren(node, [
+    const nodes = [text()];
+    const errors = validateChildren(nodes, [
       { options: [{ nodeType: "text" }] },
       { options: [{ nodeType: "text" }] },
     ]);
@@ -282,20 +280,20 @@ describe("validateChildren", () => {
 
   describe("default spec", () => {
     it("accepts when next child matches", () => {
-      const node = parent([text()]);
-      const errors = validateChildren(node, [
+      const nodes = [text()];
+      const errors = validateChildren(nodes, [
         { options: [{ nodeType: "text" }] },
       ]);
       expect(errors).toEqual([]);
     });
 
     it("consumes matched child", () => {
-      const node = parent([
+      const nodes = [
         text("foo"),
         tag("test-tag", { attr1: "x", attr2: "y" }),
         text("bar"),
-      ]);
-      const errors = validateChildren(node, [
+      ];
+      const errors = validateChildren(nodes, [
         { options: [{ nodeType: "text" }] },
         {
           options: [
@@ -308,8 +306,8 @@ describe("validateChildren", () => {
     });
 
     it("doesn't consume more than 1 child", () => {
-      const node = parent([text("foo"), text("bar")]);
-      const errors = validateChildren(node, [
+      const nodes = [text("foo"), text("bar")];
+      const errors = validateChildren(nodes, [
         { options: [{ nodeType: "text" }] },
       ]);
       expect(errors).toEqual([
@@ -321,8 +319,8 @@ describe("validateChildren", () => {
     });
 
     it("rejects when next child doesn't match", () => {
-      const node = parent([text("foo")]);
-      const errors = validateChildren(node, [
+      const nodes = [text("foo")];
+      const errors = validateChildren(nodes, [
         { options: [{ nodeType: "text", attributes: { content: "bar" } }] },
       ]);
       expect(errors).toEqual([
@@ -333,8 +331,8 @@ describe("validateChildren", () => {
 
   describe("optional spec", () => {
     it("accepts when next child matches", () => {
-      const node = parent([text(), tag("test-tag", { x: "y" })]);
-      const errors = validateChildren(node, [
+      const nodes = [text(), tag("test-tag", { x: "y" })];
+      const errors = validateChildren(nodes, [
         { optional: true, options: [{ nodeType: "text" }] },
         {
           optional: true,
@@ -347,26 +345,28 @@ describe("validateChildren", () => {
     });
 
     it("accepts when next child doesn't exist", () => {
-      const node = parent([]);
-      const errors = validateChildren(node, [
-        { optional: true, options: [{ nodeType: "text" }] },
-        {
-          optional: true,
-          options: [
-            { nodeType: "tag", tag: "test-tag", attributes: { x: "y" } },
-          ],
-        },
-      ]);
+      const errors = validateChildren(
+        [],
+        [
+          { optional: true, options: [{ nodeType: "text" }] },
+          {
+            optional: true,
+            options: [
+              { nodeType: "tag", tag: "test-tag", attributes: { x: "y" } },
+            ],
+          },
+        ],
+      );
       expect(errors).toEqual([]);
     });
 
     it("consumes matched child", () => {
-      const node = parent([
+      const nodes = [
         text("foo"),
         tag("test-tag", { attr1: "x", attr2: "y" }),
         text("bar"),
-      ]);
-      const errors = validateChildren(node, [
+      ];
+      const errors = validateChildren(nodes, [
         { optional: true, options: [{ nodeType: "text" }] },
         {
           optional: true,
@@ -383,8 +383,8 @@ describe("validateChildren", () => {
     });
 
     it("doesn't consume non-matching child", () => {
-      const node = parent([text("bar")]);
-      const errors = validateChildren(node, [
+      const nodes = [text("bar")];
+      const errors = validateChildren(nodes, [
         {
           optional: true,
           options: [{ nodeType: "text", attributes: { content: "foo" } }],
@@ -401,8 +401,8 @@ describe("validateChildren", () => {
     });
 
     it("doesn't consume more than 1 child", () => {
-      const node = parent([text("foo"), text("bar")]);
-      const errors = validateChildren(node, [
+      const nodes = [text("foo"), text("bar")];
+      const errors = validateChildren(nodes, [
         { optional: true, options: [{ nodeType: "text" }] },
       ]);
       expect(errors).toEqual([
@@ -416,8 +416,8 @@ describe("validateChildren", () => {
 
   describe("greedy spec", () => {
     it("accepts when next 1 child matches and consumes it", () => {
-      const node = parent([text(), tag("test-tag", { x: "y" })]);
-      const errors = validateChildren(node, [
+      const nodes = [text(), tag("test-tag", { x: "y" })];
+      const errors = validateChildren(nodes, [
         { greedy: true, options: [{ nodeType: "text" }] },
         {
           greedy: true,
@@ -430,14 +430,14 @@ describe("validateChildren", () => {
     });
 
     it("accepts when next >1 children match and consumes all matched children", () => {
-      const node = parent([
+      const nodes = [
         text("foo"),
         text("bar"),
         text("baz"),
         tag("test-tag1", { x: "y" }),
         tag("test-tag2", { x: "y" }),
-      ]);
-      const errors = validateChildren(node, [
+      ];
+      const errors = validateChildren(nodes, [
         { greedy: true, options: [{ nodeType: "text" }] },
         {
           greedy: true,
@@ -448,8 +448,8 @@ describe("validateChildren", () => {
     });
 
     it("doesn't consume first non-matching child", () => {
-      const node = parent([text("foo"), text("foo"), text("bar")]);
-      const errors = validateChildren(node, [
+      const nodes = [text("foo"), text("foo"), text("bar")];
+      const errors = validateChildren(nodes, [
         {
           greedy: true,
           options: [{ nodeType: "text", attributes: { content: "foo" } }],
@@ -464,8 +464,8 @@ describe("validateChildren", () => {
     });
 
     it("rejects when next child doesn't match", () => {
-      const node = parent([text("foo")]);
-      const errors = validateChildren(node, [
+      const nodes = [text("foo")];
+      const errors = validateChildren(nodes, [
         {
           greedy: true,
           options: [{ nodeType: "text", attributes: { content: "bar" } }],
@@ -479,8 +479,8 @@ describe("validateChildren", () => {
 
   describe("optional and greedy spec", () => {
     it("accepts when next 1 child matches and consumes it", () => {
-      const node = parent([text(), tag("test-tag", { x: "y" })]);
-      const errors = validateChildren(node, [
+      const nodes = [text(), tag("test-tag", { x: "y" })];
+      const errors = validateChildren(nodes, [
         { optional: true, greedy: true, options: [{ nodeType: "text" }] },
         {
           optional: true,
@@ -494,14 +494,14 @@ describe("validateChildren", () => {
     });
 
     it("accepts when next >1 children match and consumes all matched children", () => {
-      const node = parent([
+      const nodes = [
         text("foo"),
         text("bar"),
         text("baz"),
         tag("test-tag1", { x: "y" }),
         tag("test-tag2", { x: "y" }),
-      ]);
-      const errors = validateChildren(node, [
+      ];
+      const errors = validateChildren(nodes, [
         { optional: true, greedy: true, options: [{ nodeType: "text" }] },
         {
           optional: true,
@@ -513,23 +513,25 @@ describe("validateChildren", () => {
     });
 
     it("accepts when next child doesn't exist", () => {
-      const node = parent([]);
-      const errors = validateChildren(node, [
-        { optional: true, greedy: true, options: [{ nodeType: "text" }] },
-        {
-          optional: true,
-          greedy: true,
-          options: [
-            { nodeType: "tag", tag: "test-tag", attributes: { x: "y" } },
-          ],
-        },
-      ]);
+      const errors = validateChildren(
+        [],
+        [
+          { optional: true, greedy: true, options: [{ nodeType: "text" }] },
+          {
+            optional: true,
+            greedy: true,
+            options: [
+              { nodeType: "tag", tag: "test-tag", attributes: { x: "y" } },
+            ],
+          },
+        ],
+      );
       expect(errors).toEqual([]);
     });
 
     it("doesn't consume next child when it doesn't match", () => {
-      const node = parent([text("bar")]);
-      const errors = validateChildren(node, [
+      const nodes = [text("bar")];
+      const errors = validateChildren(nodes, [
         {
           optional: true,
           greedy: true,
@@ -548,8 +550,8 @@ describe("validateChildren", () => {
     });
 
     it("doesn't consume first non-matching child", () => {
-      const node = parent([text("foo"), text("foo"), text("bar")]);
-      const errors = validateChildren(node, [
+      const nodes = [text("foo"), text("foo"), text("bar")];
+      const errors = validateChildren(nodes, [
         {
           optional: true,
           greedy: true,
