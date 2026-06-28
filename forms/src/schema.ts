@@ -1,12 +1,21 @@
+import { nodes } from "@markdoc/markdoc";
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
 import { unwrapInlineTags } from "./schema/unwrapInlineTagChildren";
 import { validateChildren } from "./schema/validateChildren";
+import { validatePlainTextContent } from "./schema/validatePlainTextContent";
+import { validateProseContent } from "./schema/validateProseContent";
 import { optionTag, pieceTag, valueTag } from "./schema/valueTag";
 
 import type { Config } from "@markdoc/markdoc";
 
 export const config: Config = {
+  nodes: {
+    heading: {
+      ...nodes.heading,
+      validate: validatePlainTextContent,
+    },
+  },
   tags: {
     form: {
       attributes: {
@@ -203,8 +212,12 @@ export const config: Config = {
     value: valueTag,
     piece: pieceTag,
     option: optionTag,
-    subtitle: {},
-    instructions: {},
+    subtitle: {
+      validate: validatePlainTextContent,
+    },
+    instructions: {
+      validate: validateProseContent,
+    },
     commentary: {
       attributes: {
         lessCommon: {
@@ -213,6 +226,7 @@ export const config: Config = {
           errorLevel: "error",
         },
       },
+      validate: validateProseContent,
     },
   },
 };
