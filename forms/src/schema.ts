@@ -1,5 +1,6 @@
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
+import { unwrapInlineTags } from "./schema/unwrapInlineTagChildren";
 import { validateChildren } from "./schema/validateChildren";
 import { optionTag, pieceTag, valueTag } from "./schema/valueTag";
 
@@ -31,7 +32,7 @@ export const config: Config = {
         },
       },
       validate(node) {
-        return validateChildren(node.children, [
+        return validateChildren(unwrapInlineTags(node.children), [
           { options: [{ nodeType: "heading", attributes: { level: 1 } }] },
           { optional: true, options: [{ nodeType: "tag", tag: "subtitle" }] },
           {
@@ -45,7 +46,7 @@ export const config: Config = {
     },
     section: {
       validate(node) {
-        const childErrors = validateChildren(node.children, [
+        const childErrors = validateChildren(unwrapInlineTags(node.children), [
           { options: [{ nodeType: "heading", attributes: { level: 2 } }] },
           { optional: true, options: [{ nodeType: "tag", tag: "columns" }] },
           { greedy: true, options: [{ nodeType: "tag", tag: "line" }] },
@@ -124,7 +125,7 @@ export const config: Config = {
     },
     columns: {
       validate(node) {
-        return validateChildren(node.children, [
+        return validateChildren(unwrapInlineTags(node.children), [
           { greedy: true, options: [{ nodeType: "tag", tag: "column" }] },
         ]);
       },
@@ -136,11 +137,6 @@ export const config: Config = {
           required: true,
           errorLevel: "error",
         },
-      },
-      validate(node) {
-        return validateChildren(node.children, [
-          { options: [{ nodeType: "paragraph" }] },
-        ]);
       },
     },
     line: {
@@ -156,7 +152,7 @@ export const config: Config = {
         },
       },
       validate(node) {
-        return validateChildren(node.children, [
+        return validateChildren(unwrapInlineTags(node.children), [
           {
             optional: true,
             options: [{ nodeType: "tag", tag: "instructions" }],
@@ -183,7 +179,7 @@ export const config: Config = {
         },
       },
       validate(node) {
-        return validateChildren(node.children, [
+        return validateChildren(unwrapInlineTags(node.children), [
           { options: [{ nodeType: "tag", tag: "value" }] },
         ]);
       },
@@ -191,13 +187,7 @@ export const config: Config = {
     value: valueTag,
     piece: pieceTag,
     option: optionTag,
-    subtitle: {
-      validate(node) {
-        return validateChildren(node.children, [
-          { options: [{ nodeType: "paragraph" }] },
-        ]);
-      },
-    },
+    subtitle: {},
     instructions: {},
     commentary: {
       attributes: {
