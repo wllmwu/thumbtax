@@ -1,7 +1,12 @@
 import { absurd, FILING_STATUSES, FORM_CLASSES } from "@thumbtax/common";
 
 import { unwrapInlineTags } from "../schema/unwrapInlineTagChildren";
-import { isValueProviderType } from "../types/valueProviderType";
+import { NUMBER_SIGNS } from "../types/numberSign";
+import { ROUNDING_DIRECTIONS } from "../types/roundingDirection";
+import {
+  COMPUTED_VALUE_PROVIDER_TYPES,
+  isValueProviderType,
+} from "../types/valueProviderType";
 import { requireNumber, requireOneOf, requireString } from "./attributes";
 import { isTagNamed } from "./nodeHelpers";
 
@@ -13,22 +18,12 @@ import type { ValueSlot } from "../types/valueSlot";
 import type { Node } from "@markdoc/markdoc";
 import type { FilingStatus } from "@thumbtax/common";
 
-const COERCE_SIGNS = ["negative", "positive"] as const;
-const ROUND_DIRECTIONS = ["down", "up"] as const;
-
-const USER_INPUT_VALUE_PROVIDER_TYPES = [
-  "checkbox_input",
-  "list_amounts_input",
-  "number_input",
-  "override_number_input",
-  "select_instance_boxes_input",
-  "select_value_input",
-];
-
 function isComputedValueProvider(
   value: ValueProvider,
 ): value is ComputedValueProvider {
-  return !USER_INPUT_VALUE_PROVIDER_TYPES.includes(value.type);
+  return (
+    COMPUTED_VALUE_PROVIDER_TYPES.findIndex((t) => t === value.type) !== -1
+  );
 }
 
 function mapComputedValueProvider(node: Node): ComputedValueProvider {
@@ -228,7 +223,7 @@ export function mapValueProvider(node: Node): ValueProvider {
         coerceSign:
           node.attributes.coerceSign === undefined
             ? undefined
-            : requireOneOf(node.attributes.coerceSign, COERCE_SIGNS),
+            : requireOneOf(node.attributes.coerceSign, NUMBER_SIGNS),
         skipCondition:
           skipConditionNode === undefined
             ? undefined
@@ -248,7 +243,7 @@ export function mapValueProvider(node: Node): ValueProvider {
         coerceSign:
           node.attributes.coerceSign === undefined
             ? undefined
-            : requireOneOf(node.attributes.coerceSign, COERCE_SIGNS),
+            : requireOneOf(node.attributes.coerceSign, NUMBER_SIGNS),
       };
 
     case "piecewise_function": {
@@ -280,7 +275,7 @@ export function mapValueProvider(node: Node): ValueProvider {
         round:
           node.attributes.round === undefined
             ? undefined
-            : requireOneOf(node.attributes.round, ROUND_DIRECTIONS),
+            : requireOneOf(node.attributes.round, ROUNDING_DIRECTIONS),
       };
 
     case "select_instance_boxes_input": {

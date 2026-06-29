@@ -2,6 +2,7 @@ import { transform } from "@markdoc/markdoc";
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
 import { unwrapInlineTags } from "../schema/unwrapInlineTagChildren";
+import { FORM_CATEGORIES } from "../types/formCategory";
 import { requireNumber, requireOneOf, requireString } from "./attributes";
 import { extractPlainText } from "./extractPlainText";
 import { mapValueProvider } from "./mapValueProvider";
@@ -16,15 +17,6 @@ import type {
 import type { ValueProvider } from "../types/valueProvider";
 import type { Config, Node, RenderableTreeNodes } from "@markdoc/markdoc";
 import type { BoxFormat } from "@thumbtax/common";
-
-const FORM_CATEGORIES = ["income", "taxes"] as const;
-
-// `node.transform(config)` (the instance method) skips Markdoc's default node/tag
-// schema merging that the top-level `transform()` function performs, which would
-// cause built-in node types like `text` and `paragraph` to render as nothing.
-function transformSync(node: Node, config: Config): RenderableTreeNodes {
-  return transform(node, config);
-}
 
 function mapBoxAttributes(boxNode: Node): {
   identifier: string;
@@ -76,14 +68,14 @@ function mapLineAttributes(
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
-    instructions = transformSync(instructionsNode, config);
+    instructions = transform(instructionsNode, config);
     position++;
   }
 
   let commentary: RenderableTreeNodes | undefined;
   const commentaryNode = children[position];
   if (isTagNamed(commentaryNode, "commentary")) {
-    commentary = transformSync(commentaryNode, config);
+    commentary = transform(commentaryNode, config);
     position++;
   }
 
@@ -122,7 +114,7 @@ function mapColumn(
     instructions:
       instructionsNode === undefined
         ? undefined
-        : transformSync(instructionsNode, config),
+        : transform(instructionsNode, config),
   };
 }
 
@@ -143,14 +135,14 @@ function mapSection(
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
-    instructions = transformSync(instructionsNode, config);
+    instructions = transform(instructionsNode, config);
     position++;
   }
 
   let commentary: RenderableTreeNodes | undefined;
   const commentaryNode = children[position];
   if (isTagNamed(commentaryNode, "commentary")) {
-    commentary = transformSync(commentaryNode, config);
+    commentary = transform(commentaryNode, config);
     position++;
   }
 
@@ -203,14 +195,14 @@ export function mapFormSpecification(
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
-    instructions = transformSync(instructionsNode, config);
+    instructions = transform(instructionsNode, config);
     position++;
   }
 
   let commentary: RenderableTreeNodes | undefined;
   const commentaryNode = children[position];
   if (isTagNamed(commentaryNode, "commentary")) {
-    commentary = transformSync(commentaryNode, config);
+    commentary = transform(commentaryNode, config);
     position++;
   }
 

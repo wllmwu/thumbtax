@@ -1,3 +1,4 @@
+import type { FormCategory } from "./formCategory";
 import type { ValueProvider } from "./valueProvider";
 import type { RenderableTreeNodes } from "@markdoc/markdoc";
 import type { BoxFormat, BoxIdentifier, FormClass } from "@thumbtax/common";
@@ -8,7 +9,7 @@ type ColumnIndex = string;
 export type FormSpecification = {
   class: FormClass;
   irsPageUrl: string;
-  category: "income" | "taxes";
+  category: FormCategory;
   maxInstances: number | null;
   title: string;
   subtitle?: string;

@@ -1,3 +1,5 @@
+import type { NumberSign } from "./numberSign";
+import type { RoundingDirection } from "./roundingDirection";
 import type { BoxIdentifier, FilingStatus, FormClass } from "@thumbtax/common";
 
 type ConstantValueProvider = { type: "number_constant"; value: number };
@@ -23,7 +25,7 @@ type ArithmeticValueProvider =
       type: "quotient";
       dividend: ComputedValueProvider;
       divisor: ComputedValueProvider;
-      round?: "down" | "up";
+      round?: RoundingDirection;
     }
   | { type: "minimum"; values: Array<ComputedValueProvider> }
   | { type: "maximum"; values: Array<ComputedValueProvider> }
@@ -81,13 +83,13 @@ type UserInputValueProvider =
   | { type: "list_amounts_input" }
   | {
       type: "number_input";
-      coerceSign?: "negative" | "positive";
+      coerceSign?: NumberSign;
       skipCondition?: ComputedValueProvider;
     }
   | {
       type: "override_number_input";
       computedValue: ComputedValueProvider;
-      coerceSign?: "negative" | "positive";
+      coerceSign?: NumberSign;
     }
   | {
       type: "select_instance_boxes_input";
