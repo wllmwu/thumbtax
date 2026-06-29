@@ -5,8 +5,9 @@ import * as path from "node:path";
 import { mapFormSpecification } from "./build/mapFormSpecification";
 import { config } from "./schema";
 
-const DATA_DIRECTORY = path.join(__dirname, "data");
-const OUTPUT_DIRECTORY = path.join(__dirname, "generated");
+const SRC_DIRECTORY = path.join(import.meta.dirname, "..", "src");
+const DATA_DIRECTORY = path.join(SRC_DIRECTORY, "data");
+const OUTPUT_DIRECTORY = path.join(SRC_DIRECTORY, "generated");
 
 function buildForm(fileName: string): void {
   const filePath = path.join(DATA_DIRECTORY, fileName);

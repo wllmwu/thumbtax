@@ -8,6 +8,7 @@
     "dist"
   ],
   "scripts": {
+    "build:forms": "tsdown && node build-dist/buildForms.mjs",
     "build:schema": "tsdown",
     "fixlint": "eslint --fix",
     "lint": "eslint",
