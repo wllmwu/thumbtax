@@ -22,8 +22,7 @@ import { FormW2 } from "#src/specifications/data/formW2";
 import { FormW2_12_codes } from "#src/specifications/data/formW2_12_codes";
 
 import type { FormClass } from "@thumbtax/common";
-import type { FormSpecification } from "@thumbtax/forms";
-import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
+import type { FormSpecification, SpecificationRegistry } from "@thumbtax/forms";
 
 const allSpecifications: SpecificationRegistry = {
   f1040: Form1040,

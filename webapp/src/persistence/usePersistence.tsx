@@ -23,8 +23,8 @@ import {
 } from "#src/state/defaults";
 import { subscribeToStore, useStore } from "#src/state/useStore";
 
+import type { SpecificationRegistry } from "@thumbtax/forms";
 import type { LoadError } from "#src/persistence/types/loadError";
-import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 
 const AUTOSAVE_DEBOUNCE_MS = 300;
 

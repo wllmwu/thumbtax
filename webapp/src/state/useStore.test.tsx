@@ -11,9 +11,9 @@ import {
 import { subscribeToStore, useStore } from "#src/state/useStore";
 
 import type { FormClass } from "@thumbtax/common";
+import type { SpecificationRegistry } from "@thumbtax/forms";
 import type { UserInput } from "#src/common/types/userInput";
 import type { LoadError } from "#src/persistence/types/loadError";
-import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
 import type { UserPreferences } from "#src/state/types/userPreferences";

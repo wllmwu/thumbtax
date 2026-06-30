@@ -10,12 +10,12 @@ import {
 } from "#src/state/defaults";
 
 import type { BoxIdentifier, FilingStatus, FormClass } from "@thumbtax/common";
+import type { SpecificationRegistry } from "@thumbtax/forms";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { UserInput } from "#src/common/types/userInput";
 import type { Workbook } from "#src/common/types/workbook";
 import type { LoadError } from "#src/persistence/types/loadError";
-import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
 import type { UserPreferences } from "#src/state/types/userPreferences";

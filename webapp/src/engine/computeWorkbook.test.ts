@@ -47,11 +47,10 @@ import {
 } from "#src/specifications/test/fixtures";
 
 import type { FilingStatus } from "@thumbtax/common";
-import type { ValueProvider } from "@thumbtax/forms";
+import type { SpecificationRegistry, ValueProvider } from "@thumbtax/forms";
 import type { InstanceRegistry } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { ResolvedBox, Workbook } from "#src/common/types/workbook";
-import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 
 function makeTestData(fixture: Omit<ValueProviderFixture, "description">): {
   specificationRegistry: SpecificationRegistry;

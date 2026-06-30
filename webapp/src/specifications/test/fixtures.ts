@@ -5,8 +5,8 @@ import type {
   FormLine,
   FormSection,
   FormSpecification,
+  SpecificationRegistry,
 } from "@thumbtax/forms";
-import type { SpecificationRegistry } from "#src/specifications/types/specificationRegistry";
 
 export function makeBoxFixture(
   overrides?: Partial<FormBox<false>>,
