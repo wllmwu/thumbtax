@@ -20,6 +20,7 @@ export type FormSpecification = {
 
 export type FormSection<MultiColumns extends boolean> = {
   heading?: string;
+  subtitle?: string;
   instructions?: RenderableTreeNodes;
   commentary?: RenderableTreeNodes;
   lines: Array<FormLine<MultiColumns>>;

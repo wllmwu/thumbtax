@@ -57,7 +57,7 @@ function mapLineAttributes(
   config: Config,
 ): {
   index: string;
-  virtual: boolean;
+  virtual: boolean | undefined;
   instructions: RenderableTreeNodes | undefined;
   commentary: RenderableTreeNodes | undefined;
   boxNodes: Node[];
@@ -81,7 +81,10 @@ function mapLineAttributes(
 
   return {
     index: requireString(lineNode.attributes.index),
-    virtual: Boolean(lineNode.attributes.virtual),
+    virtual:
+      lineNode.attributes.virtual === undefined
+        ? undefined
+        : Boolean(lineNode.attributes.virtual),
     instructions,
     commentary,
     boxNodes: children.slice(position),
@@ -132,6 +135,13 @@ function mapSection(
     position++;
   }
 
+  let subtitle: string | undefined;
+  const subtitleNode = children[position];
+  if (isTagNamed(subtitleNode, "subtitle")) {
+    subtitle = extractPlainText(subtitleNode);
+    position++;
+  }
+
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
@@ -155,13 +165,13 @@ function mapSection(
     const lines = children
       .slice(position)
       .map((lineNode) => mapMultiColumnLine(lineNode, config));
-    return { heading, instructions, commentary, columns, lines };
+    return { heading, subtitle, instructions, commentary, columns, lines };
   }
 
   const lines = children
     .slice(position)
     .map((lineNode) => mapSingleColumnLine(lineNode, config));
-  return { heading, instructions, commentary, lines };
+  return { heading, subtitle, instructions, commentary, lines };
 }
 
 export function mapFormSpecification(

@@ -62,6 +62,10 @@ export const config: Config = {
           },
           {
             optional: true,
+            options: [{ nodeType: "tag", tag: "subtitle" }],
+          },
+          {
+            optional: true,
             options: [{ nodeType: "tag", tag: "instructions" }],
           },
           { optional: true, options: [{ nodeType: "tag", tag: "commentary" }] },
