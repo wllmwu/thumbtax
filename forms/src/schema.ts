@@ -4,6 +4,7 @@ import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 import alternativeMinimumTaxComputationPartial from "./data/partials/alternativeMinimumTaxComputation.mdoc";
 import taxComputationPartial from "./data/partials/taxComputation.mdoc";
 import { unwrapInlineTags } from "./schema/unwrapInlineTagChildren";
+import { unwrapListItemChildren } from "./schema/unwrapListItemChildren";
 import { validateChildren } from "./schema/validateChildren";
 import { validatePlainTextContent } from "./schema/validatePlainTextContent";
 import { validateProseContent } from "./schema/validateProseContent";
@@ -147,8 +148,9 @@ export const config: Config = {
       },
     },
     columns: {
+      children: ["list"],
       validate(node) {
-        return validateChildren(unwrapInlineTags(node.children), [
+        return validateChildren(unwrapListItemChildren(node.children), [
           { greedy: true, options: [{ nodeType: "tag", tag: "column" }] },
         ]);
       },

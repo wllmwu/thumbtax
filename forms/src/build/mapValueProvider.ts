@@ -1,6 +1,6 @@
 import { absurd, FILING_STATUSES, FORM_CLASSES } from "@thumbtax/common";
 
-import { unwrapInlineTags } from "../schema/unwrapInlineTagChildren";
+import { unwrapListItemChildren } from "../schema/unwrapListItemChildren";
 import { NUMBER_SIGNS } from "../types/numberSign";
 import { ROUNDING_DIRECTIONS } from "../types/roundingDirection";
 import {
@@ -37,7 +37,7 @@ function mapComputedValueProvider(node: Node): ComputedValueProvider {
 }
 
 function valueTagChildren(node: Node): Node[] {
-  return unwrapInlineTags(node.children).filter((child) =>
+  return unwrapListItemChildren(node.children).filter((child) =>
     isTagNamed(child, "value"),
   );
 }
@@ -248,7 +248,7 @@ export function mapValueProvider(node: Node): ValueProvider {
 
     case "piecewise_function": {
       const children = valueTagChildren(node);
-      const pieceNodes = unwrapInlineTags(node.children).filter((child) =>
+      const pieceNodes = unwrapListItemChildren(node.children).filter((child) =>
         isTagNamed(child, "piece"),
       );
       return {
@@ -279,8 +279,8 @@ export function mapValueProvider(node: Node): ValueProvider {
       };
 
     case "select_instance_boxes_input": {
-      const optionNodes = unwrapInlineTags(node.children).filter((child) =>
-        isTagNamed(child, "option"),
+      const optionNodes = unwrapListItemChildren(node.children).filter(
+        (child) => isTagNamed(child, "option"),
       );
       return {
         type: valueType,

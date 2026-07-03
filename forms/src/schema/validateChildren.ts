@@ -6,6 +6,18 @@ type ChildSpec = {
   attributes?: Record<string, unknown>;
 };
 
+function formatOptions(options: ChildSpec[]): string {
+  return options
+    .map(({ nodeType, tag }) => {
+      if (nodeType === "tag" && tag) {
+        return `tag(${tag})`;
+      } else {
+        return nodeType;
+      }
+    })
+    .join(" | ");
+}
+
 /**
  * Validates the given Markdoc nodes.
  *
@@ -35,18 +47,11 @@ export function validateChildren(
   let childIndex = 0;
   let specIndex = 0;
   let didSpecMatchPreviousChild = false;
+
   while (childIndex < children.length && specIndex < specs.length) {
     const child = children[childIndex];
     const specItem = specs[specIndex];
-    const optionTypes = specItem.options
-      .map(({ nodeType, tag }) => {
-        if (nodeType === "tag" && tag) {
-          return `tag(${tag})`;
-        } else {
-          return nodeType;
-        }
-      })
-      .join(" | ");
+    const optionTypes = formatOptions(specItem.options);
 
     let error: ValidationError | undefined = undefined;
     const matchingTypeAndTag = specItem.options.filter(
@@ -97,6 +102,9 @@ export function validateChildren(
     } else {
       childIndex++;
       if (specItem.greedy) {
+        if (childIndex >= children.length) {
+          specIndex++;
+        }
         didSpecMatchPreviousChild = true;
       } else {
         specIndex++;
@@ -106,20 +114,14 @@ export function validateChildren(
   }
 
   const remainingSpecs = specs.slice(specIndex);
-  const currentGreedySpecAlreadyMatched =
-    remainingSpecs[0]?.greedy && didSpecMatchPreviousChild;
-  if (
-    specIndex < specs.length &&
-    remainingSpecs.some(
-      (spec, index) =>
-        !spec.optional && !(index === 0 && currentGreedySpecAlreadyMatched),
-    )
-  ) {
+  const nextRequiredSpec = remainingSpecs.find((spec) => !spec.optional);
+  if (specIndex < specs.length && nextRequiredSpec !== undefined) {
+    const optionTypes = formatOptions(nextRequiredSpec.options);
     return [
       {
         id: "missing-required-child",
         level: "error",
-        message: "Missing at least one required child",
+        message: `Missing at least one required child: ${optionTypes}`,
       },
     ];
   } else if (childIndex < children.length) {

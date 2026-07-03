@@ -273,7 +273,7 @@ describe("validateChildren", () => {
       {
         id: "missing-required-child",
         level: "error",
-        message: "Missing at least one required child",
+        message: "Missing at least one required child: text",
       },
     ]);
   });

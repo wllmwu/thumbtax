@@ -6,7 +6,7 @@ import {
   type ValueProviderType,
 } from "../types/valueProviderType";
 import { VALUE_SLOTS, type ValueSlot } from "../types/valueSlot";
-import { unwrapInlineTags } from "./unwrapInlineTagChildren";
+import { unwrapListItemChildren } from "./unwrapListItemChildren";
 import { validateChildren } from "./validateChildren";
 
 import type { Node, Schema, ValidationError } from "@markdoc/markdoc";
@@ -76,23 +76,25 @@ function unexpectedSlotErrors(children: Node[]): ValidationError[] {
 const noChildren = (node: Node) => validateChildren(node.children, []);
 
 const oneUnslottedValue = (node: Node): ValidationError[] => {
-  const errors = validateChildren(unwrapInlineTags(node.children), [
+  const unwrappedChildren = unwrapListItemChildren(node.children);
+  const errors = validateChildren(unwrappedChildren, [
     { options: [valueChildSpec()] },
   ]);
-  return errors.length > 0 ? errors : unexpectedSlotErrors(node.children);
+  return errors.length > 0 ? errors : unexpectedSlotErrors(unwrappedChildren);
 };
 
 const unslottedValues = (node: Node): ValidationError[] => {
-  const errors = validateChildren(unwrapInlineTags(node.children), [
+  const unwrappedChildren = unwrapListItemChildren(node.children);
+  const errors = validateChildren(unwrappedChildren, [
     { greedy: true, options: [valueChildSpec()] },
   ]);
-  return errors.length > 0 ? errors : unexpectedSlotErrors(node.children);
+  return errors.length > 0 ? errors : unexpectedSlotErrors(unwrappedChildren);
 };
 
 function orderedSlots(slots: Array<{ slot: ValueSlot; optional?: boolean }>) {
   return (node: Node) =>
     validateChildren(
-      unwrapInlineTags(node.children),
+      unwrapListItemChildren(node.children),
       slots.map(({ slot, optional }) => ({
         optional,
         options: [valueChildSpec(slot)],
@@ -101,18 +103,19 @@ function orderedSlots(slots: Array<{ slot: ValueSlot; optional?: boolean }>) {
 }
 
 const comparisonChildren = (node: Node): ValidationError[] => {
-  const errors = validateChildren(unwrapInlineTags(node.children), [
+  const unwrappedChildren = unwrapListItemChildren(node.children);
+  const errors = validateChildren(unwrappedChildren, [
     { options: [valueChildSpec()] },
     { optional: true, options: [valueChildSpec("comparison.minimum")] },
     { optional: true, options: [valueChildSpec("comparison.maximum")] },
   ]);
   return errors.length > 0
     ? errors
-    : unexpectedSlotErrors(node.children.slice(0, 1));
+    : unexpectedSlotErrors(unwrappedChildren.slice(0, 1));
 };
 
 const piecewiseFunctionChildren = (node: Node): ValidationError[] =>
-  validateChildren(unwrapInlineTags(node.children), [
+  validateChildren(unwrapListItemChildren(node.children), [
     { options: [valueChildSpec("piecewise_function.input")] },
     { greedy: true, options: [{ nodeType: "tag", tag: "piece" }] },
     { options: [valueChildSpec("piecewise_function.lastOutput")] },
@@ -120,7 +123,8 @@ const piecewiseFunctionChildren = (node: Node): ValidationError[] =>
 
 const filingStatusMapChildren = (node: Node): ValidationError[] => {
   const seenFilingStatusKeys = new Set<string>();
-  for (const [index, child] of node.children.entries()) {
+  const unwrappedChildren = unwrapListItemChildren(node.children);
+  for (const [index, child] of unwrappedChildren.entries()) {
     if (child.type !== "tag" || child.tag !== "value") {
       return [
         {
@@ -133,7 +137,7 @@ const filingStatusMapChildren = (node: Node): ValidationError[] => {
 
     const { slot, filingStatusKey } = child.attributes;
     if (slot === "filing_status_map.default") {
-      if (index !== node.children.length - 1) {
+      if (index !== unwrappedChildren.length - 1) {
         return [
           {
             id: "default-not-last",
@@ -167,19 +171,20 @@ const filingStatusMapChildren = (node: Node): ValidationError[] => {
 };
 
 const selectInstanceBoxesInputChildren = (node: Node): ValidationError[] =>
-  validateChildren(unwrapInlineTags(node.children), [
+  validateChildren(unwrapListItemChildren(node.children), [
     { greedy: true, options: [{ nodeType: "tag", tag: "option" }] },
   ]);
 
 const selectValueInputChildren = (node: Node): ValidationError[] => {
-  const errors = validateChildren(unwrapInlineTags(node.children), [
+  const unwrappedChildren = unwrapListItemChildren(node.children);
+  const errors = validateChildren(unwrappedChildren, [
     { greedy: true, options: [valueChildSpec("select_value_input.options")] },
   ]);
   if (errors.length > 0) {
     return errors;
   }
 
-  for (const [index, child] of node.children.entries()) {
+  for (const [index, child] of unwrappedChildren.entries()) {
     if (typeof child.attributes.label !== "string") {
       return [
         {
@@ -410,6 +415,7 @@ export const valueTag: Schema = {
       errorLevel: "error",
     },
   },
+  children: ["list"],
   validate(node) {
     const valueType = node.attributes.type;
     if (!isValueProviderType(valueType)) {
@@ -434,13 +440,14 @@ export const valueTag: Schema = {
 };
 
 export const pieceTag: Schema = {
+  children: ["list"],
   validate(node) {
     const attributeErrors = validateAttributes(node, [], []);
     if (attributeErrors.length > 0) {
       return attributeErrors;
     }
 
-    return validateChildren(unwrapInlineTags(node.children), [
+    return validateChildren(unwrapListItemChildren(node.children), [
       {
         options: [valueChildSpec("piecewise_function.pieces.inputUpperBound")],
       },

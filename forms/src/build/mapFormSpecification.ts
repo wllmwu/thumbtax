@@ -2,6 +2,7 @@ import { transform } from "@markdoc/markdoc";
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
 import { unwrapInlineTags } from "../schema/unwrapInlineTagChildren";
+import { unwrapListItemChildren } from "../schema/unwrapListItemChildren";
 import { FORM_CATEGORIES } from "../types/formCategory";
 import { requireNumber, requireOneOf, requireString } from "./attributes";
 import { extractPlainText } from "./extractPlainText";
@@ -159,7 +160,7 @@ function mapSection(
   const columnsNode = children[position];
   if (isTagNamed(columnsNode, "columns")) {
     position++;
-    const columns = unwrapInlineTags(columnsNode.children)
+    const columns = unwrapListItemChildren(columnsNode.children)
       .filter((child) => isTagNamed(child, "column"))
       .map((columnNode) => mapColumn(columnNode, config));
     const lines = children
