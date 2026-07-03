@@ -6,6 +6,9 @@ export default defineConfig([
       onlyBundle: ["@markdoc/markdoc"],
     },
     entry: ["./src/schema.ts"],
+    loader: {
+      ".mdoc": "text",
+    },
     outDir: "./schema-dist",
   },
   {
@@ -13,6 +16,9 @@ export default defineConfig([
       onlyBundle: ["@markdoc/markdoc", "prettier"],
     },
     entry: ["./src/buildForms.ts"],
+    loader: {
+      ".mdoc": "text",
+    },
     outDir: "./build-dist",
   },
 ]);
