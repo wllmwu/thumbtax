@@ -211,7 +211,12 @@ export const config: Config = {
       },
       validate(node) {
         return validateChildren(unwrapInlineTags(node.children), [
-          { options: [{ nodeType: "tag", tag: "value" }] },
+          {
+            options: [
+              { nodeType: "tag", tag: "value" },
+              { nodeType: "tag", tag: "partial" },
+            ],
+          },
         ]);
       },
     },
