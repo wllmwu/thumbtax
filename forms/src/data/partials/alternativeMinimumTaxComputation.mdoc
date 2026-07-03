@@ -1,0 +1,31 @@
+{% value type="conditional" %}
+{% value type="comparison" slot="conditional.condition" %}
+{% value type="box_reference" box=$box /%}
+
+{% value type="filing_status_map" slot="comparison.maximum" %}
+{% value type="number_constant" value=119550 filingStatusKey="married_filing_separately" /%}
+
+{% value type="number_constant" value=239100 slot="filing_status_map.default" /%}
+{% /value %}
+{% /value %}
+
+{% value type="product" slot="conditional.trueValue" %}
+{% value type="box_reference" box=$box /%}
+
+{% value type="number_constant" value=0.26 /%}
+{% /value %}
+
+{% value type="difference" slot="conditional.falseValue" %}
+{% value type="product" slot="difference.minuend" %}
+{% value type="box_reference" box=$box /%}
+
+{% value type="number_constant" value=0.28 /%}
+{% /value %}
+
+{% value type="filing_status_map" slot="difference.subtrahend" %}
+{% value type="number_constant" value=2391 filingStatusKey="married_filing_separately" /%}
+
+{% value type="number_constant" value=4782 slot="filing_status_map.default" /%}
+{% /value %}
+{% /value %}
+{% /value %}

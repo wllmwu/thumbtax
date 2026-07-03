@@ -1,6 +1,7 @@
 import { nodes, parse } from "@markdoc/markdoc";
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
+import alternativeMinimumTaxComputationPartial from "./data/partials/alternativeMinimumTaxComputation.mdoc";
 import taxComputationPartial from "./data/partials/taxComputation.mdoc";
 import { unwrapInlineTags } from "./schema/unwrapInlineTagChildren";
 import { validateChildren } from "./schema/validateChildren";
@@ -235,6 +236,9 @@ export const config: Config = {
     },
   },
   partials: {
+    alternativeMinimumTaxComputation: parse(
+      alternativeMinimumTaxComputationPartial,
+    ),
     taxComputation: parse(taxComputationPartial),
   },
 };
