@@ -363,15 +363,15 @@ const TYPE_SPECS: Record<ValueProviderType, TypeSpec> = {
 
 export const valueTag: Schema = {
   attributes: {
+    slot: {
+      type: "String",
+      matches: [...VALUE_SLOTS],
+      errorLevel: "error",
+    },
     type: {
       type: "String",
       required: true,
       matches: [...VALUE_PROVIDER_TYPES],
-      errorLevel: "error",
-    },
-    slot: {
-      type: "String",
-      matches: [...VALUE_SLOTS],
       errorLevel: "error",
     },
     box: {
