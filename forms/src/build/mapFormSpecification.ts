@@ -163,16 +163,18 @@ function mapSection(
     const columns = unwrapListItemChildren(columnsNode.children)
       .filter((child) => isTagNamed(child, "column"))
       .map((columnNode) => mapColumn(columnNode, config));
-    const lines = children
-      .slice(position)
-      .map((lineNode) => mapMultiColumnLine(lineNode, config));
+    const linesNode = children[position];
+    const lines = unwrapListItemChildren(linesNode.children).map((lineNode) =>
+      mapMultiColumnLine(lineNode, config),
+    );
     return { heading, subtitle, instructions, commentary, columns, lines };
+  } else {
+    const linesNode = children[position];
+    const lines = unwrapListItemChildren(linesNode.children).map((lineNode) =>
+      mapSingleColumnLine(lineNode, config),
+    );
+    return { heading, subtitle, instructions, commentary, lines };
   }
-
-  const lines = children
-    .slice(position)
-    .map((lineNode) => mapSingleColumnLine(lineNode, config));
-  return { heading, subtitle, instructions, commentary, lines };
 }
 
 export function mapFormSpecification(

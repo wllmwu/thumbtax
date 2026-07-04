@@ -73,7 +73,7 @@ export const config: Config = {
           },
           { optional: true, options: [{ nodeType: "tag", tag: "commentary" }] },
           { optional: true, options: [{ nodeType: "tag", tag: "columns" }] },
-          { greedy: true, options: [{ nodeType: "tag", tag: "line" }] },
+          { options: [{ nodeType: "tag", tag: "lines" }] },
         ]);
         if (childErrors) {
           return childErrors;
@@ -97,7 +97,8 @@ export const config: Config = {
             },
             [],
           );
-          for (const line of node.children.slice(2)) {
+          const lines = unwrapListItemChildren(node.children[2].children);
+          for (const line of lines) {
             const lineColumns = line.children.reduce<string[]>((acc, curr) => {
               if (
                 curr.type === "tag" &&
@@ -124,7 +125,8 @@ export const config: Config = {
             }
           }
         } else {
-          for (const line of node.children.slice(1)) {
+          const lines = unwrapListItemChildren(node.children[1].children);
+          for (const line of lines) {
             const boxes = line.children.filter(
               (child) => child.type === "tag" && child.tag === "box",
             );
@@ -169,6 +171,13 @@ export const config: Config = {
             optional: true,
             options: [{ nodeType: "tag", tag: "instructions" }],
           },
+        ]);
+      },
+    },
+    lines: {
+      validate(node) {
+        return validateChildren(unwrapListItemChildren(node.children), [
+          { greedy: true, options: [{ nodeType: "tag", tag: "line" }] },
         ]);
       },
     },
