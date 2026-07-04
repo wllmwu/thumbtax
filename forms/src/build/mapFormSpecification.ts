@@ -63,7 +63,7 @@ function mapLineAttributes(
   commentary: RenderableTreeNodes | undefined;
   boxNodes: Node[];
 } {
-  const children = unwrapInlineTags(lineNode.children);
+  const children = unwrapListItemChildren(lineNode.children);
   let position = 0;
 
   let instructions: RenderableTreeNodes | undefined;

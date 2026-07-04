@@ -185,7 +185,7 @@ export const config: Config = {
         },
       },
       validate(node) {
-        return validateChildren(unwrapInlineTags(node.children), [
+        return validateChildren(unwrapListItemChildren(node.children), [
           {
             optional: true,
             options: [{ nodeType: "tag", tag: "instructions" }],
