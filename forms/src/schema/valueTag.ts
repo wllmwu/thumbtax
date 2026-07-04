@@ -106,8 +106,8 @@ const comparisonChildren = (node: Node): ValidationError[] => {
   const unwrappedChildren = unwrapListItemChildren(node.children);
   const errors = validateChildren(unwrappedChildren, [
     { options: [valueChildSpec()] },
-    { optional: true, options: [valueChildSpec("comparison.minimum")] },
-    { optional: true, options: [valueChildSpec("comparison.maximum")] },
+    { optional: true, options: [valueChildSpec("minimum")] },
+    { optional: true, options: [valueChildSpec("maximum")] },
   ]);
   return errors.length > 0
     ? errors
@@ -116,9 +116,9 @@ const comparisonChildren = (node: Node): ValidationError[] => {
 
 const piecewiseFunctionChildren = (node: Node): ValidationError[] =>
   validateChildren(unwrapListItemChildren(node.children), [
-    { options: [valueChildSpec("piecewise_function.input")] },
+    { options: [valueChildSpec("input")] },
     { greedy: true, options: [{ nodeType: "tag", tag: "piece" }] },
-    { options: [valueChildSpec("piecewise_function.lastOutput")] },
+    { options: [valueChildSpec("lastOutput")] },
   ]);
 
 const filingStatusMapChildren = (node: Node): ValidationError[] => {
@@ -136,7 +136,7 @@ const filingStatusMapChildren = (node: Node): ValidationError[] => {
     }
 
     const { slot, filingStatusKey } = child.attributes;
-    if (slot === "filing_status_map.default") {
+    if (slot === "default") {
       if (index !== unwrappedChildren.length - 1) {
         return [
           {
@@ -162,7 +162,7 @@ const filingStatusMapChildren = (node: Node): ValidationError[] => {
         {
           id: "unexpected-child",
           level: "error",
-          message: `Child number ${index + 1} should have filingStatusKey set or slot="filing_status_map.default"`,
+          message: `Child number ${index + 1} should have filingStatusKey set or slot="default"`,
         },
       ];
     }
@@ -178,7 +178,7 @@ const selectInstanceBoxesInputChildren = (node: Node): ValidationError[] =>
 const selectValueInputChildren = (node: Node): ValidationError[] => {
   const unwrappedChildren = unwrapListItemChildren(node.children);
   const errors = validateChildren(unwrappedChildren, [
-    { greedy: true, options: [valueChildSpec("select_value_input.options")] },
+    { greedy: true, options: [valueChildSpec()] },
   ]);
   if (errors.length > 0) {
     return errors;
@@ -229,9 +229,9 @@ const TYPE_SPECS: Record<ValueProviderType, TypeSpec> = {
     requiredAttributes: [],
     optionalAttributes: [],
     validateChildren: orderedSlots([
-      { slot: "conditional.condition" },
-      { slot: "conditional.trueValue" },
-      { slot: "conditional.falseValue" },
+      { slot: "condition" },
+      { slot: "trueValue" },
+      { slot: "falseValue" },
     ]),
   },
   conjunction: {
@@ -243,8 +243,8 @@ const TYPE_SPECS: Record<ValueProviderType, TypeSpec> = {
     requiredAttributes: [],
     optionalAttributes: [],
     validateChildren: orderedSlots([
-      { slot: "difference.minuend" },
-      { slot: "difference.subtrahend" },
+      { slot: "minuend" },
+      { slot: "subtrahend" },
     ]),
   },
   disjunction: {
@@ -300,9 +300,7 @@ const TYPE_SPECS: Record<ValueProviderType, TypeSpec> = {
   number_input: {
     requiredAttributes: [],
     optionalAttributes: ["coerceSign"],
-    validateChildren: orderedSlots([
-      { slot: "number_input.skipCondition", optional: true },
-    ]),
+    validateChildren: orderedSlots([{ slot: "skipCondition", optional: true }]),
   },
   numerical_negation: {
     requiredAttributes: [],
@@ -312,9 +310,7 @@ const TYPE_SPECS: Record<ValueProviderType, TypeSpec> = {
   override_number_input: {
     requiredAttributes: [],
     optionalAttributes: ["coerceSign"],
-    validateChildren: orderedSlots([
-      { slot: "override_number_input.computedValue" },
-    ]),
+    validateChildren: orderedSlots([{ slot: "computedValue" }]),
   },
   piecewise_function: {
     requiredAttributes: [],
@@ -329,10 +325,7 @@ const TYPE_SPECS: Record<ValueProviderType, TypeSpec> = {
   quotient: {
     requiredAttributes: [],
     optionalAttributes: ["round"],
-    validateChildren: orderedSlots([
-      { slot: "quotient.dividend" },
-      { slot: "quotient.divisor" },
-    ]),
+    validateChildren: orderedSlots([{ slot: "dividend" }, { slot: "divisor" }]),
   },
   select_instance_boxes_input: {
     requiredAttributes: [],
@@ -449,9 +442,9 @@ export const pieceTag: Schema = {
 
     return validateChildren(unwrapListItemChildren(node.children), [
       {
-        options: [valueChildSpec("piecewise_function.pieces.inputUpperBound")],
+        options: [valueChildSpec("inputUpperBound")],
       },
-      { options: [valueChildSpec("piecewise_function.pieces.output")] },
+      { options: [valueChildSpec("output")] },
     ]);
   },
 };

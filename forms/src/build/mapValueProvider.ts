@@ -76,11 +76,9 @@ function mapPiece(pieceNode: Node): {
   const children = valueTagChildren(pieceNode);
   return {
     inputUpperBound: mapComputedValueProvider(
-      findBySlot(children, "piecewise_function.pieces.inputUpperBound"),
+      findBySlot(children, "inputUpperBound"),
     ),
-    output: mapComputedValueProvider(
-      findBySlot(children, "piecewise_function.pieces.output"),
-    ),
+    output: mapComputedValueProvider(findBySlot(children, "output")),
   };
 }
 
@@ -125,8 +123,8 @@ export function mapValueProvider(node: Node): ValueProvider {
 
     case "comparison": {
       const children = valueTagChildren(node);
-      const minimumNode = findOptionalBySlot(children, "comparison.minimum");
-      const maximumNode = findOptionalBySlot(children, "comparison.maximum");
+      const minimumNode = findOptionalBySlot(children, "minimum");
+      const maximumNode = findOptionalBySlot(children, "maximum");
       return {
         type: valueType,
         value: mapComputedValueProvider(findSingleUnslotted(children)),
@@ -149,14 +147,10 @@ export function mapValueProvider(node: Node): ValueProvider {
       const children = valueTagChildren(node);
       return {
         type: valueType,
-        condition: mapComputedValueProvider(
-          findBySlot(children, "conditional.condition"),
-        ),
-        trueValue: mapComputedValueProvider(
-          findBySlot(children, "conditional.trueValue"),
-        ),
+        condition: mapComputedValueProvider(findBySlot(children, "condition")),
+        trueValue: mapComputedValueProvider(findBySlot(children, "trueValue")),
         falseValue: mapComputedValueProvider(
-          findBySlot(children, "conditional.falseValue"),
+          findBySlot(children, "falseValue"),
         ),
       };
     }
@@ -178,11 +172,9 @@ export function mapValueProvider(node: Node): ValueProvider {
       const children = valueTagChildren(node);
       return {
         type: valueType,
-        minuend: mapComputedValueProvider(
-          findBySlot(children, "difference.minuend"),
-        ),
+        minuend: mapComputedValueProvider(findBySlot(children, "minuend")),
         subtrahend: mapComputedValueProvider(
-          findBySlot(children, "difference.subtrahend"),
+          findBySlot(children, "subtrahend"),
         ),
       };
     }
@@ -191,7 +183,7 @@ export function mapValueProvider(node: Node): ValueProvider {
       const values: Partial<Record<FilingStatus, ComputedValueProvider>> = {};
       let defaultValue: ComputedValueProvider | undefined;
       for (const child of node.children) {
-        if (child.attributes.slot === "filing_status_map.default") {
+        if (child.attributes.slot === "default") {
           defaultValue = mapComputedValueProvider(child);
         } else {
           const filingStatusKey = requireOneOf(
@@ -216,7 +208,7 @@ export function mapValueProvider(node: Node): ValueProvider {
     case "number_input": {
       const skipConditionNode = findOptionalBySlot(
         valueTagChildren(node),
-        "number_input.skipCondition",
+        "skipCondition",
       );
       return {
         type: valueType,
@@ -235,10 +227,7 @@ export function mapValueProvider(node: Node): ValueProvider {
       return {
         type: valueType,
         computedValue: mapComputedValueProvider(
-          findBySlot(
-            valueTagChildren(node),
-            "override_number_input.computedValue",
-          ),
+          findBySlot(valueTagChildren(node), "computedValue"),
         ),
         coerceSign:
           node.attributes.coerceSign === undefined
@@ -253,12 +242,10 @@ export function mapValueProvider(node: Node): ValueProvider {
       );
       return {
         type: valueType,
-        input: mapComputedValueProvider(
-          findBySlot(children, "piecewise_function.input"),
-        ),
+        input: mapComputedValueProvider(findBySlot(children, "input")),
         pieces: pieceNodes.map(mapPiece),
         lastOutput: mapComputedValueProvider(
-          findBySlot(children, "piecewise_function.lastOutput"),
+          findBySlot(children, "lastOutput"),
         ),
       };
     }
@@ -267,10 +254,10 @@ export function mapValueProvider(node: Node): ValueProvider {
       return {
         type: valueType,
         dividend: mapComputedValueProvider(
-          findBySlot(valueTagChildren(node), "quotient.dividend"),
+          findBySlot(valueTagChildren(node), "dividend"),
         ),
         divisor: mapComputedValueProvider(
-          findBySlot(valueTagChildren(node), "quotient.divisor"),
+          findBySlot(valueTagChildren(node), "divisor"),
         ),
         round:
           node.attributes.round === undefined
