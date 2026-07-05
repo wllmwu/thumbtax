@@ -4,6 +4,7 @@ import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 import { FORM_CATEGORIES } from "../types/formCategory";
 import { requireNumber, requireOneOf, requireString } from "./attributes";
 import { extractPlainText } from "./extractPlainText";
+import { extractProse } from "./extractProse";
 import { mapValueProvider } from "./mapValueProvider";
 import { isTagNamed } from "./nodeHelpers";
 
@@ -64,14 +65,14 @@ function mapLineAttributes(lineNode: Tag): {
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
-    instructions = instructionsNode.children;
+    instructions = extractProse(instructionsNode);
     position++;
   }
 
   let commentary: RenderableTreeNodes | undefined;
   const commentaryNode = children[position];
   if (isTagNamed(commentaryNode, "commentary")) {
-    commentary = commentaryNode.children;
+    commentary = extractProse(commentaryNode);
     position++;
   }
 
@@ -110,7 +111,7 @@ function mapColumn(columnNode: Tag): {
   );
   return {
     index: requireString(columnNode.attributes.index),
-    instructions: instructionsNode?.children,
+    instructions: instructionsNode ? extractProse(instructionsNode) : undefined,
   };
 }
 
@@ -135,14 +136,14 @@ function mapSection(sectionNode: Tag): FormSection<false> | FormSection<true> {
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
-    instructions = instructionsNode.children;
+    instructions = extractProse(instructionsNode);
     position++;
   }
 
   let commentary: RenderableTreeNodes | undefined;
   const commentaryNode = children[position];
   if (isTagNamed(commentaryNode, "commentary")) {
-    commentary = commentaryNode.children;
+    commentary = extractProse(commentaryNode);
     position++;
   }
 
@@ -199,14 +200,14 @@ export function mapFormSpecification(
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
-    instructions = instructionsNode.children;
+    instructions = extractProse(instructionsNode);
     position++;
   }
 
   let commentary: RenderableTreeNodes | undefined;
   const commentaryNode = children[position];
   if (isTagNamed(commentaryNode, "commentary")) {
-    commentary = commentaryNode.children;
+    commentary = extractProse(commentaryNode);
     position++;
   }
 
