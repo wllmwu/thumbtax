@@ -1,9 +1,28 @@
-import { parse, validate, type ValidationError } from "@markdoc/markdoc";
+import { parse, Tag, transform, validate } from "@markdoc/markdoc";
 import { describe, expect, it } from "vitest";
 
 import { optionTag, pieceTag, valueTag } from "./valueTag";
 
-function validateValueTag(document: string): ValidationError[] {
+import type { RenderableTreeNode, ValidationError } from "@markdoc/markdoc";
+
+function expectTag(maybeTag: unknown): asserts maybeTag is Tag {
+  expect(Tag.isTag(maybeTag)).toEqual(true);
+}
+
+function transformValueTags(document: string): RenderableTreeNode[] {
+  const parsed = parse(document);
+  const transformed = transform(parsed, {
+    partials: {
+      testPartial: parse(`{% value type="checkbox_input" /%}`),
+    },
+    tags: { value: valueTag, option: optionTag, piece: pieceTag },
+  });
+  expectTag(transformed);
+  expect(transformed.name).toEqual("article");
+  return transformed.children;
+}
+
+function validateValueTags(document: string): ValidationError[] {
   const parsed = parse(document);
   return validate(parsed, {
     tags: { value: valueTag, option: optionTag, piece: pieceTag },
@@ -11,10 +30,50 @@ function validateValueTag(document: string): ValidationError[] {
 }
 
 describe("valueTag", () => {
-  describe("no children", () => {
+  describe("transform: _partial_passthrough", () => {
+    it("transforms _partial_passthrough value tag into contents of partial", () => {
+      const document = `
+{% value type="_partial_passthrough" %}
+- {% partial file="testPartial" /%}
+{% /value %}
+`;
+      const node = transformValueTags(document)[0];
+      expectTag(node);
+      expect(node.name).toEqual("value");
+      expect(node.attributes).toEqual({ type: "checkbox_input" });
+    });
+
+    it("copies attributes from _partial_passthrough value tag onto partial root", () => {
+      const document = `
+{% value type="filing_status_map" %}
+- {% value filingStatusKey="single" type="_partial_passthrough" %}
+  - {% partial file="testPartial" /%}
+  {% /value %}
+- {% value slot="default" type="_partial_passthrough" %}
+  - {% partial file="testPartial" /%}
+  {% /value %}
+{% /value %}
+`;
+      const mapNode = transformValueTags(document)[0];
+      expectTag(mapNode);
+      const [singleNode, defaultNode] = mapNode.children;
+      expectTag(singleNode);
+      expectTag(defaultNode);
+      expect(singleNode.attributes).toEqual({
+        filingStatusKey: "single",
+        type: "checkbox_input",
+      });
+      expect(defaultNode.attributes).toEqual({
+        slot: "default",
+        type: "checkbox_input",
+      });
+    });
+  });
+
+  describe("validate: no children", () => {
     it("accepts when tag has no children", () => {
       const document = `{% value type="checkbox_input" /%}`;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -24,19 +83,19 @@ describe("valueTag", () => {
 - {% value type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([expect.objectContaining({ id: "extra-child" })]);
     });
   });
 
-  describe("single child with no slot", () => {
+  describe("validate: single child with no slot", () => {
     it("accepts when tag contains one value with no slot", () => {
       const document = `
 {% value type="absolute_value" %}
 - {% value type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -46,7 +105,7 @@ describe("valueTag", () => {
 {% value type="number_input" /%}
 {% /value %}
 `;
-      const errors1 = validateValueTag(document1);
+      const errors1 = validateValueTags(document1);
       expect(errors1).toEqual([
         expect.objectContaining({ id: "child-invalid" }),
         expect.objectContaining({ id: "missing-required-child" }),
@@ -59,7 +118,7 @@ describe("valueTag", () => {
 - {% value type="number_input" /%}
 {% /value %}
 `;
-      const errors2 = validateValueTag(document2);
+      const errors2 = validateValueTags(document2);
       expect(errors2).toEqual([expect.objectContaining({ id: "extra-child" })]);
     });
 
@@ -70,7 +129,7 @@ describe("valueTag", () => {
 - {% value type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([expect.objectContaining({ id: "extra-child" })]);
     });
 
@@ -80,7 +139,7 @@ describe("valueTag", () => {
 - {% value slot="maximum" type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([
         {
           id: "unexpected-slot",
@@ -91,14 +150,14 @@ describe("valueTag", () => {
     });
   });
 
-  describe("multiple children with no slots", () => {
+  describe("validate: multiple children with no slots", () => {
     it("accepts when tag contains one value with no slot", () => {
       const document = `
 {% value type="sum" %}
 - {% value type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -110,7 +169,7 @@ describe("valueTag", () => {
 - {% value type="number_constant" value=10 /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -119,7 +178,7 @@ describe("valueTag", () => {
 {% value type="conjunction" %}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([
         expect.objectContaining({ id: "missing-required-child" }),
       ]);
@@ -131,14 +190,14 @@ describe("valueTag", () => {
 - {% value slot="minimum" type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([
         expect.objectContaining({ id: "unexpected-slot" }),
       ]);
     });
   });
 
-  describe("ordered slots", () => {
+  describe("validate: ordered slots", () => {
     it("accepts required slots in order", () => {
       const document = `
 {% value type="difference" %}
@@ -146,7 +205,7 @@ describe("valueTag", () => {
 - {% value slot="subtrahend" type="number_constant" value=5 /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -157,7 +216,7 @@ describe("valueTag", () => {
 - {% value slot="minuend" type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([
         expect.objectContaining({ id: "child-attributes" }),
       ]);
@@ -170,7 +229,7 @@ describe("valueTag", () => {
 - {% value slot="minuend" type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([
         expect.objectContaining({ id: "child-attributes" }),
       ]);
@@ -182,7 +241,7 @@ describe("valueTag", () => {
 - {% value slot="minuend" type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([
         expect.objectContaining({ id: "missing-required-child" }),
       ]);
@@ -193,7 +252,7 @@ describe("valueTag", () => {
 {% value type="number_input" %}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -203,7 +262,7 @@ describe("valueTag", () => {
 - {% value slot="skipCondition" type="checkbox_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -214,12 +273,12 @@ describe("valueTag", () => {
 - {% value slot="skipCondition" type="checkbox_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([expect.objectContaining({ id: "extra-child" })]);
     });
   });
 
-  describe("comparison children", () => {
+  describe("validate: comparison children", () => {
     it("accepts valid shapes", () => {
       const documents = [
         `
@@ -248,13 +307,13 @@ describe("valueTag", () => {
 `,
       ];
       for (const [index, document] of documents.entries()) {
-        const errors = validateValueTag(document);
+        const errors = validateValueTags(document);
         expect(errors, `test input index ${index}`).toEqual([]);
       }
     });
   });
 
-  describe("piecewise_function children", () => {
+  describe("validate: piecewise_function children", () => {
     it("accepts valid shapes", () => {
       const documents = [
         `
@@ -287,7 +346,7 @@ describe("valueTag", () => {
 `,
       ];
       for (const [index, document] of documents.entries()) {
-        const errors = validateValueTag(document);
+        const errors = validateValueTags(document);
         expect(errors, `test input index ${index}`).toEqual([]);
       }
     });
@@ -320,13 +379,13 @@ describe("valueTag", () => {
 `,
       ];
       for (const [index, document] of documents.entries()) {
-        const errors = validateValueTag(document);
+        const errors = validateValueTags(document);
         expect(errors.length, `test input index ${index}`).not.toEqual(0);
       }
     });
   });
 
-  describe("filing_status_map children", () => {
+  describe("validate: filing_status_map children", () => {
     it("accepts valid shapes", () => {
       const documents = [
         `{% value type="filing_status_map" /%}`,
@@ -367,7 +426,7 @@ describe("valueTag", () => {
 `,
       ];
       for (const [index, document] of documents.entries()) {
-        const errors = validateValueTag(document);
+        const errors = validateValueTags(document);
         expect(errors, `test input index ${index}`).toEqual([]);
       }
     });
@@ -395,20 +454,20 @@ describe("valueTag", () => {
 `,
       ];
       for (const [index, document] of documents.entries()) {
-        const errors = validateValueTag(document);
+        const errors = validateValueTags(document);
         expect(errors.length, `test input index ${index}`).not.toEqual(0);
       }
     });
   });
 
-  describe("select_instance_boxes_input children", () => {
+  describe("validate: select_instance_boxes_input children", () => {
     it("accepts one option", () => {
       const document = `
 {% value type="select_instance_boxes_input" %}
 - {% option form="fW2" box="1" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -419,7 +478,7 @@ describe("valueTag", () => {
 - {% option form="f1099NEC" box="1" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -428,7 +487,7 @@ describe("valueTag", () => {
 {% value type="select_instance_boxes_input" %}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([
         expect.objectContaining({ id: "missing-required-child" }),
       ]);
@@ -440,19 +499,19 @@ describe("valueTag", () => {
 - {% value type="number_input" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([expect.objectContaining({ id: "child-type" })]);
     });
   });
 
-  describe("select_value_input children", () => {
+  describe("validate: select_value_input children", () => {
     it("accepts one option", () => {
       const document = `
 {% value type="select_value_input" %}
 - {% value type="number_constant" value=1 label="First" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -464,7 +523,7 @@ describe("valueTag", () => {
 - {% value type="number_constant" value=3 label="Third" /%}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
@@ -473,7 +532,7 @@ describe("valueTag", () => {
 {% value type="select_value_input" %}
 {% /value %}
 `;
-      const errors = validateValueTag(document);
+      const errors = validateValueTags(document);
       expect(errors).toEqual([
         expect.objectContaining({ id: "missing-required-child" }),
       ]);

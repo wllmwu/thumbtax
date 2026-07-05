@@ -1,3 +1,4 @@
+import { Tag, transform as markdocTransform } from "@markdoc/markdoc";
 import { FILING_STATUSES, FORM_CLASSES } from "@thumbtax/common";
 
 import {
@@ -12,7 +13,10 @@ import { validateChildren } from "./validateChildren";
 
 import type { Node, Schema, ValidationError } from "@markdoc/markdoc";
 
-const STRUCTURAL_ATTRIBUTES = ["type", "slot", "filingStatusKey", "label"];
+const PARTIAL_PASSTHROUGH_VALUE_TYPE = "_partial_passthrough";
+type PartialPassthroughValueType = typeof PARTIAL_PASSTHROUGH_VALUE_TYPE;
+
+const STRUCTURAL_ATTRIBUTES = ["slot", "type", "filingStatusKey", "label"];
 
 function validateAttributes(
   node: Node,
@@ -205,7 +209,18 @@ type TypeSpec = {
   validateChildren: (node: Node) => ValidationError[];
 };
 
-const TYPE_SPECS: Record<ValueProviderType, TypeSpec> = {
+const TYPE_SPECS: Record<
+  ValueProviderType | PartialPassthroughValueType,
+  TypeSpec
+> = {
+  _partial_passthrough: {
+    requiredAttributes: [],
+    optionalAttributes: [],
+    validateChildren: (node) =>
+      validateChildren(unwrapListItemChildren(node.children), [
+        { options: [{ nodeType: "tag", tag: "partial" }] },
+      ]),
+  },
   absolute_value: {
     requiredAttributes: [],
     optionalAttributes: [],
@@ -355,6 +370,12 @@ const TYPE_SPECS: Record<ValueProviderType, TypeSpec> = {
   },
 };
 
+function isValidValueType(
+  t: string,
+): t is ValueProviderType | PartialPassthroughValueType {
+  return isValueProviderType(t) || t === PARTIAL_PASSTHROUGH_VALUE_TYPE;
+}
+
 export const valueTag: Schema = {
   attributes: {
     slot: {
@@ -365,7 +386,7 @@ export const valueTag: Schema = {
     type: {
       type: "String",
       required: true,
-      matches: [...VALUE_PROVIDER_TYPES],
+      matches: [...VALUE_PROVIDER_TYPES, PARTIAL_PASSTHROUGH_VALUE_TYPE],
       errorLevel: "error",
     },
     box: {
@@ -410,10 +431,28 @@ export const valueTag: Schema = {
     },
   },
   children: ["list"],
-  transform: makeTransformer("value", unwrapListItemChildren),
+  transform(node, config) {
+    const { type: valueType, ...nodeAttributes } = node.attributes;
+    if (valueType === PARTIAL_PASSTHROUGH_VALUE_TYPE) {
+      const transformedPartial = markdocTransform(
+        unwrapListItemChildren(node.children),
+        config,
+      )[0];
+      if (Tag.isTag(transformedPartial)) {
+        transformedPartial.attributes = {
+          ...transformedPartial.attributes,
+          ...nodeAttributes,
+        };
+      }
+      return transformedPartial;
+    } else {
+      const transformFn = makeTransformer("value", unwrapListItemChildren);
+      return transformFn(node, config);
+    }
+  },
   validate(node) {
     const valueType = node.attributes.type;
-    if (!isValueProviderType(valueType)) {
+    if (!isValidValueType(valueType)) {
       return [];
     }
     const spec = TYPE_SPECS[valueType];
