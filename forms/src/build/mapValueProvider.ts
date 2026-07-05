@@ -182,7 +182,7 @@ export function mapValueProvider(node: Node): ValueProvider {
     case "filing_status_map": {
       const values: Partial<Record<FilingStatus, ComputedValueProvider>> = {};
       let defaultValue: ComputedValueProvider | undefined;
-      for (const child of node.children) {
+      for (const child of unwrapListItemChildren(node.children)) {
         if (child.attributes.slot === "default") {
           defaultValue = mapComputedValueProvider(child);
         } else {
