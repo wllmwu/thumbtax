@@ -1,8 +1,6 @@
-import { transform } from "@markdoc/markdoc";
+import { Tag } from "@markdoc/markdoc";
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
-import { unwrapInlineTags } from "../schema/unwrapInlineTagChildren";
-import { unwrapListItemChildren } from "../schema/unwrapListItemChildren";
 import { FORM_CATEGORIES } from "../types/formCategory";
 import { requireNumber, requireOneOf, requireString } from "./attributes";
 import { extractPlainText } from "./extractPlainText";
@@ -16,15 +14,15 @@ import type {
   FormSpecification,
 } from "../types/formSpecification";
 import type { ValueProvider } from "../types/valueProvider";
-import type { Config, Node, RenderableTreeNodes } from "@markdoc/markdoc";
+import type { RenderableTreeNode, RenderableTreeNodes } from "@markdoc/markdoc";
 import type { BoxFormat } from "@thumbtax/common";
 
-function mapBoxAttributes(boxNode: Node): {
+function mapBoxAttributes(boxNode: Tag): {
   identifier: string;
   value: ValueProvider;
   format: BoxFormat | undefined;
 } {
-  const [valueNode] = unwrapInlineTags(boxNode.children).filter((child) =>
+  const [valueNode] = boxNode.children.filter((child) =>
     isTagNamed(child, "value"),
   );
   if (valueNode === undefined) {
@@ -42,41 +40,38 @@ function mapBoxAttributes(boxNode: Node): {
   };
 }
 
-function mapSingleColumnBox(boxNode: Node): FormBox<false> {
+function mapSingleColumnBox(boxNode: Tag): FormBox<false> {
   return mapBoxAttributes(boxNode);
 }
 
-function mapMultiColumnBox(boxNode: Node): FormBox<true> {
+function mapMultiColumnBox(boxNode: Tag): FormBox<true> {
   return {
     ...mapBoxAttributes(boxNode),
     column: requireString(boxNode.attributes.column),
   };
 }
 
-function mapLineAttributes(
-  lineNode: Node,
-  config: Config,
-): {
+function mapLineAttributes(lineNode: Tag): {
   index: string;
   virtual: boolean | undefined;
   instructions: RenderableTreeNodes | undefined;
   commentary: RenderableTreeNodes | undefined;
-  boxNodes: Node[];
+  boxNodes: Tag[];
 } {
-  const children = unwrapListItemChildren(lineNode.children);
+  const children = lineNode.children.filter(Tag.isTag);
   let position = 0;
 
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
-    instructions = transform(instructionsNode, config);
+    instructions = instructionsNode.children;
     position++;
   }
 
   let commentary: RenderableTreeNodes | undefined;
   const commentaryNode = children[position];
   if (isTagNamed(commentaryNode, "commentary")) {
-    commentary = transform(commentaryNode, config);
+    commentary = commentaryNode.children;
     position++;
   }
 
@@ -92,8 +87,8 @@ function mapLineAttributes(
   };
 }
 
-function mapSingleColumnLine(lineNode: Node, config: Config): FormLine<false> {
-  const { boxNodes, ...line } = mapLineAttributes(lineNode, config);
+function mapSingleColumnLine(lineNode: Tag): FormLine<false> {
+  const { boxNodes, ...line } = mapLineAttributes(lineNode);
   const [boxNode] = boxNodes;
   if (boxNode === undefined) {
     throw new Error(`Line "${line.index}" is missing a box`);
@@ -101,37 +96,31 @@ function mapSingleColumnLine(lineNode: Node, config: Config): FormLine<false> {
   return { ...line, box: mapSingleColumnBox(boxNode) };
 }
 
-function mapMultiColumnLine(lineNode: Node, config: Config): FormLine<true> {
-  const { boxNodes, ...line } = mapLineAttributes(lineNode, config);
+function mapMultiColumnLine(lineNode: Tag): FormLine<true> {
+  const { boxNodes, ...line } = mapLineAttributes(lineNode);
   return { ...line, boxes: boxNodes.map(mapMultiColumnBox) };
 }
 
-function mapColumn(
-  columnNode: Node,
-  config: Config,
-): { index: string; instructions: RenderableTreeNodes | undefined } {
-  const instructionsNode = unwrapInlineTags(columnNode.children).find((child) =>
+function mapColumn(columnNode: Tag): {
+  index: string;
+  instructions: RenderableTreeNodes | undefined;
+} {
+  const instructionsNode = columnNode.children.find((child) =>
     isTagNamed(child, "instructions"),
   );
   return {
     index: requireString(columnNode.attributes.index),
-    instructions:
-      instructionsNode === undefined
-        ? undefined
-        : transform(instructionsNode, config),
+    instructions: instructionsNode?.children,
   };
 }
 
-function mapSection(
-  sectionNode: Node,
-  config: Config,
-): FormSection<false> | FormSection<true> {
-  const children = unwrapInlineTags(sectionNode.children);
+function mapSection(sectionNode: Tag): FormSection<false> | FormSection<true> {
+  const children = sectionNode.children.filter(Tag.isTag);
   let position = 0;
 
   let heading: string | undefined;
   const headingNode = children[position];
-  if (headingNode !== undefined && headingNode.type === "heading") {
+  if (isTagNamed(headingNode, "h2")) {
     heading = extractPlainText(headingNode);
     position++;
   }
@@ -146,53 +135,55 @@ function mapSection(
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
-    instructions = transform(instructionsNode, config);
+    instructions = instructionsNode.children;
     position++;
   }
 
   let commentary: RenderableTreeNodes | undefined;
   const commentaryNode = children[position];
   if (isTagNamed(commentaryNode, "commentary")) {
-    commentary = transform(commentaryNode, config);
+    commentary = commentaryNode.children;
     position++;
   }
 
   const columnsNode = children[position];
   if (isTagNamed(columnsNode, "columns")) {
     position++;
-    const columns = unwrapListItemChildren(columnsNode.children)
+    const columns = columnsNode.children
       .filter((child) => isTagNamed(child, "column"))
-      .map((columnNode) => mapColumn(columnNode, config));
+      .map((columnNode) => mapColumn(columnNode));
     const linesNode = children[position];
-    const lines = unwrapListItemChildren(linesNode.children).map((lineNode) =>
-      mapMultiColumnLine(lineNode, config),
-    );
+    const lines = linesNode.children
+      .filter((child) => isTagNamed(child, "line"))
+      .map((lineNode) => mapMultiColumnLine(lineNode));
     return { heading, subtitle, instructions, commentary, columns, lines };
   } else {
     const linesNode = children[position];
-    const lines = unwrapListItemChildren(linesNode.children).map((lineNode) =>
-      mapSingleColumnLine(lineNode, config),
-    );
+    const lines = linesNode.children
+      .filter((child) => isTagNamed(child, "line"))
+      .map((lineNode) => mapSingleColumnLine(lineNode));
     return { heading, subtitle, instructions, commentary, lines };
   }
 }
 
 export function mapFormSpecification(
-  documentNode: Node,
-  config: Config,
+  documentNode: RenderableTreeNode,
 ): FormSpecification {
-  const formNode = unwrapInlineTags(documentNode.children).find((child) =>
+  if (!Tag.isTag(documentNode)) {
+    throw new Error("Document is missing a form tag");
+  }
+  const formNode = documentNode.children.find((child) =>
     isTagNamed(child, "form"),
   );
   if (formNode === undefined) {
     throw new Error("Document is missing a form tag");
   }
 
-  const children = unwrapInlineTags(formNode.children);
+  const children = formNode.children.filter(Tag.isTag);
   let position = 0;
 
   const titleNode = children[position];
-  if (titleNode === undefined || titleNode.type !== "heading") {
+  if (titleNode === undefined || titleNode.name !== "h1") {
     throw new Error("Form is missing a title heading");
   }
   const title = extractPlainText(titleNode);
@@ -208,20 +199,20 @@ export function mapFormSpecification(
   let instructions: RenderableTreeNodes | undefined;
   const instructionsNode = children[position];
   if (isTagNamed(instructionsNode, "instructions")) {
-    instructions = transform(instructionsNode, config);
+    instructions = instructionsNode.children;
     position++;
   }
 
   let commentary: RenderableTreeNodes | undefined;
   const commentaryNode = children[position];
   if (isTagNamed(commentaryNode, "commentary")) {
-    commentary = transform(commentaryNode, config);
+    commentary = commentaryNode.children;
     position++;
   }
 
   const sections = children
     .slice(position)
-    .map((sectionNode) => mapSection(sectionNode, config));
+    .map((sectionNode) => mapSection(sectionNode));
 
   return {
     class: requireOneOf(formNode.attributes.class, FORM_CLASSES),

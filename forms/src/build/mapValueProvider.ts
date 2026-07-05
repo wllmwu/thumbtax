@@ -1,6 +1,5 @@
 import { absurd, FILING_STATUSES, FORM_CLASSES } from "@thumbtax/common";
 
-import { unwrapListItemChildren } from "../schema/unwrapListItemChildren";
 import { NUMBER_SIGNS } from "../types/numberSign";
 import { ROUNDING_DIRECTIONS } from "../types/roundingDirection";
 import {
@@ -15,7 +14,7 @@ import type {
   ValueProvider,
 } from "../types/valueProvider";
 import type { ValueSlot } from "../types/valueSlot";
-import type { Node } from "@markdoc/markdoc";
+import type { Tag } from "@markdoc/markdoc";
 import type { FilingStatus } from "@thumbtax/common";
 
 function isComputedValueProvider(
@@ -26,7 +25,7 @@ function isComputedValueProvider(
   );
 }
 
-function mapComputedValueProvider(node: Node): ComputedValueProvider {
+function mapComputedValueProvider(node: Tag): ComputedValueProvider {
   const value = mapValueProvider(node);
   if (!isComputedValueProvider(value)) {
     throw new Error(
@@ -36,13 +35,11 @@ function mapComputedValueProvider(node: Node): ComputedValueProvider {
   return value;
 }
 
-function valueTagChildren(node: Node): Node[] {
-  return unwrapListItemChildren(node.children).filter((child) =>
-    isTagNamed(child, "value"),
-  );
+function valueTagChildren(node: Tag): Tag[] {
+  return node.children.filter((child) => isTagNamed(child, "value"));
 }
 
-function findBySlot(children: Node[], slot: ValueSlot): Node {
+function findBySlot(children: Tag[], slot: ValueSlot): Tag {
   const match = children.find((child) => child.attributes.slot === slot);
   if (match === undefined) {
     throw new Error(`Missing value child with slot "${slot}"`);
@@ -50,18 +47,15 @@ function findBySlot(children: Node[], slot: ValueSlot): Node {
   return match;
 }
 
-function findOptionalBySlot(
-  children: Node[],
-  slot: ValueSlot,
-): Node | undefined {
+function findOptionalBySlot(children: Tag[], slot: ValueSlot): Tag | undefined {
   return children.find((child) => child.attributes.slot === slot);
 }
 
-function findUnslotted(children: Node[]): Node[] {
+function findUnslotted(children: Tag[]): Tag[] {
   return children.filter((child) => child.attributes.slot === undefined);
 }
 
-function findSingleUnslotted(children: Node[]): Node {
+function findSingleUnslotted(children: Tag[]): Tag {
   const [match] = findUnslotted(children);
   if (match === undefined) {
     throw new Error("Missing unslotted value child");
@@ -69,7 +63,7 @@ function findSingleUnslotted(children: Node[]): Node {
   return match;
 }
 
-function mapPiece(pieceNode: Node): {
+function mapPiece(pieceNode: Tag): {
   inputUpperBound: ComputedValueProvider;
   output: ComputedValueProvider;
 } {
@@ -82,7 +76,7 @@ function mapPiece(pieceNode: Node): {
   };
 }
 
-export function mapValueProvider(node: Node): ValueProvider {
+export function mapValueProvider(node: Tag): ValueProvider {
   const valueType = node.attributes.type;
   if (!isValueProviderType(valueType)) {
     throw new Error(`Unknown value provider type "${String(valueType)}"`);
@@ -182,7 +176,7 @@ export function mapValueProvider(node: Node): ValueProvider {
     case "filing_status_map": {
       const values: Partial<Record<FilingStatus, ComputedValueProvider>> = {};
       let defaultValue: ComputedValueProvider | undefined;
-      for (const child of unwrapListItemChildren(node.children)) {
+      for (const child of valueTagChildren(node)) {
         if (child.attributes.slot === "default") {
           defaultValue = mapComputedValueProvider(child);
         } else {
@@ -237,7 +231,7 @@ export function mapValueProvider(node: Node): ValueProvider {
 
     case "piecewise_function": {
       const children = valueTagChildren(node);
-      const pieceNodes = unwrapListItemChildren(node.children).filter((child) =>
+      const pieceNodes = node.children.filter((child) =>
         isTagNamed(child, "piece"),
       );
       return {
@@ -266,8 +260,8 @@ export function mapValueProvider(node: Node): ValueProvider {
       };
 
     case "select_instance_boxes_input": {
-      const optionNodes = unwrapListItemChildren(node.children).filter(
-        (child) => isTagNamed(child, "option"),
+      const optionNodes = node.children.filter((child) =>
+        isTagNamed(child, "option"),
       );
       return {
         type: valueType,

@@ -1,4 +1,4 @@
-import { parse, validate } from "@markdoc/markdoc";
+import { parse, transform, validate } from "@markdoc/markdoc";
 import * as fsPromises from "node:fs/promises";
 import * as path from "node:path";
 import * as process from "node:process";
@@ -27,7 +27,9 @@ async function buildForm(fileName: string): Promise<void> {
     return;
   }
 
-  const formSpecification = mapFormSpecification(documentNode, config);
+  const formSpecification = mapFormSpecification(
+    transform(documentNode, config),
+  );
   const outputPath = path.join(
     OUTPUT_DIRECTORY,
     `${formSpecification.class}.ts`,

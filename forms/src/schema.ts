@@ -3,6 +3,7 @@ import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
 import alternativeMinimumTaxComputationPartial from "./data/partials/alternativeMinimumTaxComputation.mdoc";
 import taxComputationPartial from "./data/partials/taxComputation.mdoc";
+import { makeTransformer } from "./schema/makeTransformer";
 import { unwrapInlineTags } from "./schema/unwrapInlineTagChildren";
 import { unwrapListItemChildren } from "./schema/unwrapListItemChildren";
 import { validateChildren } from "./schema/validateChildren";
@@ -43,6 +44,7 @@ export const config: Config = {
           type: "Number",
         },
       },
+      transform: makeTransformer("form", unwrapInlineTags),
       validate(node) {
         return validateChildren(unwrapInlineTags(node.children), [
           { options: [{ nodeType: "heading", attributes: { level: 1 } }] },
@@ -57,6 +59,7 @@ export const config: Config = {
       },
     },
     section: {
+      transform: makeTransformer("section", unwrapInlineTags),
       validate(node) {
         const childErrors = validateChildren(unwrapInlineTags(node.children), [
           {
@@ -151,6 +154,7 @@ export const config: Config = {
     },
     columns: {
       children: ["list"],
+      transform: makeTransformer("columns", unwrapListItemChildren),
       validate(node) {
         return validateChildren(unwrapListItemChildren(node.children), [
           { greedy: true, options: [{ nodeType: "tag", tag: "column" }] },
@@ -165,6 +169,7 @@ export const config: Config = {
           errorLevel: "error",
         },
       },
+      transform: makeTransformer("column", unwrapInlineTags),
       validate(node) {
         return validateChildren(unwrapInlineTags(node.children), [
           {
@@ -175,6 +180,7 @@ export const config: Config = {
       },
     },
     lines: {
+      transform: makeTransformer("lines", unwrapListItemChildren),
       validate(node) {
         return validateChildren(unwrapListItemChildren(node.children), [
           { greedy: true, options: [{ nodeType: "tag", tag: "line" }] },
@@ -193,6 +199,7 @@ export const config: Config = {
           default: false,
         },
       },
+      transform: makeTransformer("line", unwrapListItemChildren),
       validate(node) {
         return validateChildren(unwrapListItemChildren(node.children), [
           {
@@ -220,6 +227,7 @@ export const config: Config = {
           errorLevel: "error",
         },
       },
+      transform: makeTransformer("box", unwrapInlineTags),
       validate(node) {
         return validateChildren(unwrapInlineTags(node.children), [
           {
@@ -235,9 +243,11 @@ export const config: Config = {
     piece: pieceTag,
     option: optionTag,
     subtitle: {
+      transform: makeTransformer("subtitle"),
       validate: validatePlainTextContent,
     },
     instructions: {
+      transform: makeTransformer("instructions"),
       validate: validateProseContent,
     },
     commentary: {
@@ -248,6 +258,7 @@ export const config: Config = {
           errorLevel: "error",
         },
       },
+      transform: makeTransformer("commentary"),
       validate: validateProseContent,
     },
   },

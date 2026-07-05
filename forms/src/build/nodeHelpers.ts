@@ -1,8 +1,10 @@
-import type { Node } from "@markdoc/markdoc";
+import { Tag } from "@markdoc/markdoc";
+
+import type { RenderableTreeNode } from "@markdoc/markdoc";
 
 export function isTagNamed(
-  node: Node | undefined,
+  node: RenderableTreeNode | undefined,
   tagName: string,
-): node is Node {
-  return node !== undefined && node.type === "tag" && node.tag === tagName;
+): node is Tag {
+  return Tag.isTag(node) && node.name === tagName;
 }

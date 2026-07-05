@@ -6,6 +6,7 @@ import {
   type ValueProviderType,
 } from "../types/valueProviderType";
 import { VALUE_SLOTS, type ValueSlot } from "../types/valueSlot";
+import { makeTransformer } from "./makeTransformer";
 import { unwrapListItemChildren } from "./unwrapListItemChildren";
 import { validateChildren } from "./validateChildren";
 
@@ -409,6 +410,7 @@ export const valueTag: Schema = {
     },
   },
   children: ["list"],
+  transform: makeTransformer("value", unwrapListItemChildren),
   validate(node) {
     const valueType = node.attributes.type;
     if (!isValueProviderType(valueType)) {
@@ -434,6 +436,7 @@ export const valueTag: Schema = {
 
 export const pieceTag: Schema = {
   children: ["list"],
+  transform: makeTransformer("piece", unwrapListItemChildren),
   validate(node) {
     const attributeErrors = validateAttributes(node, [], []);
     if (attributeErrors.length > 0) {
@@ -463,6 +466,7 @@ export const optionTag: Schema = {
       errorLevel: "error",
     },
   },
+  transform: makeTransformer("option"),
   validate(node) {
     const attributeErrors = validateAttributes(node, ["form", "box"], []);
     if (attributeErrors.length > 0) {
