@@ -1,6 +1,6 @@
 ---
 name: write-form-specification
-description: Use when writing the specification for a tax form
+description: Use when adding or updating the specification for a tax form
 ---
 
 # Writing a form specification
@@ -42,36 +42,37 @@ Sample Markdoc specification:
 ## Part I
 
 {% subtitle %}Sample Section 1{% /subtitle %}
-
-{% line index="1" %}
-{% instructions %}Instructions for line 1{% /instructions %}
-
-{% box identifier="1" %}{% value type="number_input" /%}{% /box %}
-{% /line %}
-
-{% line index="2" %}
-{% instructions %}This line "contains" two children{% /instructions %}
-
-{% box identifier="2" %}{% value type="unused" /%}{% /box %}
-{% /line %}
-
-{% line index="2a" %}
-{% instructions %}First child{% /instructions %}
-
-{% box identifier="2a" %}{% value type="number_input" /%}{% /box %}
-{% /line %}
-
-{% line index="2b" %}
-{% instructions %}Add lines 1 and 2a{% /instructions %}
-
-{% box identifier="2b" %}
-{% value type="sum" %}
-{% value type="box_reference" box="1" /%}
-
-{% value type="box_reference" box="2a" /%}
-{% /value %}
-{% /box %}
-{% /line %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Instructions for line 1{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}This line "contains" two children{% /instructions %}
+  - {% box identifier="2" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="2a" %}
+  - {% instructions %}First child{% /instructions %}
+  - {% box identifier="2a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2b" %}
+  - {% instructions %}Add lines 1 and 2a{% /instructions %}
+  - {% box identifier="2b" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="box_reference" box="2a" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Compute the tax amount{% /instructions %}
+  - {% box identifier="3" %}
+    {% value type="_partial_passthrough" %}
+    - {% partial file="taxComputation" variables={box: "2b"} /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
 {% /section %}
 
 {% section %}
@@ -82,25 +83,21 @@ Sample Markdoc specification:
 {% instructions %}More detailed instructions for this section{% /instructions %}
 
 {% columns %}
-{% column index="(i)" /%}
-
-{% column index="(ii)" %}
-{% instructions %}Instructions for column (ii){% /instructions %}
-{% /column %}
+- {% column index="(i)" /%}
+- {% column index="(ii)" %}
+  {% instructions %}Instructions for column (ii){% /instructions %}
+  {% /column %}
 {% /columns %}
 
-{% line index="3" %}
-{% instructions %}
-Each line in a section with columns needs a box for each column.
-{% /instructions %}
-
-{% box identifier="3(i)" column="(i)" %}{% value type="number_input" /%}{% /box %}
-
-{% box identifier="3(ii)" column="(ii)" %}{% value type="number_input" /%}{% /box %}
-{% /line %}
+{% lines %}
+- {% line index="4" %}
+  - {% instructions %}Each line in a section with columns needs a box for each column.{% /instructions %}
+  - {% box identifier="4(i)" column="(i)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="4(ii)" column="(ii)" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+{% /lines %}
 {% /section %}
 {% /form %}
 ```
 
-Note that empty lines are significant in Markdoc and Markdown.
-If you see a validation error saying a node is the wrong type, even when it's not, you might need to insert an empty line between sibling tags to make it parse correctly.
+Due to how list items and tags are parsed, when a line has instructions that are more than one paragraph of text, you might need to write out its box(es) on multiple lines.
