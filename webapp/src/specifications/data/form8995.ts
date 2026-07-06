@@ -10,24 +10,16 @@ export const Form8995: FormSpecification = {
   sections: [
     {
       columns: [
-        { index: "(a)", description: "Trade, business, or aggregation name" },
-        { index: "(b)", description: "Taxpayer identification number" },
-        { index: "(c)", description: "Qualified business income or (loss)" },
+        { index: "(a)", instructions: "Trade, business, or aggregation name" },
+        { index: "(b)", instructions: "Taxpayer identification number" },
+        { index: "(c)", instructions: "Qualified business income or (loss)" },
       ],
       lines: [
         {
           index: "1i",
           boxes: [
-            {
-              column: "(a)",
-              identifier: "1i(a)",
-              value: { type: "unused" },
-            },
-            {
-              column: "(b)",
-              identifier: "1i(b)",
-              value: { type: "unused" },
-            },
+            { column: "(a)", identifier: "1i(a)", value: { type: "unused" } },
+            { column: "(b)", identifier: "1i(b)", value: { type: "unused" } },
             {
               column: "(c)",
               identifier: "1i(c)",
@@ -38,16 +30,8 @@ export const Form8995: FormSpecification = {
         {
           index: "1ii",
           boxes: [
-            {
-              column: "(a)",
-              identifier: "1ii(a)",
-              value: { type: "unused" },
-            },
-            {
-              column: "(b)",
-              identifier: "1ii(b)",
-              value: { type: "unused" },
-            },
+            { column: "(a)", identifier: "1ii(a)", value: { type: "unused" } },
+            { column: "(b)", identifier: "1ii(b)", value: { type: "unused" } },
             {
               column: "(c)",
               identifier: "1ii(c)",
@@ -58,16 +42,8 @@ export const Form8995: FormSpecification = {
         {
           index: "1iii",
           boxes: [
-            {
-              column: "(a)",
-              identifier: "1iii(a)",
-              value: { type: "unused" },
-            },
-            {
-              column: "(b)",
-              identifier: "1iii(b)",
-              value: { type: "unused" },
-            },
+            { column: "(a)", identifier: "1iii(a)", value: { type: "unused" } },
+            { column: "(b)", identifier: "1iii(b)", value: { type: "unused" } },
             {
               column: "(c)",
               identifier: "1iii(c)",
@@ -78,16 +54,8 @@ export const Form8995: FormSpecification = {
         {
           index: "1iv",
           boxes: [
-            {
-              column: "(a)",
-              identifier: "1iv(a)",
-              value: { type: "unused" },
-            },
-            {
-              column: "(b)",
-              identifier: "1iv(b)",
-              value: { type: "unused" },
-            },
+            { column: "(a)", identifier: "1iv(a)", value: { type: "unused" } },
+            { column: "(b)", identifier: "1iv(b)", value: { type: "unused" } },
             {
               column: "(c)",
               identifier: "1iv(c)",
@@ -98,16 +66,8 @@ export const Form8995: FormSpecification = {
         {
           index: "1v",
           boxes: [
-            {
-              column: "(a)",
-              identifier: "1v(a)",
-              value: { type: "unused" },
-            },
-            {
-              column: "(b)",
-              identifier: "1v(b)",
-              value: { type: "unused" },
-            },
+            { column: "(a)", identifier: "1v(a)", value: { type: "unused" } },
+            { column: "(b)", identifier: "1v(b)", value: { type: "unused" } },
             {
               column: "(c)",
               identifier: "1v(c)",
@@ -121,7 +81,7 @@ export const Form8995: FormSpecification = {
       lines: [
         {
           index: "2",
-          description:
+          instructions:
             "Total qualified business income or (loss). Combine lines 1i through 1v, column (c)",
           box: {
             identifier: "2",
@@ -139,7 +99,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "3",
-          description:
+          instructions:
             "Qualified business net (loss) carryforward from the prior year",
           box: {
             identifier: "3",
@@ -148,7 +108,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "4",
-          description:
+          instructions:
             "Total qualified business income. Combine lines 2 and 3. If zero or less, enter -0-",
           box: {
             identifier: "4",
@@ -166,7 +126,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "5",
-          description:
+          instructions:
             "Qualified business income component. Multiply line 4 by 20% (0.20)",
           box: {
             identifier: "5",
@@ -181,16 +141,13 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "6",
-          description:
+          instructions:
             "Qualified REIT dividends and publicly traded partnership (PTP) income or (loss) (see instructions)",
-          box: {
-            identifier: "6",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "6", value: { type: "number_input" } },
         },
         {
           index: "7",
-          description:
+          instructions:
             "Qualified REIT dividends and qualified PTP (loss) carryforward from the prior year",
           box: {
             identifier: "7",
@@ -199,7 +156,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "8",
-          description:
+          instructions:
             "Total qualified REIT dividends and PTP income. Combine lines 6 and 7. If zero or less, enter -0-",
           box: {
             identifier: "8",
@@ -217,7 +174,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "9",
-          description: "REIT and PTP component. Multiply line 8 by 20% (0.20)",
+          instructions: "REIT and PTP component. Multiply line 8 by 20% (0.20)",
           box: {
             identifier: "9",
             value: {
@@ -231,7 +188,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "10",
-          description:
+          instructions:
             "Qualified business income deduction before the income limitation. Add lines 5 and 9",
           box: {
             identifier: "10",
@@ -246,7 +203,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "11",
-          description:
+          instructions:
             "Taxable income before qualified business income deduction (see instructions)",
           box: {
             identifier: "11",
@@ -254,8 +211,8 @@ export const Form8995: FormSpecification = {
               type: "difference",
               minuend: {
                 type: "box_reference",
-                form: "f1040",
                 box: "11a",
+                form: "f1040",
                 required: true,
               },
               subtrahend: {
@@ -263,14 +220,14 @@ export const Form8995: FormSpecification = {
                 values: [
                   {
                     type: "box_reference",
-                    form: "f1040",
                     box: "12e",
+                    form: "f1040",
                     required: true,
                   },
                   {
                     type: "box_reference",
-                    form: "f1040",
                     box: "13b",
+                    form: "f1040",
                     required: true,
                   },
                 ],
@@ -280,7 +237,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "12",
-          description:
+          instructions:
             "Enter your net capital gain, if any, increased by any qualified dividends (see instructions)",
           box: {
             identifier: "12",
@@ -289,8 +246,8 @@ export const Form8995: FormSpecification = {
               values: [
                 {
                   type: "box_reference",
-                  form: "f1040",
                   box: "3a",
+                  form: "f1040",
                   required: true,
                 },
                 {
@@ -301,15 +258,15 @@ export const Form8995: FormSpecification = {
                     value: {
                       type: "minimum",
                       values: [
-                        { type: "box_reference", form: "f1040sD", box: "15" },
-                        { type: "box_reference", form: "f1040sD", box: "16" },
+                        { type: "box_reference", box: "15", form: "f1040sD" },
+                        { type: "box_reference", box: "16", form: "f1040sD" },
                       ],
                     },
                   },
                   falseValue: {
                     type: "box_reference",
-                    form: "f1040",
                     box: "7a",
+                    form: "f1040",
                     required: true,
                   },
                 },
@@ -319,7 +276,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "13",
-          description:
+          instructions:
             "Subtract line 12 from line 11. If zero or less, enter -0-",
           box: {
             identifier: "13",
@@ -335,7 +292,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "14",
-          description: "Income limitation. Multiply line 13 by 20% (0.20)",
+          instructions: "Income limitation. Multiply line 13 by 20% (0.20)",
           box: {
             identifier: "14",
             value: {
@@ -349,7 +306,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "15",
-          description:
+          instructions:
             "Qualified business income deduction. Enter the smaller of line 10 or line 14. Also enter this amount on the applicable line of your return (see instructions)",
           box: {
             identifier: "15",
@@ -364,7 +321,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "16",
-          description:
+          instructions:
             "Total qualified business (loss) carryforward. Combine lines 2 and 3. If greater than zero, enter -0-",
           box: {
             identifier: "16",
@@ -382,7 +339,7 @@ export const Form8995: FormSpecification = {
         },
         {
           index: "17",
-          description:
+          instructions:
             "Total qualified REIT dividends and PTP (loss) carryforward. Combine lines 6 and 7. If greater than zero, enter -0-",
           box: {
             identifier: "17",

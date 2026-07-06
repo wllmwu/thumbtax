@@ -12,22 +12,16 @@ export const Form1040SD: FormSpecification = {
       heading:
         "Part I. Short-Term Capital Gains and Losses\u2014Generally Assets Held One Year or Less (see instructions)",
       columns: [
-        {
-          index: "(d)",
-          description: "Proceeds (sales price)",
-        },
-        {
-          index: "(e)",
-          description: "Cost (or other basis)",
-        },
+        { index: "(d)", instructions: "Proceeds (sales price)" },
+        { index: "(e)", instructions: "Cost (or other basis)" },
         {
           index: "(g)",
-          description:
+          instructions:
             "Adjustments to gain or loss from Form(s) 8949, Part I, line 2, column (g)",
         },
         {
           index: "(h)",
-          description:
+          instructions:
             "Gain or (loss). Subtract column (e) from column (d) and combine the result with column (g)",
         },
       ],
@@ -35,7 +29,7 @@ export const Form1040SD: FormSpecification = {
         {
           // TODO: conditional aggregation
           index: "1a",
-          description:
+          instructions:
             "Totals for all short-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 1b",
           boxes: [
             {
@@ -54,11 +48,7 @@ export const Form1040SD: FormSpecification = {
                 options: [{ form: "f1099B", box: "1e" }],
               },
             },
-            {
-              identifier: "1a(g)",
-              column: "(g)",
-              value: { type: "unused" },
-            },
+            { identifier: "1a(g)", column: "(g)", value: { type: "unused" } },
             {
               identifier: "1a(h)",
               column: "(h)",
@@ -78,7 +68,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "1b",
-          description:
+          instructions:
             "Totals for all transactions reported on Form(s) 8949 with Box A or Box G checked",
           boxes: [
             {
@@ -115,7 +105,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "2",
-          description:
+          instructions:
             "Totals for all transactions reported on Form(s) 8949 with Box B or Box H checked",
           boxes: [
             {
@@ -152,7 +142,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "3",
-          description:
+          instructions:
             "Totals for all transactions reported on Form(s) 8949 with Box C or Box I checked",
           boxes: [
             {
@@ -194,25 +184,19 @@ export const Form1040SD: FormSpecification = {
       lines: [
         {
           index: "4",
-          description:
+          instructions:
             "Short-term gain from Form 6252 and short-term gain or (loss) from Forms 4684, 6781, and 8824",
-          box: {
-            identifier: "4",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "4", value: { type: "number_input" } },
         },
         {
           index: "5",
-          description:
+          instructions:
             "Net short-term gain or (loss) from partnerships, S corporations, estates, and trusts from Schedule(s) K-1",
-          box: {
-            identifier: "5",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "5", value: { type: "number_input" } },
         },
         {
           index: "6",
-          description:
+          instructions:
             "Short-term capital loss carryover. Enter the amount, if any, from line 8 of your Capital Loss Carryover Worksheet in the instructions",
           box: {
             identifier: "6",
@@ -221,7 +205,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "7",
-          description:
+          instructions:
             "**Net short-term capital gain or (loss).** Combine lines 1a through 6 in column (h). If you have any long-term capital gains or losses, go to Part II below. Otherwise, go to Part III on the back",
           box: {
             identifier: "7",
@@ -245,22 +229,16 @@ export const Form1040SD: FormSpecification = {
       heading:
         "Part II. Long-Term Capital Gains and Losses\u2014Generally Assets Held More Than One Year (see instructions)",
       columns: [
-        {
-          index: "(d)",
-          description: "Proceeds (sales price)",
-        },
-        {
-          index: "(e)",
-          description: "Cost (or other basis)",
-        },
+        { index: "(d)", instructions: "Proceeds (sales price)" },
+        { index: "(e)", instructions: "Cost (or other basis)" },
         {
           index: "(g)",
-          description:
+          instructions:
             "Adjustments to gain or loss from Form(s) 8949, Part II, line 2, column (g)",
         },
         {
           index: "(h)",
-          description:
+          instructions:
             "Gain or (loss). Subtract column (e) from column (d) and combine the result with column (g)",
         },
       ],
@@ -268,7 +246,7 @@ export const Form1040SD: FormSpecification = {
         {
           // TODO: conditional aggregation
           index: "8a",
-          description:
+          instructions:
             "Totals for all long-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 8b",
           boxes: [
             {
@@ -287,11 +265,7 @@ export const Form1040SD: FormSpecification = {
                 options: [{ form: "f1099B", box: "1e" }],
               },
             },
-            {
-              identifier: "8a(g)",
-              column: "(g)",
-              value: { type: "unused" },
-            },
+            { identifier: "8a(g)", column: "(g)", value: { type: "unused" } },
             {
               identifier: "8a(h)",
               column: "(h)",
@@ -311,7 +285,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "8b",
-          description:
+          instructions:
             "Totals for all transactions reported on Form(s) 8949 with Box D or Box J checked",
           boxes: [
             {
@@ -348,7 +322,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "9",
-          description:
+          instructions:
             "Totals for all transactions reported on Form(s) 8949 with Box E or Box K checked",
           boxes: [
             {
@@ -385,7 +359,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "10",
-          description:
+          instructions:
             "Totals for all transactions reported on Form(s) 8949 with Box F or Box L checked",
           boxes: [
             {
@@ -427,33 +401,27 @@ export const Form1040SD: FormSpecification = {
       lines: [
         {
           index: "11",
-          description:
+          instructions:
             "Gain from Form 4797, Part I; long-term gain from Forms 2439 and 6252; and long-term gain or (loss) from Forms 4684, 6781, and 8824",
-          box: {
-            identifier: "11",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "11", value: { type: "number_input" } },
         },
         {
           index: "12",
-          description:
+          instructions:
             "Net long-term gain or (loss) from partnerships, S corporations, estates, and trusts from Schedule(s) K-1",
-          box: {
-            identifier: "12",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "12", value: { type: "number_input" } },
         },
         {
           index: "13",
-          description: "Capital gain distributions. See the instructions",
+          instructions: "Capital gain distributions. See the instructions",
           box: {
             identifier: "13",
-            value: { type: "box_reference", form: "f1099DIV", box: "2a" },
+            value: { type: "box_reference", box: "2a", form: "f1099DIV" },
           },
         },
         {
           index: "14",
-          description:
+          instructions:
             "Long-term capital loss carryover. Enter the amount, if any, from line 13 of your Capital Loss Carryover Worksheet in the instructions",
           box: {
             identifier: "14",
@@ -462,7 +430,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "15",
-          description:
+          instructions:
             "**Net long-term capital gain or (loss).** Combine lines 8a through 14 in column (h). Then, go to Part III on the back",
           box: {
             identifier: "15",
@@ -488,7 +456,7 @@ export const Form1040SD: FormSpecification = {
       lines: [
         {
           index: "16",
-          description:
+          instructions:
             "Combine lines 7 and 15 and enter the result\n- If line 16 is a gain, enter the amount from line 16 on Form 1040, 1040-SR, or 1040-NR, line 7a. Then, go to line 17 below.\n- If line 16 is a loss, skip lines 17 through 20 below. Then, go to line 21. Also be sure to complete line 22.\n- If line 16 is zero, skip lines 17 through 21 below and enter -0- on Form 1040, 1040-SR, or 1040-NR, line 7a. Then, go to line 22.",
           box: {
             identifier: "16",
@@ -503,7 +471,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "17",
-          description:
+          instructions:
             "Are lines 15 and 16 both gains?\n- Yes. Go to line 18.\n- No. Skip lines 18 through 21, and go to line 22.",
           box: {
             identifier: "17",
@@ -528,7 +496,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "18",
-          description:
+          instructions:
             "If you are required to complete the 28% Rate Gain Worksheet (see instructions), enter the amount, if any, from line 7 of that worksheet",
           box: {
             identifier: "18",
@@ -553,7 +521,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "19",
-          description:
+          instructions:
             "If you are required to complete the Unrecaptured Section 1250 Gain Worksheet (see instructions), enter the amount, if any, from line 18 of that worksheet",
           box: {
             identifier: "19",
@@ -578,7 +546,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "20",
-          description:
+          instructions:
             "Are lines 18 and 19 both zero or blank and you are not filing Form 4952?\n- Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16. Don't complete lines 21 and 22 below.\n- No. Complete the Schedule D Tax Worksheet in the instructions. Don't complete lines 21 and 22 below.",
           box: {
             identifier: "20",
@@ -600,7 +568,7 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "21",
-          description:
+          instructions:
             "If line 16 is a loss, enter here and on Form 1040, 1040-SR, or 1040-NR, line 7a, the smaller of:\n- The loss on line 16; or\n- ($3,000), or if married filing separately, ($1,500)",
           box: {
             identifier: "21",
@@ -634,15 +602,15 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "22",
-          description:
+          instructions:
             "Do you have qualified dividends on Form 1040, 1040-SR, or 1040-NR, line 3a?\n- Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16.\n- No. Complete the rest of Form 1040, 1040-SR, or 1040-NR.",
           box: {
             identifier: "22",
             format: "yes_no",
             value: {
               type: "box_reference",
-              form: "f1040",
               box: "3a",
+              form: "f1040",
               required: true,
             },
           },
@@ -650,7 +618,7 @@ export const Form1040SD: FormSpecification = {
         {
           index: "virtual_f1040_7a",
           virtual: true,
-          description: "Value to enter on Form 1040, line 7a",
+          instructions: "Value to enter on Form 1040, line 7a",
           box: {
             identifier: "virtual_f1040_7a",
             value: {

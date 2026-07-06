@@ -15,83 +15,59 @@ export const Form1040: FormSpecification = {
       lines: [
         {
           index: "1a",
-          description:
+          instructions:
             "Total amount from Form(s) W-2, box 1 (see instructions)",
           box: {
             identifier: "1a",
-            value: { type: "box_reference", form: "fW2", box: "1" },
+            value: { type: "box_reference", box: "1", form: "fW2" },
           },
         },
         {
           index: "1b",
-          description: "Household employee wages not reported on Form(s) W-2",
-          box: {
-            identifier: "1b",
-            value: { type: "number_input" },
-          },
+          instructions: "Household employee wages not reported on Form(s) W-2",
+          box: { identifier: "1b", value: { type: "number_input" } },
         },
         {
           index: "1c",
-          description: "Tip income not reported on line 1a (see instructions)",
-          box: {
-            identifier: "1c",
-            value: { type: "number_input" },
-          },
+          instructions: "Tip income not reported on line 1a (see instructions)",
+          box: { identifier: "1c", value: { type: "number_input" } },
         },
         {
           index: "1d",
-          description:
+          instructions:
             "Medicaid waiver payments not reported on Form(s) W-2 (see instructions)",
-          box: {
-            identifier: "1d",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "1d", value: { type: "number_input" } },
         },
         {
           index: "1e",
-          description:
+          instructions:
             "Taxable dependent care benefits from Form 2441, line 26",
-          box: {
-            identifier: "1e",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "1e", value: { type: "number_input" } },
         },
         {
           index: "1f",
-          description:
+          instructions:
             "Employer-provided adoption benefits from Form 8839, line 31",
-          box: {
-            identifier: "1f",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "1f", value: { type: "number_input" } },
         },
         {
           index: "1g",
-          description: "Wages from Form 8919, line 6",
-          box: {
-            identifier: "1g",
-            value: { type: "number_input" },
-          },
+          instructions: "Wages from Form 8919, line 6",
+          box: { identifier: "1g", value: { type: "number_input" } },
         },
         {
           index: "1h",
-          description: "Other earned income (see instructions)",
-          box: {
-            identifier: "1h",
-            value: { type: "list_amounts_input" },
-          },
+          instructions: "Other earned income (see instructions)",
+          box: { identifier: "1h", value: { type: "list_amounts_input" } },
         },
         {
           index: "1i",
-          description: "Nontaxable combat pay election (see instructions)",
-          box: {
-            identifier: "1i",
-            value: { type: "number_input" },
-          },
+          instructions: "Nontaxable combat pay election (see instructions)",
+          box: { identifier: "1i", value: { type: "number_input" } },
         },
         {
           index: "1z",
-          description: "Add lines 1a through 1h",
+          instructions: "Add lines 1a through 1h",
           box: {
             identifier: "1z",
             value: {
@@ -111,52 +87,46 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "2a",
-          description: "Tax-exempt interest",
+          instructions: "Tax-exempt interest",
           box: {
             identifier: "2a",
-            value: { type: "box_reference", form: "f1099INT", box: "8" },
+            value: { type: "box_reference", box: "8", form: "f1099INT" },
           },
         },
         {
           index: "2b",
-          description: "Taxable interest",
+          instructions: "Taxable interest",
           box: {
             identifier: "2b",
             value: {
               type: "sum",
               values: [
-                { type: "box_reference", form: "f1099INT", box: "1" },
-                { type: "box_reference", form: "f1099INT", box: "3" },
+                { type: "box_reference", box: "1", form: "f1099INT" },
+                { type: "box_reference", box: "3", form: "f1099INT" },
               ],
             },
           },
         },
         {
           index: "3a",
-          description: "Qualified dividends",
+          instructions: "Qualified dividends",
           box: {
             identifier: "3a",
-            value: { type: "box_reference", form: "f1099DIV", box: "1b" },
+            value: { type: "box_reference", box: "1b", form: "f1099DIV" },
           },
         },
         {
           index: "3b",
-          description: "Ordinary dividends",
+          instructions: "Ordinary dividends",
           box: {
             identifier: "3b",
-            value: { type: "box_reference", form: "f1099DIV", box: "1a" },
+            value: { type: "box_reference", box: "1a", form: "f1099DIV" },
           },
         },
-        {
-          index: "3c",
-          box: {
-            identifier: "3c",
-            value: { type: "unused" },
-          },
-        },
+        { index: "3c", box: { identifier: "3c", value: { type: "unused" } } },
         {
           index: "4a",
-          description: "IRA distributions",
+          instructions: "IRA distributions",
           box: {
             identifier: "4a",
             value: {
@@ -167,7 +137,7 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "4b",
-          description: "Taxable amount",
+          instructions: "Taxable amount",
           box: {
             identifier: "4b",
             value: {
@@ -176,16 +146,10 @@ export const Form1040: FormSpecification = {
             },
           },
         },
-        {
-          index: "4c",
-          box: {
-            identifier: "4c",
-            value: { type: "unused" },
-          },
-        },
+        { index: "4c", box: { identifier: "4c", value: { type: "unused" } } },
         {
           index: "5a",
-          description: "Pensions and annuities",
+          instructions: "Pensions and annuities",
           box: {
             identifier: "5a",
             value: {
@@ -196,7 +160,7 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "5b",
-          description: "Taxable amount",
+          instructions: "Taxable amount",
           box: {
             identifier: "5b",
             value: {
@@ -205,61 +169,33 @@ export const Form1040: FormSpecification = {
             },
           },
         },
-        {
-          index: "5c",
-          box: {
-            identifier: "5c",
-            value: { type: "unused" },
-          },
-        },
+        { index: "5c", box: { identifier: "5c", value: { type: "unused" } } },
         {
           index: "6a",
-          description: "Social security benefits",
-          box: {
-            identifier: "6a",
-            value: { type: "number_input" },
-          },
+          instructions: "Social security benefits",
+          box: { identifier: "6a", value: { type: "number_input" } },
         },
         {
           index: "6b",
-          description: "Taxable amount",
-          box: {
-            identifier: "6b",
-            value: { type: "number_input" },
-          },
+          instructions: "Taxable amount",
+          box: { identifier: "6b", value: { type: "number_input" } },
         },
-        {
-          index: "6c",
-          box: {
-            identifier: "6c",
-            value: { type: "unused" },
-          },
-        },
-        {
-          index: "6d",
-          box: {
-            identifier: "6d",
-            value: { type: "unused" },
-          },
-        },
+        { index: "6c", box: { identifier: "6c", value: { type: "unused" } } },
+        { index: "6d", box: { identifier: "6d", value: { type: "unused" } } },
         {
           // TODO: Form 8949
           index: "7a",
-          description: "Capital gain or (loss). Attach Schedule D if required",
+          instructions: "Capital gain or (loss). Attach Schedule D if required",
           box: {
             identifier: "7a",
             value: {
               type: "conditional",
               condition: { type: "box_reference", box: "7b" },
-              trueValue: {
-                type: "box_reference",
-                form: "f1099DIV",
-                box: "2a",
-              },
+              trueValue: { type: "box_reference", box: "2a", form: "f1099DIV" },
               falseValue: {
                 type: "box_reference",
-                form: "f1040sD",
                 box: "virtual_f1040_7a",
+                form: "f1040sD",
                 required: true,
               },
             },
@@ -267,7 +203,7 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "7b",
-          description: "Check if Schedule D not required",
+          instructions: "Check if Schedule D not required",
           box: {
             identifier: "7b",
             format: "checkbox",
@@ -280,15 +216,15 @@ export const Form1040: FormSpecification = {
                 },
                 {
                   type: "logical_negation",
-                  value: { type: "box_reference", form: "f1099DIV", box: "2b" },
+                  value: { type: "box_reference", box: "2b", form: "f1099DIV" },
                 },
                 {
                   type: "logical_negation",
-                  value: { type: "box_reference", form: "f1099DIV", box: "2c" },
+                  value: { type: "box_reference", box: "2c", form: "f1099DIV" },
                 },
                 {
                   type: "logical_negation",
-                  value: { type: "box_reference", form: "f1099DIV", box: "2d" },
+                  value: { type: "box_reference", box: "2d", form: "f1099DIV" },
                 },
               ],
             },
@@ -296,20 +232,20 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "8",
-          description: "Additional income from Schedule 1, line 10",
+          instructions: "Additional income from Schedule 1, line 10",
           box: {
             identifier: "8",
             value: {
               type: "box_reference",
-              form: "f1040s1",
               box: "10",
+              form: "f1040s1",
               required: true,
             },
           },
         },
         {
           index: "9",
-          description:
+          instructions:
             "Add lines 1z, 2b, 3b, 4b, 5b, 6b, 7a, and 8. This is your **total income**",
           box: {
             identifier: "9",
@@ -330,20 +266,20 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "10",
-          description: "Adjustments to income from Schedule 1, line 26",
+          instructions: "Adjustments to income from Schedule 1, line 26",
           box: {
             identifier: "10",
             value: {
               type: "box_reference",
-              form: "f1040s1",
               box: "26",
+              form: "f1040s1",
               required: true,
             },
           },
         },
         {
           index: "11a",
-          description:
+          instructions:
             "Subtract line 10 from line 9. This is your **adjusted gross income**",
           box: {
             identifier: "11a",
@@ -361,69 +297,34 @@ export const Form1040: FormSpecification = {
       lines: [
         {
           index: "11b",
-          description: "Amount from line 11a (adjusted gross income)",
+          instructions: "Amount from line 11a (adjusted gross income)",
           box: {
             identifier: "11b",
             value: { type: "box_reference", box: "11a" },
           },
         },
-        {
-          index: "12a",
-          box: {
-            identifier: "12a",
-            value: { type: "unused" },
-          },
-        },
-        {
-          index: "12b",
-          box: {
-            identifier: "12b",
-            value: { type: "unused" },
-          },
-        },
-        {
-          index: "12c",
-          box: {
-            identifier: "12c",
-            value: { type: "unused" },
-          },
-        },
-        {
-          index: "12d",
-          box: {
-            identifier: "12d",
-            value: { type: "unused" },
-          },
-        },
+        { index: "12a", box: { identifier: "12a", value: { type: "unused" } } },
+        { index: "12b", box: { identifier: "12b", value: { type: "unused" } } },
+        { index: "12c", box: { identifier: "12c", value: { type: "unused" } } },
+        { index: "12d", box: { identifier: "12d", value: { type: "unused" } } },
         {
           index: "12e",
-          description:
+          instructions:
             "**Standard deduction or itemized deductions** (from Schedule A)",
           box: {
             identifier: "12e",
             value: {
               type: "conditional",
-              condition: {
-                type: "box_reference",
-                form: "f1040sA",
-                box: "18",
-              },
-              trueValue: {
-                type: "box_reference",
-                form: "f1040sA",
-                box: "17",
-              },
+              condition: { type: "box_reference", box: "18", form: "f1040sA" },
+              trueValue: { type: "box_reference", box: "17", form: "f1040sA" },
               falseValue: {
                 type: "maximum",
                 values: [
-                  { type: "box_reference", form: "f1040sA", box: "17" },
+                  { type: "box_reference", box: "17", form: "f1040sA" },
                   {
                     type: "filing_status_map",
                     values: {
-                      single: {
-                        type: "number_constant",
-                        value: 15750,
-                      },
+                      single: { type: "number_constant", value: 15750 },
                       married_filing_separately: {
                         type: "number_constant",
                         value: 15750,
@@ -450,29 +351,29 @@ export const Form1040: FormSpecification = {
         {
           // TODO: Form 8995-A
           index: "13a",
-          description:
+          instructions:
             "Qualified business income deduction from Form 8995 or Form 8995-A",
           box: {
             identifier: "13a",
-            value: { type: "box_reference", form: "f8995", box: "15" },
+            value: { type: "box_reference", box: "15", form: "f8995" },
           },
         },
         {
           index: "13b",
-          description: "Additional deductions from Schedule 1-A, line 38",
+          instructions: "Additional deductions from Schedule 1-A, line 38",
           box: {
             identifier: "13b",
             value: {
               type: "box_reference",
-              form: "f1040s1A",
               box: "38",
+              form: "f1040s1A",
               required: true,
             },
           },
         },
         {
           index: "14",
-          description: "Add lines 12e, 13a, and 13b",
+          instructions: "Add lines 12e, 13a, and 13b",
           box: {
             identifier: "14",
             value: {
@@ -487,7 +388,7 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "15",
-          description:
+          instructions:
             "Subtract line 14 from line 11b. If zero or less, enter -0-. This is your **taxable income**",
           box: {
             identifier: "15",
@@ -504,7 +405,7 @@ export const Form1040: FormSpecification = {
         {
           index: "flag_16_SDTWS",
           virtual: true,
-          description: "Flag for whether to use the Schedule D Tax Worksheet",
+          instructions: "Flag for whether to use the Schedule D Tax Worksheet",
           box: {
             identifier: "flag_16_SDTWS",
             format: "yes_no",
@@ -522,8 +423,8 @@ export const Form1040: FormSpecification = {
                       type: "comparison",
                       value: {
                         type: "box_reference",
-                        form: "f1040sD",
                         box: "18",
+                        form: "f1040sD",
                       },
                       minimum: { type: "number_constant", value: 0 },
                       strict: true,
@@ -532,8 +433,8 @@ export const Form1040: FormSpecification = {
                       type: "comparison",
                       value: {
                         type: "box_reference",
-                        form: "f1040sD",
                         box: "19",
+                        form: "f1040sD",
                       },
                       minimum: { type: "number_constant", value: 0 },
                       strict: true,
@@ -542,13 +443,13 @@ export const Form1040: FormSpecification = {
                 },
                 {
                   type: "comparison",
-                  value: { type: "box_reference", form: "f1040sD", box: "15" },
+                  value: { type: "box_reference", box: "15", form: "f1040sD" },
                   minimum: { type: "number_constant", value: 0 },
                   strict: true,
                 },
                 {
                   type: "comparison",
-                  value: { type: "box_reference", form: "f1040sD", box: "16" },
+                  value: { type: "box_reference", box: "16", form: "f1040sD" },
                   minimum: { type: "number_constant", value: 0 },
                   strict: true,
                 },
@@ -559,7 +460,7 @@ export const Form1040: FormSpecification = {
         {
           index: "flag_16_QDCGTWS",
           virtual: true,
-          description:
+          instructions:
             "Flag for whether to use the Qualified Dividends and Capital Gain Tax Worksheet",
           box: {
             identifier: "flag_16_QDCGTWS",
@@ -576,10 +477,7 @@ export const Form1040: FormSpecification = {
                   values: [
                     {
                       type: "comparison",
-                      value: {
-                        type: "box_reference",
-                        box: "3a",
-                      },
+                      value: { type: "box_reference", box: "3a" },
                       minimum: { type: "number_constant", value: 0 },
                       strict: true,
                     },
@@ -589,10 +487,7 @@ export const Form1040: FormSpecification = {
                         { type: "box_reference", box: "7b" },
                         {
                           type: "comparison",
-                          value: {
-                            type: "box_reference",
-                            box: "7a",
-                          },
+                          value: { type: "box_reference", box: "7a" },
                           minimum: { type: "number_constant", value: 0 },
                           strict: true,
                         },
@@ -605,8 +500,8 @@ export const Form1040: FormSpecification = {
                           type: "comparison",
                           value: {
                             type: "box_reference",
-                            form: "f1040sD",
                             box: "15",
+                            form: "f1040sD",
                           },
                           minimum: { type: "number_constant", value: 0 },
                           strict: true,
@@ -615,8 +510,8 @@ export const Form1040: FormSpecification = {
                           type: "comparison",
                           value: {
                             type: "box_reference",
-                            form: "f1040sD",
                             box: "16",
+                            form: "f1040sD",
                           },
                           minimum: { type: "number_constant", value: 0 },
                           strict: true,
@@ -632,7 +527,7 @@ export const Form1040: FormSpecification = {
         {
           // TODO: Form 2555, foreign earned income tax worksheet
           index: "16",
-          description: "**Tax** (see instructions)",
+          instructions: "**Tax** (see instructions)",
           box: {
             identifier: "16",
             value: {
@@ -642,20 +537,17 @@ export const Form1040: FormSpecification = {
                 condition: { type: "box_reference", box: "flag_16_SDTWS" },
                 trueValue: {
                   type: "box_reference",
-                  form: "f1040sD_SDTWS",
                   box: "47",
+                  form: "f1040sD_SDTWS",
                   required: true,
                 },
                 falseValue: {
                   type: "conditional",
-                  condition: {
-                    type: "box_reference",
-                    box: "flag_16_QDCGTWS",
-                  },
+                  condition: { type: "box_reference", box: "flag_16_QDCGTWS" },
                   trueValue: {
                     type: "box_reference",
-                    form: "f1040_QDCGTWS",
                     box: "25",
+                    form: "f1040_QDCGTWS",
                     required: true,
                   },
                   falseValue: taxComputation({ box: "15" }),
@@ -666,20 +558,20 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "17",
-          description: "Amount from Schedule 2, line 3",
+          instructions: "Amount from Schedule 2, line 3",
           box: {
             identifier: "17",
             value: {
               type: "box_reference",
-              form: "f1040s2",
               box: "3",
+              form: "f1040s2",
               required: true,
             },
           },
         },
         {
           index: "18",
-          description: "Add lines 16 and 17",
+          instructions: "Add lines 16 and 17",
           box: {
             identifier: "18",
             value: {
@@ -693,29 +585,26 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "19",
-          description:
+          instructions:
             "Child tax credit or credit for other dependents from Schedule 8812",
-          box: {
-            identifier: "19",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "19", value: { type: "number_input" } },
         },
         {
           index: "20",
-          description: "Amount from Schedule 3, line 8",
+          instructions: "Amount from Schedule 3, line 8",
           box: {
             identifier: "20",
             value: {
               type: "box_reference",
-              form: "f1040s3",
               box: "8",
+              form: "f1040s3",
               required: true,
             },
           },
         },
         {
           index: "21",
-          description: "Add lines 19 and 20",
+          instructions: "Add lines 19 and 20",
           box: {
             identifier: "21",
             value: {
@@ -729,7 +618,7 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "22",
-          description:
+          instructions:
             "Subtract line 21 from line 18. If zero or less, enter -0-",
           box: {
             identifier: "22",
@@ -745,21 +634,21 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "23",
-          description:
+          instructions:
             "Other taxes, including self-employment tax, from Schedule 2, line 21",
           box: {
             identifier: "23",
             value: {
               type: "box_reference",
-              form: "f1040s2",
               box: "21",
+              form: "f1040s2",
               required: true,
             },
           },
         },
         {
           index: "24",
-          description: "Add lines 22 and 23. This is your **total tax**",
+          instructions: "Add lines 22 and 23. This is your **total tax**",
           box: {
             identifier: "24",
             value: {
@@ -778,47 +667,44 @@ export const Form1040: FormSpecification = {
       lines: [
         {
           index: "25",
-          description: "Federal income tax withheld from:",
-          box: {
-            identifier: "25",
-            value: { type: "unused" },
-          },
+          instructions: "Federal income tax withheld from:",
+          box: { identifier: "25", value: { type: "unused" } },
         },
         {
           index: "25a",
-          description: "Form(s) W-2",
+          instructions: "Form(s) W-2",
           box: {
             identifier: "25a",
-            value: { type: "box_reference", form: "fW2", box: "2" },
+            value: { type: "box_reference", box: "2", form: "fW2" },
           },
         },
         {
           index: "25b",
-          description: "Form(s) 1099",
+          instructions: "Form(s) 1099",
           box: {
             identifier: "25b",
             value: {
               type: "sum",
               values: [
-                { type: "box_reference", form: "f1099B", box: "4" },
-                { type: "box_reference", form: "f1099DIV", box: "4" },
-                { type: "box_reference", form: "f1099INT", box: "4" },
-                { type: "box_reference", form: "f1099NEC", box: "4" },
+                { type: "box_reference", box: "4", form: "f1099B" },
+                { type: "box_reference", box: "4", form: "f1099DIV" },
+                { type: "box_reference", box: "4", form: "f1099INT" },
+                { type: "box_reference", box: "4", form: "f1099NEC" },
               ],
             },
           },
         },
         {
           index: "25c",
-          description: "Other forms (see instructions)",
+          instructions: "Other forms (see instructions)",
           box: {
             identifier: "25c",
             value: {
               type: "override_number_input",
               computedValue: {
                 type: "box_reference",
-                form: "f8959",
                 box: "24",
+                form: "f8959",
                 required: true,
               },
             },
@@ -826,7 +712,7 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "25d",
-          description: "Add lines 25a through 25c",
+          instructions: "Add lines 25a through 25c",
           box: {
             identifier: "25d",
             value: {
@@ -841,76 +727,52 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "26",
-          description:
+          instructions:
             "2025 estimated tax payments and amount applied from 2024 return",
-          box: {
-            identifier: "26",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "26", value: { type: "number_input" } },
         },
         {
           index: "27a",
-          description: "Earned income credit (EIC)",
-          box: {
-            identifier: "27a",
-            value: { type: "number_input" },
-          },
+          instructions: "Earned income credit (EIC)",
+          box: { identifier: "27a", value: { type: "number_input" } },
         },
         {
           index: "27b",
-          description: "Clergy filing Schedule SE (see instructions)",
-          box: {
-            identifier: "27b",
-            value: { type: "number_input" },
-          },
+          instructions: "Clergy filing Schedule SE (see instructions)",
+          box: { identifier: "27b", value: { type: "number_input" } },
         },
-        {
-          index: "27c",
-          box: {
-            identifier: "27c",
-            value: { type: "unused" },
-          },
-        },
+        { index: "27c", box: { identifier: "27c", value: { type: "unused" } } },
         {
           index: "28",
-          description: "Additional child tax credit (ACTC) from Schedule 8812",
-          box: {
-            identifier: "28",
-            value: { type: "number_input" },
-          },
+          instructions: "Additional child tax credit (ACTC) from Schedule 8812",
+          box: { identifier: "28", value: { type: "number_input" } },
         },
         {
           index: "29",
-          description: "American opportunity credit from Form 8863, line 8",
-          box: {
-            identifier: "29",
-            value: { type: "number_input" },
-          },
+          instructions: "American opportunity credit from Form 8863, line 8",
+          box: { identifier: "29", value: { type: "number_input" } },
         },
         {
           index: "30",
-          description: "Refundable adoption credit from Form 8839, line 13",
-          box: {
-            identifier: "30",
-            value: { type: "number_input" },
-          },
+          instructions: "Refundable adoption credit from Form 8839, line 13",
+          box: { identifier: "30", value: { type: "number_input" } },
         },
         {
           index: "31",
-          description: "Amount from Schedule 3, line 15",
+          instructions: "Amount from Schedule 3, line 15",
           box: {
             identifier: "31",
             value: {
               type: "box_reference",
-              form: "f1040s3",
               box: "15",
+              form: "f1040s3",
               required: true,
             },
           },
         },
         {
           index: "32",
-          description:
+          instructions:
             "Add lines 27a, 28, 29, 30, and 31. These are your **total other payments and refundable credits**",
           box: {
             identifier: "32",
@@ -928,7 +790,7 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "33",
-          description:
+          instructions:
             "Add lines 25d, 26, and 32. These are your **total payments**",
           box: {
             identifier: "33",
@@ -949,7 +811,7 @@ export const Form1040: FormSpecification = {
       lines: [
         {
           index: "34",
-          description:
+          instructions:
             "If line 33 is more than line 24, subtract line 24 from line 33. This is the amount you **overpaid**",
           box: {
             identifier: "34",
@@ -965,20 +827,14 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "35",
-          description: "Amount of line 34 you want refunded to you",
-          box: {
-            identifier: "35",
-            value: { type: "unused" },
-          },
+          instructions: "Amount of line 34 you want refunded to you",
+          box: { identifier: "35", value: { type: "unused" } },
         },
         {
           index: "36",
-          description:
+          instructions:
             "Amount of line 34 you want applied to your 2026 estimated tax",
-          box: {
-            identifier: "36",
-            value: { type: "unused" },
-          },
+          box: { identifier: "36", value: { type: "unused" } },
         },
       ],
     },
@@ -987,7 +843,7 @@ export const Form1040: FormSpecification = {
       lines: [
         {
           index: "37",
-          description:
+          instructions:
             "Subtract line 33 from line 24. This is the **amount you owe**",
           box: {
             identifier: "37",
@@ -1003,11 +859,8 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "38",
-          description: "Estimated tax penalty (see instructions)",
-          box: {
-            identifier: "38",
-            value: { type: "number_input" },
-          },
+          instructions: "Estimated tax penalty (see instructions)",
+          box: { identifier: "38", value: { type: "number_input" } },
         },
       ],
     },

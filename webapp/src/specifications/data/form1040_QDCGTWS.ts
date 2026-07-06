@@ -14,7 +14,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
       lines: [
         {
           index: "1",
-          description:
+          instructions:
             "Enter the amount from Form 1040 or 1040-SR, line 15. However, if you are filing Form 2555 (relating to foreign earned income), enter the amount from line 3 of the Foreign Earned Income Tax Worksheet",
           box: {
             identifier: "1",
@@ -22,23 +22,23 @@ export const Form1040_QDCGTWS: FormSpecification = {
               type: "override_number_input",
               computedValue: {
                 type: "box_reference",
-                form: "f1040",
                 box: "15",
+                form: "f1040",
               },
             },
           },
         },
         {
           index: "2",
-          description: "Enter the amount from Form 1040 or 1040-SR, line 3a",
+          instructions: "Enter the amount from Form 1040 or 1040-SR, line 3a",
           box: {
             identifier: "2",
-            value: { type: "box_reference", form: "f1040", box: "3a" },
+            value: { type: "box_reference", box: "3a", form: "f1040" },
           },
         },
         {
           index: "3",
-          description:
+          instructions:
             "Are you filing Schedule D?\n- Yes. Enter the smaller of line 15 or line 16 of Schedule D. If either line 15 or line 16 is blank or a loss, enter -0-.\n- No. Enter the amount from Form 1040 or 1040-SR, line 7a.",
           box: {
             identifier: "3",
@@ -50,18 +50,18 @@ export const Form1040_QDCGTWS: FormSpecification = {
                 value: {
                   type: "minimum",
                   values: [
-                    { type: "box_reference", form: "f1040sD", box: "15" },
-                    { type: "box_reference", form: "f1040sD", box: "16" },
+                    { type: "box_reference", box: "15", form: "f1040sD" },
+                    { type: "box_reference", box: "16", form: "f1040sD" },
                   ],
                 },
               },
-              falseValue: { type: "box_reference", form: "f1040", box: "7a" },
+              falseValue: { type: "box_reference", box: "7a", form: "f1040" },
             },
           },
         },
         {
           index: "4",
-          description: "Add lines 2 and 3",
+          instructions: "Add lines 2 and 3",
           box: {
             identifier: "4",
             value: {
@@ -75,7 +75,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "5",
-          description:
+          instructions:
             "Subtract line 4 from line 1. If zero or less, enter -0-",
           box: {
             identifier: "5",
@@ -91,7 +91,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "6",
-          description:
+          instructions:
             "Enter:\n- $48,350 if single or married filing separately,\n- $96,700 if married filing jointly or qualifying surviving spouse,\n- $64,750 if head of household.",
           box: {
             identifier: "6",
@@ -118,7 +118,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "7",
-          description: "Enter the smaller of line 1 or line 6",
+          instructions: "Enter the smaller of line 1 or line 6",
           box: {
             identifier: "7",
             value: {
@@ -132,7 +132,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "8",
-          description: "Enter the smaller of line 5 or line 7",
+          instructions: "Enter the smaller of line 5 or line 7",
           box: {
             identifier: "8",
             value: {
@@ -146,7 +146,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "9",
-          description:
+          instructions:
             "Subtract line 8 from line 7. This amount is taxed at 0%",
           box: {
             identifier: "9",
@@ -159,7 +159,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "10",
-          description: "Enter the smaller of line 1 or line 4",
+          instructions: "Enter the smaller of line 1 or line 4",
           box: {
             identifier: "10",
             value: {
@@ -173,15 +173,12 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "11",
-          description: "Enter the amount from line 9",
-          box: {
-            identifier: "11",
-            value: { type: "box_reference", box: "9" },
-          },
+          instructions: "Enter the amount from line 9",
+          box: { identifier: "11", value: { type: "box_reference", box: "9" } },
         },
         {
           index: "12",
-          description: "Subtract line 11 from line 10",
+          instructions: "Subtract line 11 from line 10",
           box: {
             identifier: "12",
             value: {
@@ -193,7 +190,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "13",
-          description:
+          instructions:
             "Enter:\n- $533,400 if single,\n- $300,000 if married filing separately,\n- $600,050 if married filing jointly or qualifying surviving spouse,\n- $566,700 if head of household.",
           box: {
             identifier: "13",
@@ -220,7 +217,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "14",
-          description: "Enter the smaller of line 1 or line 13",
+          instructions: "Enter the smaller of line 1 or line 13",
           box: {
             identifier: "14",
             value: {
@@ -234,7 +231,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "15",
-          description: "Add lines 5 and 9",
+          instructions: "Add lines 5 and 9",
           box: {
             identifier: "15",
             value: {
@@ -248,7 +245,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "16",
-          description:
+          instructions:
             "Subtract line 15 from line 14. If zero or less, enter -0-",
           box: {
             identifier: "16",
@@ -264,7 +261,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "17",
-          description: "Enter the smaller of line 12 or line 16",
+          instructions: "Enter the smaller of line 12 or line 16",
           box: {
             identifier: "17",
             value: {
@@ -278,7 +275,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "18",
-          description: "Multiply line 17 by 15% (0.15)",
+          instructions: "Multiply line 17 by 15% (0.15)",
           box: {
             identifier: "18",
             value: {
@@ -292,7 +289,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "19",
-          description: "Add lines 9 and 17",
+          instructions: "Add lines 9 and 17",
           box: {
             identifier: "19",
             value: {
@@ -306,7 +303,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "20",
-          description: "Subtract line 19 from line 10",
+          instructions: "Subtract line 19 from line 10",
           box: {
             identifier: "20",
             value: {
@@ -318,7 +315,7 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "21",
-          description: "Multiply line 20 by 20% (0.20)",
+          instructions: "Multiply line 20 by 20% (0.20)",
           box: {
             identifier: "21",
             value: {
@@ -332,16 +329,13 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "22",
-          description:
+          instructions:
             "Figure the tax on the amount on line 5. If the amount on line 5 is less than $100,000, use the Tax Table to figure the tax. If the amount on line 5 is $100,000 or more, use the Tax Computation Worksheet",
-          box: {
-            identifier: "22",
-            value: taxComputation({ box: "5" }),
-          },
+          box: { identifier: "22", value: taxComputation({ box: "5" }) },
         },
         {
           index: "23",
-          description: "Add lines 18, 21, and 22",
+          instructions: "Add lines 18, 21, and 22",
           box: {
             identifier: "23",
             value: {
@@ -356,16 +350,13 @@ export const Form1040_QDCGTWS: FormSpecification = {
         },
         {
           index: "24",
-          description:
+          instructions:
             "Figure the tax on the amount on line 1. If the amount on line 1 is less than $100,000, use the Tax Table to figure the tax. If the amount on line 1 is $100,000 or more, use the Tax Computation Worksheet",
-          box: {
-            identifier: "24",
-            value: taxComputation({ box: "1" }),
-          },
+          box: { identifier: "24", value: taxComputation({ box: "1" }) },
         },
         {
           index: "25",
-          description:
+          instructions:
             "**Tax on all taxable income.** Enter the smaller of line 23 or line 24. Also include this amount on the entry space on Form 1040 or 1040-SR, line 16. If you are filing Form 2555, don't enter this amount on the entry space on Form 1040 or 1040-SR, line 16. Instead, enter it on line 4 of the Foreign Earned Income Tax Worksheet",
           box: {
             identifier: "25",

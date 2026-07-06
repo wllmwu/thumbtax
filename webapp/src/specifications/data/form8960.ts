@@ -13,60 +13,60 @@ export const Form8960: FormSpecification = {
       lines: [
         {
           index: "1",
-          description: "Taxable interest (see instructions)",
+          instructions: "Taxable interest (see instructions)",
           box: {
             identifier: "1",
             value: {
               type: "box_reference",
-              form: "f1040",
               box: "2b",
+              form: "f1040",
               required: true,
             },
           },
         },
         {
           index: "2",
-          description: "Ordinary dividends (see instructions)",
+          instructions: "Ordinary dividends (see instructions)",
           box: {
             identifier: "2",
             value: {
               type: "box_reference",
-              form: "f1040",
               box: "3b",
+              form: "f1040",
               required: true,
             },
           },
         },
         {
           index: "3",
-          description: "Annuities (see instructions)",
+          instructions: "Annuities (see instructions)",
           box: { identifier: "3", value: { type: "number_input" } },
         },
         {
           index: "4a",
-          description:
+          instructions:
             "Rental real estate, royalties, partnerships, S corporations, trusts, trades or businesses, etc. (see instructions)",
           box: {
             identifier: "4a",
             value: {
               type: "sum",
               values: [
-                { type: "box_reference", form: "f1040s1", box: "3" },
-                { type: "box_reference", form: "f1040s1", box: "5" },
-                { type: "box_reference", form: "f1040s1", box: "6" },
+                { type: "box_reference", box: "3", form: "f1040s1" },
+                { type: "box_reference", box: "5", form: "f1040s1" },
+                { type: "box_reference", box: "6", form: "f1040s1" },
               ],
             },
           },
         },
         {
           index: "4b",
-          description:
+          instructions:
             "Adjustment for net income or loss derived in the ordinary course of a non-section 1411 trade or business (see instructions)",
           box: { identifier: "4b", value: { type: "number_input" } },
         },
         {
           index: "4c",
-          description: "Combine lines 4a and 4b",
+          instructions: "Combine lines 4a and 4b",
           box: {
             identifier: "4c",
             value: {
@@ -80,34 +80,34 @@ export const Form8960: FormSpecification = {
         },
         {
           index: "5a",
-          description:
+          instructions:
             "Net gain or loss from disposition of property (see instructions)",
           box: {
             identifier: "5a",
             value: {
               type: "sum",
               values: [
-                { type: "box_reference", form: "f1040", box: "7a" },
-                { type: "box_reference", form: "f1040s1", box: "4" },
+                { type: "box_reference", box: "7a", form: "f1040" },
+                { type: "box_reference", box: "4", form: "f1040s1" },
               ],
             },
           },
         },
         {
           index: "5b",
-          description:
+          instructions:
             "Net gain or loss from disposition of property that is not subject to net investment income tax (see instructions)",
           box: { identifier: "5b", value: { type: "number_input" } },
         },
         {
           index: "5c",
-          description:
+          instructions:
             "Adjustment from disposition of partnership interest or S corporation stock (see instructions)",
           box: { identifier: "5c", value: { type: "number_input" } },
         },
         {
           index: "5d",
-          description: "Combine lines 5a through 5c",
+          instructions: "Combine lines 5a through 5c",
           box: {
             identifier: "5d",
             value: {
@@ -122,19 +122,19 @@ export const Form8960: FormSpecification = {
         },
         {
           index: "6",
-          description:
+          instructions:
             "Adjustments to investment income for certain CFCs and PFICs (see instructions)",
           box: { identifier: "6", value: { type: "number_input" } },
         },
         {
           index: "7",
-          description:
+          instructions:
             "Other modifications to investment income (see instructions)",
           box: { identifier: "7", value: { type: "number_input" } },
         },
         {
           index: "8",
-          description:
+          instructions:
             "Total investment income. Combine lines 1, 2, 3, 4c, 5d, 6, and 7",
           box: {
             identifier: "8",
@@ -160,23 +160,23 @@ export const Form8960: FormSpecification = {
       lines: [
         {
           index: "9a",
-          description: "Investment interest expenses (see instructions)",
+          instructions: "Investment interest expenses (see instructions)",
           box: { identifier: "9a", value: { type: "number_input" } },
         },
         {
           index: "9b",
-          description:
+          instructions:
             "State, local, and foreign income tax (see instructions)",
           box: { identifier: "9b", value: { type: "number_input" } },
         },
         {
           index: "9c",
-          description: "Miscellaneous investment expenses (see instructions)",
+          instructions: "Miscellaneous investment expenses (see instructions)",
           box: { identifier: "9c", value: { type: "number_input" } },
         },
         {
           index: "9d",
-          description: "Add lines 9a, 9b, and 9c",
+          instructions: "Add lines 9a, 9b, and 9c",
           box: {
             identifier: "9d",
             value: {
@@ -191,12 +191,12 @@ export const Form8960: FormSpecification = {
         },
         {
           index: "10",
-          description: "Additional modifications (see instructions)",
+          instructions: "Additional modifications (see instructions)",
           box: { identifier: "10", value: { type: "number_input" } },
         },
         {
           index: "11",
-          description:
+          instructions:
             "Total deductions and modifications. Add lines 9d and 10",
           box: {
             identifier: "11",
@@ -216,7 +216,7 @@ export const Form8960: FormSpecification = {
       lines: [
         {
           index: "12",
-          description:
+          instructions:
             "Net investment income. Subtract Part II, line 11, from Part I, line 8. Individuals, complete lines 13\u201317. Estates and trusts, complete lines 18a\u201321. If zero or less, enter -0-",
           box: {
             identifier: "12",
@@ -232,20 +232,20 @@ export const Form8960: FormSpecification = {
         },
         {
           index: "13",
-          description: "Modified adjusted gross income (see instructions)",
+          instructions: "Modified adjusted gross income (see instructions)",
           box: {
             identifier: "13",
             value: {
               type: "box_reference",
-              form: "f1040",
               box: "11a",
+              form: "f1040",
               required: true,
             },
           },
         },
         {
           index: "14",
-          description: "Threshold based on filing status (see instructions)",
+          instructions: "Threshold based on filing status (see instructions)",
           box: {
             identifier: "14",
             value: {
@@ -271,7 +271,7 @@ export const Form8960: FormSpecification = {
         },
         {
           index: "15",
-          description:
+          instructions:
             "Subtract line 14 from line 13. If zero or less, enter -0-",
           box: {
             identifier: "15",
@@ -287,7 +287,7 @@ export const Form8960: FormSpecification = {
         },
         {
           index: "16",
-          description: "Enter the smaller of line 12 or line 15",
+          instructions: "Enter the smaller of line 12 or line 15",
           box: {
             identifier: "16",
             value: {
@@ -301,7 +301,7 @@ export const Form8960: FormSpecification = {
         },
         {
           index: "17",
-          description:
+          instructions:
             "Net investment income tax for individuals. Multiply line 16 by 3.8% (0.038). Enter here and include on your tax return (see instructions)",
           box: {
             identifier: "17",
@@ -316,46 +316,46 @@ export const Form8960: FormSpecification = {
         },
         {
           index: "18a",
-          description: "Net investment income (line 12 above)",
+          instructions: "Net investment income (line 12 above)",
           box: { identifier: "18a", value: { type: "unsupported" } },
         },
         {
           index: "18b",
-          description:
+          instructions:
             "Deductions for distributions of net investment income and charitable deductions (see instructions)",
           box: { identifier: "18b", value: { type: "unsupported" } },
         },
         {
           index: "18c",
-          description:
+          instructions:
             "Undistributed net investment income. Subtract line 18b from line 18a (see instructions). If zero or less, enter -0-",
           box: { identifier: "18c", value: { type: "unsupported" } },
         },
         {
           index: "19a",
-          description: "Adjusted gross income (see instructions)",
+          instructions: "Adjusted gross income (see instructions)",
           box: { identifier: "19a", value: { type: "unsupported" } },
         },
         {
           index: "19b",
-          description:
+          instructions:
             "Highest tax bracket for estates and trusts for the year (see instructions)",
           box: { identifier: "19b", value: { type: "unsupported" } },
         },
         {
           index: "19c",
-          description:
+          instructions:
             "Subtract line 19b from line 19a. If zero or less, enter -0-",
           box: { identifier: "19c", value: { type: "unsupported" } },
         },
         {
           index: "20",
-          description: "Enter the smaller of line 18c or line 19c",
+          instructions: "Enter the smaller of line 18c or line 19c",
           box: { identifier: "20", value: { type: "unsupported" } },
         },
         {
           index: "21",
-          description:
+          instructions:
             "Net investment income tax for estates and trusts. Multiply line 20 by 3.8% (0.038). Enter here and include on your tax return (see instructions)",
           box: { identifier: "21", value: { type: "unsupported" } },
         },

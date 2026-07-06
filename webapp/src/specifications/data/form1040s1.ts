@@ -13,82 +13,58 @@ export const Form1040S1: FormSpecification = {
       lines: [
         {
           index: "1",
-          description:
+          instructions:
             "Taxable refunds, credits, or offsets of state and local income taxes",
-          box: {
-            identifier: "1",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "1", value: { type: "number_input" } },
         },
         {
           index: "2a",
-          description: "Alimony received",
-          box: {
-            identifier: "2a",
-            value: { type: "number_input" },
-          },
+          instructions: "Alimony received",
+          box: { identifier: "2a", value: { type: "number_input" } },
         },
         {
           index: "2b",
-          description:
+          instructions:
             "Date of original divorce or separation agreement (see instructions)",
-          box: {
-            identifier: "2b",
-            value: { type: "unused" },
-          },
+          box: { identifier: "2b", value: { type: "unused" } },
         },
         {
           index: "3",
-          description: "Business income or (loss). Attach Schedule C",
+          instructions: "Business income or (loss). Attach Schedule C",
           box: {
             identifier: "3",
-            value: { type: "box_reference", form: "f1040sC", box: "31" },
+            value: { type: "box_reference", box: "31", form: "f1040sC" },
           },
         },
         {
           index: "4",
-          description: "Other gains or (losses)",
-          box: {
-            identifier: "4",
-            value: { type: "number_input" },
-          },
+          instructions: "Other gains or (losses)",
+          box: { identifier: "4", value: { type: "number_input" } },
         },
         {
           index: "5",
-          description:
+          instructions:
             "Rental real estate, royalties, partnerships, S corporations, trusts, etc. Attach Schedule E",
-          box: {
-            identifier: "5",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "5", value: { type: "number_input" } },
         },
         {
           index: "6",
-          description: "Farm income or (loss). Attach Schedule F",
-          box: {
-            identifier: "6",
-            value: { type: "number_input" },
-          },
+          instructions: "Farm income or (loss). Attach Schedule F",
+          box: { identifier: "6", value: { type: "number_input" } },
         },
         {
           index: "7",
-          description: "Unemployment compensation",
-          box: {
-            identifier: "7",
-            value: { type: "number_input" },
-          },
+          instructions: "Unemployment compensation",
+          box: { identifier: "7", value: { type: "number_input" } },
         },
         {
           index: "8",
-          description: "Other income:",
-          box: {
-            identifier: "8",
-            value: { type: "unused" },
-          },
+          instructions: "Other income:",
+          box: { identifier: "8", value: { type: "unused" } },
         },
         {
           index: "8a",
-          description: "Net operating loss",
+          instructions: "Net operating loss",
           box: {
             identifier: "8a",
             value: { type: "number_input", coerceSign: "negative" },
@@ -96,24 +72,18 @@ export const Form1040S1: FormSpecification = {
         },
         {
           index: "8b",
-          description: "Gambling",
-          box: {
-            identifier: "8b",
-            value: { type: "number_input" },
-          },
+          instructions: "Gambling",
+          box: { identifier: "8b", value: { type: "number_input" } },
         },
         {
           index: "8c",
-          description: "Cancellation of debt",
-          box: {
-            identifier: "8c",
-            value: { type: "number_input" },
-          },
+          instructions: "Cancellation of debt",
+          box: { identifier: "8c", value: { type: "number_input" } },
         },
         {
           // TODO: Form 2555
           index: "8d",
-          description: "Foreign earned income exclusion from Form 2555",
+          instructions: "Foreign earned income exclusion from Form 2555",
           box: {
             identifier: "8d",
             value: { type: "number_input", coerceSign: "negative" },
@@ -121,54 +91,42 @@ export const Form1040S1: FormSpecification = {
         },
         {
           index: "8e",
-          description: "Income from Form 8853",
-          box: {
-            identifier: "8e",
-            value: { type: "number_input" },
-          },
+          instructions: "Income from Form 8853",
+          box: { identifier: "8e", value: { type: "number_input" } },
         },
         {
           index: "8f",
-          description: "Income from Form 8889",
+          instructions: "Income from Form 8889",
           box: {
             identifier: "8f",
             value: {
               type: "sum",
               values: [
-                { type: "box_reference", form: "f8889", box: "16" },
-                { type: "box_reference", form: "f8889", box: "20" },
+                { type: "box_reference", box: "16", form: "f8889" },
+                { type: "box_reference", box: "20", form: "f8889" },
               ],
             },
           },
         },
         {
           index: "8g",
-          description: "Alaska Permanent Fund dividends",
-          box: {
-            identifier: "8g",
-            value: { type: "number_input" },
-          },
+          instructions: "Alaska Permanent Fund dividends",
+          box: { identifier: "8g", value: { type: "number_input" } },
         },
         {
           index: "8h",
-          description: "Jury duty pay",
-          box: {
-            identifier: "8h",
-            value: { type: "number_input" },
-          },
+          instructions: "Jury duty pay",
+          box: { identifier: "8h", value: { type: "number_input" } },
         },
         {
           index: "8i",
-          description: "Prizes and awards",
-          box: {
-            identifier: "8i",
-            value: { type: "number_input" },
-          },
+          instructions: "Prizes and awards",
+          box: { identifier: "8i", value: { type: "number_input" } },
         },
         {
           // TODO: helper forms
           index: "8j",
-          description: "Activity not engaged in for profit income",
+          instructions: "Activity not engaged in for profit income",
           box: {
             identifier: "8j",
             value: {
@@ -179,75 +137,51 @@ export const Form1040S1: FormSpecification = {
         },
         {
           index: "8k",
-          description: "Stock options",
-          box: {
-            identifier: "8k",
-            value: { type: "number_input" },
-          },
+          instructions: "Stock options",
+          box: { identifier: "8k", value: { type: "number_input" } },
         },
         {
           index: "8l",
-          description:
+          instructions:
             "Income from the rental of personal property if you engaged in the rental for profit but were not in the business of renting such property",
-          box: {
-            identifier: "8l",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "8l", value: { type: "number_input" } },
         },
         {
           index: "8m",
-          description:
+          instructions:
             "Olympic and Paralympic medals and USOC prize money (see instructions)",
-          box: {
-            identifier: "8m",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "8m", value: { type: "number_input" } },
         },
         {
           index: "8n",
-          description: "Section 951(a) inclusion (see instructions)",
-          box: {
-            identifier: "8n",
-            value: { type: "number_input" },
-          },
+          instructions: "Section 951(a) inclusion (see instructions)",
+          box: { identifier: "8n", value: { type: "number_input" } },
         },
         {
           index: "8o",
-          description: "Section 951A(a) inclusion (see instructions)",
-          box: {
-            identifier: "8o",
-            value: { type: "number_input" },
-          },
+          instructions: "Section 951A(a) inclusion (see instructions)",
+          box: { identifier: "8o", value: { type: "number_input" } },
         },
         {
           index: "8p",
-          description: "Section 461(l) excess business loss adjustment",
-          box: {
-            identifier: "8p",
-            value: { type: "number_input" },
-          },
+          instructions: "Section 461(l) excess business loss adjustment",
+          box: { identifier: "8p", value: { type: "number_input" } },
         },
         {
           index: "8q",
-          description:
+          instructions:
             "Taxable distributions from an ABLE account (see instructions)",
-          box: {
-            identifier: "8q",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "8q", value: { type: "number_input" } },
         },
         {
           index: "8r",
-          description:
+          instructions:
             "Scholarship and fellowship grants not reported on Form W-2",
-          box: {
-            identifier: "8r",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "8r", value: { type: "number_input" } },
         },
         {
           index: "8s",
-          description:
+          instructions:
             "Nontaxable amount of Medicaid waiver payments included on Form 1040, line 1a or 1d",
           box: {
             identifier: "8s",
@@ -256,41 +190,29 @@ export const Form1040S1: FormSpecification = {
         },
         {
           index: "8t",
-          description:
+          instructions:
             "Pension or annuity from a nonqualified deferred compensation plan or a nongovernmental section 457 plan",
-          box: {
-            identifier: "8t",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "8t", value: { type: "number_input" } },
         },
         {
           index: "8u",
-          description: "Wages earned while incarcerated",
-          box: {
-            identifier: "8u",
-            value: { type: "number_input" },
-          },
+          instructions: "Wages earned while incarcerated",
+          box: { identifier: "8u", value: { type: "number_input" } },
         },
         {
           index: "8v",
-          description:
+          instructions:
             "Digital assets received as ordinary income not reported elsewhere. See instructions",
-          box: {
-            identifier: "8v",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "8v", value: { type: "number_input" } },
         },
         {
           index: "8z",
-          description: "Other income. List type and amount",
-          box: {
-            identifier: "8z",
-            value: { type: "list_amounts_input" },
-          },
+          instructions: "Other income. List type and amount",
+          box: { identifier: "8z", value: { type: "list_amounts_input" } },
         },
         {
           index: "9",
-          description: "Total other income. Add lines 8a through 8z",
+          instructions: "Total other income. Add lines 8a through 8z",
           box: {
             identifier: "9",
             value: {
@@ -325,7 +247,7 @@ export const Form1040S1: FormSpecification = {
         },
         {
           index: "10",
-          description:
+          instructions:
             "Combine lines 1 through 7 and 9. This is your **additional income.** Enter here and on Form 1040, 1040-SR, or 1040-NR, line 8",
           box: {
             identifier: "10",
@@ -351,244 +273,163 @@ export const Form1040S1: FormSpecification = {
       lines: [
         {
           index: "11",
-          description: "Educator expenses",
-          box: {
-            identifier: "11",
-            value: { type: "number_input" },
-          },
+          instructions: "Educator expenses",
+          box: { identifier: "11", value: { type: "number_input" } },
         },
         {
           index: "12",
-          description:
+          instructions:
             "Certain business expenses of reservists, performing artists, and fee-basis government officials. Attach Form 2106",
-          box: {
-            identifier: "12",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "12", value: { type: "number_input" } },
         },
         {
           index: "13",
-          description: "Health savings account deduction. Attach Form 8889",
+          instructions: "Health savings account deduction. Attach Form 8889",
           box: {
             identifier: "13",
-            value: { type: "box_reference", form: "f8889", box: "13" },
+            value: { type: "box_reference", box: "13", form: "f8889" },
           },
         },
         {
           index: "14",
-          description:
+          instructions:
             "Moving expenses for members of the Armed Forces. Attach Form 3903",
-          box: {
-            identifier: "14",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "14", value: { type: "number_input" } },
         },
         {
           // TODO: Schedule SE
           index: "15",
-          description:
+          instructions:
             "Deductible part of self-employment tax. Attach Schedule SE",
-          box: {
-            identifier: "15",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "15", value: { type: "number_input" } },
         },
         {
           index: "16",
-          description: "Self-employed SEP, SIMPLE, and qualified plans",
-          box: {
-            identifier: "16",
-            value: { type: "number_input" },
-          },
+          instructions: "Self-employed SEP, SIMPLE, and qualified plans",
+          box: { identifier: "16", value: { type: "number_input" } },
         },
         {
           index: "17",
-          description: "Self-employed health insurance deduction",
-          box: {
-            identifier: "17",
-            value: { type: "number_input" },
-          },
+          instructions: "Self-employed health insurance deduction",
+          box: { identifier: "17", value: { type: "number_input" } },
         },
         {
           index: "18",
-          description: "Penalty on early withdrawal of savings",
-          box: {
-            identifier: "18",
-            value: { type: "number_input" },
-          },
+          instructions: "Penalty on early withdrawal of savings",
+          box: { identifier: "18", value: { type: "number_input" } },
         },
         {
           index: "19a",
-          description: "Alimony paid",
-          box: {
-            identifier: "19a",
-            value: { type: "number_input" },
-          },
+          instructions: "Alimony paid",
+          box: { identifier: "19a", value: { type: "number_input" } },
         },
         {
           index: "19b",
-          description: "Recipient's SSN",
-          box: {
-            identifier: "19b",
-            value: { type: "unused" },
-          },
+          instructions: "Recipient's SSN",
+          box: { identifier: "19b", value: { type: "unused" } },
         },
         {
           index: "19c",
-          description:
+          instructions:
             "Date of original divorce or separation agreement (see instructions)",
-          box: {
-            identifier: "19c",
-            value: { type: "unused" },
-          },
+          box: { identifier: "19c", value: { type: "unused" } },
         },
         {
           index: "20",
-          description: "IRA deduction",
-          box: {
-            identifier: "20",
-            value: { type: "number_input" },
-          },
+          instructions: "IRA deduction",
+          box: { identifier: "20", value: { type: "number_input" } },
         },
         {
           index: "21",
-          description: "Student loan interest deduction",
-          box: {
-            identifier: "21",
-            value: { type: "number_input" },
-          },
+          instructions: "Student loan interest deduction",
+          box: { identifier: "21", value: { type: "number_input" } },
         },
         {
           index: "22",
-          description: "Reserved for future use",
-          box: {
-            identifier: "22",
-            value: { type: "unused" },
-          },
+          instructions: "Reserved for future use",
+          box: { identifier: "22", value: { type: "unused" } },
         },
         {
           index: "23",
-          description: "Archer MSA deduction",
-          box: {
-            identifier: "23",
-            value: { type: "number_input" },
-          },
+          instructions: "Archer MSA deduction",
+          box: { identifier: "23", value: { type: "number_input" } },
         },
         {
           index: "24",
-          description: "Other adjustments:",
-          box: {
-            identifier: "24",
-            value: { type: "unused" },
-          },
+          instructions: "Other adjustments:",
+          box: { identifier: "24", value: { type: "unused" } },
         },
         {
           index: "24a",
-          description: "Jury duty pay (see instructions)",
-          box: {
-            identifier: "24a",
-            value: { type: "number_input" },
-          },
+          instructions: "Jury duty pay (see instructions)",
+          box: { identifier: "24a", value: { type: "number_input" } },
         },
         {
           index: "24b",
-          description:
+          instructions:
             "Deductible expenses related to income reported on line 8l from the rental of personal property engaged in for profit",
-          box: {
-            identifier: "24b",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "24b", value: { type: "number_input" } },
         },
         {
           index: "24c",
-          description:
+          instructions:
             "Nontaxable amount of the value of Olympic and Paralympic medals and USOC prize money reported on line 8m",
-          box: {
-            identifier: "24c",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "24c", value: { type: "number_input" } },
         },
         {
           index: "24d",
-          description: "Reforestation amortization and expenses",
-          box: {
-            identifier: "24d",
-            value: { type: "number_input" },
-          },
+          instructions: "Reforestation amortization and expenses",
+          box: { identifier: "24d", value: { type: "number_input" } },
         },
         {
           index: "24e",
-          description:
+          instructions:
             "Repayment of supplemental unemployment benefits under the Trade Act of 1974",
-          box: {
-            identifier: "24e",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "24e", value: { type: "number_input" } },
         },
         {
           index: "24f",
-          description: "Contributions to section 501(c)(18)(D) pension plans",
-          box: {
-            identifier: "24f",
-            value: { type: "number_input" },
-          },
+          instructions: "Contributions to section 501(c)(18)(D) pension plans",
+          box: { identifier: "24f", value: { type: "number_input" } },
         },
         {
           index: "24g",
-          description:
+          instructions:
             "Contributions by certain chaplains to section 403(b) plans",
-          box: {
-            identifier: "24g",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "24g", value: { type: "number_input" } },
         },
         {
           index: "24h",
-          description:
+          instructions:
             "Attorney fees and court costs for actions involving certain unlawful discrimination claims (see instructions)",
-          box: {
-            identifier: "24h",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "24h", value: { type: "number_input" } },
         },
         {
           index: "24i",
-          description:
+          instructions:
             "Attorney fees and court costs you paid in connection with an award from the IRS for information you provided that helped the IRS detect tax law violations",
-          box: {
-            identifier: "24i",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "24i", value: { type: "number_input" } },
         },
         {
           // TODO: Form 2555
           index: "24j",
-          description: "Housing deduction from Form 2555",
-          box: {
-            identifier: "24j",
-            value: { type: "number_input" },
-          },
+          instructions: "Housing deduction from Form 2555",
+          box: { identifier: "24j", value: { type: "number_input" } },
         },
         {
           index: "24k",
-          description:
+          instructions:
             "Excess deductions of section 67(e) expenses from Schedule K-1 (Form 1041)",
-          box: {
-            identifier: "24k",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "24k", value: { type: "number_input" } },
         },
         {
           index: "24z",
-          description: "Other adjustments. List type and amount",
-          box: {
-            identifier: "24z",
-            value: { type: "list_amounts_input" },
-          },
+          instructions: "Other adjustments. List type and amount",
+          box: { identifier: "24z", value: { type: "list_amounts_input" } },
         },
         {
           index: "25",
-          description: "Total other adjustments. Add lines 24a through 24z",
+          instructions: "Total other adjustments. Add lines 24a through 24z",
           box: {
             identifier: "25",
             value: {
@@ -612,7 +453,7 @@ export const Form1040S1: FormSpecification = {
         },
         {
           index: "26",
-          description:
+          instructions:
             "Add lines 11 through 23 and 25. These are your **adjustments to income.** Enter here and on Form 1040, 1040-SR, or 1040-NR, line 10",
           box: {
             identifier: "26",

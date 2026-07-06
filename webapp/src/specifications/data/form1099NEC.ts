@@ -12,60 +12,39 @@ export const Form1099NEC: FormSpecification = {
       lines: [
         {
           index: "1",
-          description: "Nonemployee compensation",
-          box: {
-            identifier: "1",
-            value: { type: "number_input" },
-          },
+          instructions: "Nonemployee compensation",
+          box: { identifier: "1", value: { type: "number_input" } },
         },
         {
           index: "2",
-          description:
+          instructions:
             "Payer made direct sales totaling $5,000 or more of consumer products to recipient for resale",
-          box: {
-            identifier: "2",
-            value: { type: "unused" },
-          },
+          box: { identifier: "2", value: { type: "unused" } },
         },
         {
           index: "3",
-          description: "Excess golden parachute payments",
-          box: {
-            identifier: "3",
-            value: { type: "number_input" },
-          },
+          instructions: "Excess golden parachute payments",
+          box: { identifier: "3", value: { type: "number_input" } },
         },
         {
           index: "4",
-          description: "Federal income tax withheld",
-          box: {
-            identifier: "4",
-            value: { type: "number_input" },
-          },
+          instructions: "Federal income tax withheld",
+          box: { identifier: "4", value: { type: "number_input" } },
         },
         {
           index: "5",
-          description: "State tax withheld",
-          box: {
-            identifier: "5",
-            value: { type: "number_input" },
-          },
+          instructions: "State tax withheld",
+          box: { identifier: "5", value: { type: "number_input" } },
         },
         {
           index: "6",
-          description: "State/Payer's state number",
-          box: {
-            identifier: "6",
-            value: { type: "unused" },
-          },
+          instructions: "State/Payer's state number",
+          box: { identifier: "6", value: { type: "unused" } },
         },
         {
           index: "7",
-          description: "State income",
-          box: {
-            identifier: "7",
-            value: { type: "number_input" },
-          },
+          instructions: "State income",
+          box: { identifier: "7", value: { type: "number_input" } },
         },
       ],
     },

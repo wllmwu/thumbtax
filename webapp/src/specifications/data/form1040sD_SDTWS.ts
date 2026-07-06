@@ -13,7 +13,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
       lines: [
         {
           index: "1",
-          description:
+          instructions:
             "Enter your taxable income from Form 1040, 1040-SR, or 1040-NR, line 15. (However, if you are filing Form 2555 (relating to foreign earned income), enter instead the amount from line 3 of the Foreign Earned Income Tax Worksheet in the instructions for Form 1040, line 16.)",
           box: {
             identifier: "1",
@@ -21,8 +21,8 @@ export const Form1040SD_SDTWS: FormSpecification = {
               type: "override_number_input",
               computedValue: {
                 type: "box_reference",
-                form: "f1040",
                 box: "15",
+                form: "f1040",
                 required: true,
               },
             },
@@ -30,38 +30,32 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "2",
-          description:
+          instructions:
             "Enter your qualified dividends from Form 1040, 1040-SR, or 1040-NR, line 3a",
           box: {
             identifier: "2",
             value: {
               type: "box_reference",
-              form: "f1040",
               box: "3a",
+              form: "f1040",
               required: true,
             },
           },
         },
         {
           index: "3",
-          description:
+          instructions:
             "Enter the amount from Form 4952 (used to figure investment interest expense deduction), line 4g",
-          box: {
-            identifier: "3",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "3", value: { type: "number_input" } },
         },
         {
           index: "4",
-          description: "Enter the amount from Form 4952, line 4e",
-          box: {
-            identifier: "4",
-            value: { type: "number_input" },
-          },
+          instructions: "Enter the amount from Form 4952, line 4e",
+          box: { identifier: "4", value: { type: "number_input" } },
         },
         {
           index: "5",
-          description:
+          instructions:
             "Subtract line 4 from line 3. If zero or less, enter -0-",
           box: {
             identifier: "5",
@@ -77,7 +71,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "6",
-          description:
+          instructions:
             "Subtract line 5 from line 2. If zero or less, enter -0-",
           box: {
             identifier: "6",
@@ -93,21 +87,21 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "7",
-          description: "Enter the smaller of line 15 or line 16 of Schedule D",
+          instructions: "Enter the smaller of line 15 or line 16 of Schedule D",
           box: {
             identifier: "7",
             value: {
               type: "minimum",
               values: [
-                { type: "box_reference", form: "f1040sD", box: "15" },
-                { type: "box_reference", form: "f1040sD", box: "16" },
+                { type: "box_reference", box: "15", form: "f1040sD" },
+                { type: "box_reference", box: "16", form: "f1040sD" },
               ],
             },
           },
         },
         {
           index: "8",
-          description: "Enter the smaller of line 3 or line 4",
+          instructions: "Enter the smaller of line 3 or line 4",
           box: {
             identifier: "8",
             value: {
@@ -121,7 +115,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "9",
-          description:
+          instructions:
             "Subtract line 8 from line 7. If zero or less, enter -0-",
           box: {
             identifier: "9",
@@ -137,7 +131,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "10",
-          description: "Add lines 6 and 9",
+          instructions: "Add lines 6 and 9",
           box: {
             identifier: "10",
             value: {
@@ -151,7 +145,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "11",
-          description: "Add lines 18 and 19 of Schedule D",
+          instructions: "Add lines 18 and 19 of Schedule D",
           box: {
             identifier: "11",
             value: {
@@ -159,14 +153,14 @@ export const Form1040SD_SDTWS: FormSpecification = {
               values: [
                 {
                   type: "box_reference",
-                  form: "f1040sD",
                   box: "18",
+                  form: "f1040sD",
                   required: true,
                 },
                 {
                   type: "box_reference",
-                  form: "f1040sD",
                   box: "19",
+                  form: "f1040sD",
                   required: true,
                 },
               ],
@@ -175,7 +169,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "12",
-          description: "Enter the smaller of line 9 or line 11",
+          instructions: "Enter the smaller of line 9 or line 11",
           box: {
             identifier: "12",
             value: {
@@ -189,7 +183,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "13",
-          description: "Subtract line 12 from line 10",
+          instructions: "Subtract line 12 from line 10",
           box: {
             identifier: "13",
             value: {
@@ -201,7 +195,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "14",
-          description:
+          instructions:
             "Subtract line 13 from line 1. If zero or less, enter -0-",
           box: {
             identifier: "14",
@@ -217,7 +211,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "15",
-          description:
+          instructions:
             "Enter:\n- $48,350 if single or married filing separately;\n- $96,700 if married filing jointly or qualifying surviving spouse; or\n- $64,750 if head of household.",
           box: {
             identifier: "15",
@@ -244,7 +238,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "16",
-          description: "Enter the smaller of line 1 or line 15",
+          instructions: "Enter the smaller of line 1 or line 15",
           box: {
             identifier: "16",
             value: {
@@ -258,7 +252,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "17",
-          description: "Enter the smaller of line 14 or line 16",
+          instructions: "Enter the smaller of line 14 or line 16",
           box: {
             identifier: "17",
             value: {
@@ -272,7 +266,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "18",
-          description:
+          instructions:
             "Subtract line 10 from line 1. If zero or less, enter -0-",
           box: {
             identifier: "18",
@@ -288,7 +282,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "19",
-          description:
+          instructions:
             "Enter the smaller of line 1 or:\n- $197,300 if single or married filing separately;\n- $394,600 if married filing jointly or qualifying surviving spouse; or\n- $197,300 if head of household.",
           box: {
             identifier: "19",
@@ -324,7 +318,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "20",
-          description: "Enter the smaller of line 14 or line 19",
+          instructions: "Enter the smaller of line 14 or line 19",
           box: {
             identifier: "20",
             value: {
@@ -338,7 +332,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "21",
-          description: "Enter the larger of line 18 or line 20",
+          instructions: "Enter the larger of line 18 or line 20",
           box: {
             identifier: "21",
             value: {
@@ -352,7 +346,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "22",
-          description:
+          instructions:
             "Subtract line 17 from line 16. This amount is taxed at 0%\nIf lines 1 and 16 are the same, skip lines 23 through 43 and go to line 44. Otherwise, go to line 23.",
           box: {
             identifier: "22",
@@ -365,7 +359,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "23",
-          description: "Enter the smaller of line 1 or line 13",
+          instructions: "Enter the smaller of line 1 or line 13",
           box: {
             identifier: "23",
             value: {
@@ -379,7 +373,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "24",
-          description: "Enter the amount from line 22",
+          instructions: "Enter the amount from line 22",
           box: {
             identifier: "24",
             value: { type: "box_reference", box: "22" },
@@ -387,7 +381,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "25",
-          description:
+          instructions:
             "Subtract line 24 from line 23. If zero or less, enter -0-",
           box: {
             identifier: "25",
@@ -403,7 +397,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "26",
-          description:
+          instructions:
             "Enter:\n- $533,400 if single;\n- $300,000 if married filing separately;\n- $600,050 if married filing jointly or qualifying surviving spouse; or\n- $566,700 if head of household.",
           box: {
             identifier: "26",
@@ -430,7 +424,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "27",
-          description: "Enter the smaller of line 1 or line 26",
+          instructions: "Enter the smaller of line 1 or line 26",
           box: {
             identifier: "27",
             value: {
@@ -444,7 +438,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "28",
-          description: "Add lines 21 and 22",
+          instructions: "Add lines 21 and 22",
           box: {
             identifier: "28",
             value: {
@@ -458,7 +452,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "29",
-          description:
+          instructions:
             "Subtract line 28 from line 27. If zero or less, enter -0-",
           box: {
             identifier: "29",
@@ -474,7 +468,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "30",
-          description: "Enter the smaller of line 25 or line 29",
+          instructions: "Enter the smaller of line 25 or line 29",
           box: {
             identifier: "30",
             value: {
@@ -488,7 +482,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "31",
-          description: "Multiply line 30 by 15% (0.15)",
+          instructions: "Multiply line 30 by 15% (0.15)",
           box: {
             identifier: "31",
             value: {
@@ -502,7 +496,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "32",
-          description:
+          instructions:
             "Add lines 24 and 30\nIf lines 1 and 32 are the same, skip lines 33 through 43 and go to line 44. Otherwise, go to line 33.",
           box: {
             identifier: "32",
@@ -517,7 +511,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "33",
-          description: "Subtract line 32 from line 23",
+          instructions: "Subtract line 32 from line 23",
           box: {
             identifier: "33",
             value: {
@@ -529,7 +523,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "34",
-          description:
+          instructions:
             "Multiply line 33 by 20% (0.20)\nIf Schedule D, line 19, is zero or blank, skip lines 35 through 40 and go to line 41. Otherwise, go to line 35.",
           box: {
             identifier: "34",
@@ -544,7 +538,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "35",
-          description:
+          instructions:
             "Enter the smaller of line 9 above or Schedule D, line 19",
           box: {
             identifier: "35",
@@ -552,14 +546,14 @@ export const Form1040SD_SDTWS: FormSpecification = {
               type: "minimum",
               values: [
                 { type: "box_reference", box: "9" },
-                { type: "box_reference", form: "f1040sD", box: "19" },
+                { type: "box_reference", box: "19", form: "f1040sD" },
               ],
             },
           },
         },
         {
           index: "36",
-          description: "Add lines 10 and 21",
+          instructions: "Add lines 10 and 21",
           box: {
             identifier: "36",
             value: {
@@ -573,15 +567,12 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "37",
-          description: "Enter the amount from line 1 above",
-          box: {
-            identifier: "37",
-            value: { type: "box_reference", box: "1" },
-          },
+          instructions: "Enter the amount from line 1 above",
+          box: { identifier: "37", value: { type: "box_reference", box: "1" } },
         },
         {
           index: "38",
-          description:
+          instructions:
             "Subtract line 37 from line 36. If zero or less, enter -0-",
           box: {
             identifier: "38",
@@ -597,7 +588,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "39",
-          description:
+          instructions:
             "Subtract line 38 from line 35. If zero or less, enter -0-",
           box: {
             identifier: "39",
@@ -613,7 +604,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "40",
-          description:
+          instructions:
             "Multiply line 39 by 25% (0.25)\nIf Schedule D, line 18, is zero or blank, skip lines 41 through 43 and go to line 44. Otherwise, go to line 41.",
           box: {
             identifier: "40",
@@ -628,7 +619,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "41",
-          description: "Add lines 21, 22, 30, 33, and 39",
+          instructions: "Add lines 21, 22, 30, 33, and 39",
           box: {
             identifier: "41",
             value: {
@@ -645,7 +636,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "42",
-          description: "Subtract line 41 from line 1",
+          instructions: "Subtract line 41 from line 1",
           box: {
             identifier: "42",
             value: {
@@ -657,7 +648,7 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "43",
-          description: "Multiply line 42 by 28% (0.28)",
+          instructions: "Multiply line 42 by 28% (0.28)",
           box: {
             identifier: "43",
             value: {
@@ -671,16 +662,13 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "44",
-          description:
+          instructions:
             "Figure the tax on the amount on line 21. If the amount on line 21 is less than $100,000, use the Tax Table to figure the tax. If the amount on line 21 is $100,000 or more, use the Tax Computation Worksheet",
-          box: {
-            identifier: "44",
-            value: taxComputation({ box: "21" }),
-          },
+          box: { identifier: "44", value: taxComputation({ box: "21" }) },
         },
         {
           index: "45",
-          description: "Add lines 31, 34, 40, 43, and 44",
+          instructions: "Add lines 31, 34, 40, 43, and 44",
           box: {
             identifier: "45",
             value: {
@@ -697,16 +685,13 @@ export const Form1040SD_SDTWS: FormSpecification = {
         },
         {
           index: "46",
-          description:
+          instructions:
             "Figure the tax on the amount on line 1. If the amount on line 1 is less than $100,000, use the Tax Table to figure the tax. If the amount on line 1 is $100,000 or more, use the Tax Computation Worksheet",
-          box: {
-            identifier: "46",
-            value: taxComputation({ box: "1" }),
-          },
+          box: { identifier: "46", value: taxComputation({ box: "1" }) },
         },
         {
           index: "47",
-          description:
+          instructions:
             "**Tax on all taxable income (including capital gains and qualified dividends).** Enter the smaller of line 45 or line 46. Also, include this amount on Form 1040, 1040-SR, or 1040-NR, line 16. (If you are filing Form 2555, don’t enter this amount on Form 1040 or 1040-SR, line 16. Instead, enter it on line 4 of the Foreign Earned Income Tax Worksheet in the Instructions for Form 1040.)",
           box: {
             identifier: "47",

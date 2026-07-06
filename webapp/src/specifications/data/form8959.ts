@@ -13,33 +13,27 @@ export const Form8959: FormSpecification = {
       lines: [
         {
           index: "1",
-          description:
+          instructions:
             "Medicare wages and tips from Form W-2, box 5. If you have more than one Form W-2, enter the total of the amounts from box 5",
           box: {
             identifier: "1",
-            value: { type: "box_reference", form: "fW2", box: "5" },
+            value: { type: "box_reference", box: "5", form: "fW2" },
           },
         },
         {
           // TODO: Form 4137
           index: "2",
-          description: "Unreported tips from Form 4137, line 6",
-          box: {
-            identifier: "2",
-            value: { type: "number_input" },
-          },
+          instructions: "Unreported tips from Form 4137, line 6",
+          box: { identifier: "2", value: { type: "number_input" } },
         },
         {
           index: "3",
-          description: "Wages from Form 8919, line 6",
-          box: {
-            identifier: "3",
-            value: { type: "number_input" },
-          },
+          instructions: "Wages from Form 8919, line 6",
+          box: { identifier: "3", value: { type: "number_input" } },
         },
         {
           index: "4",
-          description: "Add lines 1 through 3",
+          instructions: "Add lines 1 through 3",
           box: {
             identifier: "4",
             value: {
@@ -54,7 +48,7 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "5",
-          description:
+          instructions:
             "Enter the following amount for your filing status:\nMarried filing jointly $250,000\nMarried filing separately $125,000\nSingle, Head of household, or Qualifying surviving spouse $200,000",
           box: {
             identifier: "5",
@@ -76,7 +70,7 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "6",
-          description:
+          instructions:
             "Subtract line 5 from line 4. If zero or less, enter -0-",
           box: {
             identifier: "6",
@@ -92,7 +86,7 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "7",
-          description:
+          instructions:
             "Additional Medicare Tax on Medicare wages. Multiply line 6 by 0.9% (0.009). Enter here and go to Part II",
           box: {
             identifier: "7",
@@ -113,16 +107,13 @@ export const Form8959: FormSpecification = {
         {
           // TODO: Schedule SE
           index: "8",
-          description:
+          instructions:
             "Self-employment income from Schedule SE (Form 1040), Part I, line 6. If you had a loss, enter -0-",
-          box: {
-            identifier: "8",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "8", value: { type: "number_input" } },
         },
         {
           index: "9",
-          description:
+          instructions:
             "Enter the following amount for your filing status:\nMarried filing jointly $250,000\nMarried filing separately $125,000\nSingle, Head of household, or Qualifying surviving spouse $200,000",
           box: {
             identifier: "9",
@@ -144,15 +135,12 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "10",
-          description: "Enter the amount from line 4",
-          box: {
-            identifier: "10",
-            value: { type: "box_reference", box: "4" },
-          },
+          instructions: "Enter the amount from line 4",
+          box: { identifier: "10", value: { type: "box_reference", box: "4" } },
         },
         {
           index: "11",
-          description:
+          instructions:
             "Subtract line 10 from line 9. If zero or less, enter -0-",
           box: {
             identifier: "11",
@@ -168,7 +156,7 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "12",
-          description:
+          instructions:
             "Subtract line 11 from line 8. If zero or less, enter -0-",
           box: {
             identifier: "12",
@@ -184,7 +172,7 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "13",
-          description:
+          instructions:
             "Additional Medicare Tax on self-employment income. Multiply line 12 by 0.9% (0.009). Enter here and go to Part III",
           box: {
             identifier: "13",
@@ -205,7 +193,7 @@ export const Form8959: FormSpecification = {
       lines: [
         {
           index: "14",
-          description:
+          instructions:
             "Railroad retirement (RRTA) compensation and tips from Form(s) W-2, box 14 (see instructions)",
           box: {
             identifier: "14",
@@ -217,7 +205,7 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "15",
-          description:
+          instructions:
             "Enter the following amount for your filing status: Married filing jointly $250,000 / Married filing separately $125,000 / Single, Head of household, or Qualifying surviving spouse $200,000",
           box: {
             identifier: "15",
@@ -239,7 +227,7 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "16",
-          description:
+          instructions:
             "Subtract line 15 from line 14. If zero or less, enter -0-",
           box: {
             identifier: "16",
@@ -255,7 +243,7 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "17",
-          description:
+          instructions:
             "Additional Medicare Tax on railroad retirement (RRTA) compensation. Multiply line 16 by 0.9% (0.009). Enter here and go to Part IV",
           box: {
             identifier: "17",
@@ -275,7 +263,7 @@ export const Form8959: FormSpecification = {
       lines: [
         {
           index: "18",
-          description:
+          instructions:
             "Add lines 7, 13, and 17. Also include this amount on Schedule 2 (Form 1040), line 11 (Form 1040-SS filers, see instructions), and go to Part V",
           box: {
             identifier: "18",
@@ -296,24 +284,21 @@ export const Form8959: FormSpecification = {
       lines: [
         {
           index: "19",
-          description:
+          instructions:
             "Medicare tax withheld from Form W-2, box 6. If you have more than one Form W-2, enter the total of the amounts from box 6",
           box: {
             identifier: "19",
-            value: { type: "box_reference", form: "fW2", box: "6" },
+            value: { type: "box_reference", box: "6", form: "fW2" },
           },
         },
         {
           index: "20",
-          description: "Enter the amount from line 1",
-          box: {
-            identifier: "20",
-            value: { type: "box_reference", box: "1" },
-          },
+          instructions: "Enter the amount from line 1",
+          box: { identifier: "20", value: { type: "box_reference", box: "1" } },
         },
         {
           index: "21",
-          description:
+          instructions:
             "Multiply line 20 by 1.45% (0.0145). This is your regular Medicare tax withholding on Medicare wages",
           box: {
             identifier: "21",
@@ -328,7 +313,7 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "22",
-          description:
+          instructions:
             "Subtract line 21 from line 19. If zero or less, enter -0-. This is your Additional Medicare Tax withholding on Medicare wages",
           box: {
             identifier: "22",
@@ -344,16 +329,13 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "23",
-          description:
+          instructions:
             "Additional Medicare Tax withholding on railroad retirement (RRTA) compensation from Form W-2, box 14 (see instructions)",
-          box: {
-            identifier: "23",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "23", value: { type: "number_input" } },
         },
         {
           index: "24",
-          description:
+          instructions:
             "**Total Additional Medicare Tax withholding.** Add lines 22 and 23. Also include this amount with federal income tax withholding on Form 1040, 1040-SR, or 1040-NR, line 25c (Form 1040-SS filers, see instructions)",
           box: {
             identifier: "24",

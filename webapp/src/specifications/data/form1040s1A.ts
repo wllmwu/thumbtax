@@ -13,55 +13,43 @@ export const Form1040S1A: FormSpecification = {
       lines: [
         {
           index: "1",
-          description:
+          instructions:
             "Enter the amount from Form 1040, 1040-SR, or 1040-NR, line 11b",
           box: {
             identifier: "1",
             value: {
               type: "box_reference",
-              form: "f1040",
               box: "11b",
+              form: "f1040",
               required: true,
             },
           },
         },
         {
           index: "2a",
-          description: "Enter any income from Puerto Rico that you excluded",
-          box: {
-            identifier: "2a",
-            value: { type: "number_input" },
-          },
+          instructions: "Enter any income from Puerto Rico that you excluded",
+          box: { identifier: "2a", value: { type: "number_input" } },
         },
         {
           // TODO: Form 2555
           index: "2b",
-          description: "Enter the amount from Form 2555, line 45",
-          box: {
-            identifier: "2b",
-            value: { type: "number_input" },
-          },
+          instructions: "Enter the amount from Form 2555, line 45",
+          box: { identifier: "2b", value: { type: "number_input" } },
         },
         {
           // TODO: Form 2555
           index: "2c",
-          description: "Enter the amount from Form 2555, line 50",
-          box: {
-            identifier: "2c",
-            value: { type: "number_input" },
-          },
+          instructions: "Enter the amount from Form 2555, line 50",
+          box: { identifier: "2c", value: { type: "number_input" } },
         },
         {
           index: "2d",
-          description: "Enter the amount from Form 4563, line 15",
-          box: {
-            identifier: "2d",
-            value: { type: "number_input" },
-          },
+          instructions: "Enter the amount from Form 4563, line 15",
+          box: { identifier: "2d", value: { type: "number_input" } },
         },
         {
           index: "2e",
-          description: "Add lines 2a, 2b, 2c, and 2d",
+          instructions: "Add lines 2a, 2b, 2c, and 2d",
           box: {
             identifier: "2e",
             value: {
@@ -77,7 +65,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "3",
-          description: "Add lines 1 and 2e",
+          instructions: "Add lines 1 and 2e",
           box: {
             identifier: "3",
             value: {
@@ -96,17 +84,14 @@ export const Form1040S1A: FormSpecification = {
       lines: [
         {
           index: "4",
-          description:
+          instructions:
             "Qualified tips received as an employee. If you received tips as an employee with respect to employment with more than one employer, enter -0- on lines 4a and 4b and see the instructions to determine the amount to enter on line 4c. If you received tips as an employee in more than one occupation, see the instructions.",
-          box: {
-            identifier: "4",
-            value: { type: "unused" },
-          },
+          box: { identifier: "4", value: { type: "unused" } },
         },
         {
           // TODO: helper forms, Form 4137
           index: "4a",
-          description:
+          instructions:
             "Enter qualified tips included on Form W-2, box 7, but see the instructions if Form W-2, box 5 is more than $176,100 or you received tips that are not subject to social security and Medicare taxes",
           box: {
             identifier: "4a",
@@ -122,17 +107,14 @@ export const Form1040S1A: FormSpecification = {
         {
           // TODO: Form 4137
           index: "4b",
-          description:
+          instructions:
             "Qualified tips included on Form 4137, line 1, row A, column (c). If Form 4137 is not filed, enter -0-",
-          box: {
-            identifier: "4b",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "4b", value: { type: "number_input" } },
         },
         {
           // TODO: Form 4137
           index: "4c",
-          description:
+          instructions:
             "If you only received qualified tips as an employee with respect to employment with one employer, enter the larger of line 4a or line 4b. Otherwise, see the instructions to determine the amount to enter on line 4c. If you received tips as an employee in more than one occupation, see the instructions",
           box: {
             identifier: "4c",
@@ -151,7 +133,7 @@ export const Form1040S1A: FormSpecification = {
         {
           // TODO: override select instance boxes
           index: "5",
-          description:
+          instructions:
             "Qualified tips received in the course of a trade or business.\nQualified tip amount included in Form 1099-NEC, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions",
           box: {
             identifier: "5",
@@ -163,7 +145,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "6",
-          description: "Add lines 4c and 5",
+          instructions: "Add lines 4c and 5",
           box: {
             identifier: "6",
             value: {
@@ -177,7 +159,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "7",
-          description: "Enter the smaller of the amount on line 6 or $25,000",
+          instructions: "Enter the smaller of the amount on line 6 or $25,000",
           box: {
             identifier: "7",
             value: {
@@ -191,15 +173,12 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "8",
-          description: "Enter the amount from line 3",
-          box: {
-            identifier: "8",
-            value: { type: "box_reference", box: "3" },
-          },
+          instructions: "Enter the amount from line 3",
+          box: { identifier: "8", value: { type: "box_reference", box: "3" } },
         },
         {
           index: "9",
-          description: "Enter $150,000 ($300,000 if married filing jointly)",
+          instructions: "Enter $150,000 ($300,000 if married filing jointly)",
           box: {
             identifier: "9",
             value: {
@@ -216,7 +195,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "10",
-          description:
+          instructions:
             "Subtract line 9 from line 8. If zero or less, enter the amount from line 7 on line 13",
           box: {
             identifier: "10",
@@ -229,7 +208,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "11",
-          description:
+          instructions:
             "Divide line 10 by $1,000. If the resulting number isn't a whole number, decrease the result to the next lower whole number",
           box: {
             identifier: "11",
@@ -243,7 +222,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "12",
-          description: "Multiply line 11 by $100",
+          instructions: "Multiply line 11 by $100",
           box: {
             identifier: "12",
             value: {
@@ -257,7 +236,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "13",
-          description:
+          instructions:
             "**Qualified tips deduction.** Subtract line 12 from line 7. If zero or less, enter -0-",
           box: {
             identifier: "13",
@@ -287,16 +266,16 @@ export const Form1040S1A: FormSpecification = {
       lines: [
         {
           index: "14a",
-          description:
+          instructions:
             "Qualified overtime compensation included in Form W-2, box 1. If you received qualified overtime compensation not reported on Form W-2, box 1, see instructions",
           box: {
             identifier: "14a",
-            value: { type: "box_reference", form: "fW2_12_codes", box: "TT" },
+            value: { type: "box_reference", box: "TT", form: "fW2_12_codes" },
           },
         },
         {
           index: "14b",
-          description:
+          instructions:
             "Qualified overtime compensation included in Form 1099-NEC, box 1, or Form 1099-MISC, box 3 (see instructions)",
           box: {
             identifier: "14b",
@@ -308,7 +287,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "14c",
-          description: "Add lines 14a and 14b",
+          instructions: "Add lines 14a and 14b",
           box: {
             identifier: "14c",
             value: {
@@ -322,7 +301,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "15",
-          description:
+          instructions:
             "Enter the smaller of the amount on line 14c or $12,500 ($25,000 if married filing jointly)",
           box: {
             identifier: "15",
@@ -346,15 +325,12 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "16",
-          description: "Enter the amount from line 3",
-          box: {
-            identifier: "16",
-            value: { type: "box_reference", box: "3" },
-          },
+          instructions: "Enter the amount from line 3",
+          box: { identifier: "16", value: { type: "box_reference", box: "3" } },
         },
         {
           index: "17",
-          description: "Enter $150,000 ($300,000 if married filing jointly)",
+          instructions: "Enter $150,000 ($300,000 if married filing jointly)",
           box: {
             identifier: "17",
             value: {
@@ -371,7 +347,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "18",
-          description:
+          instructions:
             "Subtract line 17 from line 16. If zero or less, enter the amount from line 15 on line 21",
           box: {
             identifier: "18",
@@ -384,7 +360,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "19",
-          description:
+          instructions:
             "Divide line 18 by $1,000. If the resulting number isn't a whole number, decrease the result to the next lower whole number",
           box: {
             identifier: "19",
@@ -398,7 +374,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "20",
-          description: "Multiply line 19 by $100",
+          instructions: "Multiply line 19 by $100",
           box: {
             identifier: "20",
             value: {
@@ -412,7 +388,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "21",
-          description:
+          instructions:
             "**Qualified overtime compensation deduction.** Subtract line 20 from line 15. If zero or less, enter -0-",
           box: {
             identifier: "21",
@@ -440,33 +416,25 @@ export const Form1040S1A: FormSpecification = {
     {
       heading: "Part IV. No Tax on Car Loan Interest",
       columns: [
-        { index: "(i)", description: "Vehicle identification number (VIN)" },
+        { index: "(i)", instructions: "Vehicle identification number (VIN)" },
         {
           index: "(ii)",
-          description:
+          instructions:
             "Interest for this loan deducted on Schedule C, Schedule E, or Schedule F",
         },
         {
           index: "(iii)",
-          description: "Interest for this loan paid in 2025 less column (ii)",
+          instructions: "Interest for this loan paid in 2025 less column (ii)",
         },
       ],
       lines: [
         {
           index: "22",
-          description:
+          instructions:
             "Applicable passenger vehicle (see instructions). If more than two VINs, see instructions.",
           boxes: [
-            {
-              identifier: "22(i)",
-              column: "(i)",
-              value: { type: "unused" },
-            },
-            {
-              identifier: "22(ii)",
-              column: "(ii)",
-              value: { type: "unused" },
-            },
+            { identifier: "22(i)", column: "(i)", value: { type: "unused" } },
+            { identifier: "22(ii)", column: "(ii)", value: { type: "unused" } },
             {
               identifier: "22(iii)",
               column: "(iii)",
@@ -476,13 +444,9 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "22a",
-          description: "Applicable passenger vehicle",
+          instructions: "Applicable passenger vehicle",
           boxes: [
-            {
-              identifier: "22a(i)",
-              column: "(i)",
-              value: { type: "unused" },
-            },
+            { identifier: "22a(i)", column: "(i)", value: { type: "unused" } },
             {
               identifier: "22a(ii)",
               column: "(ii)",
@@ -497,13 +461,9 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "22b",
-          description: "Applicable passenger vehicle",
+          instructions: "Applicable passenger vehicle",
           boxes: [
-            {
-              identifier: "22b(i)",
-              column: "(i)",
-              value: { type: "unused" },
-            },
+            { identifier: "22b(i)", column: "(i)", value: { type: "unused" } },
             {
               identifier: "22b(ii)",
               column: "(ii)",
@@ -518,7 +478,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "23",
-          description: "Add lines 22a and 22b, column (iii)",
+          instructions: "Add lines 22a and 22b, column (iii)",
           boxes: [
             {
               identifier: "23_skip_i",
@@ -545,7 +505,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "24",
-          description: "Enter the smaller of the amount on line 23 or $10,000",
+          instructions: "Enter the smaller of the amount on line 23 or $10,000",
           boxes: [
             {
               identifier: "24_skip_i",
@@ -572,7 +532,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "25",
-          description: "Enter the amount from line 3",
+          instructions: "Enter the amount from line 3",
           boxes: [
             {
               identifier: "25_skip_i",
@@ -593,7 +553,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "26",
-          description: "Enter $100,000 ($200,000 if married filing jointly)",
+          instructions: "Enter $100,000 ($200,000 if married filing jointly)",
           boxes: [
             {
               identifier: "26_skip_i",
@@ -623,7 +583,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "27",
-          description:
+          instructions:
             "Subtract line 26 from line 25. If zero or less, enter the amount from line 24 on line 30",
           boxes: [
             {
@@ -649,7 +609,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "28",
-          description:
+          instructions:
             "Divide line 27 by $1,000. If the resulting number isn't a whole number, increase the result to the next higher whole number",
           boxes: [
             {
@@ -676,7 +636,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "29",
-          description: "Multiply line 28 by $200",
+          instructions: "Multiply line 28 by $200",
           boxes: [
             {
               identifier: "29_skip_i",
@@ -703,7 +663,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "30",
-          description:
+          instructions:
             "**Qualified passenger vehicle loan interest deduction.** Subtract line 29 from line 24. If zero or less, enter -0-",
           boxes: [
             {
@@ -746,15 +706,12 @@ export const Form1040S1A: FormSpecification = {
       lines: [
         {
           index: "31",
-          description: "Enter the amount from line 3",
-          box: {
-            identifier: "31",
-            value: { type: "box_reference", box: "3" },
-          },
+          instructions: "Enter the amount from line 3",
+          box: { identifier: "31", value: { type: "box_reference", box: "3" } },
         },
         {
           index: "32",
-          description: "Enter $75,000 ($150,000 if married filing jointly)",
+          instructions: "Enter $75,000 ($150,000 if married filing jointly)",
           box: {
             identifier: "32",
             value: {
@@ -771,7 +728,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "33",
-          description:
+          instructions:
             "Subtract line 32 from line 31. If zero or less, enter $6,000 on line 35",
           box: {
             identifier: "33",
@@ -784,7 +741,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "34",
-          description: "Multiply line 33 by 6% (0.06)",
+          instructions: "Multiply line 33 by 6% (0.06)",
           box: {
             identifier: "34",
             value: {
@@ -798,7 +755,7 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "35",
-          description:
+          instructions:
             "Subtract line 34 from $6,000. If zero or less, enter -0-",
           box: {
             identifier: "35",
@@ -823,25 +780,19 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "36a",
-          description:
+          instructions:
             "If you have a valid social security number (see instructions) and were born before January 2, 1961, enter the amount from line 35",
-          box: {
-            identifier: "36a",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "36a", value: { type: "number_input" } },
         },
         {
           index: "36b",
-          description:
+          instructions:
             "If you are married filing jointly, your spouse has a valid social security number (see instructions), and your spouse was born before January 2, 1961, enter the amount from line 35",
-          box: {
-            identifier: "36b",
-            value: { type: "number_input" },
-          },
+          box: { identifier: "36b", value: { type: "number_input" } },
         },
         {
           index: "37",
-          description:
+          instructions:
             "**Enhanced deduction for seniors.** Add lines 36a and 36b",
           box: {
             identifier: "37",
@@ -861,7 +812,7 @@ export const Form1040S1A: FormSpecification = {
       lines: [
         {
           index: "38",
-          description:
+          instructions:
             "Add lines 13, 21, 30, and 37. Enter here and on Form 1040 or 1040-SR, line 13b, or on Form 1040-NR, line 13c",
           box: {
             identifier: "38",

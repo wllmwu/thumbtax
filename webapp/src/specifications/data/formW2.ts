@@ -12,169 +12,100 @@ export const FormW2: FormSpecification = {
       lines: [
         {
           index: "1",
-          description: "Wages, tips, other compensation",
-          box: {
-            identifier: "1",
-            value: { type: "number_input" },
-          },
+          instructions: "Wages, tips, other compensation",
+          box: { identifier: "1", value: { type: "number_input" } },
         },
         {
           index: "2",
-          description: "Federal income tax withheld",
-          box: {
-            identifier: "2",
-            value: { type: "number_input" },
-          },
+          instructions: "Federal income tax withheld",
+          box: { identifier: "2", value: { type: "number_input" } },
         },
         {
           index: "3",
-          description: "Social security wages",
-          box: {
-            identifier: "3",
-            value: { type: "number_input" },
-          },
+          instructions: "Social security wages",
+          box: { identifier: "3", value: { type: "number_input" } },
         },
         {
           index: "4",
-          description: "Social security tax withheld",
-          box: {
-            identifier: "4",
-            value: { type: "number_input" },
-          },
+          instructions: "Social security tax withheld",
+          box: { identifier: "4", value: { type: "number_input" } },
         },
         {
           index: "5",
-          description: "Medicare wages and tips",
-          box: {
-            identifier: "5",
-            value: { type: "number_input" },
-          },
+          instructions: "Medicare wages and tips",
+          box: { identifier: "5", value: { type: "number_input" } },
         },
         {
           index: "6",
-          description: "Medicare tax withheld",
-          box: {
-            identifier: "6",
-            value: { type: "number_input" },
-          },
+          instructions: "Medicare tax withheld",
+          box: { identifier: "6", value: { type: "number_input" } },
         },
         {
           index: "7",
-          description: "Social security tips",
-          box: {
-            identifier: "7",
-            value: { type: "number_input" },
-          },
+          instructions: "Social security tips",
+          box: { identifier: "7", value: { type: "number_input" } },
         },
         {
           index: "8",
-          description: "Allocated tips",
-          box: {
-            identifier: "8",
-            value: { type: "number_input" },
-          },
+          instructions: "Allocated tips",
+          box: { identifier: "8", value: { type: "number_input" } },
         },
-        {
-          index: "9",
-          box: {
-            identifier: "9",
-            value: { type: "unused" },
-          },
-        },
+        { index: "9", box: { identifier: "9", value: { type: "unused" } } },
         {
           index: "10",
-          description: "Dependent care benefits",
-          box: {
-            identifier: "10",
-            value: { type: "number_input" },
-          },
+          instructions: "Dependent care benefits",
+          box: { identifier: "10", value: { type: "number_input" } },
         },
         {
           index: "11",
-          description: "Nonqualified plans",
-          box: {
-            identifier: "11",
-            value: { type: "number_input" },
-          },
+          instructions: "Nonqualified plans",
+          box: { identifier: "11", value: { type: "number_input" } },
         },
         {
           index: "12a\u2013d",
-          description: "Codes",
-          box: {
-            identifier: "12",
-            value: { type: "unused" },
-          },
+          instructions: "Codes",
+          box: { identifier: "12", value: { type: "unused" } },
         },
-        {
-          index: "13",
-          box: {
-            identifier: "13",
-            value: { type: "unused" },
-          },
-        },
+        { index: "13", box: { identifier: "13", value: { type: "unused" } } },
         {
           index: "14a",
-          description: "Other",
-          box: {
-            identifier: "14a",
-            value: { type: "number_input" },
-          },
+          instructions: "Other",
+          box: { identifier: "14a", value: { type: "number_input" } },
         },
         {
           index: "14b",
-          description: "Treasury Tipped Occupation Code(s)",
-          box: {
-            identifier: "14b",
-            value: { type: "unused" },
-          },
+          instructions: "Treasury Tipped Occupation Code(s)",
+          box: { identifier: "14b", value: { type: "unused" } },
         },
         {
           index: "15",
-          description: "State",
-          box: {
-            identifier: "15",
-            value: { type: "unused" },
-          },
+          instructions: "State",
+          box: { identifier: "15", value: { type: "unused" } },
         },
         {
           index: "16",
-          description: "State wages, tips, etc.",
-          box: {
-            identifier: "16",
-            value: { type: "number_input" },
-          },
+          instructions: "State wages, tips, etc.",
+          box: { identifier: "16", value: { type: "number_input" } },
         },
         {
           index: "17",
-          description: "State income tax",
-          box: {
-            identifier: "17",
-            value: { type: "number_input" },
-          },
+          instructions: "State income tax",
+          box: { identifier: "17", value: { type: "number_input" } },
         },
         {
           index: "18",
-          description: "Local wages, tips, etc.",
-          box: {
-            identifier: "18",
-            value: { type: "number_input" },
-          },
+          instructions: "Local wages, tips, etc.",
+          box: { identifier: "18", value: { type: "number_input" } },
         },
         {
           index: "19",
-          description: "Local income tax",
-          box: {
-            identifier: "19",
-            value: { type: "number_input" },
-          },
+          instructions: "Local income tax",
+          box: { identifier: "19", value: { type: "number_input" } },
         },
         {
           index: "20",
-          description: "Locality name",
-          box: {
-            identifier: "20",
-            value: { type: "unused" },
-          },
+          instructions: "Locality name",
+          box: { identifier: "20", value: { type: "unused" } },
         },
       ],
     },

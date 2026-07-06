@@ -12,99 +12,63 @@ export const Form1099B: FormSpecification = {
       lines: [
         {
           index: "1a",
-          description: "Description of property",
-          box: {
-            identifier: "1a",
-            value: { type: "unused" },
-          },
+          instructions: "Description of property",
+          box: { identifier: "1a", value: { type: "unused" } },
         },
         {
           index: "1b",
-          description: "Date acquired",
-          box: {
-            identifier: "1b",
-            value: { type: "unused" },
-          },
+          instructions: "Date acquired",
+          box: { identifier: "1b", value: { type: "unused" } },
         },
         {
           index: "1c",
-          description: "Date sold or disposed",
-          box: {
-            identifier: "1c",
-            value: { type: "unused" },
-          },
+          instructions: "Date sold or disposed",
+          box: { identifier: "1c", value: { type: "unused" } },
         },
         {
           index: "1d",
-          description: "Proceeds",
-          box: {
-            identifier: "1d",
-            value: { type: "number_input" },
-          },
+          instructions: "Proceeds",
+          box: { identifier: "1d", value: { type: "number_input" } },
         },
         {
           index: "1e",
-          description: "Cost or other basis",
-          box: {
-            identifier: "1e",
-            value: { type: "number_input" },
-          },
+          instructions: "Cost or other basis",
+          box: { identifier: "1e", value: { type: "number_input" } },
         },
         {
           index: "1f",
-          description: "Accrued market discount",
-          box: {
-            identifier: "1f",
-            value: { type: "number_input" },
-          },
+          instructions: "Accrued market discount",
+          box: { identifier: "1f", value: { type: "number_input" } },
         },
         {
           index: "1g",
-          description: "Wash sale loss disallowed",
-          box: {
-            identifier: "1g",
-            value: { type: "number_input" },
-          },
+          instructions: "Wash sale loss disallowed",
+          box: { identifier: "1g", value: { type: "number_input" } },
         },
         {
           index: "2",
-          description: "Type of gain or loss",
-          box: {
-            identifier: "2",
-            value: { type: "unused" },
-          },
+          instructions: "Type of gain or loss",
+          box: { identifier: "2", value: { type: "unused" } },
         },
         {
           index: "3",
-          description: "Check if proceeds are from collectibles or from a QOF",
-          box: {
-            identifier: "3",
-            value: { type: "unused" },
-          },
+          instructions: "Check if proceeds are from collectibles or from a QOF",
+          box: { identifier: "3", value: { type: "unused" } },
         },
         {
           index: "4",
-          description: "Federal income tax withheld",
-          box: {
-            identifier: "4",
-            value: { type: "number_input" },
-          },
+          instructions: "Federal income tax withheld",
+          box: { identifier: "4", value: { type: "number_input" } },
         },
         {
           index: "6",
-          description: "Reported to IRS",
-          box: {
-            identifier: "6",
-            value: { type: "unused" },
-          },
+          instructions: "Reported to IRS",
+          box: { identifier: "6", value: { type: "unused" } },
         },
         {
           index: "7",
-          description: "Check if loss not allowed based on amount in box 1d",
-          box: {
-            identifier: "7",
-            value: { type: "unused" },
-          },
+          instructions: "Check if loss not allowed based on amount in box 1d",
+          box: { identifier: "7", value: { type: "unused" } },
         },
       ],
     },
