@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form8959: FormSpecification = {
+export const f8959: FormSpecification = {
   class: "f8959",
-  title: "Form 8959",
-  subtitle: "Additional Medicare Tax",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8959",
   category: "taxes",
   maxInstances: 1,
+  title: "Form 8959",
+  subtitle: "Additional Medicare Tax",
   sections: [
     {
       heading: "Part I. Additional Medicare Tax on Medicare Wages",
@@ -21,7 +21,6 @@ export const Form8959: FormSpecification = {
           },
         },
         {
-          // TODO: Form 4137
           index: "2",
           instructions: "Unreported tips from Form 4137, line 6",
           box: { identifier: "2", value: { type: "number_input" } },
@@ -48,8 +47,20 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "5",
-          instructions:
-            "Enter the following amount for your filing status:\nMarried filing jointly $250,000\nMarried filing separately $125,000\nSingle, Head of household, or Qualifying surviving spouse $200,000",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "p",
+            attributes: {},
+            children: [
+              "Enter the following amount for your filing status:",
+              " ",
+              "Married filing jointly $250,000",
+              " ",
+              "Married filing separately $125,000",
+              " ",
+              "Single, Head of household, or Qualifying surviving spouse $200,000",
+            ],
+          },
           box: {
             identifier: "5",
             value: {
@@ -105,7 +116,6 @@ export const Form8959: FormSpecification = {
       heading: "Part II. Additional Medicare Tax on Self-Employment Income",
       lines: [
         {
-          // TODO: Schedule SE
           index: "8",
           instructions:
             "Self-employment income from Schedule SE (Form 1040), Part I, line 6. If you had a loss, enter -0-",
@@ -113,8 +123,20 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "9",
-          instructions:
-            "Enter the following amount for your filing status:\nMarried filing jointly $250,000\nMarried filing separately $125,000\nSingle, Head of household, or Qualifying surviving spouse $200,000",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "p",
+            attributes: {},
+            children: [
+              "Enter the following amount for your filing status:",
+              " ",
+              "Married filing jointly $250,000",
+              " ",
+              "Married filing separately $125,000",
+              " ",
+              "Single, Head of household, or Qualifying surviving spouse $200,000",
+            ],
+          },
           box: {
             identifier: "9",
             value: {
@@ -335,8 +357,15 @@ export const Form8959: FormSpecification = {
         },
         {
           index: "24",
-          instructions:
-            "**Total Additional Medicare Tax withholding.** Add lines 22 and 23. Also include this amount with federal income tax withholding on Form 1040, 1040-SR, or 1040-NR, line 25c (Form 1040-SS filers, see instructions)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Total Additional Medicare Tax withholding."],
+            },
+            " Add lines 22 and 23. Also include this amount with federal income tax withholding on Form 1040, 1040-SR, or 1040-NR, line 25c (Form 1040-SS filers, see instructions)",
+          ],
           box: {
             identifier: "24",
             value: {

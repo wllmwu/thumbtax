@@ -1,0 +1,97 @@
+{% form
+   category="income"
+   class="f1099R"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-1099-r" %}
+# Form 1099-R
+
+{% subtitle %}Distributions From Pensions, Annuities, Retirement or Profit-Sharing Plans, IRAs, Insurance Contracts, etc.{% /subtitle %}
+
+{% section %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Gross distribution{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2a" %}
+  - {% instructions %}Taxable amount{% /instructions %}
+  - {% box identifier="2a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2b" %}
+  - {% instructions %}Taxable amount not determined / Total distribution{% /instructions %}
+  - {% box identifier="2b" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Capital gain (included in box 2a){% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}Employee contributions/Designated Roth contributions or insurance premiums{% /instructions %}
+  - {% box identifier="5" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Net unrealized appreciation in employer's securities{% /instructions %}
+  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Distribution code(s){% /instructions %}
+  - {% box identifier="7" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Other{% /instructions %}
+  - {% box identifier="8" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="9a" %}
+  - {% instructions %}Your percentage of total distribution{% /instructions %}
+  - {% box identifier="9a" format="percentage" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="9b" %}
+  - {% instructions %}Total employee contributions{% /instructions %}
+  - {% box identifier="9b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Amount allocable to IRR within 5 years{% /instructions %}
+  - {% box identifier="10" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}1st year of designated Roth contributions{% /instructions %}
+  - {% box identifier="11" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="12" %}
+  - {% instructions %}FATCA filing requirement{% /instructions %}
+  - {% box identifier="12" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}Date of payment{% /instructions %}
+  - {% box identifier="13" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="14" %}
+  - {% instructions %}State tax withheld{% /instructions %}
+  - {% box identifier="14" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}State/Payer's state number{% /instructions %}
+  - {% box identifier="15" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}State distribution{% /instructions %}
+  - {% box identifier="16" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="17" %}
+  - {% instructions %}Local tax withheld{% /instructions %}
+  - {% box identifier="17" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="18" %}
+  - {% instructions %}Name of locality{% /instructions %}
+  - {% box identifier="18" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="19" %}
+  - {% instructions %}Local distribution{% /instructions %}
+  - {% box identifier="19" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

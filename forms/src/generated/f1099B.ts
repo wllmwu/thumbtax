@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1099B: FormSpecification = {
+export const f1099B: FormSpecification = {
   class: "f1099B",
-  title: "Form 1099-B",
-  subtitle: "Proceeds from Broker and Barter Exchange Transactions",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-b",
   category: "income",
   maxInstances: null,
+  title: "Form 1099-B",
+  subtitle: "Proceeds from Broker and Barter Exchange Transactions",
   sections: [
     {
       lines: [

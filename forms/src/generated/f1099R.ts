@@ -1,13 +1,13 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1099R: FormSpecification = {
+export const f1099R: FormSpecification = {
   class: "f1099R",
-  title: "Form 1099-R",
-  subtitle:
-    "Distributions From Pensions, Annuities, Retirement or Profit-Sharing Plans, IRAs, Insurance Contracts, etc.",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-r",
   category: "income",
   maxInstances: null,
+  title: "Form 1099-R",
+  subtitle:
+    "Distributions From Pensions, Annuities, Retirement or Profit-Sharing Plans, IRAs, Insurance Contracts, etc.",
   sections: [
     {
       lines: [

@@ -1,0 +1,206 @@
+{% form
+   category="taxes"
+   class="f1040s3"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-1040"
+   maxInstances=1 %}
+# Schedule 3 (Form 1040)
+
+{% subtitle %}Additional Credits and Payments{% /subtitle %}
+
+{% section %}
+## Part I. Nonrefundable Credits
+
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Foreign tax credit. Attach Form 1116 if required{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Credit for child and dependent care expenses from Form 2441, line 11. Attach Form 2441{% /instructions %}
+  - {% box identifier="2" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Education credits from Form 8863, line 19{% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Retirement savings contributions credit. Attach Form 8880{% /instructions %}
+  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5a" %}
+  - {% instructions %}Residential clean energy credit from Form 5695, line 15{% /instructions %}
+  - {% box identifier="5a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5b" %}
+  - {% instructions %}Energy efficient home improvement credit from Form 5695, line 32{% /instructions %}
+  - {% box identifier="5b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Other nonrefundable credits:{% /instructions %}
+  - {% box identifier="6" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="6a" %}
+  - {% instructions %}General business credit. Attach Form 3800{% /instructions %}
+  - {% box identifier="6a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6b" %}
+  - {% instructions %}Credit for prior year minimum tax. Attach Form 8801{% /instructions %}
+  - {% box identifier="6b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6c" %}
+  - {% instructions %}Adoption credit. Attach Form 8839{% /instructions %}
+  - {% box identifier="6c" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6d" %}
+  - {% instructions %}Credit for the elderly or disabled. Attach Schedule R{% /instructions %}
+  - {% box identifier="6d" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6e" %}
+  - {% instructions %}Reserved for future use{% /instructions %}
+  - {% box identifier="6e" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="6f" %}
+  - {% instructions %}Clean vehicle credit. Attach Form 8936{% /instructions %}
+  - {% box identifier="6f" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6g" %}
+  - {% instructions %}Mortgage interest credit. Attach Form 8396{% /instructions %}
+  - {% box identifier="6g" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6h" %}
+  - {% instructions %}District of Columbia first-time homebuyer credit. Attach Form 8859{% /instructions %}
+  - {% box identifier="6h" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6i" %}
+  - {% instructions %}Qualified electric vehicle credit. Attach Form 8834{% /instructions %}
+  - {% box identifier="6i" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6j" %}
+  - {% instructions %}Alternative fuel vehicle refueling property credit. Attach Form 8911{% /instructions %}
+  - {% box identifier="6j" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6k" %}
+  - {% instructions %}Credit to holders of tax credit bonds. Attach Form 8912{% /instructions %}
+  - {% box identifier="6k" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6l" %}
+  - {% instructions %}Amount on Form 8978, line 14. See instructions{% /instructions %}
+  - {% box identifier="6l" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6m" %}
+  - {% instructions %}Credit for previously owned clean vehicles. Attach Form 8936{% /instructions %}
+  - {% box identifier="6m" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6z" %}
+  - {% instructions %}Other nonrefundable credits. List type and amount{% /instructions %}
+  - {% box identifier="6z" %}{% value type="list_amounts_input" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Total other nonrefundable credits. Add lines 6a through 6z{% /instructions %}
+  - {% box identifier="7" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="6a" /%}
+    - {% value type="box_reference" box="6b" /%}
+    - {% value type="box_reference" box="6c" /%}
+    - {% value type="box_reference" box="6d" /%}
+    - {% value type="box_reference" box="6e" /%}
+    - {% value type="box_reference" box="6f" /%}
+    - {% value type="box_reference" box="6g" /%}
+    - {% value type="box_reference" box="6h" /%}
+    - {% value type="box_reference" box="6i" /%}
+    - {% value type="box_reference" box="6j" /%}
+    - {% value type="box_reference" box="6k" /%}
+    - {% value type="box_reference" box="6l" /%}
+    - {% value type="box_reference" box="6m" /%}
+    - {% value type="box_reference" box="6z" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Add lines 1 through 4, 5a, 5b, and 7. Enter here and on Form 1040, 1040-SR, or 1040-NR, line 20{% /instructions %}
+  - {% box identifier="8" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="box_reference" box="2" /%}
+    - {% value type="box_reference" box="3" /%}
+    - {% value type="box_reference" box="4" /%}
+    - {% value type="box_reference" box="5a" /%}
+    - {% value type="box_reference" box="5b" /%}
+    - {% value type="box_reference" box="7" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part II. Other Payments and Refundable Credits
+
+{% lines %}
+- {% line index="9" %}
+  - {% instructions %}Net premium tax credit. Attach Form 8962{% /instructions %}
+  - {% box identifier="9" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Amount paid with request for extension to file (see instructions){% /instructions %}
+  - {% box identifier="10" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}Excess social security and tier 1 RRTA tax withheld{% /instructions %}
+  - {% box identifier="11" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="12" %}
+  - {% instructions %}Credit for federal tax on fuels. Attach Form 4136{% /instructions %}
+  - {% box identifier="12" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}Other payments or refundable credits:{% /instructions %}
+  - {% box identifier="13" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="13a" %}
+  - {% instructions %}Form 2439{% /instructions %}
+  - {% box identifier="13a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="13b" %}
+  - {% instructions %}Section 1341 credit for repayment of amounts included in income from earlier years{% /instructions %}
+  - {% box identifier="13b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="13c" %}
+  - {% instructions %}Net elective payment election amount from Form 3800, Part III, line 6, column (j){% /instructions %}
+  - {% box identifier="13c" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="13d" %}
+  - {% instructions %}Deferred amount of net 965 tax liability (see instructions){% /instructions %}
+  - {% box identifier="13d" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="13z" %}
+  - {% instructions %}Other refundable credits (see instructions){% /instructions %}
+  - {% box identifier="13z" %}{% value type="list_amounts_input" /%}{% /box %}
+  {% /line %}
+- {% line index="14" %}
+  - {% instructions %}Total other payments or refundable credits. Add lines 13a through 13z{% /instructions %}
+  - {% box identifier="14" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="13a" /%}
+    - {% value type="box_reference" box="13b" /%}
+    - {% value type="box_reference" box="13c" /%}
+    - {% value type="box_reference" box="13d" /%}
+    - {% value type="box_reference" box="13z" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}Add lines 9 through 12 and 14. Enter here and on Form 1040, 1040-SR, or 1040-NR, line 31{% /instructions %}
+  - {% box identifier="15" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="9" /%}
+    - {% value type="box_reference" box="10" /%}
+    - {% value type="box_reference" box="11" /%}
+    - {% value type="box_reference" box="12" /%}
+    - {% value type="box_reference" box="14" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

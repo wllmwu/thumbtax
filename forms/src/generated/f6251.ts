@@ -1,51 +1,12 @@
-import type { BoxIdentifier } from "@thumbtax/common";
-import type { ComputedValueProvider, FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-function alternativeMinimumTaxComputation(
-  box: BoxIdentifier,
-): ComputedValueProvider {
-  const input = { type: "box_reference" as const, box };
-  return {
-    type: "conditional",
-    condition: {
-      type: "comparison",
-      value: input,
-      maximum: {
-        type: "filing_status_map",
-        values: {
-          married_filing_separately: { type: "number_constant", value: 119550 },
-        },
-        default: { type: "number_constant", value: 239100 },
-      },
-    },
-    trueValue: {
-      type: "product",
-      values: [input, { type: "number_constant", value: 0.26 }],
-    },
-    falseValue: {
-      type: "difference",
-      minuend: {
-        type: "product",
-        values: [input, { type: "number_constant", value: 0.28 }],
-      },
-      subtrahend: {
-        type: "filing_status_map",
-        values: {
-          married_filing_separately: { type: "number_constant", value: 2391 },
-        },
-        default: { type: "number_constant", value: 4782 },
-      },
-    },
-  };
-}
-
-export const Form6251: FormSpecification = {
+export const f6251: FormSpecification = {
   class: "f6251",
-  title: "Form 6251",
-  subtitle: "Alternative Minimum Tax\u2014Individuals",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-6251",
   category: "taxes",
   maxInstances: 1,
+  title: "Form 6251",
+  subtitle: "Alternative Minimum Tax—Individuals",
   sections: [
     {
       heading: "Part I. Alternative Minimum Taxable Income",
@@ -188,7 +149,6 @@ export const Form6251: FormSpecification = {
           box: { identifier: "2j", value: { type: "number_input" } },
         },
         {
-          // TODO: adjusted basis for AMT
           index: "2k",
           instructions:
             "Disposition of property (difference between AMT and regular tax gain or loss)",
@@ -291,8 +251,15 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "4",
-          instructions:
-            "**Alternative minimum taxable income.** Combine lines 1b through 3. (If married filing separately and line 4 is more than $900,350, see instructions.)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Alternative minimum taxable income."],
+            },
+            " Combine lines 1b through 3. (If married filing separately and line 4 is more than $900,350, see instructions.)",
+          ],
           box: {
             identifier: "4",
             value: {
@@ -583,8 +550,37 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "7",
-          instructions:
-            "- If you are filing Form 2555, see instructions for the amount to enter.\n- If you reported capital gain distributions directly on Form 1040 or 1040-SR, line 7; you reported qualified dividends on Form 1040 or 1040-SR, line 3a; or you had a gain on both lines 15 and 16 of Schedule D (Form 1040) (as refigured for the AMT, if necessary), complete Part III on the back and enter the amount from line 40 here.\n- All others: If line 6 is $239,100 or less ($119,550 or less if married filing separately), multiply line 6 by 26% (0.26). Otherwise, multiply line 6 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result.",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "ul",
+            attributes: {},
+            children: [
+              {
+                $$mdtype: "Tag",
+                name: "li",
+                attributes: {},
+                children: [
+                  "If you are filing Form 2555, see instructions for the amount to enter.",
+                ],
+              },
+              {
+                $$mdtype: "Tag",
+                name: "li",
+                attributes: {},
+                children: [
+                  "If you reported capital gain distributions directly on Form 1040 or 1040-SR, line 7; you reported qualified dividends on Form 1040 or 1040-SR, line 3a; or you had a gain on both lines 15 and 16 of Schedule D (Form 1040) (as refigured for the AMT, if necessary), complete Part III on the back and enter the amount from line 40 here.",
+                ],
+              },
+              {
+                $$mdtype: "Tag",
+                name: "li",
+                attributes: {},
+                children: [
+                  "All others: If line 6 is $239,100 or less ($119,550 or less if married filing separately), multiply line 6 by 26% (0.26). Otherwise, multiply line 6 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result.",
+                ],
+              },
+            ],
+          },
           box: {
             identifier: "7",
             value: {
@@ -593,7 +589,50 @@ export const Form6251: FormSpecification = {
                 type: "conditional",
                 condition: { type: "box_reference", box: "flag_7_part_iii" },
                 trueValue: { type: "box_reference", box: "40" },
-                falseValue: alternativeMinimumTaxComputation("6"),
+                falseValue: {
+                  type: "conditional",
+                  condition: {
+                    type: "comparison",
+                    value: { type: "box_reference", box: "6" },
+                    maximum: {
+                      type: "filing_status_map",
+                      values: {
+                        married_filing_separately: {
+                          type: "number_constant",
+                          value: 119550,
+                        },
+                      },
+                      default: { type: "number_constant", value: 239100 },
+                    },
+                  },
+                  trueValue: {
+                    type: "product",
+                    values: [
+                      { type: "box_reference", box: "6" },
+                      { type: "number_constant", value: 0.26 },
+                    ],
+                  },
+                  falseValue: {
+                    type: "difference",
+                    minuend: {
+                      type: "product",
+                      values: [
+                        { type: "box_reference", box: "6" },
+                        { type: "number_constant", value: 0.28 },
+                      ],
+                    },
+                    subtrahend: {
+                      type: "filing_status_map",
+                      values: {
+                        married_filing_separately: {
+                          type: "number_constant",
+                          value: 2391,
+                        },
+                      },
+                      default: { type: "number_constant", value: 4782 },
+                    },
+                  },
+                },
               },
             },
           },
@@ -657,8 +696,15 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "11",
-          instructions:
-            "**AMT.** Subtract line 10 from line 9. If zero or less, enter -0-. Enter here and on Schedule 2 (Form 1040), line 2",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["AMT."],
+            },
+            " Subtract line 10 from line 9. If zero or less, enter -0-. Enter here and on Schedule 2 (Form 1040), line 2",
+          ],
           box: {
             identifier: "11",
             value: {
@@ -811,13 +857,91 @@ export const Form6251: FormSpecification = {
             "If line 17 is $239,100 or less ($119,550 or less if married filing separately), multiply line 17 by 26% (0.26). Otherwise, multiply line 17 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result",
           box: {
             identifier: "18",
-            value: alternativeMinimumTaxComputation("17"),
+            value: {
+              type: "conditional",
+              condition: {
+                type: "comparison",
+                value: { type: "box_reference", box: "17" },
+                maximum: {
+                  type: "filing_status_map",
+                  values: {
+                    married_filing_separately: {
+                      type: "number_constant",
+                      value: 119550,
+                    },
+                  },
+                  default: { type: "number_constant", value: 239100 },
+                },
+              },
+              trueValue: {
+                type: "product",
+                values: [
+                  { type: "box_reference", box: "17" },
+                  { type: "number_constant", value: 0.26 },
+                ],
+              },
+              falseValue: {
+                type: "difference",
+                minuend: {
+                  type: "product",
+                  values: [
+                    { type: "box_reference", box: "17" },
+                    { type: "number_constant", value: 0.28 },
+                  ],
+                },
+                subtrahend: {
+                  type: "filing_status_map",
+                  values: {
+                    married_filing_separately: {
+                      type: "number_constant",
+                      value: 2391,
+                    },
+                  },
+                  default: { type: "number_constant", value: 4782 },
+                },
+              },
+            },
           },
         },
         {
           index: "19",
-          instructions:
-            "Enter:\n- $96,700 if married filing jointly or qualifying surviving spouse;\n- $48,350 if single or married filing separately; or\n- $64,750 if head of household.",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: ["Enter:"],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "$96,700 if married filing jointly or qualifying surviving spouse;",
+                  ],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "$48,350 if single or married filing separately; or",
+                  ],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["$64,750 if head of household."],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "19",
             value: {
@@ -950,8 +1074,47 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "25",
-          instructions:
-            "Enter:\n- $533,400 if single;\n- $300,000 if married filing separately;\n- $600,050 if married filing jointly or qualifying surviving spouse;\n- or $566,700 if head of household.",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: ["Enter:"],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["$533,400 if single;"],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["$300,000 if married filing separately;"],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "$600,050 if married filing jointly or qualifying surviving spouse;",
+                  ],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["or $566,700 if head of household."],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "25",
             value: {
@@ -1086,8 +1249,16 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "32",
-          instructions:
-            "Add lines 23 and 30\nIf lines 32 and 12 are the same, skip lines 33 through 37 and go to line 38. Otherwise, go to line 33.",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "p",
+            attributes: {},
+            children: [
+              "Add lines 23 and 30",
+              " ",
+              "If lines 32 and 12 are the same, skip lines 33 through 37 and go to line 38. Otherwise, go to line 33.",
+            ],
+          },
           box: {
             identifier: "32",
             value: {
@@ -1113,8 +1284,16 @@ export const Form6251: FormSpecification = {
         },
         {
           index: "34",
-          instructions:
-            "Multiply line 33 by 20% (0.20)\nIf line 14 is zero or blank, skip lines 35 through 37 and go to line 38. Otherwise, go to line 35.",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "p",
+            attributes: {},
+            children: [
+              "Multiply line 33 by 20% (0.20)",
+              " ",
+              "If line 14 is zero or blank, skip lines 35 through 37 and go to line 38. Otherwise, go to line 35.",
+            ],
+          },
           box: {
             identifier: "34",
             value: {
@@ -1189,7 +1368,50 @@ export const Form6251: FormSpecification = {
             "If line 12 is $239,100 or less ($119,550 or less if married filing separately), multiply line 12 by 26% (0.26). Otherwise, multiply line 12 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result",
           box: {
             identifier: "39",
-            value: alternativeMinimumTaxComputation("12"),
+            value: {
+              type: "conditional",
+              condition: {
+                type: "comparison",
+                value: { type: "box_reference", box: "12" },
+                maximum: {
+                  type: "filing_status_map",
+                  values: {
+                    married_filing_separately: {
+                      type: "number_constant",
+                      value: 119550,
+                    },
+                  },
+                  default: { type: "number_constant", value: 239100 },
+                },
+              },
+              trueValue: {
+                type: "product",
+                values: [
+                  { type: "box_reference", box: "12" },
+                  { type: "number_constant", value: 0.26 },
+                ],
+              },
+              falseValue: {
+                type: "difference",
+                minuend: {
+                  type: "product",
+                  values: [
+                    { type: "box_reference", box: "12" },
+                    { type: "number_constant", value: 0.28 },
+                  ],
+                },
+                subtrahend: {
+                  type: "filing_status_map",
+                  values: {
+                    married_filing_separately: {
+                      type: "number_constant",
+                      value: 2391,
+                    },
+                  },
+                  default: { type: "number_constant", value: 4782 },
+                },
+              },
+            },
           },
         },
         {

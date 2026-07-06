@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1099DIV: FormSpecification = {
+export const f1099DIV: FormSpecification = {
   class: "f1099DIV",
-  title: "Form 1099-DIV",
-  subtitle: "Dividends and Distributions",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-div",
   category: "income",
   maxInstances: null,
+  title: "Form 1099-DIV",
+  subtitle: "Dividends and Distributions",
   sections: [
     {
       lines: [

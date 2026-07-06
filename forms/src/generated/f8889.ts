@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form8889: FormSpecification = {
+export const f8889: FormSpecification = {
   class: "f8889",
-  title: "Form 8889",
-  subtitle: "Health Savings Accounts (HSAs)",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8889",
   category: "taxes",
   maxInstances: 1,
+  title: "Form 8889",
+  subtitle: "Health Savings Accounts (HSAs)",
   sections: [
     {
       heading: "Part I. HSA Contributions and Deduction",
@@ -131,7 +131,15 @@ export const Form8889: FormSpecification = {
         },
         {
           index: "13",
-          instructions: "**HSA deduction** (see instructions)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["HSA deduction"],
+            },
+            " (see instructions)",
+          ],
           box: {
             identifier: "13",
             value: {
@@ -150,13 +158,13 @@ export const Form8889: FormSpecification = {
             "Flag for whether to file Form 5329 due to excess HSA contributions",
           box: {
             identifier: "flag_f5329",
-            format: "yes_no",
             value: {
               type: "comparison",
               value: { type: "box_reference", box: "2" },
               minimum: { type: "box_reference", box: "13" },
               strict: true,
             },
+            format: "yes_no",
           },
         },
       ],
@@ -165,7 +173,6 @@ export const Form8889: FormSpecification = {
       heading: "Part II. HSA Distributions",
       lines: [
         {
-          // TODO: Form 1099-SA
           index: "14a",
           instructions:
             "Total distributions you received in 2025 from all HSAs (see instructions)",
@@ -197,8 +204,15 @@ export const Form8889: FormSpecification = {
         },
         {
           index: "16",
-          instructions:
-            "**Taxable HSA distributions.** Subtract line 15 from line 14c. If zero or less, enter -0-. Also, include this amount in the total on Schedule 1 (Form 1040), Part I, line 8f",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Taxable HSA distributions."],
+            },
+            " Subtract line 15 from line 14c. If zero or less, enter -0-. Also, include this amount in the total on Schedule 1 (Form 1040), Part I, line 8f",
+          ],
           box: {
             identifier: "16",
             value: {
@@ -213,14 +227,29 @@ export const Form8889: FormSpecification = {
         },
         {
           index: "17a",
-          instructions:
-            "If any of the distributions included on line 16 meet any of the **Exceptions to the Additional 20% Tax** (see instructions), check here",
+          instructions: [
+            "If any of the distributions included on line 16 meet any of the ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Exceptions to the Additional 20% Tax"],
+            },
+            " (see instructions), check here",
+          ],
           box: { identifier: "17a", value: { type: "checkbox_input" } },
         },
         {
           index: "17b",
-          instructions:
-            "**Additional 20% tax** (see instructions). Enter 20% (0.20) of the distributions included on line 16 that are subject to the additional 20% tax. Also, include this amount in the total on Schedule 2 (Form 1040), Part II, line 17c",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Additional 20% tax"],
+            },
+            " (see instructions). Enter 20% (0.20) of the distributions included on line 16 that are subject to the additional 20% tax. Also, include this amount in the total on Schedule 2 (Form 1040), Part II, line 17c",
+          ],
           box: {
             identifier: "17b",
             value: {
@@ -253,8 +282,15 @@ export const Form8889: FormSpecification = {
         },
         {
           index: "20",
-          instructions:
-            "**Total income.** Add lines 18 and 19. Include this amount on Schedule 1 (Form 1040), Part I, line 8f",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Total income."],
+            },
+            " Add lines 18 and 19. Include this amount on Schedule 1 (Form 1040), Part I, line 8f",
+          ],
           box: {
             identifier: "20",
             value: {
@@ -268,8 +304,15 @@ export const Form8889: FormSpecification = {
         },
         {
           index: "21",
-          instructions:
-            "**Additional tax.** Multiply line 20 by 10% (0.10). Include this amount in the total on Schedule 2 (Form 1040), Part II, line 17d",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Additional tax."],
+            },
+            " Multiply line 20 by 10% (0.10). Include this amount in the total on Schedule 2 (Form 1040), Part II, line 17d",
+          ],
           box: {
             identifier: "21",
             value: {

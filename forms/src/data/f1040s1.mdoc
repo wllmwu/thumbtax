@@ -1,0 +1,356 @@
+{% form
+   category="taxes"
+   class="f1040s1"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-1040"
+   maxInstances=1 %}
+# Schedule 1 (Form 1040)
+
+{% subtitle %}Additional Income and Adjustments to Income{% /subtitle %}
+
+{% section %}
+## Part I. Additional Income
+
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Taxable refunds, credits, or offsets of state and local income taxes{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2a" %}
+  - {% instructions %}Alimony received{% /instructions %}
+  - {% box identifier="2a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2b" %}
+  - {% instructions %}Date of original divorce or separation agreement (see instructions){% /instructions %}
+  - {% box identifier="2b" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Business income or (loss). Attach Schedule C{% /instructions %}
+  - {% box identifier="3" %}{% value type="box_reference" form="f1040sC" box="31" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Other gains or (losses){% /instructions %}
+  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}Rental real estate, royalties, partnerships, S corporations, trusts, etc. Attach Schedule E{% /instructions %}
+  - {% box identifier="5" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Farm income or (loss). Attach Schedule F{% /instructions %}
+  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Unemployment compensation{% /instructions %}
+  - {% box identifier="7" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Other income:{% /instructions %}
+  - {% box identifier="8" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="8a" %}
+  - {% instructions %}Net operating loss{% /instructions %}
+  - {% box identifier="8a" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  {% /line %}
+- {% line index="8b" %}
+  - {% instructions %}Gambling{% /instructions %}
+  - {% box identifier="8b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8c" %}
+  - {% instructions %}Cancellation of debt{% /instructions %}
+  - {% box identifier="8c" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8d" %}
+  - {% instructions %}Foreign earned income exclusion from Form 2555{% /instructions %}
+  - {% box identifier="8d" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  {% /line %}
+- {% line index="8e" %}
+  - {% instructions %}Income from Form 8853{% /instructions %}
+  - {% box identifier="8e" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8f" %}
+  - {% instructions %}Income from Form 8889{% /instructions %}
+  - {% box identifier="8f" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" form="f8889" box="16" /%}
+    - {% value type="box_reference" form="f8889" box="20" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="8g" %}
+  - {% instructions %}Alaska Permanent Fund dividends{% /instructions %}
+  - {% box identifier="8g" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8h" %}
+  - {% instructions %}Jury duty pay{% /instructions %}
+  - {% box identifier="8h" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8i" %}
+  - {% instructions %}Prizes and awards{% /instructions %}
+  - {% box identifier="8i" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8j" %}
+  - {% instructions %}Activity not engaged in for profit income{% /instructions %}
+  - {% box identifier="8j" %}
+    {% value type="select_instance_boxes_input" %}
+    - {% option form="f1099NEC" box="1" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="8k" %}
+  - {% instructions %}Stock options{% /instructions %}
+  - {% box identifier="8k" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8l" %}
+  - {% instructions %}Income from the rental of personal property if you engaged in the rental for profit but were not in the business of renting such property{% /instructions %}
+  - {% box identifier="8l" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8m" %}
+  - {% instructions %}Olympic and Paralympic medals and USOC prize money (see instructions){% /instructions %}
+  - {% box identifier="8m" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8n" %}
+  - {% instructions %}Section 951(a) inclusion (see instructions){% /instructions %}
+  - {% box identifier="8n" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8o" %}
+  - {% instructions %}Section 951A(a) inclusion (see instructions){% /instructions %}
+  - {% box identifier="8o" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8p" %}
+  - {% instructions %}Section 461(l) excess business loss adjustment{% /instructions %}
+  - {% box identifier="8p" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8q" %}
+  - {% instructions %}Taxable distributions from an ABLE account (see instructions){% /instructions %}
+  - {% box identifier="8q" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8r" %}
+  - {% instructions %}Scholarship and fellowship grants not reported on Form W-2{% /instructions %}
+  - {% box identifier="8r" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8s" %}
+  - {% instructions %}Nontaxable amount of Medicaid waiver payments included on Form 1040, line 1a or 1d{% /instructions %}
+  - {% box identifier="8s" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  {% /line %}
+- {% line index="8t" %}
+  - {% instructions %}Pension or annuity from a nonqualified deferred compensation plan or a nongovernmental section 457 plan{% /instructions %}
+  - {% box identifier="8t" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8u" %}
+  - {% instructions %}Wages earned while incarcerated{% /instructions %}
+  - {% box identifier="8u" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8v" %}
+  - {% instructions %}Digital assets received as ordinary income not reported elsewhere. See instructions{% /instructions %}
+  - {% box identifier="8v" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8z" %}
+  - {% instructions %}Other income. List type and amount{% /instructions %}
+  - {% box identifier="8z" %}{% value type="list_amounts_input" /%}{% /box %}
+  {% /line %}
+- {% line index="9" %}
+  - {% instructions %}Total other income. Add lines 8a through 8z{% /instructions %}
+  - {% box identifier="9" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="8a" /%}
+    - {% value type="box_reference" box="8b" /%}
+    - {% value type="box_reference" box="8c" /%}
+    - {% value type="box_reference" box="8d" /%}
+    - {% value type="box_reference" box="8e" /%}
+    - {% value type="box_reference" box="8f" /%}
+    - {% value type="box_reference" box="8g" /%}
+    - {% value type="box_reference" box="8h" /%}
+    - {% value type="box_reference" box="8i" /%}
+    - {% value type="box_reference" box="8j" /%}
+    - {% value type="box_reference" box="8k" /%}
+    - {% value type="box_reference" box="8l" /%}
+    - {% value type="box_reference" box="8m" /%}
+    - {% value type="box_reference" box="8n" /%}
+    - {% value type="box_reference" box="8o" /%}
+    - {% value type="box_reference" box="8p" /%}
+    - {% value type="box_reference" box="8q" /%}
+    - {% value type="box_reference" box="8r" /%}
+    - {% value type="box_reference" box="8s" /%}
+    - {% value type="box_reference" box="8t" /%}
+    - {% value type="box_reference" box="8u" /%}
+    - {% value type="box_reference" box="8v" /%}
+    - {% value type="box_reference" box="8z" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Combine lines 1 through 7 and 9. This is your **additional income.** Enter here and on Form 1040, 1040-SR, or 1040-NR, line 8{% /instructions %}
+  - {% box identifier="10" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="box_reference" box="2a" /%}
+    - {% value type="box_reference" box="3" /%}
+    - {% value type="box_reference" box="4" /%}
+    - {% value type="box_reference" box="5" /%}
+    - {% value type="box_reference" box="6" /%}
+    - {% value type="box_reference" box="7" /%}
+    - {% value type="box_reference" box="9" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part II. Adjustments to Income
+
+{% lines %}
+- {% line index="11" %}
+  - {% instructions %}Educator expenses{% /instructions %}
+  - {% box identifier="11" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="12" %}
+  - {% instructions %}Certain business expenses of reservists, performing artists, and fee-basis government officials. Attach Form 2106{% /instructions %}
+  - {% box identifier="12" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}Health savings account deduction. Attach Form 8889{% /instructions %}
+  - {% box identifier="13" %}{% value type="box_reference" form="f8889" box="13" /%}{% /box %}
+  {% /line %}
+- {% line index="14" %}
+  - {% instructions %}Moving expenses for members of the Armed Forces. Attach Form 3903{% /instructions %}
+  - {% box identifier="14" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}Deductible part of self-employment tax. Attach Schedule SE{% /instructions %}
+  - {% box identifier="15" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}Self-employed SEP, SIMPLE, and qualified plans{% /instructions %}
+  - {% box identifier="16" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="17" %}
+  - {% instructions %}Self-employed health insurance deduction{% /instructions %}
+  - {% box identifier="17" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="18" %}
+  - {% instructions %}Penalty on early withdrawal of savings{% /instructions %}
+  - {% box identifier="18" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="19a" %}
+  - {% instructions %}Alimony paid{% /instructions %}
+  - {% box identifier="19a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="19b" %}
+  - {% instructions %}Recipient's SSN{% /instructions %}
+  - {% box identifier="19b" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="19c" %}
+  - {% instructions %}Date of original divorce or separation agreement (see instructions){% /instructions %}
+  - {% box identifier="19c" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="20" %}
+  - {% instructions %}IRA deduction{% /instructions %}
+  - {% box identifier="20" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="21" %}
+  - {% instructions %}Student loan interest deduction{% /instructions %}
+  - {% box identifier="21" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="22" %}
+  - {% instructions %}Reserved for future use{% /instructions %}
+  - {% box identifier="22" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="23" %}
+  - {% instructions %}Archer MSA deduction{% /instructions %}
+  - {% box identifier="23" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24" %}
+  - {% instructions %}Other adjustments:{% /instructions %}
+  - {% box identifier="24" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="24a" %}
+  - {% instructions %}Jury duty pay (see instructions){% /instructions %}
+  - {% box identifier="24a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24b" %}
+  - {% instructions %}Deductible expenses related to income reported on line 8l from the rental of personal property engaged in for profit{% /instructions %}
+  - {% box identifier="24b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24c" %}
+  - {% instructions %}Nontaxable amount of the value of Olympic and Paralympic medals and USOC prize money reported on line 8m{% /instructions %}
+  - {% box identifier="24c" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24d" %}
+  - {% instructions %}Reforestation amortization and expenses{% /instructions %}
+  - {% box identifier="24d" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24e" %}
+  - {% instructions %}Repayment of supplemental unemployment benefits under the Trade Act of 1974{% /instructions %}
+  - {% box identifier="24e" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24f" %}
+  - {% instructions %}Contributions to section 501(c)(18)(D) pension plans{% /instructions %}
+  - {% box identifier="24f" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24g" %}
+  - {% instructions %}Contributions by certain chaplains to section 403(b) plans{% /instructions %}
+  - {% box identifier="24g" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24h" %}
+  - {% instructions %}Attorney fees and court costs for actions involving certain unlawful discrimination claims (see instructions){% /instructions %}
+  - {% box identifier="24h" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24i" %}
+  - {% instructions %}Attorney fees and court costs you paid in connection with an award from the IRS for information you provided that helped the IRS detect tax law violations{% /instructions %}
+  - {% box identifier="24i" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24j" %}
+  - {% instructions %}Housing deduction from Form 2555{% /instructions %}
+  - {% box identifier="24j" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24k" %}
+  - {% instructions %}Excess deductions of section 67(e) expenses from Schedule K-1 (Form 1041){% /instructions %}
+  - {% box identifier="24k" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24z" %}
+  - {% instructions %}Other adjustments. List type and amount{% /instructions %}
+  - {% box identifier="24z" %}{% value type="list_amounts_input" /%}{% /box %}
+  {% /line %}
+- {% line index="25" %}
+  - {% instructions %}Total other adjustments. Add lines 24a through 24z{% /instructions %}
+  - {% box identifier="25" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="24a" /%}
+    - {% value type="box_reference" box="24b" /%}
+    - {% value type="box_reference" box="24c" /%}
+    - {% value type="box_reference" box="24d" /%}
+    - {% value type="box_reference" box="24e" /%}
+    - {% value type="box_reference" box="24f" /%}
+    - {% value type="box_reference" box="24g" /%}
+    - {% value type="box_reference" box="24h" /%}
+    - {% value type="box_reference" box="24i" /%}
+    - {% value type="box_reference" box="24j" /%}
+    - {% value type="box_reference" box="24k" /%}
+    - {% value type="box_reference" box="24z" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="26" %}
+  - {% instructions %}Add lines 11 through 23 and 25. These are your **adjustments to income.** Enter here and on Form 1040, 1040-SR, or 1040-NR, line 10{% /instructions %}
+  - {% box identifier="26" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="11" /%}
+    - {% value type="box_reference" box="12" /%}
+    - {% value type="box_reference" box="13" /%}
+    - {% value type="box_reference" box="14" /%}
+    - {% value type="box_reference" box="15" /%}
+    - {% value type="box_reference" box="16" /%}
+    - {% value type="box_reference" box="17" /%}
+    - {% value type="box_reference" box="18" /%}
+    - {% value type="box_reference" box="19a" /%}
+    - {% value type="box_reference" box="20" /%}
+    - {% value type="box_reference" box="21" /%}
+    - {% value type="box_reference" box="23" /%}
+    - {% value type="box_reference" box="25" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

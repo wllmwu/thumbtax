@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form8960: FormSpecification = {
+export const f8960: FormSpecification = {
   class: "f8960",
-  title: "Form 8960",
-  subtitle: "Net Investment Income Tax\u2014Individuals, Estates, and Trusts",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8960",
   category: "taxes",
   maxInstances: 1,
+  title: "Form 8960",
+  subtitle: "Net Investment Income Tax—Individuals, Estates, and Trusts",
   sections: [
     {
       heading: "Part I. Investment Income",
@@ -217,7 +217,7 @@ export const Form8960: FormSpecification = {
         {
           index: "12",
           instructions:
-            "Net investment income. Subtract Part II, line 11, from Part I, line 8. Individuals, complete lines 13\u201317. Estates and trusts, complete lines 18a\u201321. If zero or less, enter -0-",
+            "Net investment income. Subtract Part II, line 11, from Part I, line 8. Individuals, complete lines 13–17. Estates and trusts, complete lines 18a–21. If zero or less, enter -0-",
           box: {
             identifier: "12",
             value: {

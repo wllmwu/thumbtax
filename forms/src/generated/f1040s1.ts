@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1040S1: FormSpecification = {
+export const f1040s1: FormSpecification = {
   class: "f1040s1",
-  title: "Schedule 1 (Form 1040)",
-  subtitle: "Additional Income and Adjustments to Income",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
   maxInstances: 1,
+  title: "Schedule 1 (Form 1040)",
+  subtitle: "Additional Income and Adjustments to Income",
   sections: [
     {
       heading: "Part I. Additional Income",
@@ -81,7 +81,6 @@ export const Form1040S1: FormSpecification = {
           box: { identifier: "8c", value: { type: "number_input" } },
         },
         {
-          // TODO: Form 2555
           index: "8d",
           instructions: "Foreign earned income exclusion from Form 2555",
           box: {
@@ -124,7 +123,6 @@ export const Form1040S1: FormSpecification = {
           box: { identifier: "8i", value: { type: "number_input" } },
         },
         {
-          // TODO: helper forms
           index: "8j",
           instructions: "Activity not engaged in for profit income",
           box: {
@@ -247,8 +245,16 @@ export const Form1040S1: FormSpecification = {
         },
         {
           index: "10",
-          instructions:
-            "Combine lines 1 through 7 and 9. This is your **additional income.** Enter here and on Form 1040, 1040-SR, or 1040-NR, line 8",
+          instructions: [
+            "Combine lines 1 through 7 and 9. This is your ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["additional income."],
+            },
+            " Enter here and on Form 1040, 1040-SR, or 1040-NR, line 8",
+          ],
           box: {
             identifier: "10",
             value: {
@@ -297,7 +303,6 @@ export const Form1040S1: FormSpecification = {
           box: { identifier: "14", value: { type: "number_input" } },
         },
         {
-          // TODO: Schedule SE
           index: "15",
           instructions:
             "Deductible part of self-employment tax. Attach Schedule SE",
@@ -411,7 +416,6 @@ export const Form1040S1: FormSpecification = {
           box: { identifier: "24i", value: { type: "number_input" } },
         },
         {
-          // TODO: Form 2555
           index: "24j",
           instructions: "Housing deduction from Form 2555",
           box: { identifier: "24j", value: { type: "number_input" } },
@@ -453,8 +457,16 @@ export const Form1040S1: FormSpecification = {
         },
         {
           index: "26",
-          instructions:
-            "Add lines 11 through 23 and 25. These are your **adjustments to income.** Enter here and on Form 1040, 1040-SR, or 1040-NR, line 10",
+          instructions: [
+            "Add lines 11 through 23 and 25. These are your ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["adjustments to income."],
+            },
+            " Enter here and on Form 1040, 1040-SR, or 1040-NR, line 10",
+          ],
           box: {
             identifier: "26",
             value: {

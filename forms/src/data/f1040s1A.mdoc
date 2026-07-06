@@ -1,0 +1,511 @@
+{% form
+   category="taxes"
+   class="f1040s1A"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-1040"
+   maxInstances=1 %}
+# Schedule 1-A (Form 1040)
+
+{% subtitle %}Additional Deductions{% /subtitle %}
+
+{% section %}
+## Part I. Modified Adjusted Gross Income (MAGI) Amount
+
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Enter the amount from Form 1040, 1040-SR, or 1040-NR, line 11b{% /instructions %}
+  - {% box identifier="1" %}{% value type="box_reference" form="f1040" box="11b" required=true /%}{% /box %}
+  {% /line %}
+- {% line index="2a" %}
+  - {% instructions %}Enter any income from Puerto Rico that you excluded{% /instructions %}
+  - {% box identifier="2a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2b" %}
+  - {% instructions %}Enter the amount from Form 2555, line 45{% /instructions %}
+  - {% box identifier="2b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2c" %}
+  - {% instructions %}Enter the amount from Form 2555, line 50{% /instructions %}
+  - {% box identifier="2c" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2d" %}
+  - {% instructions %}Enter the amount from Form 4563, line 15{% /instructions %}
+  - {% box identifier="2d" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2e" %}
+  - {% instructions %}Add lines 2a, 2b, 2c, and 2d{% /instructions %}
+  - {% box identifier="2e" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="2a" /%}
+    - {% value type="box_reference" box="2b" /%}
+    - {% value type="box_reference" box="2c" /%}
+    - {% value type="box_reference" box="2d" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Add lines 1 and 2e{% /instructions %}
+  - {% box identifier="3" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="box_reference" box="2e" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part II. No Tax on Tips
+
+{% lines %}
+- {% line index="4" %}
+  - {% instructions %}Qualified tips received as an employee. If you received tips as an employee with respect to employment with more than one employer, enter -0- on lines 4a and 4b and see the instructions to determine the amount to enter on line 4c. If you received tips as an employee in more than one occupation, see the instructions.{% /instructions %}
+  - {% box identifier="4" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="4a" %}
+  - {% instructions %}Enter qualified tips included on Form W-2, box 7, but see the instructions if Form W-2, box 5 is more than $176,100 or you received tips that are not subject to social security and Medicare taxes{% /instructions %}
+  - {% box identifier="4a" %}
+    {% value type="select_instance_boxes_input" %}
+    - {% option form="fW2" box="7" /%}
+    - {% option form="fW2" box="14a" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="4b" %}
+  - {% instructions %}Qualified tips included on Form 4137, line 1, row A, column (c). If Form 4137 is not filed, enter -0-{% /instructions %}
+  - {% box identifier="4b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="4c" %}
+  - {% instructions %}If you only received qualified tips as an employee with respect to employment with one employer, enter the larger of line 4a or line 4b. Otherwise, see the instructions to determine the amount to enter on line 4c. If you received tips as an employee in more than one occupation, see the instructions{% /instructions %}
+  - {% box identifier="4c" %}
+    {% value type="override_number_input" %}
+    - {% value slot="computedValue" type="maximum" %}
+      - {% value type="box_reference" box="4a" /%}
+      - {% value type="box_reference" box="4b" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}
+    Qualified tips received in the course of a trade or business.
+    Qualified tip amount included in Form 1099-NEC, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions
+    {% /instructions %}
+  - {% box identifier="5" %}
+    {% value type="select_instance_boxes_input" %}
+    - {% option form="f1099NEC" box="1" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Add lines 4c and 5{% /instructions %}
+  - {% box identifier="6" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="4c" /%}
+    - {% value type="box_reference" box="5" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Enter the smaller of the amount on line 6 or $25,000{% /instructions %}
+  - {% box identifier="7" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="6" /%}
+    - {% value type="number_constant" value=25000 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Enter the amount from line 3{% /instructions %}
+  - {% box identifier="8" %}{% value type="box_reference" box="3" /%}{% /box %}
+  {% /line %}
+- {% line index="9" %}
+  - {% instructions %}Enter $150,000 ($300,000 if married filing jointly){% /instructions %}
+  - {% box identifier="9" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="number_constant"
+         value=300000
+         filingStatusKey="married_filing_jointly" /%}
+    - {% value slot="default" type="number_constant" value=150000 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Subtract line 9 from line 8. If zero or less, enter the amount from line 7 on line 13{% /instructions %}
+  - {% box identifier="10" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="8" /%}
+    - {% value slot="subtrahend" type="box_reference" box="9" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}Divide line 10 by $1,000. If the resulting number isn't a whole number, decrease the result to the next lower whole number{% /instructions %}
+  - {% box identifier="11" %}
+    {% value type="quotient" round="down" %}
+    - {% value slot="dividend" type="box_reference" box="10" /%}
+    - {% value slot="divisor" type="number_constant" value=1000 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="12" %}
+  - {% instructions %}Multiply line 11 by $100{% /instructions %}
+  - {% box identifier="12" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="11" /%}
+    - {% value type="number_constant" value=100 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}**Qualified tips deduction.** Subtract line 12 from line 7. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="13" %}
+    {% value type="conditional" %}
+    - {% value slot="condition" type="comparison" %}
+      - {% value type="box_reference" box="10" /%}
+      - {% value slot="maximum" type="number_constant" value=0 /%}
+      {% /value %}
+    - {% value slot="trueValue" type="box_reference" box="7" /%}
+    - {% value slot="falseValue" type="non_negative_clamp" %}
+      - {% value type="difference" %}
+        - {% value slot="minuend" type="box_reference" box="7" /%}
+        - {% value slot="subtrahend" type="box_reference" box="12" /%}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part III. No Tax on Overtime
+
+{% lines %}
+- {% line index="14a" %}
+  - {% instructions %}Qualified overtime compensation included in Form W-2, box 1. If you received qualified overtime compensation not reported on Form W-2, box 1, see instructions{% /instructions %}
+  - {% box identifier="14a" %}{% value type="box_reference" form="fW2_12_codes" box="TT" /%}{% /box %}
+  {% /line %}
+- {% line index="14b" %}
+  - {% instructions %}Qualified overtime compensation included in Form 1099-NEC, box 1, or Form 1099-MISC, box 3 (see instructions){% /instructions %}
+  - {% box identifier="14b" %}
+    {% value type="select_instance_boxes_input" %}
+    - {% option form="f1099NEC" box="1" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="14c" %}
+  - {% instructions %}Add lines 14a and 14b{% /instructions %}
+  - {% box identifier="14c" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="14a" /%}
+    - {% value type="box_reference" box="14b" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}Enter the smaller of the amount on line 14c or $12,500 ($25,000 if married filing jointly){% /instructions %}
+  - {% box identifier="15" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="14c" /%}
+    - {% value type="filing_status_map" %}
+      - {% value
+           type="number_constant"
+           value=25000
+           filingStatusKey="married_filing_jointly" /%}
+      - {% value slot="default" type="number_constant" value=12500 /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}Enter the amount from line 3{% /instructions %}
+  - {% box identifier="16" %}{% value type="box_reference" box="3" /%}{% /box %}
+  {% /line %}
+- {% line index="17" %}
+  - {% instructions %}Enter $150,000 ($300,000 if married filing jointly){% /instructions %}
+  - {% box identifier="17" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="number_constant"
+         value=300000
+         filingStatusKey="married_filing_jointly" /%}
+    - {% value slot="default" type="number_constant" value=150000 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="18" %}
+  - {% instructions %}Subtract line 17 from line 16. If zero or less, enter the amount from line 15 on line 21{% /instructions %}
+  - {% box identifier="18" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="16" /%}
+    - {% value slot="subtrahend" type="box_reference" box="17" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="19" %}
+  - {% instructions %}Divide line 18 by $1,000. If the resulting number isn't a whole number, decrease the result to the next lower whole number{% /instructions %}
+  - {% box identifier="19" %}
+    {% value type="quotient" round="down" %}
+    - {% value slot="dividend" type="box_reference" box="18" /%}
+    - {% value slot="divisor" type="number_constant" value=1000 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="20" %}
+  - {% instructions %}Multiply line 19 by $100{% /instructions %}
+  - {% box identifier="20" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="19" /%}
+    - {% value type="number_constant" value=100 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="21" %}
+  - {% instructions %}**Qualified overtime compensation deduction.** Subtract line 20 from line 15. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="21" %}
+    {% value type="conditional" %}
+    - {% value slot="condition" type="comparison" %}
+      - {% value type="box_reference" box="18" /%}
+      - {% value slot="maximum" type="number_constant" value=0 /%}
+      {% /value %}
+    - {% value slot="trueValue" type="box_reference" box="15" /%}
+    - {% value slot="falseValue" type="non_negative_clamp" %}
+      - {% value type="difference" %}
+        - {% value slot="minuend" type="box_reference" box="15" /%}
+        - {% value slot="subtrahend" type="box_reference" box="20" /%}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part IV. No Tax on Car Loan Interest
+
+{% columns %}
+- {% column index="(i)" %}
+  {% instructions %}Vehicle identification number (VIN){% /instructions %}
+  {% /column %}
+- {% column index="(ii)" %}
+  {% instructions %}Interest for this loan deducted on Schedule C, Schedule E, or Schedule F{% /instructions %}
+  {% /column %}
+- {% column index="(iii)" %}
+  {% instructions %}Interest for this loan paid in 2025 less column (ii){% /instructions %}
+  {% /column %}
+{% /columns %}
+
+{% lines %}
+- {% line index="22" %}
+  - {% instructions %}Applicable passenger vehicle (see instructions). If more than two VINs, see instructions.{% /instructions %}
+  - {% box identifier="22(i)" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="22(ii)" column="(ii)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="22(iii)" column="(iii)" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="22a" %}
+  - {% instructions %}Applicable passenger vehicle{% /instructions %}
+  - {% box identifier="22a(i)" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="22a(ii)" column="(ii)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="22a(iii)" column="(iii)" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="22b" %}
+  - {% instructions %}Applicable passenger vehicle{% /instructions %}
+  - {% box identifier="22b(i)" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="22b(ii)" column="(ii)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="22b(iii)" column="(iii)" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="23" %}
+  - {% instructions %}Add lines 22a and 22b, column (iii){% /instructions %}
+  - {% box identifier="23_skip_i" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="23_skip_ii" column="(ii)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="23" column="(iii)" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="22a(iii)" /%}
+    - {% value type="box_reference" box="22b(iii)" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="24" %}
+  - {% instructions %}Enter the smaller of the amount on line 23 or $10,000{% /instructions %}
+  - {% box identifier="24_skip_i" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="24_skip_ii" column="(ii)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="24" column="(iii)" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="23" /%}
+    - {% value type="number_constant" value=10000 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="25" %}
+  - {% instructions %}Enter the amount from line 3{% /instructions %}
+  - {% box identifier="25_skip_i" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="25_skip_ii" column="(ii)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="25" column="(iii)" %}{% value type="box_reference" box="3" /%}{% /box %}
+  {% /line %}
+- {% line index="26" %}
+  - {% instructions %}Enter $100,000 ($200,000 if married filing jointly){% /instructions %}
+  - {% box identifier="26_skip_i" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="26_skip_ii" column="(ii)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="26" column="(iii)" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="number_constant"
+         value=200000
+         filingStatusKey="married_filing_jointly" /%}
+    - {% value slot="default" type="number_constant" value=100000 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="27" %}
+  - {% instructions %}Subtract line 26 from line 25. If zero or less, enter the amount from line 24 on line 30{% /instructions %}
+  - {% box identifier="27_skip_i" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="27_skip_ii" column="(ii)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="27" column="(iii)" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="25" /%}
+    - {% value slot="subtrahend" type="box_reference" box="26" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="28" %}
+  - {% instructions %}Divide line 27 by $1,000. If the resulting number isn't a whole number, increase the result to the next higher whole number{% /instructions %}
+  - {% box identifier="28_skip_i" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="28_skip_ii" column="(ii)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="28" column="(iii)" %}
+    {% value type="quotient" round="up" %}
+    - {% value slot="dividend" type="box_reference" box="27" /%}
+    - {% value slot="divisor" type="number_constant" value=1000 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="29" %}
+  - {% instructions %}Multiply line 28 by $200{% /instructions %}
+  - {% box identifier="29_skip_i" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="29_skip_ii" column="(ii)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="29" column="(iii)" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="28" /%}
+    - {% value type="number_constant" value=200 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="30" %}
+  - {% instructions %}**Qualified passenger vehicle loan interest deduction.** Subtract line 29 from line 24. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="30_skip_i" column="(i)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="30_skip_ii" column="(ii)" %}{% value type="unused" /%}{% /box %}
+  - {% box identifier="30" column="(iii)" %}
+    {% value type="conditional" %}
+    - {% value slot="condition" type="comparison" %}
+      - {% value type="box_reference" box="27" /%}
+      - {% value slot="maximum" type="number_constant" value=0 /%}
+      {% /value %}
+    - {% value slot="trueValue" type="box_reference" box="24" /%}
+    - {% value slot="falseValue" type="non_negative_clamp" %}
+      - {% value type="difference" %}
+        - {% value slot="minuend" type="box_reference" box="24" /%}
+        - {% value slot="subtrahend" type="box_reference" box="29" /%}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part V. Enhanced Deduction for Seniors
+
+{% lines %}
+- {% line index="31" %}
+  - {% instructions %}Enter the amount from line 3{% /instructions %}
+  - {% box identifier="31" %}{% value type="box_reference" box="3" /%}{% /box %}
+  {% /line %}
+- {% line index="32" %}
+  - {% instructions %}Enter $75,000 ($150,000 if married filing jointly){% /instructions %}
+  - {% box identifier="32" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="number_constant"
+         value=150000
+         filingStatusKey="married_filing_jointly" /%}
+    - {% value slot="default" type="number_constant" value=75000 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="33" %}
+  - {% instructions %}Subtract line 32 from line 31. If zero or less, enter $6,000 on line 35{% /instructions %}
+  - {% box identifier="33" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="31" /%}
+    - {% value slot="subtrahend" type="box_reference" box="32" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="34" %}
+  - {% instructions %}Multiply line 33 by 6% (0.06){% /instructions %}
+  - {% box identifier="34" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="33" /%}
+    - {% value type="number_constant" value=0.06 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="35" %}
+  - {% instructions %}Subtract line 34 from $6,000. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="35" %}
+    {% value type="conditional" %}
+    - {% value slot="condition" type="comparison" %}
+      - {% value type="box_reference" box="33" /%}
+      - {% value slot="maximum" type="number_constant" value=0 /%}
+      {% /value %}
+    - {% value slot="trueValue" type="number_constant" value=6000 /%}
+    - {% value slot="falseValue" type="non_negative_clamp" %}
+      - {% value type="difference" %}
+        - {% value slot="minuend" type="number_constant" value=6000 /%}
+        - {% value slot="subtrahend" type="box_reference" box="34" /%}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="36a" %}
+  - {% instructions %}If you have a valid social security number (see instructions) and were born before January 2, 1961, enter the amount from line 35{% /instructions %}
+  - {% box identifier="36a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="36b" %}
+  - {% instructions %}If you are married filing jointly, your spouse has a valid social security number (see instructions), and your spouse was born before January 2, 1961, enter the amount from line 35{% /instructions %}
+  - {% box identifier="36b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="37" %}
+  - {% instructions %}**Enhanced deduction for seniors.** Add lines 36a and 36b{% /instructions %}
+  - {% box identifier="37" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="36a" /%}
+    - {% value type="box_reference" box="36b" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part VI. Total Additional Deductions
+
+{% lines %}
+- {% line index="38" %}
+  - {% instructions %}Add lines 13, 21, 30, and 37. Enter here and on Form 1040 or 1040-SR, line 13b, or on Form 1040-NR, line 13c{% /instructions %}
+  - {% box identifier="38" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="13" /%}
+    - {% value type="box_reference" box="21" /%}
+    - {% value type="box_reference" box="30" /%}
+    - {% value type="box_reference" box="37" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

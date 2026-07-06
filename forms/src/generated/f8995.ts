@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form8995: FormSpecification = {
+export const f8995: FormSpecification = {
   class: "f8995",
-  title: "Form 8995",
-  subtitle: "Qualified Business Income Deduction Simplified Computation",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8995",
   category: "taxes",
   maxInstances: 1,
+  title: "Form 8995",
+  subtitle: "Qualified Business Income Deduction Simplified Computation",
   sections: [
     {
       columns: [
@@ -18,60 +18,60 @@ export const Form8995: FormSpecification = {
         {
           index: "1i",
           boxes: [
-            { column: "(a)", identifier: "1i(a)", value: { type: "unused" } },
-            { column: "(b)", identifier: "1i(b)", value: { type: "unused" } },
+            { identifier: "1i(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1i(b)", value: { type: "unused" }, column: "(b)" },
             {
-              column: "(c)",
               identifier: "1i(c)",
               value: { type: "number_input" },
+              column: "(c)",
             },
           ],
         },
         {
           index: "1ii",
           boxes: [
-            { column: "(a)", identifier: "1ii(a)", value: { type: "unused" } },
-            { column: "(b)", identifier: "1ii(b)", value: { type: "unused" } },
+            { identifier: "1ii(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1ii(b)", value: { type: "unused" }, column: "(b)" },
             {
-              column: "(c)",
               identifier: "1ii(c)",
               value: { type: "number_input" },
+              column: "(c)",
             },
           ],
         },
         {
           index: "1iii",
           boxes: [
-            { column: "(a)", identifier: "1iii(a)", value: { type: "unused" } },
-            { column: "(b)", identifier: "1iii(b)", value: { type: "unused" } },
+            { identifier: "1iii(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1iii(b)", value: { type: "unused" }, column: "(b)" },
             {
-              column: "(c)",
               identifier: "1iii(c)",
               value: { type: "number_input" },
+              column: "(c)",
             },
           ],
         },
         {
           index: "1iv",
           boxes: [
-            { column: "(a)", identifier: "1iv(a)", value: { type: "unused" } },
-            { column: "(b)", identifier: "1iv(b)", value: { type: "unused" } },
+            { identifier: "1iv(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1iv(b)", value: { type: "unused" }, column: "(b)" },
             {
-              column: "(c)",
               identifier: "1iv(c)",
               value: { type: "number_input" },
+              column: "(c)",
             },
           ],
         },
         {
           index: "1v",
           boxes: [
-            { column: "(a)", identifier: "1v(a)", value: { type: "unused" } },
-            { column: "(b)", identifier: "1v(b)", value: { type: "unused" } },
+            { identifier: "1v(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1v(b)", value: { type: "unused" }, column: "(b)" },
             {
-              column: "(c)",
               identifier: "1v(c)",
               value: { type: "number_input" },
+              column: "(c)",
             },
           ],
         },

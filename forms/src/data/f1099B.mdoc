@@ -1,0 +1,61 @@
+{% form
+   category="income"
+   class="f1099B"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-1099-b" %}
+# Form 1099-B
+
+{% subtitle %}Proceeds from Broker and Barter Exchange Transactions{% /subtitle %}
+
+{% section %}
+{% lines %}
+- {% line index="1a" %}
+  - {% instructions %}Description of property{% /instructions %}
+  - {% box identifier="1a" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="1b" %}
+  - {% instructions %}Date acquired{% /instructions %}
+  - {% box identifier="1b" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="1c" %}
+  - {% instructions %}Date sold or disposed{% /instructions %}
+  - {% box identifier="1c" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="1d" %}
+  - {% instructions %}Proceeds{% /instructions %}
+  - {% box identifier="1d" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="1e" %}
+  - {% instructions %}Cost or other basis{% /instructions %}
+  - {% box identifier="1e" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="1f" %}
+  - {% instructions %}Accrued market discount{% /instructions %}
+  - {% box identifier="1f" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="1g" %}
+  - {% instructions %}Wash sale loss disallowed{% /instructions %}
+  - {% box identifier="1g" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Type of gain or loss{% /instructions %}
+  - {% box identifier="2" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Check if proceeds are from collectibles or from a QOF{% /instructions %}
+  - {% box identifier="3" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Reported to IRS{% /instructions %}
+  - {% box identifier="6" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Check if loss not allowed based on amount in box 1d{% /instructions %}
+  - {% box identifier="7" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

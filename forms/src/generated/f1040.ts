@@ -1,14 +1,12 @@
-import { taxComputation } from "#src/specifications/data/taxComputation";
+import type { FormSpecification } from "../types/formSpecification";
 
-import type { FormSpecification } from "@thumbtax/forms";
-
-export const Form1040: FormSpecification = {
+export const f1040: FormSpecification = {
   class: "f1040",
-  title: "Form 1040",
-  subtitle: "U.S. Individual Income Tax Return",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
   maxInstances: 1,
+  title: "Form 1040",
+  subtitle: "U.S. Individual Income Tax Return",
   sections: [
     {
       heading: "Income",
@@ -183,7 +181,6 @@ export const Form1040: FormSpecification = {
         { index: "6c", box: { identifier: "6c", value: { type: "unused" } } },
         { index: "6d", box: { identifier: "6d", value: { type: "unused" } } },
         {
-          // TODO: Form 8949
           index: "7a",
           instructions: "Capital gain or (loss). Attach Schedule D if required",
           box: {
@@ -206,7 +203,6 @@ export const Form1040: FormSpecification = {
           instructions: "Check if Schedule D not required",
           box: {
             identifier: "7b",
-            format: "checkbox",
             value: {
               type: "conjunction",
               values: [
@@ -228,6 +224,7 @@ export const Form1040: FormSpecification = {
                 },
               ],
             },
+            format: "checkbox",
           },
         },
         {
@@ -245,8 +242,15 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "9",
-          instructions:
-            "Add lines 1z, 2b, 3b, 4b, 5b, 6b, 7a, and 8. This is your **total income**",
+          instructions: [
+            "Add lines 1z, 2b, 3b, 4b, 5b, 6b, 7a, and 8. This is your ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["total income"],
+            },
+          ],
           box: {
             identifier: "9",
             value: {
@@ -279,8 +283,15 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "11a",
-          instructions:
-            "Subtract line 10 from line 9. This is your **adjusted gross income**",
+          instructions: [
+            "Subtract line 10 from line 9. This is your ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["adjusted gross income"],
+            },
+          ],
           box: {
             identifier: "11a",
             value: {
@@ -309,8 +320,15 @@ export const Form1040: FormSpecification = {
         { index: "12d", box: { identifier: "12d", value: { type: "unused" } } },
         {
           index: "12e",
-          instructions:
-            "**Standard deduction or itemized deductions** (from Schedule A)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Standard deduction or itemized deductions"],
+            },
+            " (from Schedule A)",
+          ],
           box: {
             identifier: "12e",
             value: {
@@ -349,7 +367,6 @@ export const Form1040: FormSpecification = {
           },
         },
         {
-          // TODO: Form 8995-A
           index: "13a",
           instructions:
             "Qualified business income deduction from Form 8995 or Form 8995-A",
@@ -388,8 +405,15 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "15",
-          instructions:
-            "Subtract line 14 from line 11b. If zero or less, enter -0-. This is your **taxable income**",
+          instructions: [
+            "Subtract line 14 from line 11b. If zero or less, enter -0-. This is your ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["taxable income"],
+            },
+          ],
           box: {
             identifier: "15",
             value: {
@@ -408,7 +432,6 @@ export const Form1040: FormSpecification = {
           instructions: "Flag for whether to use the Schedule D Tax Worksheet",
           box: {
             identifier: "flag_16_SDTWS",
-            format: "yes_no",
             value: {
               type: "conjunction",
               values: [
@@ -455,6 +478,7 @@ export const Form1040: FormSpecification = {
                 },
               ],
             },
+            format: "yes_no",
           },
         },
         {
@@ -464,7 +488,6 @@ export const Form1040: FormSpecification = {
             "Flag for whether to use the Qualified Dividends and Capital Gain Tax Worksheet",
           box: {
             identifier: "flag_16_QDCGTWS",
-            format: "yes_no",
             value: {
               type: "conjunction",
               values: [
@@ -522,12 +545,20 @@ export const Form1040: FormSpecification = {
                 },
               ],
             },
+            format: "yes_no",
           },
         },
         {
-          // TODO: Form 2555, foreign earned income tax worksheet
           index: "16",
-          instructions: "**Tax** (see instructions)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Tax"],
+            },
+            " (see instructions)",
+          ],
           box: {
             identifier: "16",
             value: {
@@ -550,7 +581,405 @@ export const Form1040: FormSpecification = {
                     form: "f1040_QDCGTWS",
                     required: true,
                   },
-                  falseValue: taxComputation({ box: "15" }),
+                  falseValue: {
+                    type: "filing_status_map",
+                    values: {
+                      head_of_household: {
+                        type: "piecewise_function",
+                        input: { type: "box_reference", box: "15" },
+                        pieces: [
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 103350,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.22 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 6825,
+                              },
+                            },
+                          },
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 197300,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.24 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 8892,
+                              },
+                            },
+                          },
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 250500,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.32 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 24676,
+                              },
+                            },
+                          },
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 626350,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.35 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 32191,
+                              },
+                            },
+                          },
+                        ],
+                        lastOutput: {
+                          type: "difference",
+                          minuend: {
+                            type: "product",
+                            values: [
+                              { type: "box_reference", box: "15" },
+                              { type: "number_constant", value: 0.37 },
+                            ],
+                          },
+                          subtrahend: { type: "number_constant", value: 44718 },
+                        },
+                      },
+                      married_filing_separately: {
+                        type: "piecewise_function",
+                        input: { type: "box_reference", box: "15" },
+                        pieces: [
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 103350,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.22 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 5086,
+                              },
+                            },
+                          },
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 197300,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.24 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 7153,
+                              },
+                            },
+                          },
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 250525,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.32 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 22937,
+                              },
+                            },
+                          },
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 375800,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.35 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 30452.75,
+                              },
+                            },
+                          },
+                        ],
+                        lastOutput: {
+                          type: "difference",
+                          minuend: {
+                            type: "product",
+                            values: [
+                              { type: "box_reference", box: "15" },
+                              { type: "number_constant", value: 0.37 },
+                            ],
+                          },
+                          subtrahend: {
+                            type: "number_constant",
+                            value: 37968.75,
+                          },
+                        },
+                      },
+                      single: {
+                        type: "piecewise_function",
+                        input: { type: "box_reference", box: "15" },
+                        pieces: [
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 103350,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.22 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 5086,
+                              },
+                            },
+                          },
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 197300,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.24 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 7153,
+                              },
+                            },
+                          },
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 250525,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.32 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 22937,
+                              },
+                            },
+                          },
+                          {
+                            inputUpperBound: {
+                              type: "number_constant",
+                              value: 626350,
+                            },
+                            output: {
+                              type: "difference",
+                              minuend: {
+                                type: "product",
+                                values: [
+                                  { type: "box_reference", box: "15" },
+                                  { type: "number_constant", value: 0.35 },
+                                ],
+                              },
+                              subtrahend: {
+                                type: "number_constant",
+                                value: 30452.75,
+                              },
+                            },
+                          },
+                        ],
+                        lastOutput: {
+                          type: "difference",
+                          minuend: {
+                            type: "product",
+                            values: [
+                              { type: "box_reference", box: "15" },
+                              { type: "number_constant", value: 0.37 },
+                            ],
+                          },
+                          subtrahend: {
+                            type: "number_constant",
+                            value: 42979.75,
+                          },
+                        },
+                      },
+                    },
+                    default: {
+                      type: "piecewise_function",
+                      input: { type: "box_reference", box: "15" },
+                      pieces: [
+                        {
+                          inputUpperBound: {
+                            type: "number_constant",
+                            value: 206700,
+                          },
+                          output: {
+                            type: "difference",
+                            minuend: {
+                              type: "product",
+                              values: [
+                                { type: "box_reference", box: "15" },
+                                { type: "number_constant", value: 0.22 },
+                              ],
+                            },
+                            subtrahend: {
+                              type: "number_constant",
+                              value: 10172,
+                            },
+                          },
+                        },
+                        {
+                          inputUpperBound: {
+                            type: "number_constant",
+                            value: 394600,
+                          },
+                          output: {
+                            type: "difference",
+                            minuend: {
+                              type: "product",
+                              values: [
+                                { type: "box_reference", box: "15" },
+                                { type: "number_constant", value: 0.24 },
+                              ],
+                            },
+                            subtrahend: {
+                              type: "number_constant",
+                              value: 14306,
+                            },
+                          },
+                        },
+                        {
+                          inputUpperBound: {
+                            type: "number_constant",
+                            value: 501050,
+                          },
+                          output: {
+                            type: "difference",
+                            minuend: {
+                              type: "product",
+                              values: [
+                                { type: "box_reference", box: "15" },
+                                { type: "number_constant", value: 0.32 },
+                              ],
+                            },
+                            subtrahend: {
+                              type: "number_constant",
+                              value: 45874,
+                            },
+                          },
+                        },
+                        {
+                          inputUpperBound: {
+                            type: "number_constant",
+                            value: 751600,
+                          },
+                          output: {
+                            type: "difference",
+                            minuend: {
+                              type: "product",
+                              values: [
+                                { type: "box_reference", box: "15" },
+                                { type: "number_constant", value: 0.35 },
+                              ],
+                            },
+                            subtrahend: {
+                              type: "number_constant",
+                              value: 60905.5,
+                            },
+                          },
+                        },
+                      ],
+                      lastOutput: {
+                        type: "difference",
+                        minuend: {
+                          type: "product",
+                          values: [
+                            { type: "box_reference", box: "15" },
+                            { type: "number_constant", value: 0.37 },
+                          ],
+                        },
+                        subtrahend: { type: "number_constant", value: 75937.5 },
+                      },
+                    },
+                  },
                 },
               },
             },
@@ -648,7 +1077,15 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "24",
-          instructions: "Add lines 22 and 23. This is your **total tax**",
+          instructions: [
+            "Add lines 22 and 23. This is your ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["total tax"],
+            },
+          ],
           box: {
             identifier: "24",
             value: {
@@ -772,8 +1209,15 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "32",
-          instructions:
-            "Add lines 27a, 28, 29, 30, and 31. These are your **total other payments and refundable credits**",
+          instructions: [
+            "Add lines 27a, 28, 29, 30, and 31. These are your ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["total other payments and refundable credits"],
+            },
+          ],
           box: {
             identifier: "32",
             value: {
@@ -790,8 +1234,15 @@ export const Form1040: FormSpecification = {
         },
         {
           index: "33",
-          instructions:
-            "Add lines 25d, 26, and 32. These are your **total payments**",
+          instructions: [
+            "Add lines 25d, 26, and 32. These are your ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["total payments"],
+            },
+          ],
           box: {
             identifier: "33",
             value: {
@@ -811,8 +1262,15 @@ export const Form1040: FormSpecification = {
       lines: [
         {
           index: "34",
-          instructions:
-            "If line 33 is more than line 24, subtract line 24 from line 33. This is the amount you **overpaid**",
+          instructions: [
+            "If line 33 is more than line 24, subtract line 24 from line 33. This is the amount you ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["overpaid"],
+            },
+          ],
           box: {
             identifier: "34",
             value: {
@@ -843,8 +1301,15 @@ export const Form1040: FormSpecification = {
       lines: [
         {
           index: "37",
-          instructions:
-            "Subtract line 33 from line 24. This is the **amount you owe**",
+          instructions: [
+            "Subtract line 33 from line 24. This is the ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["amount you owe"],
+            },
+          ],
           box: {
             identifier: "37",
             value: {

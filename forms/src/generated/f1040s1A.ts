@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1040S1A: FormSpecification = {
+export const f1040s1A: FormSpecification = {
   class: "f1040s1A",
-  title: "Schedule 1-A (Form 1040)",
-  subtitle: "Additional Deductions",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
   maxInstances: 1,
+  title: "Schedule 1-A (Form 1040)",
+  subtitle: "Additional Deductions",
   sections: [
     {
       heading: "Part I. Modified Adjusted Gross Income (MAGI) Amount",
@@ -31,13 +31,11 @@ export const Form1040S1A: FormSpecification = {
           box: { identifier: "2a", value: { type: "number_input" } },
         },
         {
-          // TODO: Form 2555
           index: "2b",
           instructions: "Enter the amount from Form 2555, line 45",
           box: { identifier: "2b", value: { type: "number_input" } },
         },
         {
-          // TODO: Form 2555
           index: "2c",
           instructions: "Enter the amount from Form 2555, line 50",
           box: { identifier: "2c", value: { type: "number_input" } },
@@ -89,7 +87,6 @@ export const Form1040S1A: FormSpecification = {
           box: { identifier: "4", value: { type: "unused" } },
         },
         {
-          // TODO: helper forms, Form 4137
           index: "4a",
           instructions:
             "Enter qualified tips included on Form W-2, box 7, but see the instructions if Form W-2, box 5 is more than $176,100 or you received tips that are not subject to social security and Medicare taxes",
@@ -105,14 +102,12 @@ export const Form1040S1A: FormSpecification = {
           },
         },
         {
-          // TODO: Form 4137
           index: "4b",
           instructions:
             "Qualified tips included on Form 4137, line 1, row A, column (c). If Form 4137 is not filed, enter -0-",
           box: { identifier: "4b", value: { type: "number_input" } },
         },
         {
-          // TODO: Form 4137
           index: "4c",
           instructions:
             "If you only received qualified tips as an employee with respect to employment with one employer, enter the larger of line 4a or line 4b. Otherwise, see the instructions to determine the amount to enter on line 4c. If you received tips as an employee in more than one occupation, see the instructions",
@@ -131,10 +126,17 @@ export const Form1040S1A: FormSpecification = {
           },
         },
         {
-          // TODO: override select instance boxes
           index: "5",
-          instructions:
-            "Qualified tips received in the course of a trade or business.\nQualified tip amount included in Form 1099-NEC, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "p",
+            attributes: {},
+            children: [
+              "Qualified tips received in the course of a trade or business.",
+              " ",
+              "Qualified tip amount included in Form 1099-NEC, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions",
+            ],
+          },
           box: {
             identifier: "5",
             value: {
@@ -236,8 +238,15 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "13",
-          instructions:
-            "**Qualified tips deduction.** Subtract line 12 from line 7. If zero or less, enter -0-",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Qualified tips deduction."],
+            },
+            " Subtract line 12 from line 7. If zero or less, enter -0-",
+          ],
           box: {
             identifier: "13",
             value: {
@@ -388,8 +397,15 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "21",
-          instructions:
-            "**Qualified overtime compensation deduction.** Subtract line 20 from line 15. If zero or less, enter -0-",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Qualified overtime compensation deduction."],
+            },
+            " Subtract line 20 from line 15. If zero or less, enter -0-",
+          ],
           box: {
             identifier: "21",
             value: {
@@ -433,12 +449,12 @@ export const Form1040S1A: FormSpecification = {
           instructions:
             "Applicable passenger vehicle (see instructions). If more than two VINs, see instructions.",
           boxes: [
-            { identifier: "22(i)", column: "(i)", value: { type: "unused" } },
-            { identifier: "22(ii)", column: "(ii)", value: { type: "unused" } },
+            { identifier: "22(i)", value: { type: "unused" }, column: "(i)" },
+            { identifier: "22(ii)", value: { type: "unused" }, column: "(ii)" },
             {
               identifier: "22(iii)",
-              column: "(iii)",
               value: { type: "unused" },
+              column: "(iii)",
             },
           ],
         },
@@ -446,16 +462,16 @@ export const Form1040S1A: FormSpecification = {
           index: "22a",
           instructions: "Applicable passenger vehicle",
           boxes: [
-            { identifier: "22a(i)", column: "(i)", value: { type: "unused" } },
+            { identifier: "22a(i)", value: { type: "unused" }, column: "(i)" },
             {
               identifier: "22a(ii)",
-              column: "(ii)",
               value: { type: "number_input" },
+              column: "(ii)",
             },
             {
               identifier: "22a(iii)",
-              column: "(iii)",
               value: { type: "number_input" },
+              column: "(iii)",
             },
           ],
         },
@@ -463,16 +479,16 @@ export const Form1040S1A: FormSpecification = {
           index: "22b",
           instructions: "Applicable passenger vehicle",
           boxes: [
-            { identifier: "22b(i)", column: "(i)", value: { type: "unused" } },
+            { identifier: "22b(i)", value: { type: "unused" }, column: "(i)" },
             {
               identifier: "22b(ii)",
-              column: "(ii)",
               value: { type: "number_input" },
+              column: "(ii)",
             },
             {
               identifier: "22b(iii)",
-              column: "(iii)",
               value: { type: "number_input" },
+              column: "(iii)",
             },
           ],
         },
@@ -482,17 +498,16 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "23_skip_i",
-              column: "(i)",
               value: { type: "unused" },
+              column: "(i)",
             },
             {
               identifier: "23_skip_ii",
-              column: "(ii)",
               value: { type: "unused" },
+              column: "(ii)",
             },
             {
               identifier: "23",
-              column: "(iii)",
               value: {
                 type: "sum",
                 values: [
@@ -500,6 +515,7 @@ export const Form1040S1A: FormSpecification = {
                   { type: "box_reference", box: "22b(iii)" },
                 ],
               },
+              column: "(iii)",
             },
           ],
         },
@@ -509,17 +525,16 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "24_skip_i",
-              column: "(i)",
               value: { type: "unused" },
+              column: "(i)",
             },
             {
               identifier: "24_skip_ii",
-              column: "(ii)",
               value: { type: "unused" },
+              column: "(ii)",
             },
             {
               identifier: "24",
-              column: "(iii)",
               value: {
                 type: "minimum",
                 values: [
@@ -527,6 +542,7 @@ export const Form1040S1A: FormSpecification = {
                   { type: "number_constant", value: 10000 },
                 ],
               },
+              column: "(iii)",
             },
           ],
         },
@@ -536,18 +552,18 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "25_skip_i",
-              column: "(i)",
               value: { type: "unused" },
+              column: "(i)",
             },
             {
               identifier: "25_skip_ii",
-              column: "(ii)",
               value: { type: "unused" },
+              column: "(ii)",
             },
             {
               identifier: "25",
-              column: "(iii)",
               value: { type: "box_reference", box: "3" },
+              column: "(iii)",
             },
           ],
         },
@@ -557,17 +573,16 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "26_skip_i",
-              column: "(i)",
               value: { type: "unused" },
+              column: "(i)",
             },
             {
               identifier: "26_skip_ii",
-              column: "(ii)",
               value: { type: "unused" },
+              column: "(ii)",
             },
             {
               identifier: "26",
-              column: "(iii)",
               value: {
                 type: "filing_status_map",
                 values: {
@@ -578,6 +593,7 @@ export const Form1040S1A: FormSpecification = {
                 },
                 default: { type: "number_constant", value: 100000 },
               },
+              column: "(iii)",
             },
           ],
         },
@@ -588,22 +604,22 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "27_skip_i",
-              column: "(i)",
               value: { type: "unused" },
+              column: "(i)",
             },
             {
               identifier: "27_skip_ii",
-              column: "(ii)",
               value: { type: "unused" },
+              column: "(ii)",
             },
             {
               identifier: "27",
-              column: "(iii)",
               value: {
                 type: "difference",
                 minuend: { type: "box_reference", box: "25" },
                 subtrahend: { type: "box_reference", box: "26" },
               },
+              column: "(iii)",
             },
           ],
         },
@@ -614,23 +630,23 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "28_skip_i",
-              column: "(i)",
               value: { type: "unused" },
+              column: "(i)",
             },
             {
               identifier: "28_skip_ii",
-              column: "(ii)",
               value: { type: "unused" },
+              column: "(ii)",
             },
             {
               identifier: "28",
-              column: "(iii)",
               value: {
                 type: "quotient",
                 dividend: { type: "box_reference", box: "27" },
                 divisor: { type: "number_constant", value: 1000 },
                 round: "up",
               },
+              column: "(iii)",
             },
           ],
         },
@@ -640,17 +656,16 @@ export const Form1040S1A: FormSpecification = {
           boxes: [
             {
               identifier: "29_skip_i",
-              column: "(i)",
               value: { type: "unused" },
+              column: "(i)",
             },
             {
               identifier: "29_skip_ii",
-              column: "(ii)",
               value: { type: "unused" },
+              column: "(ii)",
             },
             {
               identifier: "29",
-              column: "(iii)",
               value: {
                 type: "product",
                 values: [
@@ -658,27 +673,36 @@ export const Form1040S1A: FormSpecification = {
                   { type: "number_constant", value: 200 },
                 ],
               },
+              column: "(iii)",
             },
           ],
         },
         {
           index: "30",
-          instructions:
-            "**Qualified passenger vehicle loan interest deduction.** Subtract line 29 from line 24. If zero or less, enter -0-",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: [
+                "Qualified passenger vehicle loan interest deduction.",
+              ],
+            },
+            " Subtract line 29 from line 24. If zero or less, enter -0-",
+          ],
           boxes: [
             {
               identifier: "30_skip_i",
-              column: "(i)",
               value: { type: "unused" },
+              column: "(i)",
             },
             {
               identifier: "30_skip_ii",
-              column: "(ii)",
               value: { type: "unused" },
+              column: "(ii)",
             },
             {
               identifier: "30",
-              column: "(iii)",
               value: {
                 type: "conditional",
                 condition: {
@@ -696,6 +720,7 @@ export const Form1040S1A: FormSpecification = {
                   },
                 },
               },
+              column: "(iii)",
             },
           ],
         },
@@ -792,8 +817,15 @@ export const Form1040S1A: FormSpecification = {
         },
         {
           index: "37",
-          instructions:
-            "**Enhanced deduction for seniors.** Add lines 36a and 36b",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Enhanced deduction for seniors."],
+            },
+            " Add lines 36a and 36b",
+          ],
           box: {
             identifier: "37",
             value: {

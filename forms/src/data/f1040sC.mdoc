@@ -1,0 +1,339 @@
+{% form
+   category="taxes"
+   class="f1040sC"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-schedule-c-form-1040" %}
+# Schedule C (Form 1040)
+
+{% subtitle %}Profit or Loss From Business (Sole Proprietorship){% /subtitle %}
+
+{% section %}
+## Part I. Income
+
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Gross receipts or sales. See instructions for line 1 if this income was reported to you on Form W-2 and the "Statutory employee" box on that form was checked{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Returns and allowances{% /instructions %}
+  - {% box identifier="2" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Subtract line 2 from line 1{% /instructions %}
+  - {% box identifier="3" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="1" /%}
+    - {% value slot="subtrahend" type="box_reference" box="2" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Cost of goods sold (from line 42){% /instructions %}
+  - {% box identifier="4" %}{% value type="box_reference" box="42" /%}{% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}**Gross profit.** Subtract line 4 from line 3{% /instructions %}
+  - {% box identifier="5" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="3" /%}
+    - {% value slot="subtrahend" type="box_reference" box="4" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Other income, including federal and state gasoline or fuel tax credit or refund (see instructions){% /instructions %}
+  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}**Gross income.** Add lines 5 and 6{% /instructions %}
+  - {% box identifier="7" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="5" /%}
+    - {% value type="box_reference" box="6" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part II. Expenses.
+
+{% instructions %}
+Enter expenses for business use of your home **only** on line 30.
+{% /instructions %}
+
+{% lines %}
+- {% line index="8" %}
+  - {% instructions %}Advertising{% /instructions %}
+  - {% box identifier="8" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="9" %}
+  - {% instructions %}Car and truck expenses (see instructions){% /instructions %}
+  - {% box identifier="9" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Commissions and fees{% /instructions %}
+  - {% box identifier="10" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}Contract labor (see instructions){% /instructions %}
+  - {% box identifier="11" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="12" %}
+  - {% instructions %}Depletion{% /instructions %}
+  - {% box identifier="12" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}Depreciation and section 179 expense deduction (not included in Part III) (see instructions){% /instructions %}
+  - {% box identifier="13" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="14" %}
+  - {% instructions %}Employee benefit programs (other than on line 19){% /instructions %}
+  - {% box identifier="14" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}Insurance (other than health){% /instructions %}
+  - {% box identifier="15" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}Interest (see instructions):{% /instructions %}
+  - {% box identifier="16" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="16a" %}
+  - {% instructions %}Mortgage (paid to banks, etc.){% /instructions %}
+  - {% box identifier="16a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="16b" %}
+  - {% instructions %}Other{% /instructions %}
+  - {% box identifier="16b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="17" %}
+  - {% instructions %}Legal and professional services{% /instructions %}
+  - {% box identifier="17" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="18" %}
+  - {% instructions %}Office expense (see instructions){% /instructions %}
+  - {% box identifier="18" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="19" %}
+  - {% instructions %}Pension and profit-sharing plans{% /instructions %}
+  - {% box identifier="19" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="20" %}
+  - {% instructions %}Rent or lease (see instructions):{% /instructions %}
+  - {% box identifier="20" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="20a" %}
+  - {% instructions %}Vehicles, machinery, and equipment{% /instructions %}
+  - {% box identifier="20a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="20b" %}
+  - {% instructions %}Other business property{% /instructions %}
+  - {% box identifier="20b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="21" %}
+  - {% instructions %}Repairs and maintenance{% /instructions %}
+  - {% box identifier="21" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="22" %}
+  - {% instructions %}Supplies (not included in Part III){% /instructions %}
+  - {% box identifier="22" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="23" %}
+  - {% instructions %}Taxes and licenses{% /instructions %}
+  - {% box identifier="23" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24" %}
+  - {% instructions %}Travel and meals:{% /instructions %}
+  - {% box identifier="24" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="24a" %}
+  - {% instructions %}Travel{% /instructions %}
+  - {% box identifier="24a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="24b" %}
+  - {% instructions %}Deductible meals (see instructions){% /instructions %}
+  - {% box identifier="24b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="25" %}
+  - {% instructions %}Utilities{% /instructions %}
+  - {% box identifier="25" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="26" %}
+  - {% instructions %}Wages (less employment credits){% /instructions %}
+  - {% box identifier="26" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="27a" %}
+  - {% instructions %}Energy efficient commercial buildings deduction (attach Form 7205){% /instructions %}
+  - {% box identifier="27a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="27b" %}
+  - {% instructions %}Other expenses (from line 48){% /instructions %}
+  - {% box identifier="27b" %}{% value type="box_reference" box="48" /%}{% /box %}
+  {% /line %}
+- {% line index="28" %}
+  - {% instructions %}**Total expenses** before expenses for business use of home. Add lines 8 through 27b{% /instructions %}
+  - {% box identifier="28" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="8" /%}
+    - {% value type="box_reference" box="9" /%}
+    - {% value type="box_reference" box="10" /%}
+    - {% value type="box_reference" box="11" /%}
+    - {% value type="box_reference" box="12" /%}
+    - {% value type="box_reference" box="13" /%}
+    - {% value type="box_reference" box="14" /%}
+    - {% value type="box_reference" box="15" /%}
+    - {% value type="box_reference" box="16a" /%}
+    - {% value type="box_reference" box="16b" /%}
+    - {% value type="box_reference" box="17" /%}
+    - {% value type="box_reference" box="18" /%}
+    - {% value type="box_reference" box="19" /%}
+    - {% value type="box_reference" box="20a" /%}
+    - {% value type="box_reference" box="20b" /%}
+    - {% value type="box_reference" box="21" /%}
+    - {% value type="box_reference" box="22" /%}
+    - {% value type="box_reference" box="23" /%}
+    - {% value type="box_reference" box="24a" /%}
+    - {% value type="box_reference" box="24b" /%}
+    - {% value type="box_reference" box="25" /%}
+    - {% value type="box_reference" box="26" /%}
+    - {% value type="box_reference" box="27a" /%}
+    - {% value type="box_reference" box="27b" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="29" %}
+  - {% instructions %}Tentative profit or (loss). Subtract line 28 from line 7{% /instructions %}
+  - {% box identifier="29" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="7" /%}
+    - {% value slot="subtrahend" type="box_reference" box="28" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="30" %}
+  - {% instructions %}
+    Expenses for business use of your home. Do not report these expenses elsewhere. Attach Form 8829 unless using the simplified method. See instructions.
+    **Simplified method filers only:** Use the Simplified Method Worksheet in the instructions to figure the amount to enter on line 30
+    {% /instructions %}
+  - {% box identifier="30" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="31" %}
+  - {% instructions %}
+    **Net profit or (loss).** Subtract line 30 from line 29.
+
+    - If a profit, enter on both Schedule 1 (Form 1040), line 3, and on Schedule SE, line 2.
+    - If a loss, you **must** go to line 32.
+    {% /instructions %}
+  - {% box identifier="31" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="29" /%}
+    - {% value slot="subtrahend" type="box_reference" box="30" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="32" %}
+  - {% instructions %}
+    If you have a loss, check the box that describes your investment in this activity. See instructions.
+
+    - If you checked 32a, enter the loss on both Schedule 1 (Form 1040), line 3, and on Schedule SE, line 2
+    - If you checked 32b, you **must** attach Form 6198. Your loss may be limited.
+    {% /instructions %}
+  - {% box identifier="32" %}
+    {% value type="unused" /%}
+    {% /box %}
+  {% /line %}
+- {% line index="32a" %}
+  - {% instructions %}All investment is at risk.{% /instructions %}
+  - {% box identifier="32a" %}{% value type="checkbox_input" /%}{% /box %}
+  {% /line %}
+- {% line index="32b" %}
+  - {% instructions %}Some investment is not at risk.{% /instructions %}
+  - {% box identifier="32b" %}{% value type="checkbox_input" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part III. Cost of Goods Sold (see instructions)
+
+{% lines %}
+- {% line index="33" %}
+  - {% instructions %}Method(s) used to value closing inventory{% /instructions %}
+  - {% box identifier="33" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="34" %}
+  - {% instructions %}Was there any change in determining quantities, costs, or valuations between opening and closing inventory? If "Yes," attach explanation{% /instructions %}
+  - {% box identifier="34" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="35" %}
+  - {% instructions %}Inventory at beginning of year. If different from last year's closing inventory, attach explanation{% /instructions %}
+  - {% box identifier="35" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="36" %}
+  - {% instructions %}Purchases less cost of items withdrawn for personal use{% /instructions %}
+  - {% box identifier="36" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="37" %}
+  - {% instructions %}Cost of labor. Do not include any amounts paid to yourself{% /instructions %}
+  - {% box identifier="37" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="38" %}
+  - {% instructions %}Materials and supplies{% /instructions %}
+  - {% box identifier="38" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="39" %}
+  - {% instructions %}Other costs{% /instructions %}
+  - {% box identifier="39" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="40" %}
+  - {% instructions %}Add lines 35 through 39{% /instructions %}
+  - {% box identifier="40" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="35" /%}
+    - {% value type="box_reference" box="36" /%}
+    - {% value type="box_reference" box="37" /%}
+    - {% value type="box_reference" box="38" /%}
+    - {% value type="box_reference" box="39" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="41" %}
+  - {% instructions %}Inventory at end of year{% /instructions %}
+  - {% box identifier="41" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="42" %}
+  - {% instructions %}**Cost of goods sold.** Subtract line 41 from line 40. Enter the result here and on line 4{% /instructions %}
+  - {% box identifier="42" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="40" /%}
+    - {% value slot="subtrahend" type="box_reference" box="41" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part IV. Information on Your Vehicle
+
+{% lines %}
+- {% line index="43–47b" %}
+  - {% instructions %}Unused{% /instructions %}
+  - {% box identifier="43" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part V. Other Expenses
+
+{% lines %}
+- {% line index="48" %}
+  - {% instructions %}**Total other expenses.** Enter here and on line 27b{% /instructions %}
+  - {% box identifier="48" %}{% value type="list_amounts_input" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

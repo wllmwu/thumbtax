@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1040S2: FormSpecification = {
+export const f1040s2: FormSpecification = {
   class: "f1040s2",
-  title: "Schedule 2 (Form 1040)",
-  subtitle: "Additional Taxes",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
   maxInstances: 1,
+  title: "Schedule 2 (Form 1040)",
+  subtitle: "Additional Taxes",
   sections: [
     {
       heading: "Part I. Tax",
@@ -109,13 +109,11 @@ export const Form1040S2: FormSpecification = {
       heading: "Part II. Other Taxes",
       lines: [
         {
-          // TODO: Schedule SE
           index: "4",
           instructions: "Self-employment tax. Attach Schedule SE",
           box: { identifier: "4", value: { type: "number_input" } },
         },
         {
-          // TODO: Form 4137
           index: "5",
           instructions:
             "Social security and Medicare tax on unreported tip income. Attach Form 4137",
@@ -376,8 +374,16 @@ export const Form1040S2: FormSpecification = {
         },
         {
           index: "21",
-          instructions:
-            "Add lines 4, 7 through 16, 18, and 19. These are your **total other taxes.** Enter here and on Form 1040 or 1040-SR, line 23; or Form 1040-NR, line 23b",
+          instructions: [
+            "Add lines 4, 7 through 16, 18, and 19. These are your ",
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["total other taxes."],
+            },
+            " Enter here and on Form 1040 or 1040-SR, line 23; or Form 1040-NR, line 23b",
+          ],
           box: {
             identifier: "21",
             value: {

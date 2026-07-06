@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1040SA: FormSpecification = {
+export const f1040sA: FormSpecification = {
   class: "f1040sA",
-  title: "Schedule A (Form 1040)",
-  subtitle: "Itemized Deductions",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-schedule-a-form-1040",
   category: "taxes",
   maxInstances: 1,
+  title: "Schedule A (Form 1040)",
+  subtitle: "Itemized Deductions",
   sections: [
     {
       heading: "Medical and Dental Expenses",
@@ -268,7 +268,7 @@ export const Form1040SA: FormSpecification = {
         {
           index: "16",
           instructions:
-            "Other\u2014from list in instructions. List type and amount:",
+            "Other—from list in instructions. List type and amount:",
           box: { identifier: "16", value: { type: "list_amounts_input" } },
         },
       ],

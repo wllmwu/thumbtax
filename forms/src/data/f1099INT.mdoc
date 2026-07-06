@@ -1,0 +1,81 @@
+{% form
+   category="income"
+   class="f1099INT"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-1099-int" %}
+# Form 1099-INT
+
+{% subtitle %}Interest Income{% /subtitle %}
+
+{% section %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Interest income{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Early withdrawal penalty{% /instructions %}
+  - {% box identifier="2" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Interest on U.S. Savings Bonds and Treasury obligations{% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}Investment expenses{% /instructions %}
+  - {% box identifier="5" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Foreign tax paid{% /instructions %}
+  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Foreign country or U.S. territory{% /instructions %}
+  - {% box identifier="7" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Tax-exempt interest{% /instructions %}
+  - {% box identifier="8" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="9" %}
+  - {% instructions %}Specified private activity bond interest{% /instructions %}
+  - {% box identifier="9" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Market discount{% /instructions %}
+  - {% box identifier="10" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}Bond premium{% /instructions %}
+  - {% box identifier="11" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="12" %}
+  - {% instructions %}Bond premium on Treasury obligations{% /instructions %}
+  - {% box identifier="12" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}Bond premium on tax-exempt bond{% /instructions %}
+  - {% box identifier="13" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="14" %}
+  - {% instructions %}Tax-exempt and tax credit bond CUSIP number{% /instructions %}
+  - {% box identifier="14" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}State{% /instructions %}
+  - {% box identifier="15" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}State identification number{% /instructions %}
+  - {% box identifier="16" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="17" %}
+  - {% instructions %}State tax withheld{% /instructions %}
+  - {% box identifier="17" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

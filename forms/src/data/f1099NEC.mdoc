@@ -1,0 +1,41 @@
+{% form
+   category="income"
+   class="f1099NEC"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-1099-nec" %}
+# Form 1099-NEC
+
+{% subtitle %}Nonemployee Compensation{% /subtitle %}
+
+{% section %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Nonemployee compensation{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Payer made direct sales totaling $5,000 or more of consumer products to recipient for resale{% /instructions %}
+  - {% box identifier="2" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Excess golden parachute payments{% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}State tax withheld{% /instructions %}
+  - {% box identifier="5" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}State/Payer's state number{% /instructions %}
+  - {% box identifier="6" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}State income{% /instructions %}
+  - {% box identifier="7" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1040S3: FormSpecification = {
+export const f1040s3: FormSpecification = {
   class: "f1040s3",
-  title: "Schedule 3 (Form 1040)",
-  subtitle: "Additional Credits and Payments",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
   maxInstances: 1,
+  title: "Schedule 3 (Form 1040)",
+  subtitle: "Additional Credits and Payments",
   sections: [
     {
       heading: "Part I. Nonrefundable Credits",

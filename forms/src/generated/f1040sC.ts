@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1040SC: FormSpecification = {
+export const f1040sC: FormSpecification = {
   class: "f1040sC",
-  title: "Schedule C (Form 1040)",
-  subtitle: "Profit or Loss From Business (Sole Proprietorship)",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-schedule-c-form-1040",
   category: "taxes",
   maxInstances: null,
+  title: "Schedule C (Form 1040)",
+  subtitle: "Profit or Loss From Business (Sole Proprietorship)",
   sections: [
     {
       heading: "Part I. Income",
@@ -41,7 +41,15 @@ export const Form1040SC: FormSpecification = {
         },
         {
           index: "5",
-          instructions: "**Gross profit.** Subtract line 4 from line 3",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Gross profit."],
+            },
+            " Subtract line 4 from line 3",
+          ],
           box: {
             identifier: "5",
             value: {
@@ -59,7 +67,15 @@ export const Form1040SC: FormSpecification = {
         },
         {
           index: "7",
-          instructions: "**Gross income.** Add lines 5 and 6",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Gross income."],
+            },
+            " Add lines 5 and 6",
+          ],
           box: {
             identifier: "7",
             value: {
@@ -74,8 +90,22 @@ export const Form1040SC: FormSpecification = {
       ],
     },
     {
-      heading:
-        "Part II. Expenses. Enter expenses for business use of your home **only** on line 30.",
+      heading: "Part II. Expenses.",
+      instructions: {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Enter expenses for business use of your home ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["only"],
+          },
+          " on line 30.",
+        ],
+      },
       lines: [
         {
           index: "8",
@@ -219,8 +249,15 @@ export const Form1040SC: FormSpecification = {
         },
         {
           index: "28",
-          instructions:
-            "**Total expenses** before expenses for business use of home. Add lines 8 through 27b",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Total expenses"],
+            },
+            " before expenses for business use of home. Add lines 8 through 27b",
+          ],
           box: {
             identifier: "28",
             value: {
@@ -269,14 +306,72 @@ export const Form1040SC: FormSpecification = {
         },
         {
           index: "30",
-          instructions:
-            "Expenses for business use of your home. Do not report these expenses elsewhere. Attach Form 8829 unless using the simplified method. See instructions.\n**Simplified method filers only:** Use the Simplified Method Worksheet in the instructions to figure the amount to enter on line 30",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "p",
+            attributes: {},
+            children: [
+              "Expenses for business use of your home. Do not report these expenses elsewhere. Attach Form 8829 unless using the simplified method. See instructions.",
+              " ",
+              {
+                $$mdtype: "Tag",
+                name: "strong",
+                attributes: {},
+                children: ["Simplified method filers only:"],
+              },
+              " Use the Simplified Method Worksheet in the instructions to figure the amount to enter on line 30",
+            ],
+          },
           box: { identifier: "30", value: { type: "number_input" } },
         },
         {
           index: "31",
-          instructions:
-            "**Net profit or (loss).** Subtract line 30 from line 29.\n- If a profit, enter on both Schedule 1 (Form 1040), line 3, and on Schedule SE, line 2.\n- If a loss, you **must** go to line 32.",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "strong",
+                  attributes: {},
+                  children: ["Net profit or (loss)."],
+                },
+                " Subtract line 30 from line 29.",
+              ],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "If a profit, enter on both Schedule 1 (Form 1040), line 3, and on Schedule SE, line 2.",
+                  ],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "If a loss, you ",
+                    {
+                      $$mdtype: "Tag",
+                      name: "strong",
+                      attributes: {},
+                      children: ["must"],
+                    },
+                    " go to line 32.",
+                  ],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "31",
             value: {
@@ -288,8 +383,46 @@ export const Form1040SC: FormSpecification = {
         },
         {
           index: "32",
-          instructions:
-            "If you have a loss, check the box that describes your investment in this activity. See instructions.\n- If you checked 32a, enter the loss on both Schedule 1 (Form 1040), line 3, and on Schedule SE, line 2\n- If you checked 32b, you **must** attach Form 6198. Your loss may be limited.",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: [
+                "If you have a loss, check the box that describes your investment in this activity. See instructions.",
+              ],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "If you checked 32a, enter the loss on both Schedule 1 (Form 1040), line 3, and on Schedule SE, line 2",
+                  ],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "If you checked 32b, you ",
+                    {
+                      $$mdtype: "Tag",
+                      name: "strong",
+                      attributes: {},
+                      children: ["must"],
+                    },
+                    " attach Form 6198. Your loss may be limited.",
+                  ],
+                },
+              ],
+            },
+          ],
           box: { identifier: "32", value: { type: "unused" } },
         },
         {
@@ -370,8 +503,15 @@ export const Form1040SC: FormSpecification = {
         },
         {
           index: "42",
-          instructions:
-            "**Cost of goods sold.** Subtract line 41 from line 40. Enter the result here and on line 4",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Cost of goods sold."],
+            },
+            " Subtract line 41 from line 40. Enter the result here and on line 4",
+          ],
           box: {
             identifier: "42",
             value: {
@@ -387,7 +527,7 @@ export const Form1040SC: FormSpecification = {
       heading: "Part IV. Information on Your Vehicle",
       lines: [
         {
-          index: "43\u201347b",
+          index: "43–47b",
           instructions: "Unused",
           box: { identifier: "43", value: { type: "unused" } },
         },
@@ -398,7 +538,15 @@ export const Form1040SC: FormSpecification = {
       lines: [
         {
           index: "48",
-          instructions: "**Total other expenses.** Enter here and on line 27b",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Total other expenses."],
+            },
+            " Enter here and on line 27b",
+          ],
           box: { identifier: "48", value: { type: "list_amounts_input" } },
         },
       ],

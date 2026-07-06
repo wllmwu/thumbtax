@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1099NEC: FormSpecification = {
+export const f1099NEC: FormSpecification = {
   class: "f1099NEC",
-  title: "Form 1099-NEC",
-  subtitle: "Nonemployee Compensation",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-nec",
   category: "income",
   maxInstances: null,
+  title: "Form 1099-NEC",
+  subtitle: "Nonemployee Compensation",
   sections: [
     {
       lines: [

@@ -1,11 +1,11 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const FormW2_12_codes: FormSpecification = {
+export const fW2_12_codes: FormSpecification = {
   class: "fW2_12_codes",
-  title: "Form W-2: codes for box 12",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-w-2",
   category: "income",
   maxInstances: null,
+  title: "Form W-2: codes for box 12",
   sections: [
     {
       lines: [

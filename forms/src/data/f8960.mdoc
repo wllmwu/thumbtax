@@ -1,0 +1,249 @@
+{% form
+   category="taxes"
+   class="f8960"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-8960"
+   maxInstances=1 %}
+# Form 8960
+
+{% subtitle %}Net Investment Income Tax—Individuals, Estates, and Trusts{% /subtitle %}
+
+{% section %}
+## Part I. Investment Income
+
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Taxable interest (see instructions){% /instructions %}
+  - {% box identifier="1" %}{% value type="box_reference" form="f1040" box="2b" required=true /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Ordinary dividends (see instructions){% /instructions %}
+  - {% box identifier="2" %}{% value type="box_reference" form="f1040" box="3b" required=true /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Annuities (see instructions){% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="4a" %}
+  - {% instructions %}Rental real estate, royalties, partnerships, S corporations, trusts, trades or businesses, etc. (see instructions){% /instructions %}
+  - {% box identifier="4a" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" form="f1040s1" box="3" /%}
+    - {% value type="box_reference" form="f1040s1" box="5" /%}
+    - {% value type="box_reference" form="f1040s1" box="6" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="4b" %}
+  - {% instructions %}Adjustment for net income or loss derived in the ordinary course of a non-section 1411 trade or business (see instructions){% /instructions %}
+  - {% box identifier="4b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="4c" %}
+  - {% instructions %}Combine lines 4a and 4b{% /instructions %}
+  - {% box identifier="4c" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="4a" /%}
+    - {% value type="box_reference" box="4b" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="5a" %}
+  - {% instructions %}Net gain or loss from disposition of property (see instructions){% /instructions %}
+  - {% box identifier="5a" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" form="f1040" box="7a" /%}
+    - {% value type="box_reference" form="f1040s1" box="4" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="5b" %}
+  - {% instructions %}Net gain or loss from disposition of property that is not subject to net investment income tax (see instructions){% /instructions %}
+  - {% box identifier="5b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5c" %}
+  - {% instructions %}Adjustment from disposition of partnership interest or S corporation stock (see instructions){% /instructions %}
+  - {% box identifier="5c" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5d" %}
+  - {% instructions %}Combine lines 5a through 5c{% /instructions %}
+  - {% box identifier="5d" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="5a" /%}
+    - {% value type="box_reference" box="5b" /%}
+    - {% value type="box_reference" box="5c" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Adjustments to investment income for certain CFCs and PFICs (see instructions){% /instructions %}
+  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Other modifications to investment income (see instructions){% /instructions %}
+  - {% box identifier="7" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Total investment income. Combine lines 1, 2, 3, 4c, 5d, 6, and 7{% /instructions %}
+  - {% box identifier="8" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="box_reference" box="2" /%}
+    - {% value type="box_reference" box="3" /%}
+    - {% value type="box_reference" box="4c" /%}
+    - {% value type="box_reference" box="5d" /%}
+    - {% value type="box_reference" box="6" /%}
+    - {% value type="box_reference" box="7" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part II. Investment Expenses Allocable to Investment Income and Modifications
+
+{% lines %}
+- {% line index="9a" %}
+  - {% instructions %}Investment interest expenses (see instructions){% /instructions %}
+  - {% box identifier="9a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="9b" %}
+  - {% instructions %}State, local, and foreign income tax (see instructions){% /instructions %}
+  - {% box identifier="9b" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="9c" %}
+  - {% instructions %}Miscellaneous investment expenses (see instructions){% /instructions %}
+  - {% box identifier="9c" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="9d" %}
+  - {% instructions %}Add lines 9a, 9b, and 9c{% /instructions %}
+  - {% box identifier="9d" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="9a" /%}
+    - {% value type="box_reference" box="9b" /%}
+    - {% value type="box_reference" box="9c" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Additional modifications (see instructions){% /instructions %}
+  - {% box identifier="10" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}Total deductions and modifications. Add lines 9d and 10{% /instructions %}
+  - {% box identifier="11" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="9d" /%}
+    - {% value type="box_reference" box="10" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part III. Tax Computation
+
+{% lines %}
+- {% line index="12" %}
+  - {% instructions %}Net investment income. Subtract Part II, line 11, from Part I, line 8. Individuals, complete lines 13–17. Estates and trusts, complete lines 18a–21. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="12" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="8" /%}
+      - {% value slot="subtrahend" type="box_reference" box="11" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}Modified adjusted gross income (see instructions){% /instructions %}
+  - {% box identifier="13" %}{% value type="box_reference" form="f1040" box="11a" required=true /%}{% /box %}
+  {% /line %}
+- {% line index="14" %}
+  - {% instructions %}Threshold based on filing status (see instructions){% /instructions %}
+  - {% box identifier="14" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="number_constant"
+         value=200000
+         filingStatusKey="head_of_household" /%}
+    - {% value
+         type="number_constant"
+         value=250000
+         filingStatusKey="married_filing_jointly" /%}
+    - {% value
+         type="number_constant"
+         value=125000
+         filingStatusKey="married_filing_separately" /%}
+    - {% value
+         type="number_constant"
+         value=250000
+         filingStatusKey="qualifying_surviving_spouse" /%}
+    - {% value type="number_constant" value=200000 filingStatusKey="single" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}Subtract line 14 from line 13. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="15" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="13" /%}
+      - {% value slot="subtrahend" type="box_reference" box="14" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}Enter the smaller of line 12 or line 15{% /instructions %}
+  - {% box identifier="16" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="12" /%}
+    - {% value type="box_reference" box="15" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="17" %}
+  - {% instructions %}Net investment income tax for individuals. Multiply line 16 by 3.8% (0.038). Enter here and include on your tax return (see instructions){% /instructions %}
+  - {% box identifier="17" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="16" /%}
+    - {% value type="number_constant" value=0.038 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="18a" %}
+  - {% instructions %}Net investment income (line 12 above){% /instructions %}
+  - {% box identifier="18a" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="18b" %}
+  - {% instructions %}Deductions for distributions of net investment income and charitable deductions (see instructions){% /instructions %}
+  - {% box identifier="18b" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="18c" %}
+  - {% instructions %}Undistributed net investment income. Subtract line 18b from line 18a (see instructions). If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="18c" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="19a" %}
+  - {% instructions %}Adjusted gross income (see instructions){% /instructions %}
+  - {% box identifier="19a" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="19b" %}
+  - {% instructions %}Highest tax bracket for estates and trusts for the year (see instructions){% /instructions %}
+  - {% box identifier="19b" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="19c" %}
+  - {% instructions %}Subtract line 19b from line 19a. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="19c" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="20" %}
+  - {% instructions %}Enter the smaller of line 18c or line 19c{% /instructions %}
+  - {% box identifier="20" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="21" %}
+  - {% instructions %}Net investment income tax for estates and trusts. Multiply line 20 by 3.8% (0.038). Enter here and include on your tax return (see instructions){% /instructions %}
+  - {% box identifier="21" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

@@ -1,0 +1,813 @@
+{% form
+   category="taxes"
+   class="f6251"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-6251"
+   maxInstances=1 %}
+# Form 6251
+
+{% subtitle %}Alternative Minimum Tax—Individuals{% /subtitle %}
+
+{% section %}
+## Part I. Alternative Minimum Taxable Income
+
+{% lines %}
+- {% line index="1a" %}
+  - {% instructions %}Subtract Schedule 1-A (Form 1040), line 37, from Form 1040, 1040-SR, or 1040-NR, line 14{% /instructions %}
+  - {% box identifier="1a" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" form="f1040" box="14" required=true /%}
+    - {% value slot="subtrahend" type="box_reference" form="f1040s1A" box="37" required=true /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="1b" %}
+  - {% instructions %}Subtract line 1a from Form 1040, 1040-SR, or 1040-NR, line 11b (if less than zero, enter as a negative amount){% /instructions %}
+  - {% box identifier="1b" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" form="f1040" box="11b" required=true /%}
+    - {% value slot="subtrahend" type="box_reference" box="1a" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="2a" %}
+  - {% instructions %}If filing Schedule A (Form 1040), enter the taxes from Schedule A, line 7; otherwise, enter the amount from Form 1040 or 1040-SR, line 12e{% /instructions %}
+  - {% box identifier="2a" %}
+    {% value type="conditional" %}
+    - {% value slot="condition" type="form_instance_count" form="f1040sA" /%}
+    - {% value slot="trueValue" type="box_reference" form="f1040sA" box="7" /%}
+    - {% value slot="falseValue" type="box_reference" form="f1040" box="12e" required=true /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="2b" %}
+  - {% instructions %}Tax refund from Schedule 1 (Form 1040), line 1 or line 8z{% /instructions %}
+  - {% box identifier="2b" %}
+    {% value type="override_number_input" coerceSign="negative" %}
+    - {% value
+         slot="computedValue"
+         type="box_reference"
+         form="f1040s1"
+         box="1"
+         required=true /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="2c" %}
+  - {% instructions %}Investment interest expense (difference between regular tax and AMT){% /instructions %}
+  - {% box identifier="2c" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2d" %}
+  - {% instructions %}Depletion (difference between regular tax and AMT){% /instructions %}
+  - {% box identifier="2d" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2e" %}
+  - {% instructions %}Net operating loss deduction from Schedule 1 (Form 1040), line 8a. Enter as a positive amount{% /instructions %}
+  - {% box identifier="2e" %}
+    {% value type="absolute_value" %}
+    - {% value type="box_reference" form="f1040s1" box="8a" required=true /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="2f" %}
+  - {% instructions %}Alternative tax net operating loss deduction{% /instructions %}
+  - {% box identifier="2f" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  {% /line %}
+- {% line index="2g" %}
+  - {% instructions %}Interest from specified private activity bonds exempt from the regular tax{% /instructions %}
+  - {% box identifier="2g" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2h" %}
+  - {% instructions %}Qualified small business stock, see instructions{% /instructions %}
+  - {% box identifier="2h" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2i" %}
+  - {% instructions %}Exercise of incentive stock options (excess of AMT income over regular tax income){% /instructions %}
+  - {% box identifier="2i" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2j" %}
+  - {% instructions %}Estates and trusts (amount from Schedule K-1 (Form 1041), box 12, code A){% /instructions %}
+  - {% box identifier="2j" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2k" %}
+  - {% instructions %}Disposition of property (difference between AMT and regular tax gain or loss){% /instructions %}
+  - {% box identifier="2k" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2l" %}
+  - {% instructions %}Depreciation on assets placed in service after 1986 (difference between regular tax and AMT){% /instructions %}
+  - {% box identifier="2l" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2m" %}
+  - {% instructions %}Passive activities (difference between AMT and regular tax income or loss){% /instructions %}
+  - {% box identifier="2m" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2n" %}
+  - {% instructions %}Loss limitations (difference between AMT and regular tax income or loss){% /instructions %}
+  - {% box identifier="2n" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2o" %}
+  - {% instructions %}Circulation costs (difference between regular tax and AMT){% /instructions %}
+  - {% box identifier="2o" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2p" %}
+  - {% instructions %}Long-term contracts (difference between AMT and regular tax income){% /instructions %}
+  - {% box identifier="2p" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2q" %}
+  - {% instructions %}Mining costs (difference between regular tax and AMT){% /instructions %}
+  - {% box identifier="2q" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2r" %}
+  - {% instructions %}Research and experimental costs (difference between regular tax and AMT){% /instructions %}
+  - {% box identifier="2r" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2s" %}
+  - {% instructions %}Income from certain installment sales before January 1, 1987{% /instructions %}
+  - {% box identifier="2s" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  {% /line %}
+- {% line index="2t" %}
+  - {% instructions %}Intangible drilling costs preference{% /instructions %}
+  - {% box identifier="2t" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Other adjustments, including income-based related adjustments{% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="virtual_4_before_additional" virtual=true %}
+  - {% box identifier="virtual_4_before_additional" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="1b" /%}
+    - {% value type="box_reference" box="2a" /%}
+    - {% value type="box_reference" box="2b" /%}
+    - {% value type="box_reference" box="2c" /%}
+    - {% value type="box_reference" box="2d" /%}
+    - {% value type="box_reference" box="2e" /%}
+    - {% value type="box_reference" box="2f" /%}
+    - {% value type="box_reference" box="2g" /%}
+    - {% value type="box_reference" box="2h" /%}
+    - {% value type="box_reference" box="2i" /%}
+    - {% value type="box_reference" box="2j" /%}
+    - {% value type="box_reference" box="2k" /%}
+    - {% value type="box_reference" box="2l" /%}
+    - {% value type="box_reference" box="2m" /%}
+    - {% value type="box_reference" box="2n" /%}
+    - {% value type="box_reference" box="2o" /%}
+    - {% value type="box_reference" box="2p" /%}
+    - {% value type="box_reference" box="2q" /%}
+    - {% value type="box_reference" box="2r" /%}
+    - {% value type="box_reference" box="2s" /%}
+    - {% value type="box_reference" box="2t" /%}
+    - {% value type="box_reference" box="3" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}**Alternative minimum taxable income.** Combine lines 1b through 3. (If married filing separately and line 4 is more than $900,350, see instructions.){% /instructions %}
+  - {% box identifier="4" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="virtual_4_before_additional" /%}
+    - {% value type="filing_status_map" %}
+      - {% value type="conditional" filingStatusKey="married_filing_separately" %}
+        - {% value slot="condition" type="comparison" %}
+          - {% value type="box_reference" box="virtual_4_before_additional" /%}
+          - {% value slot="minimum" type="number_constant" value=1174350 /%}
+          {% /value %}
+        - {% value slot="trueValue" type="number_constant" value=68500 /%}
+        - {% value slot="falseValue" type="product" %}
+          - {% value type="difference" %}
+            - {% value slot="minuend" type="box_reference" box="virtual_4_before_additional" /%}
+            - {% value slot="subtrahend" type="number_constant" value=900350 /%}
+            {% /value %}
+          - {% value type="number_constant" value=0.25 /%}
+          {% /value %}
+        {% /value %}
+      - {% value slot="default" type="number_constant" value=0 /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part II. Alternative Minimum Tax (AMT)
+
+{% lines %}
+- {% line index="5" %}
+  - {% instructions %}Exemption. See instructions.{% /instructions %}
+  - {% box identifier="5" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="piecewise_function"
+         filingStatusKey="married_filing_jointly" %}
+      - {% value slot="input" type="box_reference" box="4" /%}
+      - {% piece %}
+        - {% value slot="inputUpperBound" type="number_constant" value=1252700 /%}
+        - {% value slot="output" type="number_constant" value=137000 /%}
+        {% /piece %}
+      - {% piece %}
+        - {% value slot="inputUpperBound" type="number_constant" value=1800700 /%}
+        - {% value slot="output" type="non_negative_clamp" %}
+          - {% value type="difference" %}
+            - {% value slot="minuend" type="number_constant" value=137000 /%}
+            - {% value slot="subtrahend" type="product" %}
+              - {% value type="non_negative_clamp" %}
+                - {% value type="difference" %}
+                  - {% value slot="minuend" type="box_reference" box="4" /%}
+                  - {% value slot="subtrahend" type="number_constant" value=1252700 /%}
+                  {% /value %}
+                {% /value %}
+              - {% value type="number_constant" value=0.25 /%}
+              {% /value %}
+            {% /value %}
+          {% /value %}
+        {% /piece %}
+      - {% value slot="lastOutput" type="number_constant" value=0 /%}
+      {% /value %}
+    - {% value
+         type="piecewise_function"
+         filingStatusKey="married_filing_separately" %}
+      - {% value slot="input" type="box_reference" box="4" /%}
+      - {% piece %}
+        - {% value slot="inputUpperBound" type="number_constant" value=626350 /%}
+        - {% value slot="output" type="number_constant" value=68500 /%}
+        {% /piece %}
+      - {% piece %}
+        - {% value slot="inputUpperBound" type="number_constant" value=900350 /%}
+        - {% value slot="output" type="non_negative_clamp" %}
+          - {% value type="difference" %}
+            - {% value slot="minuend" type="number_constant" value=68500 /%}
+            - {% value slot="subtrahend" type="product" %}
+              - {% value type="non_negative_clamp" %}
+                - {% value type="difference" %}
+                  - {% value slot="minuend" type="box_reference" box="4" /%}
+                  - {% value slot="subtrahend" type="number_constant" value=626350 /%}
+                  {% /value %}
+                {% /value %}
+              - {% value type="number_constant" value=0.25 /%}
+              {% /value %}
+            {% /value %}
+          {% /value %}
+        {% /piece %}
+      - {% value slot="lastOutput" type="number_constant" value=0 /%}
+      {% /value %}
+    - {% value
+         type="piecewise_function"
+         filingStatusKey="qualifying_surviving_spouse" %}
+      - {% value slot="input" type="box_reference" box="4" /%}
+      - {% piece %}
+        - {% value slot="inputUpperBound" type="number_constant" value=1252700 /%}
+        - {% value slot="output" type="number_constant" value=137000 /%}
+        {% /piece %}
+      - {% piece %}
+        - {% value slot="inputUpperBound" type="number_constant" value=1800700 /%}
+        - {% value slot="output" type="non_negative_clamp" %}
+          - {% value type="difference" %}
+            - {% value slot="minuend" type="number_constant" value=137000 /%}
+            - {% value slot="subtrahend" type="product" %}
+              - {% value type="non_negative_clamp" %}
+                - {% value type="difference" %}
+                  - {% value slot="minuend" type="box_reference" box="4" /%}
+                  - {% value slot="subtrahend" type="number_constant" value=1252700 /%}
+                  {% /value %}
+                {% /value %}
+              - {% value type="number_constant" value=0.25 /%}
+              {% /value %}
+            {% /value %}
+          {% /value %}
+        {% /piece %}
+      - {% value slot="lastOutput" type="number_constant" value=0 /%}
+      {% /value %}
+    - {% value slot="default" type="piecewise_function" %}
+      - {% value slot="input" type="box_reference" box="4" /%}
+      - {% piece %}
+        - {% value slot="inputUpperBound" type="number_constant" value=626350 /%}
+        - {% value slot="output" type="number_constant" value=88100 /%}
+        {% /piece %}
+      - {% piece %}
+        - {% value slot="inputUpperBound" type="number_constant" value=978750 /%}
+        - {% value slot="output" type="non_negative_clamp" %}
+          - {% value type="difference" %}
+            - {% value slot="minuend" type="number_constant" value=88100 /%}
+            - {% value slot="subtrahend" type="product" %}
+              - {% value type="non_negative_clamp" %}
+                - {% value type="difference" %}
+                  - {% value slot="minuend" type="box_reference" box="4" /%}
+                  - {% value slot="subtrahend" type="number_constant" value=626350 /%}
+                  {% /value %}
+                {% /value %}
+              - {% value type="number_constant" value=0.25 /%}
+              {% /value %}
+            {% /value %}
+          {% /value %}
+        {% /piece %}
+      - {% value slot="lastOutput" type="number_constant" value=0 /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Subtract line 5 from line 4. If more than zero, go to line 7. If zero or less, enter -0- here and on lines 7, 9, and 11, and go to line 10{% /instructions %}
+  - {% box identifier="6" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="4" /%}
+      - {% value slot="subtrahend" type="box_reference" box="5" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="flag_7_part_iii" virtual=true %}
+  - {% instructions %}Flag for whether to use Part III to compute line 7{% /instructions %}
+  - {% box identifier="flag_7_part_iii" %}
+    {% value type="disjunction" %}
+    - {% value type="box_reference" form="f1040" box="7a" /%}
+    - {% value type="box_reference" form="f1040" box="3a" /%}
+    - {% value type="conjunction" %}
+      - {% value type="comparison" strict=true %}
+        - {% value type="box_reference" form="f1040sD" box="15" /%}
+        - {% value slot="minimum" type="number_constant" value=0 /%}
+        {% /value %}
+      - {% value type="comparison" strict=true %}
+        - {% value type="box_reference" form="f1040sD" box="16" /%}
+        - {% value slot="minimum" type="number_constant" value=0 /%}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}
+    - If you are filing Form 2555, see instructions for the amount to enter.
+    - If you reported capital gain distributions directly on Form 1040 or 1040-SR, line 7; you reported qualified dividends on Form 1040 or 1040-SR, line 3a; or you had a gain on both lines 15 and 16 of Schedule D (Form 1040) (as refigured for the AMT, if necessary), complete Part III on the back and enter the amount from line 40 here.
+    - All others: If line 6 is $239,100 or less ($119,550 or less if married filing separately), multiply line 6 by 26% (0.26). Otherwise, multiply line 6 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result.
+    {% /instructions %}
+  - {% box identifier="7" %}
+    {% value type="override_number_input" %}
+    - {% value slot="computedValue" type="conditional" %}
+      - {% value slot="condition" type="box_reference" box="flag_7_part_iii" /%}
+      - {% value slot="trueValue" type="box_reference" box="40" /%}
+      - {% value slot="falseValue" type="_partial_passthrough" %}
+        - {% partial file="alternativeMinimumTaxComputation" variables={box: "6"} /%}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Alternative minimum tax foreign tax credit (see instructions){% /instructions %}
+  - {% box identifier="8" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="9" %}
+  - {% instructions %}Tentative minimum tax. Subtract line 8 from line 7{% /instructions %}
+  - {% box identifier="9" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="7" /%}
+    - {% value slot="subtrahend" type="box_reference" box="8" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Add Form 1040 or 1040-SR, line 16 (minus any tax from Form 4972), and Schedule 2 (Form 1040), line 1z. Subtract from the result Schedule 3 (Form 1040), line 1 and any negative amount reported on Form 8978, line 14 (treated as a positive number). If zero or less, enter -0-. If you used Schedule J to figure your tax on Form 1040 or 1040-SR, line 16, refigure that tax without using Schedule J before completing this line. See instructions{% /instructions %}
+  - {% box identifier="10" %}
+    {% value type="override_number_input" %}
+    - {% value slot="computedValue" type="non_negative_clamp" %}
+      - {% value type="difference" %}
+        - {% value slot="minuend" type="sum" %}
+          - {% value type="box_reference" form="f1040" box="16" required=true /%}
+          - {% value type="box_reference" form="f1040s2" box="1z" required=true /%}
+          {% /value %}
+        - {% value slot="subtrahend" type="box_reference" form="f1040s3" box="1" /%}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}**AMT.** Subtract line 10 from line 9. If zero or less, enter -0-. Enter here and on Schedule 2 (Form 1040), line 2{% /instructions %}
+  - {% box identifier="11" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="9" /%}
+      - {% value slot="subtrahend" type="box_reference" box="10" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+
+{% section %}
+## Part III. Tax Computation Using Maximum Capital Gains Rates
+
+{% lines %}
+- {% line index="12" %}
+  - {% instructions %}Enter the amount from Form 6251, line 6. If you are filing Form 2555, enter the amount from line 3 of the worksheet in the instructions for line 7{% /instructions %}
+  - {% box identifier="12" %}
+    {% value type="override_number_input" %}
+    - {% value slot="computedValue" type="box_reference" box="6" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}Enter the amount from line 4 of the Qualified Dividends and Capital Gain Tax Worksheet in the Instructions for Form 1040 or the amount from line 13 of the Schedule D Tax Worksheet in the Instructions for Schedule D (Form 1040), whichever applies (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% box identifier="13" %}
+    {% value type="override_number_input" %}
+    - {% value slot="computedValue" type="conditional" %}
+      - {% value
+           slot="condition"
+           type="box_reference"
+           form="f1040"
+           box="flag_16_SDTWS"
+           required=true /%}
+      - {% value
+           slot="trueValue"
+           type="box_reference"
+           form="f1040sD_SDTWS"
+           box="13"
+           required=true /%}
+      - {% value slot="falseValue" type="conditional" %}
+        - {% value
+             slot="condition"
+             type="box_reference"
+             form="f1040"
+             box="flag_16_QDCGTWS"
+             required=true /%}
+        - {% value
+             slot="trueValue"
+             type="box_reference"
+             form="f1040_QDCGTWS"
+             box="4"
+             required=true /%}
+        - {% value slot="falseValue" type="number_constant" value=0 /%}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="14" %}
+  - {% instructions %}Enter the amount from Schedule D (Form 1040), line 19 (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% box identifier="14" %}
+    {% value type="override_number_input" %}
+    - {% value
+         slot="computedValue"
+         type="box_reference"
+         form="f1040sD"
+         box="19"
+         required=true /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}If you did not complete a Schedule D Tax Worksheet for the regular tax or the AMT, enter the amount from line 13. Otherwise, add lines 13 and 14, and enter the smaller of that result or the amount from line 10 of the Schedule D Tax Worksheet (as refigured for the AMT, if necessary). If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% box identifier="15" %}
+    {% value type="override_number_input" %}
+    - {% value slot="computedValue" type="conditional" %}
+      - {% value slot="condition" type="form_instance_count" form="f1040sD_SDTWS" /%}
+      - {% value slot="trueValue" type="minimum" %}
+        - {% value type="sum" %}
+          - {% value type="box_reference" box="13" /%}
+          - {% value type="box_reference" box="14" /%}
+          {% /value %}
+        - {% value type="box_reference" form="f1040sD_SDTWS" box="10" /%}
+        {% /value %}
+      - {% value slot="falseValue" type="box_reference" box="13" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}Enter the smaller of line 12 or line 15{% /instructions %}
+  - {% box identifier="16" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="12" /%}
+    - {% value type="box_reference" box="15" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="17" %}
+  - {% instructions %}Subtract line 16 from line 12{% /instructions %}
+  - {% box identifier="17" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="12" /%}
+    - {% value slot="subtrahend" type="box_reference" box="16" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="18" %}
+  - {% instructions %}If line 17 is $239,100 or less ($119,550 or less if married filing separately), multiply line 17 by 26% (0.26). Otherwise, multiply line 17 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result{% /instructions %}
+  - {% box identifier="18" %}
+    {% value type="_partial_passthrough" %}
+    - {% partial file="alternativeMinimumTaxComputation" variables={box: "17"} /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="19" %}
+  - {% instructions %}
+    Enter:
+    - $96,700 if married filing jointly or qualifying surviving spouse;
+    - $48,350 if single or married filing separately; or
+    - $64,750 if head of household.
+    {% /instructions %}
+  - {% box identifier="19" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="number_constant"
+         value=64750
+         filingStatusKey="head_of_household" /%}
+    - {% value
+         type="number_constant"
+         value=96700
+         filingStatusKey="married_filing_jointly" /%}
+    - {% value
+         type="number_constant"
+         value=48350
+         filingStatusKey="married_filing_separately" /%}
+    - {% value
+         type="number_constant"
+         value=96700
+         filingStatusKey="qualifying_surviving_spouse" /%}
+    - {% value type="number_constant" value=48350 filingStatusKey="single" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="20" %}
+  - {% instructions %}Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 14 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% box identifier="20" %}
+    {% value type="override_number_input" %}
+    - {% value slot="computedValue" type="non_negative_clamp" %}
+      - {% value type="conditional" %}
+        - {% value
+             slot="condition"
+             type="box_reference"
+             form="f1040"
+             box="flag_16_SDTWS"
+             required=true /%}
+        - {% value
+             slot="trueValue"
+             type="box_reference"
+             form="f1040sD_SDTWS"
+             box="14"
+             required=true /%}
+        - {% value slot="falseValue" type="conditional" %}
+          - {% value
+               slot="condition"
+               type="box_reference"
+               form="f1040"
+               box="flag_16_QDCGTWS"
+               required=true /%}
+          - {% value
+               slot="trueValue"
+               type="box_reference"
+               form="f1040_QDCGTWS"
+               box="5"
+               required=true /%}
+          - {% value
+               slot="falseValue"
+               type="box_reference"
+               form="f1040"
+               box="15"
+               required=true /%}
+          {% /value %}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="21" %}
+  - {% instructions %}Subtract line 20 from line 19. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="21" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="19" /%}
+      - {% value slot="subtrahend" type="box_reference" box="20" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="22" %}
+  - {% instructions %}Enter the smaller of line 12 or line 13{% /instructions %}
+  - {% box identifier="22" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="12" /%}
+    - {% value type="box_reference" box="13" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="23" %}
+  - {% instructions %}Enter the smaller of line 21 or line 22. This amount is taxed at 0%{% /instructions %}
+  - {% box identifier="23" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="21" /%}
+    - {% value type="box_reference" box="22" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="24" %}
+  - {% instructions %}Subtract line 23 from line 22{% /instructions %}
+  - {% box identifier="24" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="22" /%}
+    - {% value slot="subtrahend" type="box_reference" box="23" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="25" %}
+  - {% instructions %}
+    Enter:
+    - $533,400 if single;
+    - $300,000 if married filing separately;
+    - $600,050 if married filing jointly or qualifying surviving spouse;
+    - or $566,700 if head of household.
+    {% /instructions %}
+  - {% box identifier="25" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="number_constant"
+         value=566700
+         filingStatusKey="head_of_household" /%}
+    - {% value
+         type="number_constant"
+         value=300000
+         filingStatusKey="married_filing_separately" /%}
+    - {% value type="number_constant" value=533400 filingStatusKey="single" /%}
+    - {% value slot="default" type="number_constant" value=600050 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="26" %}
+  - {% instructions %}Enter the amount from line 21{% /instructions %}
+  - {% box identifier="26" %}{% value type="box_reference" box="21" /%}{% /box %}
+  {% /line %}
+- {% line index="27" %}
+  - {% instructions %}Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 21 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% box identifier="27" %}
+    {% value type="override_number_input" %}
+    - {% value slot="computedValue" type="non_negative_clamp" %}
+      - {% value type="conditional" %}
+        - {% value
+             slot="condition"
+             type="box_reference"
+             form="f1040"
+             box="flag_16_SDTWS"
+             required=true /%}
+        - {% value
+             slot="trueValue"
+             type="box_reference"
+             form="f1040sD_SDTWS"
+             box="21"
+             required=true /%}
+        - {% value slot="falseValue" type="conditional" %}
+          - {% value
+               slot="condition"
+               type="box_reference"
+               form="f1040"
+               box="flag_16_QDCGTWS"
+               required=true /%}
+          - {% value
+               slot="trueValue"
+               type="box_reference"
+               form="f1040_QDCGTWS"
+               box="5"
+               required=true /%}
+          - {% value
+               slot="falseValue"
+               type="box_reference"
+               form="f1040"
+               box="15"
+               required=true /%}
+          {% /value %}
+        {% /value %}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="28" %}
+  - {% instructions %}Add line 26 and line 27{% /instructions %}
+  - {% box identifier="28" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="26" /%}
+    - {% value type="box_reference" box="27" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="29" %}
+  - {% instructions %}Subtract line 28 from line 25. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="29" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="25" /%}
+      - {% value slot="subtrahend" type="box_reference" box="28" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="30" %}
+  - {% instructions %}Enter the smaller of line 24 or line 29{% /instructions %}
+  - {% box identifier="30" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="24" /%}
+    - {% value type="box_reference" box="29" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="31" %}
+  - {% instructions %}Multiply line 30 by 15% (0.15){% /instructions %}
+  - {% box identifier="31" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="30" /%}
+    - {% value type="number_constant" value=0.15 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="32" %}
+  - {% instructions %}
+    Add lines 23 and 30
+    If lines 32 and 12 are the same, skip lines 33 through 37 and go to line 38. Otherwise, go to line 33.
+    {% /instructions %}
+  - {% box identifier="32" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="23" /%}
+    - {% value type="box_reference" box="30" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="33" %}
+  - {% instructions %}Subtract line 32 from line 22{% /instructions %}
+  - {% box identifier="33" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="22" /%}
+    - {% value slot="subtrahend" type="box_reference" box="32" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="34" %}
+  - {% instructions %}
+    Multiply line 33 by 20% (0.20)
+    If line 14 is zero or blank, skip lines 35 through 37 and go to line 38. Otherwise, go to line 35.
+    {% /instructions %}
+  - {% box identifier="34" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="33" /%}
+    - {% value type="number_constant" value=0.2 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="35" %}
+  - {% instructions %}Add lines 17, 32, and 33{% /instructions %}
+  - {% box identifier="35" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="17" /%}
+    - {% value type="box_reference" box="32" /%}
+    - {% value type="box_reference" box="33" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="36" %}
+  - {% instructions %}Subtract line 35 from line 12{% /instructions %}
+  - {% box identifier="36" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="12" /%}
+    - {% value slot="subtrahend" type="box_reference" box="35" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="37" %}
+  - {% instructions %}Multiply line 36 by 25% (0.25){% /instructions %}
+  - {% box identifier="37" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="36" /%}
+    - {% value type="number_constant" value=0.25 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="38" %}
+  - {% instructions %}Add lines 18, 31, 34, and 37{% /instructions %}
+  - {% box identifier="38" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="18" /%}
+    - {% value type="box_reference" box="31" /%}
+    - {% value type="box_reference" box="34" /%}
+    - {% value type="box_reference" box="37" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="39" %}
+  - {% instructions %}If line 12 is $239,100 or less ($119,550 or less if married filing separately), multiply line 12 by 26% (0.26). Otherwise, multiply line 12 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result{% /instructions %}
+  - {% box identifier="39" %}
+    {% value type="_partial_passthrough" %}
+    - {% partial file="alternativeMinimumTaxComputation" variables={box: "12"} /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="40" %}
+  - {% instructions %}Enter the smaller of line 38 or line 39 here and on line 7. If you are filing Form 2555, do not enter this amount on line 7. Instead, enter it on line 4 of the worksheet in the instructions for line 7{% /instructions %}
+  - {% box identifier="40" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="38" /%}
+    - {% value type="box_reference" box="39" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

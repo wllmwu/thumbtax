@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1099INT: FormSpecification = {
+export const f1099INT: FormSpecification = {
   class: "f1099INT",
-  title: "Form 1099-INT",
-  subtitle: "Interest Income",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-int",
   category: "income",
   maxInstances: null,
+  title: "Form 1099-INT",
+  subtitle: "Interest Income",
   sections: [
     {
       lines: [

@@ -1,16 +1,16 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const Form1040SD: FormSpecification = {
+export const f1040sD: FormSpecification = {
   class: "f1040sD",
-  title: "Schedule D (Form 1040)",
-  subtitle: "Capital Gains and Losses",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-schedule-d-form-1040",
   category: "taxes",
   maxInstances: 1,
+  title: "Schedule D (Form 1040)",
+  subtitle: "Capital Gains and Losses",
   sections: [
     {
       heading:
-        "Part I. Short-Term Capital Gains and Losses\u2014Generally Assets Held One Year or Less (see instructions)",
+        "Part I. Short-Term Capital Gains and Losses—Generally Assets Held One Year or Less (see instructions)",
       columns: [
         { index: "(d)", instructions: "Proceeds (sales price)" },
         { index: "(e)", instructions: "Cost (or other basis)" },
@@ -27,31 +27,29 @@ export const Form1040SD: FormSpecification = {
       ],
       lines: [
         {
-          // TODO: conditional aggregation
           index: "1a",
           instructions:
             "Totals for all short-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 1b",
           boxes: [
             {
               identifier: "1a(d)",
-              column: "(d)",
               value: {
                 type: "select_instance_boxes_input",
                 options: [{ form: "f1099B", box: "1d" }],
               },
+              column: "(d)",
             },
             {
               identifier: "1a(e)",
-              column: "(e)",
               value: {
                 type: "select_instance_boxes_input",
                 options: [{ form: "f1099B", box: "1e" }],
               },
+              column: "(e)",
             },
-            { identifier: "1a(g)", column: "(g)", value: { type: "unused" } },
+            { identifier: "1a(g)", value: { type: "unused" }, column: "(g)" },
             {
               identifier: "1a(h)",
-              column: "(h)",
               value: {
                 type: "sum",
                 values: [
@@ -63,6 +61,7 @@ export const Form1040SD: FormSpecification = {
                   { type: "box_reference", box: "1a(g)" },
                 ],
               },
+              column: "(h)",
             },
           ],
         },
@@ -73,22 +72,21 @@ export const Form1040SD: FormSpecification = {
           boxes: [
             {
               identifier: "1b(d)",
-              column: "(d)",
               value: { type: "number_input" },
+              column: "(d)",
             },
             {
               identifier: "1b(e)",
-              column: "(e)",
               value: { type: "number_input" },
+              column: "(e)",
             },
             {
               identifier: "1b(g)",
-              column: "(g)",
               value: { type: "number_input" },
+              column: "(g)",
             },
             {
               identifier: "1b(h)",
-              column: "(h)",
               value: {
                 type: "sum",
                 values: [
@@ -100,6 +98,7 @@ export const Form1040SD: FormSpecification = {
                   { type: "box_reference", box: "1b(g)" },
                 ],
               },
+              column: "(h)",
             },
           ],
         },
@@ -110,22 +109,21 @@ export const Form1040SD: FormSpecification = {
           boxes: [
             {
               identifier: "2(d)",
-              column: "(d)",
               value: { type: "number_input" },
+              column: "(d)",
             },
             {
               identifier: "2(e)",
-              column: "(e)",
               value: { type: "number_input" },
+              column: "(e)",
             },
             {
               identifier: "2(g)",
-              column: "(g)",
               value: { type: "number_input" },
+              column: "(g)",
             },
             {
               identifier: "2(h)",
-              column: "(h)",
               value: {
                 type: "sum",
                 values: [
@@ -137,6 +135,7 @@ export const Form1040SD: FormSpecification = {
                   { type: "box_reference", box: "2(g)" },
                 ],
               },
+              column: "(h)",
             },
           ],
         },
@@ -147,22 +146,21 @@ export const Form1040SD: FormSpecification = {
           boxes: [
             {
               identifier: "3(d)",
-              column: "(d)",
               value: { type: "number_input" },
+              column: "(d)",
             },
             {
               identifier: "3(e)",
-              column: "(e)",
               value: { type: "number_input" },
+              column: "(e)",
             },
             {
               identifier: "3(g)",
-              column: "(g)",
               value: { type: "number_input" },
+              column: "(g)",
             },
             {
               identifier: "3(h)",
-              column: "(h)",
               value: {
                 type: "sum",
                 values: [
@@ -174,6 +172,7 @@ export const Form1040SD: FormSpecification = {
                   { type: "box_reference", box: "3(g)" },
                 ],
               },
+              column: "(h)",
             },
           ],
         },
@@ -205,8 +204,15 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "7",
-          instructions:
-            "**Net short-term capital gain or (loss).** Combine lines 1a through 6 in column (h). If you have any long-term capital gains or losses, go to Part II below. Otherwise, go to Part III on the back",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Net short-term capital gain or (loss)."],
+            },
+            " Combine lines 1a through 6 in column (h). If you have any long-term capital gains or losses, go to Part II below. Otherwise, go to Part III on the back",
+          ],
           box: {
             identifier: "7",
             value: {
@@ -227,7 +233,7 @@ export const Form1040SD: FormSpecification = {
     },
     {
       heading:
-        "Part II. Long-Term Capital Gains and Losses\u2014Generally Assets Held More Than One Year (see instructions)",
+        "Part II. Long-Term Capital Gains and Losses—Generally Assets Held More Than One Year (see instructions)",
       columns: [
         { index: "(d)", instructions: "Proceeds (sales price)" },
         { index: "(e)", instructions: "Cost (or other basis)" },
@@ -244,31 +250,29 @@ export const Form1040SD: FormSpecification = {
       ],
       lines: [
         {
-          // TODO: conditional aggregation
           index: "8a",
           instructions:
             "Totals for all long-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 8b",
           boxes: [
             {
               identifier: "8a(d)",
-              column: "(d)",
               value: {
                 type: "select_instance_boxes_input",
                 options: [{ form: "f1099B", box: "1d" }],
               },
+              column: "(d)",
             },
             {
               identifier: "8a(e)",
-              column: "(e)",
               value: {
                 type: "select_instance_boxes_input",
                 options: [{ form: "f1099B", box: "1e" }],
               },
+              column: "(e)",
             },
-            { identifier: "8a(g)", column: "(g)", value: { type: "unused" } },
+            { identifier: "8a(g)", value: { type: "unused" }, column: "(g)" },
             {
               identifier: "8a(h)",
-              column: "(h)",
               value: {
                 type: "sum",
                 values: [
@@ -280,6 +284,7 @@ export const Form1040SD: FormSpecification = {
                   { type: "box_reference", box: "8a(g)" },
                 ],
               },
+              column: "(h)",
             },
           ],
         },
@@ -290,22 +295,21 @@ export const Form1040SD: FormSpecification = {
           boxes: [
             {
               identifier: "8b(d)",
-              column: "(d)",
               value: { type: "number_input" },
+              column: "(d)",
             },
             {
               identifier: "8b(e)",
-              column: "(e)",
               value: { type: "number_input" },
+              column: "(e)",
             },
             {
               identifier: "8b(g)",
-              column: "(g)",
               value: { type: "number_input" },
+              column: "(g)",
             },
             {
               identifier: "8b(h)",
-              column: "(h)",
               value: {
                 type: "sum",
                 values: [
@@ -317,6 +321,7 @@ export const Form1040SD: FormSpecification = {
                   { type: "box_reference", box: "8b(g)" },
                 ],
               },
+              column: "(h)",
             },
           ],
         },
@@ -327,22 +332,21 @@ export const Form1040SD: FormSpecification = {
           boxes: [
             {
               identifier: "9(d)",
-              column: "(d)",
               value: { type: "number_input" },
+              column: "(d)",
             },
             {
               identifier: "9(e)",
-              column: "(e)",
               value: { type: "number_input" },
+              column: "(e)",
             },
             {
               identifier: "9(g)",
-              column: "(g)",
               value: { type: "number_input" },
+              column: "(g)",
             },
             {
               identifier: "9(h)",
-              column: "(h)",
               value: {
                 type: "sum",
                 values: [
@@ -354,6 +358,7 @@ export const Form1040SD: FormSpecification = {
                   { type: "box_reference", box: "9(g)" },
                 ],
               },
+              column: "(h)",
             },
           ],
         },
@@ -364,22 +369,21 @@ export const Form1040SD: FormSpecification = {
           boxes: [
             {
               identifier: "10(d)",
-              column: "(d)",
               value: { type: "number_input" },
+              column: "(d)",
             },
             {
               identifier: "10(e)",
-              column: "(e)",
               value: { type: "number_input" },
+              column: "(e)",
             },
             {
               identifier: "10(g)",
-              column: "(g)",
               value: { type: "number_input" },
+              column: "(g)",
             },
             {
               identifier: "10(h)",
-              column: "(h)",
               value: {
                 type: "sum",
                 values: [
@@ -391,6 +395,7 @@ export const Form1040SD: FormSpecification = {
                   { type: "box_reference", box: "10(g)" },
                 ],
               },
+              column: "(h)",
             },
           ],
         },
@@ -430,8 +435,15 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "15",
-          instructions:
-            "**Net long-term capital gain or (loss).** Combine lines 8a through 14 in column (h). Then, go to Part III on the back",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Net long-term capital gain or (loss)."],
+            },
+            " Combine lines 8a through 14 in column (h). Then, go to Part III on the back",
+          ],
           box: {
             identifier: "15",
             value: {
@@ -456,8 +468,45 @@ export const Form1040SD: FormSpecification = {
       lines: [
         {
           index: "16",
-          instructions:
-            "Combine lines 7 and 15 and enter the result\n- If line 16 is a gain, enter the amount from line 16 on Form 1040, 1040-SR, or 1040-NR, line 7a. Then, go to line 17 below.\n- If line 16 is a loss, skip lines 17 through 20 below. Then, go to line 21. Also be sure to complete line 22.\n- If line 16 is zero, skip lines 17 through 21 below and enter -0- on Form 1040, 1040-SR, or 1040-NR, line 7a. Then, go to line 22.",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: ["Combine lines 7 and 15 and enter the result"],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "If line 16 is a gain, enter the amount from line 16 on Form 1040, 1040-SR, or 1040-NR, line 7a. Then, go to line 17 below.",
+                  ],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "If line 16 is a loss, skip lines 17 through 20 below. Then, go to line 21. Also be sure to complete line 22.",
+                  ],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "If line 16 is zero, skip lines 17 through 21 below and enter -0- on Form 1040, 1040-SR, or 1040-NR, line 7a. Then, go to line 22.",
+                  ],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "16",
             value: {
@@ -471,8 +520,35 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "17",
-          instructions:
-            "Are lines 15 and 16 both gains?\n- Yes. Go to line 18.\n- No. Skip lines 18 through 21, and go to line 22.",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: ["Are lines 15 and 16 both gains?"],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["Yes. Go to line 18."],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "No. Skip lines 18 through 21, and go to line 22.",
+                  ],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "17",
             value: {
@@ -546,11 +622,41 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "20",
-          instructions:
-            "Are lines 18 and 19 both zero or blank and you are not filing Form 4952?\n- Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16. Don't complete lines 21 and 22 below.\n- No. Complete the Schedule D Tax Worksheet in the instructions. Don't complete lines 21 and 22 below.",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: [
+                "Are lines 18 and 19 both zero or blank and you are not filing Form 4952?",
+              ],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16. Don't complete lines 21 and 22 below.",
+                  ],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "No. Complete the Schedule D Tax Worksheet in the instructions. Don't complete lines 21 and 22 below.",
+                  ],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "20",
-            format: "yes_no",
             value: {
               type: "conjunction",
               values: [
@@ -564,12 +670,42 @@ export const Form1040SD: FormSpecification = {
                 },
               ],
             },
+            format: "yes_no",
           },
         },
         {
           index: "21",
-          instructions:
-            "If line 16 is a loss, enter here and on Form 1040, 1040-SR, or 1040-NR, line 7a, the smaller of:\n- The loss on line 16; or\n- ($3,000), or if married filing separately, ($1,500)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: [
+                "If line 16 is a loss, enter here and on Form 1040, 1040-SR, or 1040-NR, line 7a, the smaller of:",
+              ],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["The loss on line 16; or"],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "($3,000), or if married filing separately, ($1,500)",
+                  ],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "21",
             value: {
@@ -602,17 +738,48 @@ export const Form1040SD: FormSpecification = {
         },
         {
           index: "22",
-          instructions:
-            "Do you have qualified dividends on Form 1040, 1040-SR, or 1040-NR, line 3a?\n- Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16.\n- No. Complete the rest of Form 1040, 1040-SR, or 1040-NR.",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: [
+                "Do you have qualified dividends on Form 1040, 1040-SR, or 1040-NR, line 3a?",
+              ],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16.",
+                  ],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "No. Complete the rest of Form 1040, 1040-SR, or 1040-NR.",
+                  ],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "22",
-            format: "yes_no",
             value: {
               type: "box_reference",
               box: "3a",
               form: "f1040",
               required: true,
             },
+            format: "yes_no",
           },
         },
         {

@@ -1,0 +1,515 @@
+{% form
+   category="taxes"
+   class="f1040sD_SDTWS"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-schedule-d-form-1040"
+   maxInstances=1 %}
+# Schedule D Tax Worksheet
+
+{% section %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Enter your taxable income from Form 1040, 1040-SR, or 1040-NR, line 15. (However, if you are filing Form 2555 (relating to foreign earned income), enter instead the amount from line 3 of the Foreign Earned Income Tax Worksheet in the instructions for Form 1040, line 16.){% /instructions %}
+  - {% box identifier="1" %}
+    {% value type="override_number_input" %}
+    - {% value
+         slot="computedValue"
+         type="box_reference"
+         form="f1040"
+         box="15"
+         required=true /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Enter your qualified dividends from Form 1040, 1040-SR, or 1040-NR, line 3a{% /instructions %}
+  - {% box identifier="2" %}{% value type="box_reference" form="f1040" box="3a" required=true /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Enter the amount from Form 4952 (used to figure investment interest expense deduction), line 4g{% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Enter the amount from Form 4952, line 4e{% /instructions %}
+  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}Subtract line 4 from line 3. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="5" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="3" /%}
+      - {% value slot="subtrahend" type="box_reference" box="4" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Subtract line 5 from line 2. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="6" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="2" /%}
+      - {% value slot="subtrahend" type="box_reference" box="5" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Enter the smaller of line 15 or line 16 of Schedule D{% /instructions %}
+  - {% box identifier="7" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" form="f1040sD" box="15" /%}
+    - {% value type="box_reference" form="f1040sD" box="16" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Enter the smaller of line 3 or line 4{% /instructions %}
+  - {% box identifier="8" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="3" /%}
+    - {% value type="box_reference" box="4" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="9" %}
+  - {% instructions %}Subtract line 8 from line 7. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="9" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="7" /%}
+      - {% value slot="subtrahend" type="box_reference" box="8" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Add lines 6 and 9{% /instructions %}
+  - {% box identifier="10" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="6" /%}
+    - {% value type="box_reference" box="9" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}Add lines 18 and 19 of Schedule D{% /instructions %}
+  - {% box identifier="11" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" form="f1040sD" box="18" required=true /%}
+    - {% value type="box_reference" form="f1040sD" box="19" required=true /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="12" %}
+  - {% instructions %}Enter the smaller of line 9 or line 11{% /instructions %}
+  - {% box identifier="12" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="9" /%}
+    - {% value type="box_reference" box="11" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}Subtract line 12 from line 10{% /instructions %}
+  - {% box identifier="13" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="10" /%}
+    - {% value slot="subtrahend" type="box_reference" box="12" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="14" %}
+  - {% instructions %}Subtract line 13 from line 1. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="14" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="1" /%}
+      - {% value slot="subtrahend" type="box_reference" box="13" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}
+    Enter:
+
+    - $48,350 if single or married filing separately;
+    - $96,700 if married filing jointly or qualifying surviving spouse; or
+    - $64,750 if head of household.
+    {% /instructions %}
+  - {% box identifier="15" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="number_constant"
+         value=64750
+         filingStatusKey="head_of_household" /%}
+    - {% value
+         type="number_constant"
+         value=96700
+         filingStatusKey="married_filing_jointly" /%}
+    - {% value
+         type="number_constant"
+         value=48350
+         filingStatusKey="married_filing_separately" /%}
+    - {% value
+         type="number_constant"
+         value=96700
+         filingStatusKey="qualifying_surviving_spouse" /%}
+    - {% value type="number_constant" value=48350 filingStatusKey="single" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}Enter the smaller of line 1 or line 15{% /instructions %}
+  - {% box identifier="16" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="box_reference" box="15" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="17" %}
+  - {% instructions %}Enter the smaller of line 14 or line 16{% /instructions %}
+  - {% box identifier="17" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="14" /%}
+    - {% value type="box_reference" box="16" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="18" %}
+  - {% instructions %}Subtract line 10 from line 1. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="18" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="1" /%}
+      - {% value slot="subtrahend" type="box_reference" box="10" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="19" %}
+  - {% instructions %}
+    Enter the smaller of line 1 or:
+
+    - $197,300 if single or married filing separately;
+    - $394,600 if married filing jointly or qualifying surviving spouse; or
+    - $197,300 if head of household.
+    {% /instructions %}
+  - {% box identifier="19" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="filing_status_map" %}
+      - {% value
+           type="number_constant"
+           value=197300
+           filingStatusKey="head_of_household" /%}
+      - {% value
+           type="number_constant"
+           value=394600
+           filingStatusKey="married_filing_jointly" /%}
+      - {% value
+           type="number_constant"
+           value=197300
+           filingStatusKey="married_filing_separately" /%}
+      - {% value
+           type="number_constant"
+           value=394600
+           filingStatusKey="qualifying_surviving_spouse" /%}
+      - {% value type="number_constant" value=197300 filingStatusKey="single" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="20" %}
+  - {% instructions %}Enter the smaller of line 14 or line 19{% /instructions %}
+  - {% box identifier="20" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="14" /%}
+    - {% value type="box_reference" box="19" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="21" %}
+  - {% instructions %}Enter the larger of line 18 or line 20{% /instructions %}
+  - {% box identifier="21" %}
+    {% value type="maximum" %}
+    - {% value type="box_reference" box="18" /%}
+    - {% value type="box_reference" box="20" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="22" %}
+  - {% instructions %}
+    Subtract line 17 from line 16. This amount is taxed at 0%
+    If lines 1 and 16 are the same, skip lines 23 through 43 and go to line 44. Otherwise, go to line 23.
+    {% /instructions %}
+  - {% box identifier="22" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="16" /%}
+    - {% value slot="subtrahend" type="box_reference" box="17" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="23" %}
+  - {% instructions %}Enter the smaller of line 1 or line 13{% /instructions %}
+  - {% box identifier="23" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="box_reference" box="13" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="24" %}
+  - {% instructions %}Enter the amount from line 22{% /instructions %}
+  - {% box identifier="24" %}{% value type="box_reference" box="22" /%}{% /box %}
+  {% /line %}
+- {% line index="25" %}
+  - {% instructions %}Subtract line 24 from line 23. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="25" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="23" /%}
+      - {% value slot="subtrahend" type="box_reference" box="24" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="26" %}
+  - {% instructions %}
+    Enter:
+
+    - $533,400 if single;
+    - $300,000 if married filing separately;
+    - $600,050 if married filing jointly or qualifying surviving spouse; or
+    - $566,700 if head of household.
+    {% /instructions %}
+  - {% box identifier="26" %}
+    {% value type="filing_status_map" %}
+    - {% value
+         type="number_constant"
+         value=566700
+         filingStatusKey="head_of_household" /%}
+    - {% value
+         type="number_constant"
+         value=600050
+         filingStatusKey="married_filing_jointly" /%}
+    - {% value
+         type="number_constant"
+         value=300000
+         filingStatusKey="married_filing_separately" /%}
+    - {% value
+         type="number_constant"
+         value=600050
+         filingStatusKey="qualifying_surviving_spouse" /%}
+    - {% value type="number_constant" value=533400 filingStatusKey="single" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="27" %}
+  - {% instructions %}Enter the smaller of line 1 or line 26{% /instructions %}
+  - {% box identifier="27" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="box_reference" box="26" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="28" %}
+  - {% instructions %}Add lines 21 and 22{% /instructions %}
+  - {% box identifier="28" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="21" /%}
+    - {% value type="box_reference" box="22" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="29" %}
+  - {% instructions %}Subtract line 28 from line 27. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="29" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="27" /%}
+      - {% value slot="subtrahend" type="box_reference" box="28" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="30" %}
+  - {% instructions %}Enter the smaller of line 25 or line 29{% /instructions %}
+  - {% box identifier="30" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="25" /%}
+    - {% value type="box_reference" box="29" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="31" %}
+  - {% instructions %}Multiply line 30 by 15% (0.15){% /instructions %}
+  - {% box identifier="31" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="30" /%}
+    - {% value type="number_constant" value=0.15 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="32" %}
+  - {% instructions %}
+    Add lines 24 and 30
+    If lines 1 and 32 are the same, skip lines 33 through 43 and go to line 44. Otherwise, go to line 33.
+    {% /instructions %}
+  - {% box identifier="32" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="24" /%}
+    - {% value type="box_reference" box="30" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="33" %}
+  - {% instructions %}Subtract line 32 from line 23{% /instructions %}
+  - {% box identifier="33" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="23" /%}
+    - {% value slot="subtrahend" type="box_reference" box="32" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="34" %}
+  - {% instructions %}
+    Multiply line 33 by 20% (0.20)
+    If Schedule D, line 19, is zero or blank, skip lines 35 through 40 and go to line 41. Otherwise, go to line 35.
+    {% /instructions %}
+  - {% box identifier="34" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="33" /%}
+    - {% value type="number_constant" value=0.2 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="35" %}
+  - {% instructions %}Enter the smaller of line 9 above or Schedule D, line 19{% /instructions %}
+  - {% box identifier="35" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="9" /%}
+    - {% value type="box_reference" form="f1040sD" box="19" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="36" %}
+  - {% instructions %}Add lines 10 and 21{% /instructions %}
+  - {% box identifier="36" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="10" /%}
+    - {% value type="box_reference" box="21" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="37" %}
+  - {% instructions %}Enter the amount from line 1 above{% /instructions %}
+  - {% box identifier="37" %}{% value type="box_reference" box="1" /%}{% /box %}
+  {% /line %}
+- {% line index="38" %}
+  - {% instructions %}Subtract line 37 from line 36. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="38" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="36" /%}
+      - {% value slot="subtrahend" type="box_reference" box="37" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="39" %}
+  - {% instructions %}Subtract line 38 from line 35. If zero or less, enter -0-{% /instructions %}
+  - {% box identifier="39" %}
+    {% value type="non_negative_clamp" %}
+    - {% value type="difference" %}
+      - {% value slot="minuend" type="box_reference" box="35" /%}
+      - {% value slot="subtrahend" type="box_reference" box="38" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="40" %}
+  - {% instructions %}
+    Multiply line 39 by 25% (0.25)
+    If Schedule D, line 18, is zero or blank, skip lines 41 through 43 and go to line 44. Otherwise, go to line 41.
+    {% /instructions %}
+  - {% box identifier="40" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="39" /%}
+    - {% value type="number_constant" value=0.25 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="41" %}
+  - {% instructions %}Add lines 21, 22, 30, 33, and 39{% /instructions %}
+  - {% box identifier="41" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="21" /%}
+    - {% value type="box_reference" box="22" /%}
+    - {% value type="box_reference" box="30" /%}
+    - {% value type="box_reference" box="33" /%}
+    - {% value type="box_reference" box="39" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="42" %}
+  - {% instructions %}Subtract line 41 from line 1{% /instructions %}
+  - {% box identifier="42" %}
+    {% value type="difference" %}
+    - {% value slot="minuend" type="box_reference" box="1" /%}
+    - {% value slot="subtrahend" type="box_reference" box="41" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="43" %}
+  - {% instructions %}Multiply line 42 by 28% (0.28){% /instructions %}
+  - {% box identifier="43" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="42" /%}
+    - {% value type="number_constant" value=0.28 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="44" %}
+  - {% instructions %}Figure the tax on the amount on line 21. If the amount on line 21 is less than $100,000, use the Tax Table to figure the tax. If the amount on line 21 is $100,000 or more, use the Tax Computation Worksheet{% /instructions %}
+  - {% box identifier="44" %}
+    {% value type="_partial_passthrough" %}
+    - {% partial file="taxComputation" variables={box: "21"} /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="45" %}
+  - {% instructions %}Add lines 31, 34, 40, 43, and 44{% /instructions %}
+  - {% box identifier="45" %}
+    {% value type="sum" %}
+    - {% value type="box_reference" box="31" /%}
+    - {% value type="box_reference" box="34" /%}
+    - {% value type="box_reference" box="40" /%}
+    - {% value type="box_reference" box="43" /%}
+    - {% value type="box_reference" box="44" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="46" %}
+  - {% instructions %}Figure the tax on the amount on line 1. If the amount on line 1 is less than $100,000, use the Tax Table to figure the tax. If the amount on line 1 is $100,000 or more, use the Tax Computation Worksheet{% /instructions %}
+  - {% box identifier="46" %}
+    {% value type="_partial_passthrough" %}
+    - {% partial file="taxComputation" variables={box: "1"} /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="47" %}
+  - {% instructions %}**Tax on all taxable income (including capital gains and qualified dividends).** Enter the smaller of line 45 or line 46. Also, include this amount on Form 1040, 1040-SR, or 1040-NR, line 16. (If you are filing Form 2555, don’t enter this amount on Form 1040 or 1040-SR, line 16. Instead, enter it on line 4 of the Foreign Earned Income Tax Worksheet in the Instructions for Form 1040.){% /instructions %}
+  - {% box identifier="47" %}
+    {% value type="minimum" %}
+    - {% value type="box_reference" box="45" /%}
+    - {% value type="box_reference" box="46" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}
