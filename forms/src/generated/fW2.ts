@@ -1,12 +1,12 @@
-import type { FormSpecification } from "@thumbtax/forms";
+import type { FormSpecification } from "../types/formSpecification";
 
-export const FormW2: FormSpecification = {
+export const fW2: FormSpecification = {
   class: "fW2",
-  title: "Form W-2",
-  subtitle: "Wage and Tax Statement",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-w-2",
   category: "income",
   maxInstances: null,
+  title: "Form W-2",
+  subtitle: "Wage and Tax Statement",
   sections: [
     {
       lines: [
@@ -62,11 +62,16 @@ export const FormW2: FormSpecification = {
           box: { identifier: "11", value: { type: "number_input" } },
         },
         {
-          index: "12a\u2013d",
+          index: "12a–d",
           instructions: "Codes",
+          commentary: 'See "Form W-2: codes for box 12"',
           box: { identifier: "12", value: { type: "unused" } },
         },
-        { index: "13", box: { identifier: "13", value: { type: "unused" } } },
+        {
+          index: "13",
+          instructions: "Checkboxes",
+          box: { identifier: "13", value: { type: "unused" } },
+        },
         {
           index: "14a",
           instructions: "Other",

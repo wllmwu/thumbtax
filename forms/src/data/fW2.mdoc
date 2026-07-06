@@ -1,0 +1,97 @@
+{% form
+   category="income"
+   class="fW2"
+   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-w-2" %}
+# Form W-2
+
+{% subtitle %}Wage and Tax Statement{% /subtitle %}
+
+{% section %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Wages, tips, other compensation{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% box identifier="2" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Social security wages{% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Social security tax withheld{% /instructions %}
+  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}Medicare wages and tips{% /instructions %}
+  - {% box identifier="5" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Medicare tax withheld{% /instructions %}
+  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Social security tips{% /instructions %}
+  - {% box identifier="7" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Allocated tips{% /instructions %}
+  - {% box identifier="8" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="9" %}
+  - {% box identifier="9" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Dependent care benefits{% /instructions %}
+  - {% box identifier="10" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}Nonqualified plans{% /instructions %}
+  - {% box identifier="11" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="12a–d" %}
+  - {% instructions %}Codes{% /instructions %}
+  - {% commentary %}See "Form W-2: codes for box 12"{% /commentary %}
+  - {% box identifier="12" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}Checkboxes{% /instructions %}
+  - {% box identifier="13" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="14a" %}
+  - {% instructions %}Other{% /instructions %}
+  - {% box identifier="14a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="14b" %}
+  - {% instructions %}Treasury Tipped Occupation Code(s){% /instructions %}
+  - {% box identifier="14b" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}State{% /instructions %}
+  - {% box identifier="15" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}State wages, tips, etc.{% /instructions %}
+  - {% box identifier="16" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="17" %}
+  - {% instructions %}State income tax{% /instructions %}
+  - {% box identifier="17" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="18" %}
+  - {% instructions %}Local wages, tips, etc.{% /instructions %}
+  - {% box identifier="18" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="19" %}
+  - {% instructions %}Local income tax{% /instructions %}
+  - {% box identifier="19" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="20" %}
+  - {% instructions %}Locality name{% /instructions %}
+  - {% box identifier="20" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}
