@@ -44,7 +44,7 @@ import {
   makeSectionFixture,
   makeSectionFixtureMultiColumn,
   makeSpecificationFixture,
-} from "#src/specifications/test/fixtures";
+} from "#src/test/specificationFixtures";
 
 import type { FilingStatus } from "@thumbtax/common";
 import type { SpecificationRegistry, ValueProvider } from "@thumbtax/forms";

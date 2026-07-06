@@ -11,14 +11,14 @@ import {
   UI_STATE_KEY,
 } from "#src/persistence/localStorageKeys";
 import { usePersistence } from "#src/persistence/usePersistence";
+import { useStore } from "#src/state/useStore";
 import {
   makeBoxFixture,
   makeLineFixture,
   makeRegistryFixture,
   makeSectionFixture,
   makeSpecificationFixture,
-} from "#src/specifications/test/fixtures";
-import { useStore } from "#src/state/useStore";
+} from "#src/test/specificationFixtures";
 
 const TEST_BOX = "box1";
 

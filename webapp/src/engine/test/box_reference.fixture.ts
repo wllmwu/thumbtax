@@ -15,7 +15,7 @@ import {
   makeSectionFixture,
   makeSectionFixtureMultiColumn,
   makeSpecificationFixture,
-} from "#src/specifications/test/fixtures";
+} from "#src/test/specificationFixtures";
 
 export const box_reference: ValueProviderFixture[] = [
   {

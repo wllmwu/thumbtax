@@ -12,7 +12,7 @@ import {
   makeRegistryFixture,
   makeSectionFixture,
   makeSpecificationFixture,
-} from "#src/specifications/test/fixtures";
+} from "#src/test/specificationFixtures";
 
 export const select_instance_boxes_input: ValueProviderFixture[] = [
   {

@@ -3,12 +3,12 @@ import userEvent from "@testing-library/user-event";
 import { Button, DialogTrigger, Modal } from "react-aria-components";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { makeRegistryFixture } from "#src/specifications/test/fixtures";
 import {
   DEFAULT_UI_STATE,
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
 import { useStore } from "#src/state/useStore";
+import { makeRegistryFixture } from "#src/test/specificationFixtures";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
 
 import type { FormClass } from "@thumbtax/common";

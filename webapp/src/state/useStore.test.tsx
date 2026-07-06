@@ -1,14 +1,14 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { subscribeToStore, useStore } from "#src/state/useStore";
 import {
   makeBoxFixture,
   makeLineFixture,
   makeRegistryFixture,
   makeSectionFixture,
   makeSpecificationFixture,
-} from "#src/specifications/test/fixtures";
-import { subscribeToStore, useStore } from "#src/state/useStore";
+} from "#src/test/specificationFixtures";
 
 import type { FormClass } from "@thumbtax/common";
 import type { SpecificationRegistry } from "@thumbtax/forms";

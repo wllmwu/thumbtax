@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import {
   makeRegistryFixture,
   makeSpecificationFixture,
-} from "#src/specifications/test/fixtures";
+} from "#src/test/specificationFixtures";
 import { SelectInstanceBoxesField } from "#src/ui/forms/SelectInstanceBoxesField";
 
 import type React from "react";
