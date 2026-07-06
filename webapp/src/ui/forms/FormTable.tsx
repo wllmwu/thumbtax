@@ -6,6 +6,7 @@ import { Button, DialogTrigger, Modal } from "react-aria-components";
 import { useStore } from "#src/state/useStore";
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
+import { ProseContent } from "#src/ui/forms/ProseContent";
 import styles from "#src/ui/forms/FormTable.module.css";
 
 import type { FormLine, FormSpecification } from "@thumbtax/forms";
@@ -52,7 +53,7 @@ function FormLineTableRow({
         {line.index}
       </span>
       <span id={lineDescriptionTextId} className={styles.formTableRowHeader}>
-        {line.description}
+        <ProseContent nodes={line.instructions} />
       </span>
       {"boxes" in line ? (
         line.boxes.map((box, index) => (
@@ -240,7 +241,7 @@ export function FormTable({
                             column.index,
                           )}
                         >
-                          {column.description}
+                          <ProseContent nodes={column.instructions} />
                         </span>
                       </span>
                     ))
