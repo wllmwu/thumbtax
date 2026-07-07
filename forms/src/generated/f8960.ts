@@ -9,7 +9,8 @@ export const f8960: FormSpecification = {
   subtitle: "Net Investment Income Tax—Individuals, Estates, and Trusts",
   sections: [
     {
-      heading: "Part I. Investment Income",
+      heading: "Part I",
+      subtitle: "Investment Income",
       lines: [
         {
           index: "1",
@@ -155,8 +156,9 @@ export const f8960: FormSpecification = {
       ],
     },
     {
-      heading:
-        "Part II. Investment Expenses Allocable to Investment Income and Modifications",
+      heading: "Part II",
+      subtitle:
+        "Investment Expenses Allocable to Investment Income and Modifications",
       lines: [
         {
           index: "9a",
@@ -212,7 +214,8 @@ export const f8960: FormSpecification = {
       ],
     },
     {
-      heading: "Part III. Tax Computation",
+      heading: "Part III",
+      subtitle: "Tax Computation",
       lines: [
         {
           index: "12",

@@ -9,7 +9,8 @@ export const f1040s1: FormSpecification = {
   subtitle: "Additional Income and Adjustments to Income",
   sections: [
     {
-      heading: "Part I. Additional Income",
+      heading: "Part I",
+      subtitle: "Additional Income",
       lines: [
         {
           index: "1",
@@ -275,7 +276,8 @@ export const f1040s1: FormSpecification = {
       ],
     },
     {
-      heading: "Part II. Adjustments to Income",
+      heading: "Part II",
+      subtitle: "Adjustments to Income",
       lines: [
         {
           index: "11",

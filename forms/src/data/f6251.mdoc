@@ -8,15 +8,27 @@
 {% subtitle %}Alternative Minimum Tax—Individuals{% /subtitle %}
 
 {% section %}
-## Part I. Alternative Minimum Taxable Income
+## Part I
+
+{% subtitle %}Alternative Minimum Taxable Income{% /subtitle %}
 
 {% lines %}
 - {% line index="1a" %}
   - {% instructions %}Subtract Schedule 1-A (Form 1040), line 37, from Form 1040, 1040-SR, or 1040-NR, line 14{% /instructions %}
   - {% box identifier="1a" %}
     {% value type="difference" %}
-    - {% value slot="minuend" type="box_reference" form="f1040" box="14" required=true /%}
-    - {% value slot="subtrahend" type="box_reference" form="f1040s1A" box="37" required=true /%}
+    - {% value
+         slot="minuend"
+         type="box_reference"
+         form="f1040"
+         box="14"
+         required=true /%}
+    - {% value
+         slot="subtrahend"
+         type="box_reference"
+         form="f1040s1A"
+         box="37"
+         required=true /%}
     {% /value %}
     {% /box %}
   {% /line %}
@@ -24,7 +36,12 @@
   - {% instructions %}Subtract line 1a from Form 1040, 1040-SR, or 1040-NR, line 11b (if less than zero, enter as a negative amount){% /instructions %}
   - {% box identifier="1b" %}
     {% value type="difference" %}
-    - {% value slot="minuend" type="box_reference" form="f1040" box="11b" required=true /%}
+    - {% value
+         slot="minuend"
+         type="box_reference"
+         form="f1040"
+         box="11b"
+         required=true /%}
     - {% value slot="subtrahend" type="box_reference" box="1a" /%}
     {% /value %}
     {% /box %}
@@ -35,7 +52,12 @@
     {% value type="conditional" %}
     - {% value slot="condition" type="form_instance_count" form="f1040sA" /%}
     - {% value slot="trueValue" type="box_reference" form="f1040sA" box="7" /%}
-    - {% value slot="falseValue" type="box_reference" form="f1040" box="12e" required=true /%}
+    - {% value
+         slot="falseValue"
+         type="box_reference"
+         form="f1040"
+         box="12e"
+         required=true /%}
     {% /value %}
     {% /box %}
   {% /line %}
@@ -174,7 +196,10 @@
         - {% value slot="trueValue" type="number_constant" value=68500 /%}
         - {% value slot="falseValue" type="product" %}
           - {% value type="difference" %}
-            - {% value slot="minuend" type="box_reference" box="virtual_4_before_additional" /%}
+            - {% value
+                 slot="minuend"
+                 type="box_reference"
+                 box="virtual_4_before_additional" /%}
             - {% value slot="subtrahend" type="number_constant" value=900350 /%}
             {% /value %}
           - {% value type="number_constant" value=0.25 /%}
@@ -189,7 +214,9 @@
 {% /section %}
 
 {% section %}
-## Part II. Alternative Minimum Tax (AMT)
+## Part II
+
+{% subtitle %}Alternative Minimum Tax (AMT){% /subtitle %}
 
 {% lines %}
 - {% line index="5" %}
@@ -397,7 +424,9 @@
 {% /section %}
 
 {% section %}
-## Part III. Tax Computation Using Maximum Capital Gains Rates
+## Part III
+
+{% subtitle %}Tax Computation Using Maximum Capital Gains Rates{% /subtitle %}
 
 {% lines %}
 - {% line index="12" %}
@@ -504,6 +533,7 @@
 - {% line index="19" %}
   - {% instructions %}
     Enter:
+
     - $96,700 if married filing jointly or qualifying surviving spouse;
     - $48,350 if single or married filing separately; or
     - $64,750 if head of household.
@@ -614,6 +644,7 @@
 - {% line index="25" %}
   - {% instructions %}
     Enter:
+
     - $533,400 if single;
     - $300,000 if married filing separately;
     - $600,050 if married filing jointly or qualifying surviving spouse;

@@ -9,7 +9,8 @@ export const f8959: FormSpecification = {
   subtitle: "Additional Medicare Tax",
   sections: [
     {
-      heading: "Part I. Additional Medicare Tax on Medicare Wages",
+      heading: "Part I",
+      subtitle: "Additional Medicare Tax on Medicare Wages",
       lines: [
         {
           index: "1",
@@ -113,7 +114,8 @@ export const f8959: FormSpecification = {
       ],
     },
     {
-      heading: "Part II. Additional Medicare Tax on Self-Employment Income",
+      heading: "Part II",
+      subtitle: "Additional Medicare Tax on Self-Employment Income",
       lines: [
         {
           index: "8",
@@ -210,8 +212,9 @@ export const f8959: FormSpecification = {
       ],
     },
     {
-      heading:
-        "Part III. Additional Medicare Tax on Railroad Retirement Tax Act (RRTA) Compensation",
+      heading: "Part III",
+      subtitle:
+        "Additional Medicare Tax on Railroad Retirement Tax Act (RRTA) Compensation",
       lines: [
         {
           index: "14",
@@ -281,7 +284,8 @@ export const f8959: FormSpecification = {
       ],
     },
     {
-      heading: "Part IV. Total Additional Medicare Tax",
+      heading: "Part IV",
+      subtitle: "Total Additional Medicare Tax",
       lines: [
         {
           index: "18",
@@ -302,7 +306,8 @@ export const f8959: FormSpecification = {
       ],
     },
     {
-      heading: "Part V. Withholding Reconciliation",
+      heading: "Part V",
+      subtitle: "Withholding Reconciliation",
       lines: [
         {
           index: "19",

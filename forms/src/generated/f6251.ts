@@ -9,7 +9,8 @@ export const f6251: FormSpecification = {
   subtitle: "Alternative Minimum Tax—Individuals",
   sections: [
     {
-      heading: "Part I. Alternative Minimum Taxable Income",
+      heading: "Part I",
+      subtitle: "Alternative Minimum Taxable Income",
       lines: [
         {
           index: "1a",
@@ -308,7 +309,8 @@ export const f6251: FormSpecification = {
       ],
     },
     {
-      heading: "Part II. Alternative Minimum Tax (AMT)",
+      heading: "Part II",
+      subtitle: "Alternative Minimum Tax (AMT)",
       lines: [
         {
           index: "5",
@@ -720,7 +722,8 @@ export const f6251: FormSpecification = {
       ],
     },
     {
-      heading: "Part III. Tax Computation Using Maximum Capital Gains Rates",
+      heading: "Part III",
+      subtitle: "Tax Computation Using Maximum Capital Gains Rates",
       lines: [
         {
           index: "12",

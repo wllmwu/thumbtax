@@ -9,7 +9,8 @@ export const f8889: FormSpecification = {
   subtitle: "Health Savings Accounts (HSAs)",
   sections: [
     {
-      heading: "Part I. HSA Contributions and Deduction",
+      heading: "Part I",
+      subtitle: "HSA Contributions and Deduction",
       lines: [
         {
           index: "1",
@@ -170,7 +171,8 @@ export const f8889: FormSpecification = {
       ],
     },
     {
-      heading: "Part II. HSA Distributions",
+      heading: "Part II",
+      subtitle: "HSA Distributions",
       lines: [
         {
           index: "14a",
@@ -267,8 +269,9 @@ export const f8889: FormSpecification = {
       ],
     },
     {
-      heading:
-        "Part III. Income and Additional Tax for Failure To Maintain HDHP Coverage",
+      heading: "Part III",
+      subtitle:
+        "Income and Additional Tax for Failure To Maintain HDHP Coverage",
       lines: [
         {
           index: "18",

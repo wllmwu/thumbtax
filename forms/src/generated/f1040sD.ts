@@ -9,8 +9,9 @@ export const f1040sD: FormSpecification = {
   subtitle: "Capital Gains and Losses",
   sections: [
     {
-      heading:
-        "Part I. Short-Term Capital Gains and Losses—Generally Assets Held One Year or Less (see instructions)",
+      heading: "Part I",
+      subtitle:
+        "Short-Term Capital Gains and Losses—Generally Assets Held One Year or Less (see instructions)",
       columns: [
         { index: "(d)", instructions: "Proceeds (sales price)" },
         { index: "(e)", instructions: "Cost (or other basis)" },
@@ -232,8 +233,9 @@ export const f1040sD: FormSpecification = {
       ],
     },
     {
-      heading:
-        "Part II. Long-Term Capital Gains and Losses—Generally Assets Held More Than One Year (see instructions)",
+      heading: "Part II",
+      subtitle:
+        "Long-Term Capital Gains and Losses—Generally Assets Held More Than One Year (see instructions)",
       columns: [
         { index: "(d)", instructions: "Proceeds (sales price)" },
         { index: "(e)", instructions: "Cost (or other basis)" },
@@ -464,7 +466,8 @@ export const f1040sD: FormSpecification = {
       ],
     },
     {
-      heading: "Part III. Summary",
+      heading: "Part III",
+      subtitle: "Summary",
       lines: [
         {
           index: "16",

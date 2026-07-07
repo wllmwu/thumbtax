@@ -9,7 +9,8 @@ export const f1040s1A: FormSpecification = {
   subtitle: "Additional Deductions",
   sections: [
     {
-      heading: "Part I. Modified Adjusted Gross Income (MAGI) Amount",
+      heading: "Part I",
+      subtitle: "Modified Adjusted Gross Income (MAGI) Amount",
       lines: [
         {
           index: "1",
@@ -78,7 +79,8 @@ export const f1040s1A: FormSpecification = {
       ],
     },
     {
-      heading: "Part II. No Tax on Tips",
+      heading: "Part II",
+      subtitle: "No Tax on Tips",
       lines: [
         {
           index: "4",
@@ -271,7 +273,8 @@ export const f1040s1A: FormSpecification = {
       ],
     },
     {
-      heading: "Part III. No Tax on Overtime",
+      heading: "Part III",
+      subtitle: "No Tax on Overtime",
       lines: [
         {
           index: "14a",
@@ -430,7 +433,8 @@ export const f1040s1A: FormSpecification = {
       ],
     },
     {
-      heading: "Part IV. No Tax on Car Loan Interest",
+      heading: "Part IV",
+      subtitle: "No Tax on Car Loan Interest",
       columns: [
         { index: "(i)", instructions: "Vehicle identification number (VIN)" },
         {
@@ -727,7 +731,8 @@ export const f1040s1A: FormSpecification = {
       ],
     },
     {
-      heading: "Part V. Enhanced Deduction for Seniors",
+      heading: "Part V",
+      subtitle: "Enhanced Deduction for Seniors",
       lines: [
         {
           index: "31",
@@ -840,7 +845,8 @@ export const f1040s1A: FormSpecification = {
       ],
     },
     {
-      heading: "Part VI. Total Additional Deductions",
+      heading: "Part VI",
+      subtitle: "Total Additional Deductions",
       lines: [
         {
           index: "38",

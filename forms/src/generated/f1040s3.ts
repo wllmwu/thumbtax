@@ -9,7 +9,8 @@ export const f1040s3: FormSpecification = {
   subtitle: "Additional Credits and Payments",
   sections: [
     {
-      heading: "Part I. Nonrefundable Credits",
+      heading: "Part I",
+      subtitle: "Nonrefundable Credits",
       lines: [
         {
           index: "1",
@@ -174,7 +175,8 @@ export const f1040s3: FormSpecification = {
       ],
     },
     {
-      heading: "Part II. Other Payments and Refundable Credits",
+      heading: "Part II",
+      subtitle: "Other Payments and Refundable Credits",
       lines: [
         {
           index: "9",

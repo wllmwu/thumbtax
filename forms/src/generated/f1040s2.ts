@@ -9,7 +9,8 @@ export const f1040s2: FormSpecification = {
   subtitle: "Additional Taxes",
   sections: [
     {
-      heading: "Part I. Tax",
+      heading: "Part I",
+      subtitle: "Tax",
       lines: [
         {
           index: "1",
@@ -106,7 +107,8 @@ export const f1040s2: FormSpecification = {
       ],
     },
     {
-      heading: "Part II. Other Taxes",
+      heading: "Part II",
+      subtitle: "Other Taxes",
       lines: [
         {
           index: "4",

@@ -9,7 +9,8 @@ export const f1040sC: FormSpecification = {
   subtitle: "Profit or Loss From Business (Sole Proprietorship)",
   sections: [
     {
-      heading: "Part I. Income",
+      heading: "Part I",
+      subtitle: "Income",
       lines: [
         {
           index: "1",
@@ -90,7 +91,8 @@ export const f1040sC: FormSpecification = {
       ],
     },
     {
-      heading: "Part II. Expenses.",
+      heading: "Part II",
+      subtitle: "Expenses.",
       instructions: {
         $$mdtype: "Tag",
         name: "p",
@@ -438,7 +440,8 @@ export const f1040sC: FormSpecification = {
       ],
     },
     {
-      heading: "Part III. Cost of Goods Sold (see instructions)",
+      heading: "Part III",
+      subtitle: "Cost of Goods Sold (see instructions)",
       lines: [
         {
           index: "33",
@@ -524,7 +527,8 @@ export const f1040sC: FormSpecification = {
       ],
     },
     {
-      heading: "Part IV. Information on Your Vehicle",
+      heading: "Part IV",
+      subtitle: "Information on Your Vehicle",
       lines: [
         {
           index: "43–47b",
@@ -534,7 +538,8 @@ export const f1040sC: FormSpecification = {
       ],
     },
     {
-      heading: "Part V. Other Expenses",
+      heading: "Part V",
+      subtitle: "Other Expenses",
       lines: [
         {
           index: "48",
