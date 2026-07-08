@@ -40,7 +40,7 @@
   grid-column: 3 / -1;
 }
 
-.form-section-heading-cell {
+.form-section-header-cell {
   grid-row: auto / span 1;
   grid-column: 1 / -1;
 }

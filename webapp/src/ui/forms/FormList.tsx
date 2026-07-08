@@ -2,6 +2,7 @@ import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { FormTable } from "#src/ui/forms/FormTable";
+import { ProseContent } from "#src/ui/forms/ProseContent";
 import { Badge } from "#src/ui/primitives/Badge";
 
 import type { FormSpecification } from "@thumbtax/forms";
@@ -65,7 +66,17 @@ function FormListItem({
           </Button>
         )}
       </span>
-      {specification.subtitle && <p>{specification.subtitle}</p>}
+      {specification.subtitle && <span>{specification.subtitle}</span>}
+      {specification.instructions && (
+        <span>
+          <ProseContent nodes={specification.instructions} />
+        </span>
+      )}
+      {specification.commentary && (
+        <span>
+          <ProseContent nodes={specification.commentary} />
+        </span>
+      )}
       <Disclosure>
         <Button slot="trigger">Show/hide {specification.title}</Button>
         <DisclosurePanel>

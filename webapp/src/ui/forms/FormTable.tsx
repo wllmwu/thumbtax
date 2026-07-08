@@ -53,7 +53,16 @@ function FormLineTableRow({
         {line.index}
       </span>
       <span id={lineDescriptionTextId} className={styles.formTableRowHeader}>
-        <ProseContent nodes={line.instructions} />
+        {line.instructions && (
+          <span>
+            <ProseContent nodes={line.instructions} />
+          </span>
+        )}
+        {line.commentary && (
+          <span>
+            <ProseContent nodes={line.commentary} />
+          </span>
+        )}
       </span>
       {"boxes" in line ? (
         line.boxes.map((box, index) => (
@@ -110,6 +119,15 @@ export function FormTable({
     let count = allowsMultipleInstances ? 1 : 0;
     for (const section of specification.sections) {
       if (section.heading) {
+        count++;
+      }
+      if (section.subtitle) {
+        count++;
+      }
+      if (section.instructions) {
+        count++;
+      }
+      if (section.commentary) {
         count++;
       }
       count++;
@@ -203,14 +221,50 @@ export function FormTable({
               <React.Fragment key={sectionIndex}>
                 {section.heading && (
                   <div className={styles.formTableRow}>
-                    <div
+                    <h3
                       className={classNames(
-                        styles.formSectionHeadingCell,
+                        styles.formSectionHeaderCell,
                         styles.formTableRowHeader,
                       )}
                     >
                       {section.heading}
-                    </div>
+                    </h3>
+                  </div>
+                )}
+                {section.subtitle && (
+                  <div className={styles.formTableRow}>
+                    <span
+                      className={classNames(
+                        styles.formSectionHeaderCell,
+                        styles.formTableRowHeader,
+                      )}
+                    >
+                      {section.subtitle}
+                    </span>
+                  </div>
+                )}
+                {section.instructions && (
+                  <div className={styles.formTableRow}>
+                    <span
+                      className={classNames(
+                        styles.formSectionHeaderCell,
+                        styles.formTableRowHeader,
+                      )}
+                    >
+                      <ProseContent nodes={section.instructions} />
+                    </span>
+                  </div>
+                )}
+                {section.commentary && (
+                  <div className={styles.formTableRow}>
+                    <span
+                      className={classNames(
+                        styles.formSectionHeaderCell,
+                        styles.formTableRowHeader,
+                      )}
+                    >
+                      <ProseContent nodes={section.commentary} />
+                    </span>
                   </div>
                 )}
                 <div className={styles.formTableRow}>
