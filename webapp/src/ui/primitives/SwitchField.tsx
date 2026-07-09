@@ -14,6 +14,7 @@ export function SwitchField({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
+  "aria-details": ariaDetails,
   description,
   disabled,
   readOnly,
@@ -26,6 +27,7 @@ export function SwitchField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      aria-details={ariaDetails}
       isSelected={value}
       onChange={onChange}
       isDisabled={disabled}

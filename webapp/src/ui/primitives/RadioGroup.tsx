@@ -27,6 +27,7 @@ export function RadioGroup<TValue extends string>({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
+  "aria-details": ariaDetails,
   description,
   disabled,
   readOnly,
@@ -50,6 +51,7 @@ export function RadioGroup<TValue extends string>({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      aria-details={ariaDetails}
       isDisabled={disabled}
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}

@@ -17,6 +17,7 @@ export function SearchField({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
+  "aria-details": ariaDetails,
   placeholder,
   description,
   disabled,
@@ -31,6 +32,7 @@ export function SearchField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      aria-details={ariaDetails}
       value={value}
       onChange={onChange}
       autoFocus={autoFocus}

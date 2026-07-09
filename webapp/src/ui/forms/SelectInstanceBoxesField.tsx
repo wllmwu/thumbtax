@@ -43,6 +43,7 @@ export function SelectInstanceBoxesField({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
+  "aria-details": ariaDetails,
   specifications,
   instanceRegistry,
   boxAddress,
@@ -102,6 +103,7 @@ export function SelectInstanceBoxesField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      aria-details={ariaDetails}
       selectionMode="multiple"
       isInvalid={!!errorMessage}
       value={selectedKeys}

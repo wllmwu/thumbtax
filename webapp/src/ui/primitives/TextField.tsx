@@ -20,6 +20,7 @@ export function TextField({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
+  "aria-details": ariaDetails,
   inputMode,
   placeholder,
   description,
@@ -37,6 +38,7 @@ export function TextField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      aria-details={ariaDetails}
       inputMode={inputMode}
       value={value}
       onChange={onChange}

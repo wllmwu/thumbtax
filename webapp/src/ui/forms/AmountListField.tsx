@@ -40,6 +40,7 @@ export function AmountListField({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
+  "aria-details": ariaDetails,
   errorMessage,
   list,
   onChange,
@@ -111,6 +112,7 @@ export function AmountListField({
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
         aria-describedby={describedBy}
+        aria-details={ariaDetails}
         isInvalid={!!errorMessage}
       >
         {list.map(({ label, amount }, index) => (

@@ -29,6 +29,7 @@ export function SelectField({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
+  "aria-details": ariaDetails,
   description,
   disabled,
   errorMessage,
@@ -50,6 +51,7 @@ export function SelectField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      aria-details={ariaDetails}
       value={value}
       onChange={handleChange}
       isDisabled={disabled}
