@@ -45,21 +45,26 @@ function FormLineTableRow({
   }
 
   const lineIndexTextId = `${instance.id}-line-${line.index}-index`;
-  const lineDescriptionTextId = `${instance.id}-line-${line.index}-description`;
+  const lineInstructionsTextId = line.instructions
+    ? `${instance.id}-line-${line.index}-instructions`
+    : undefined;
+  const lineCommentaryTextId = line.commentary
+    ? `${instance.id}-line-${line.index}-commentary`
+    : undefined;
 
   return (
     <div className={styles.formTableRow}>
       <span id={lineIndexTextId} className={styles.formTableRowHeader}>
         {line.index}
       </span>
-      <span id={lineDescriptionTextId} className={styles.formTableRowHeader}>
+      <span className={styles.formTableRowHeader}>
         {line.instructions && (
-          <span>
+          <span id={lineInstructionsTextId}>
             <ProseContent nodes={line.instructions} />
           </span>
         )}
         {line.commentary && (
-          <span>
+          <span id={lineCommentaryTextId}>
             <ProseContent nodes={line.commentary} />
           </span>
         )}
@@ -83,10 +88,11 @@ function FormLineTableRow({
                 instance.id,
                 box.column,
               )}`}
-              aria-describedby={`${lineDescriptionTextId} ${makeColumnDescriptionTextId(
+              aria-describedby={`${lineInstructionsTextId} ${makeColumnDescriptionTextId(
                 instance.id,
                 box.column,
               )}`}
+              aria-details={lineCommentaryTextId}
             />
           </span>
         ))
@@ -96,7 +102,8 @@ function FormLineTableRow({
             instance={instance}
             box={line.box}
             aria-labelledby={lineIndexTextId}
-            aria-describedby={lineDescriptionTextId}
+            aria-describedby={lineInstructionsTextId}
+            aria-details={lineCommentaryTextId}
           />
         </span>
       )}
