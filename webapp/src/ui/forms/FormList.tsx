@@ -1,4 +1,9 @@
-import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
+import {
+  Button,
+  Disclosure,
+  DisclosurePanel,
+  Link,
+} from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { FormTable } from "#src/ui/forms/FormTable";
@@ -27,15 +32,19 @@ function FormListItem({
     return null;
   }
 
+  const formListItemId = specification.class;
   const formTitleHeadingId = `${specification.class}-title`;
   const moveUpButtonId = `${specification.class}-move-up`;
   const moveDownButtonId = `${specification.class}-move-down`;
   const deleteButtonId = `${specification.class}-delete`;
 
   return (
-    <li>
+    <li id={formListItemId}>
       <span>
         <h2 id={formTitleHeadingId}>{specification.title}</h2>
+        <Link href={`#${formListItemId}`} aria-label="Link to this form">
+          #
+        </Link>
         <Badge>{specification.category}</Badge>
         {specification.maxInstances !== 1 && <Badge>{instances.length}</Badge>}
         <Button
