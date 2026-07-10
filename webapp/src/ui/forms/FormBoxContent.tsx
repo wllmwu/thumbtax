@@ -23,7 +23,7 @@ type Props = {
   instance: FormInstance;
   box: FormBox<boolean>;
   "aria-labelledby": string;
-  "aria-describedby": string | undefined;
+  "aria-describedby"?: string;
   "aria-details": string | undefined;
 };
 
