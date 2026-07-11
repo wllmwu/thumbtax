@@ -16,9 +16,14 @@ const PROSE_TYPES: NodeType[] = [
   "text",
 ];
 
+const ALLOWED_TAGS: Array<string | undefined> = ["fl"];
+
 export function validateProseContent(node: Node): ValidationError[] {
   for (const descendant of node.walk()) {
-    if (!PROSE_TYPES.includes(descendant.type)) {
+    const isProseNode = PROSE_TYPES.includes(descendant.type);
+    const isAllowedTag =
+      descendant.type === "tag" && ALLOWED_TAGS.includes(descendant.tag);
+    if (!isProseNode && !isAllowedTag) {
       return [
         {
           id: "prose-content",

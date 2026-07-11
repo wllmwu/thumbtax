@@ -251,15 +251,18 @@ export const config: Config = {
       validate: validateProseContent,
     },
     commentary: {
+      transform: makeTransformer("commentary"),
+      validate: validateProseContent,
+    },
+    fl: {
       attributes: {
-        lessCommon: {
-          type: "Boolean",
-          default: false,
+        formClass: {
+          type: "String",
+          matches: [...FORM_CLASSES],
           errorLevel: "error",
         },
       },
-      transform: makeTransformer("commentary"),
-      validate: validateProseContent,
+      render: "FormLink",
     },
   },
   partials: {
