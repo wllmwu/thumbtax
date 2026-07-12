@@ -1,0 +1,48 @@
+:root {
+  --color-background: #fff;
+  --color-background-surface: #f0f0f0;
+  --color-palette-primary: #00f;
+  --color-palette-secondary: #66f;
+  --color-text-body: #000;
+  --color-text-on-primary: #fff;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-body);
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+a {
+  color: var(--color-palette-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:is(h1, h2, h3, h4, h5, h6) a {
+  color: inherit;
+}
