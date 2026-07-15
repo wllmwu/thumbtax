@@ -45,7 +45,7 @@ function FormLineTableRow({
   }
 
   const lineIndexTextId = `${instance.id}-line-${line.index}-index`;
-  const lineDetailsTextId = line.instructions
+  const lineDescriptionTextId = line.instructions
     ? `${instance.id}-line-${line.index}-details`
     : undefined;
 
@@ -54,7 +54,7 @@ function FormLineTableRow({
       <span id={lineIndexTextId} className={styles.formTableRowHeader}>
         {line.index}
       </span>
-      <span id={lineDetailsTextId} className={styles.formTableRowHeader}>
+      <span id={lineDescriptionTextId} className={styles.formTableRowHeader}>
         {line.instructions && (
           <span>
             <ProseContent nodes={line.instructions} />
@@ -85,7 +85,7 @@ function FormLineTableRow({
                 instance.id,
                 box.column,
               )}`}
-              aria-details={lineDetailsTextId}
+              aria-describedby={lineDescriptionTextId}
             />
           </span>
         ))
@@ -95,7 +95,7 @@ function FormLineTableRow({
             instance={instance}
             box={line.box}
             aria-labelledby={lineIndexTextId}
-            aria-details={lineDetailsTextId}
+            aria-describedby={lineDescriptionTextId}
           />
         </span>
       )}

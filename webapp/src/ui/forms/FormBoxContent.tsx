@@ -23,8 +23,8 @@ type Props = {
   instance: FormInstance;
   box: FormBox<boolean>;
   "aria-labelledby": string;
-  "aria-describedby"?: string;
-  "aria-details": string | undefined;
+  "aria-describedby": string | undefined;
+  "aria-details"?: string | undefined;
 };
 
 const YES_NO_RADIO_OPTIONS: Array<RadioOption<"yes" | "no">> = [
