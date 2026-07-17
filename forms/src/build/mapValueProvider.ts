@@ -6,8 +6,12 @@ import {
   COMPUTED_VALUE_PROVIDER_TYPES,
   isValueProviderType,
 } from "../types/valueProviderType";
-import { requireNumber, requireOneOf, requireString } from "./attributes";
-import { isTagNamed } from "./nodeHelpers";
+import {
+  requireNumber,
+  requireOneOf,
+  requireString,
+} from "./attributeRequires";
+import { isTagNamed } from "./isTagNamed";
 
 import type {
   ComputedValueProvider,

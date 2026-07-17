@@ -2,11 +2,15 @@ import { Tag } from "@markdoc/markdoc";
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
 import { FORM_CATEGORIES } from "../types/formCategory";
-import { requireNumber, requireOneOf, requireString } from "./attributes";
+import {
+  requireNumber,
+  requireOneOf,
+  requireString,
+} from "./attributeRequires";
 import { extractPlainText } from "./extractPlainText";
 import { extractProse } from "./extractProse";
+import { isTagNamed } from "./isTagNamed";
 import { mapValueProvider } from "./mapValueProvider";
-import { isTagNamed } from "./nodeHelpers";
 
 import type {
   FormBox,
