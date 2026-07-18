@@ -16,15 +16,8 @@ The code is split into these top-level Node packages:
 - `forms` (`@thumbtax/forms`): Static tax form data
 - `webapp`: Frontend React app
 
-## Commands
-
-Run these commands within each top-level package, unless otherwise noted:
-
-- Typecheck: `npm run typecheck`
-- Lint: `npm run lint`
-- Autofix lint errors (formatting, import sort, etc.): `npm run fixlint`
-- Test: `npm run test`
-  - Not used in `common` since it doesn't have tests
+Each package has an `index.md` file at its root and additional `index.md` files in each child directory (module).
+These files provide context about the contents of each package or module.
 
 ## Patterns
 
@@ -33,3 +26,6 @@ Run these commands within each top-level package, unless otherwise noted:
 - Keep code type-safe.
   Don't use the exclamation mark operator or type casts and don't disable the typechecker or linter.
 - Use the `absurd(x: never)` helper from `@thumbtax/common` for exhaustive type checks.
+- Keep helpers discoverable.
+  If a helper is used in multiple places, prefer to put it in its own file.
+  Don't create dumping-ground files with multiple unrelated exports.
