@@ -5,9 +5,25 @@ import {
   Text,
 } from "react-aria-components";
 
+import styles from "#src/ui/primitives/CheckboxField.module.css";
+
 import type { FieldProps } from "#src/ui/types/fieldProps";
+import type React from "react";
 
 type Props = Omit<FieldProps<boolean>, "placeholder">;
+
+function CheckboxIndicator({ checked }: { checked: boolean }): React.ReactNode {
+  return (
+    <svg
+      className={styles.checkboxIndicator}
+      viewBox="0 0 16 16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect x="1" y="1" width="14" height="14" rx="5" />
+      {checked && <polyline points="3,8 7,12 13,4" />}
+    </svg>
+  );
+}
 
 export function CheckboxField({
   label,
@@ -26,18 +42,19 @@ export function CheckboxField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      className={styles.checkboxField}
       isSelected={value}
       onChange={onChange}
       isDisabled={disabled}
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}
     >
-      <CheckboxButton>
-        {`${value}`}
+      <CheckboxButton className={styles.checkboxButton}>
+        <CheckboxIndicator checked={value} />
         {label}
       </CheckboxButton>
-      {description && <Text slot="description">{description}</Text>}
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
+      {description && <Text slot="description">{description}</Text>}
     </AriaCheckboxField>
   );
 }

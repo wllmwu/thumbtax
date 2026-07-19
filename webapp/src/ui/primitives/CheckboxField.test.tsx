@@ -23,9 +23,7 @@ describe("CheckboxField", () => {
   it("renders unchecked state with label", async () => {
     renderComponent({ label: "Test", value: false });
 
-    expect(await screen.findByRole("checkbox")).toHaveAccessibleName(
-      "falseTest",
-    );
+    expect(await screen.findByRole("checkbox")).toHaveAccessibleName("Test");
     expect(await screen.findByRole("checkbox")).not.toBeChecked();
   });
 
@@ -39,9 +37,7 @@ describe("CheckboxField", () => {
   it("renders checked state with label", async () => {
     renderComponent({ label: "Test", value: true });
 
-    expect(await screen.findByRole("checkbox")).toHaveAccessibleName(
-      "trueTest",
-    );
+    expect(await screen.findByRole("checkbox")).toHaveAccessibleName("Test");
     expect(await screen.findByRole("checkbox")).toBeChecked();
   });
 

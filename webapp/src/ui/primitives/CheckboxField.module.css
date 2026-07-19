@@ -1,0 +1,44 @@
+.checkbox-field {
+  display: flex;
+  flex-direction: column;
+
+  .checkbox-button {
+    align-items: baseline;
+    display: flex;
+    flex-direction: row;
+    font-weight: 500;
+    gap: 0.25em;
+
+    .checkbox-indicator {
+      height: 1em;
+      position: relative;
+      stroke: var(--color-border);
+      stroke-width: 1px;
+      top: 0.0625em;
+      width: 1em;
+
+      polyline {
+        stroke: var(--color-text-on-primary);
+        stroke-width: 2px;
+      }
+
+      rect {
+        fill: var(--color-background);
+      }
+    }
+
+    :is(&[data-disabled], &[data-readonly]) .checkbox-indicator {
+      opacity: 0.5;
+    }
+
+    &[data-pressed] .checkbox-indicator {
+      filter: brightness(0.75);
+    }
+
+    &[data-selected] .checkbox-indicator {
+      rect {
+        fill: var(--color-palette-primary);
+      }
+    }
+  }
+}
