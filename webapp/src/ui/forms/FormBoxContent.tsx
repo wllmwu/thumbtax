@@ -24,7 +24,6 @@ type Props = {
   box: FormBox<boolean>;
   "aria-labelledby": string;
   "aria-describedby": string | undefined;
-  "aria-details"?: string | undefined;
 };
 
 const YES_NO_RADIO_OPTIONS: Array<RadioOption<"yes" | "no">> = [
@@ -37,14 +36,12 @@ function ValueDisplay({
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
-  ariaDetails,
   resolvedValue,
 }: {
   boxFormat: BoxFormat;
   errorMessage: React.ReactNode;
   ariaLabelledBy: string;
   ariaDescribedBy: string | undefined;
-  ariaDetails: string | undefined;
   resolvedValue: number;
 }) {
   const formatBoxValue = useFormatBoxValue({
@@ -61,7 +58,6 @@ function ValueDisplay({
         <CheckboxField
           aria-labelledby={ariaLabelledBy}
           aria-describedby={ariaDescribedBy}
-          aria-details={ariaDetails}
           readOnly
           value={resolvedValue !== 0}
           onChange={noop}
@@ -74,7 +70,6 @@ function ValueDisplay({
         <TextField
           aria-labelledby={ariaLabelledBy}
           aria-describedby={ariaDescribedBy}
-          aria-details={ariaDetails}
           readOnly
           errorMessage={errorMessage}
           value={formattedValue}
@@ -86,7 +81,6 @@ function ValueDisplay({
         <RadioGroup
           aria-labelledby={ariaLabelledBy}
           aria-describedby={ariaDescribedBy}
-          aria-details={ariaDetails}
           readOnly
           errorMessage={errorMessage}
           value={resolvedValue === 0 ? "no" : "yes"}
@@ -104,7 +98,6 @@ type InputBoxProps = {
   errorMessage: React.ReactNode;
   ariaLabelledBy: string;
   ariaDescribedBy: string | undefined;
-  ariaDetails: string | undefined;
   instance: FormInstance;
 };
 
@@ -114,7 +107,6 @@ function CheckboxInputBox({
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
-  ariaDetails,
   instance,
 }: InputBoxProps & {
   boxFormat: BoxFormat;
@@ -137,7 +129,6 @@ function CheckboxInputBox({
     <RadioGroup
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      aria-details={ariaDetails}
       readOnly
       errorMessage={errorMessage}
       value={value ? "yes" : "no"}
@@ -148,7 +139,6 @@ function CheckboxInputBox({
     <CheckboxField
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      aria-details={ariaDetails}
       errorMessage={errorMessage}
       value={value}
       onChange={onChange}
@@ -161,7 +151,6 @@ function ListAmountsInputBox({
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
-  ariaDetails,
   instance,
 }: InputBoxProps) {
   const setBoxInput = useStore((state) => state.setBoxInput);
@@ -182,7 +171,6 @@ function ListAmountsInputBox({
     <AmountListField
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      aria-details={ariaDetails}
       errorMessage={errorMessage}
       list={list}
       onChange={onChange}
@@ -196,7 +184,6 @@ function NumberInputBox({
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
-  ariaDetails,
   instance,
   skipped,
 }: InputBoxProps & {
@@ -221,7 +208,6 @@ function NumberInputBox({
     <NumberField
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      aria-details={ariaDetails}
       disabled={skipped}
       errorMessage={errorMessage}
       format={boxFormat}
@@ -237,7 +223,6 @@ function OverrideNumberInputBox({
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
-  ariaDetails,
   instance,
   value,
 }: InputBoxProps & {
@@ -282,7 +267,6 @@ function OverrideNumberInputBox({
         <NumberField
           aria-labelledby={ariaLabelledBy}
           aria-describedby={ariaDescribedBy}
-          aria-details={ariaDetails}
           errorMessage={errorMessage}
           format={boxFormat}
           value={value}
@@ -294,7 +278,6 @@ function OverrideNumberInputBox({
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
-          ariaDetails={ariaDetails}
           resolvedValue={value}
         />
       )}
@@ -308,7 +291,6 @@ function SelectInstanceBoxesInputBox({
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
-  ariaDetails,
   instance,
 }: InputBoxProps & {
   boxValue: Extract<ValueProvider, { type: "select_instance_boxes_input" }>;
@@ -340,7 +322,6 @@ function SelectInstanceBoxesInputBox({
     <SelectInstanceBoxesField
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      aria-details={ariaDetails}
       errorMessage={errorMessage}
       specifications={specifications}
       instanceRegistry={instanceRegistry}
@@ -358,7 +339,6 @@ function SelectValueInputBox({
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
-  ariaDetails,
   instance,
 }: InputBoxProps & {
   boxValue: Extract<ValueProvider, { type: "select_value_input" }>;
@@ -391,7 +371,6 @@ function SelectValueInputBox({
     <SelectField
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      aria-details={ariaDetails}
       errorMessage={errorMessage}
       value={selectedId}
       onChange={onChange}
@@ -410,7 +389,6 @@ export function FormBoxContent({
   box,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "aria-details": ariaDetails,
 }: Props) {
   const resolvedBox = useStore(
     (state) => state.workbook[instance.id][box.identifier],
@@ -453,7 +431,6 @@ export function FormBoxContent({
           boxIdentifier={box.identifier}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
-          ariaDetails={ariaDetails}
           instance={instance}
           errorMessage={errorMessage}
         />
@@ -465,7 +442,6 @@ export function FormBoxContent({
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
-          ariaDetails={ariaDetails}
           instance={instance}
         />
       );
@@ -477,7 +453,6 @@ export function FormBoxContent({
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
-          ariaDetails={ariaDetails}
           instance={instance}
           skipped={resolvedBox.skipped}
         />
@@ -490,7 +465,6 @@ export function FormBoxContent({
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
-          ariaDetails={ariaDetails}
           instance={instance}
           value={resolvedBox.value}
         />
@@ -503,7 +477,6 @@ export function FormBoxContent({
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
-          ariaDetails={ariaDetails}
           instance={instance}
         />
       );
@@ -515,7 +488,6 @@ export function FormBoxContent({
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
-          ariaDetails={ariaDetails}
           instance={instance}
         />
       );
@@ -545,7 +517,6 @@ export function FormBoxContent({
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
-          ariaDetails={ariaDetails}
           resolvedValue={resolvedBox.value}
         />
       );
