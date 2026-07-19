@@ -1,12 +1,13 @@
 import React from "react";
 
 import classNames from "classnames";
-import { Button, DialogTrigger, Modal } from "react-aria-components";
+import { DialogTrigger, Modal } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
 import { ProseContent } from "#src/ui/forms/ProseContent";
+import { Button } from "#src/ui/primitives/Button";
 import styles from "#src/ui/forms/FormTable.module.css";
 
 import type { FormLine, FormSpecification } from "@thumbtax/forms";

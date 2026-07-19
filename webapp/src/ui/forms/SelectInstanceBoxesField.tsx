@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  Button,
   FieldError,
   type Key,
   ListBox,
@@ -9,6 +8,8 @@ import {
   Popover,
   Select,
 } from "react-aria-components";
+
+import { Button } from "#src/ui/primitives/Button";
 
 import type { SpecificationRegistry, ValueProvider } from "@thumbtax/forms";
 import type { BoxAddress } from "#src/common/types/boxAddress";

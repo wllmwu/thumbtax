@@ -2,7 +2,6 @@ import React from "react";
 
 import { FILING_STATUSES } from "@thumbtax/common";
 import {
-  Button,
   Collection,
   Label,
   Menu,
@@ -14,6 +13,7 @@ import {
 
 import { useStore } from "#src/state/useStore";
 import { formatFilingStatus } from "#src/ui/formatting/formatFilingStatus";
+import { Button } from "#src/ui/primitives/Button";
 
 export function FilingStatusSelector() {
   const filingStatus = useStore((state) => state.applicationState.filingStatus);

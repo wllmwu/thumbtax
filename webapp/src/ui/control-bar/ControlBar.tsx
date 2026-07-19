@@ -1,9 +1,10 @@
-import { Button, DialogTrigger, Modal, Toolbar } from "react-aria-components";
+import { DialogTrigger, Modal, Toolbar } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { AddFormMenu } from "#src/ui/control-bar/AddFormMenu";
 import { FilingStatusSelector } from "#src/ui/control-bar/FilingStatusSelector";
 import { SettingsDialog } from "#src/ui/control-bar/SettingsDialog";
+import { Button } from "#src/ui/primitives/Button";
 
 export function ControlBar() {
   const isUndoDisabled = useStore((state) => state.history.past.length === 0);

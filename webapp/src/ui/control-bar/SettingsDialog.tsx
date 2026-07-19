@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  Button,
   Dialog,
   FieldError,
   Form,
@@ -13,6 +12,7 @@ import {
 } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
+import { Button } from "#src/ui/primitives/Button";
 import { SwitchField } from "#src/ui/primitives/SwitchField";
 
 export function SettingsDialog() {
@@ -61,7 +61,9 @@ export function SettingsDialog() {
             <FieldError>Must be between 0 and 1000.</FieldError>
           </NumberField>
           <Button slot="close">Cancel</Button>
-          <Button type="submit">Save</Button>
+          <Button type="submit" variant="primary">
+            Save
+          </Button>
         </Form>
       </>
     ),

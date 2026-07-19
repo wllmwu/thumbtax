@@ -1,13 +1,9 @@
 import React from "react";
 
 import { produce } from "immer";
-import {
-  Button,
-  FieldError,
-  FieldErrorContext,
-  Group,
-} from "react-aria-components";
+import { FieldError, FieldErrorContext, Group } from "react-aria-components";
 
+import { Button } from "#src/ui/primitives/Button";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { TextField } from "#src/ui/primitives/TextField";
 

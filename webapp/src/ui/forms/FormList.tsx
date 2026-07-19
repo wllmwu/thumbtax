@@ -1,10 +1,11 @@
-import { Button, Disclosure, DisclosurePanel } from "react-aria-components";
+import { Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { FormLink } from "#src/ui/forms/FormLink";
 import { FormTable } from "#src/ui/forms/FormTable";
 import { ProseContent } from "#src/ui/forms/ProseContent";
 import { Badge } from "#src/ui/primitives/Badge";
+import { Button } from "#src/ui/primitives/Button";
 
 import type { FormSpecification } from "@thumbtax/forms";
 

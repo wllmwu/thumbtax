@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  Button,
   FieldError,
   type Key,
   Label,
@@ -13,6 +12,8 @@ import {
   SelectValue,
   Text,
 } from "react-aria-components";
+
+import { Button } from "#src/ui/primitives/Button";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
 

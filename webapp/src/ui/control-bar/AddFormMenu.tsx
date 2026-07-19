@@ -3,7 +3,6 @@ import React from "react";
 import { absurd } from "@thumbtax/common";
 import {
   Autocomplete,
-  Button,
   Collection,
   Header,
   Menu,
@@ -15,6 +14,7 @@ import {
 } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
+import { Button } from "#src/ui/primitives/Button";
 import { SearchField } from "#src/ui/primitives/SearchField";
 
 import type { FormSpecification } from "@thumbtax/forms";

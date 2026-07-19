@@ -1,8 +1,9 @@
 import React from "react";
 
-import { Button, Dialog, Form, Heading } from "react-aria-components";
+import { Dialog, Form, Heading } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
+import { Button } from "#src/ui/primitives/Button";
 import { TextField } from "#src/ui/primitives/TextField";
 
 import type { FormClass } from "@thumbtax/common";
