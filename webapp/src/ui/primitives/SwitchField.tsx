@@ -5,9 +5,25 @@ import {
   Text,
 } from "react-aria-components";
 
+import styles from "#src/ui/primitives/SwitchField.module.css";
+
 import type { FieldProps } from "#src/ui/types/fieldProps";
+import type React from "react";
 
 type Props = Omit<FieldProps<boolean>, "placeholder">;
+
+function SwitchIndicator({ checked }: { checked: boolean }): React.ReactNode {
+  return (
+    <svg
+      className={styles.switchIndicator}
+      viewBox="0 0 28 16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect x="1" y="1" ry="50%" width="26" height="14" />
+      <circle r="6" cx={checked ? 20 : 8} cy="8" />
+    </svg>
+  );
+}
 
 export function SwitchField({
   label,
@@ -26,18 +42,19 @@ export function SwitchField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      className={styles.switchField}
       isSelected={value}
       onChange={onChange}
       isDisabled={disabled}
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}
     >
-      <SwitchButton>
-        {`${value}`}
+      <SwitchButton className={styles.switchButton}>
+        <SwitchIndicator checked={value} />
         {label}
       </SwitchButton>
-      {description && <Text slot="description">{description}</Text>}
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
+      {description && <Text slot="description">{description}</Text>}
     </AriaSwitchField>
   );
 }
