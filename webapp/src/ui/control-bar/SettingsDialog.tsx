@@ -14,6 +14,7 @@ import {
 import { useStore } from "#src/state/useStore";
 import { Button } from "#src/ui/primitives/Button";
 import { SwitchField } from "#src/ui/primitives/SwitchField";
+import fieldStyles from "#src/ui/primitives/fields.module.css";
 
 export function SettingsDialog() {
   const preferences = useStore((state) => state.userPreferences);
@@ -47,6 +48,7 @@ export function SettingsDialog() {
             onChange={setIsBrowserSaveEnabled}
           />
           <NumberField
+            className={fieldStyles.inputBoxField}
             value={maxHistorySize}
             onChange={setMaxHistorySize}
             minValue={0}

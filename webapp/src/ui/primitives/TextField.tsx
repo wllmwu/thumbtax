@@ -7,6 +7,8 @@ import {
   type TextFieldProps,
 } from "react-aria-components";
 
+import fieldStyles from "#src/ui/primitives/fields.module.css";
+
 import type { FieldProps } from "#src/ui/types/fieldProps";
 import type { InputProps } from "#src/ui/types/inputProps";
 
@@ -37,6 +39,7 @@ export function TextField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      className={fieldStyles.inputBoxField}
       inputMode={inputMode}
       value={value}
       onChange={onChange}

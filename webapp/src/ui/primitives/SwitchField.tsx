@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import {
   FieldError,
   SwitchButton,
@@ -5,6 +6,7 @@ import {
   Text,
 } from "react-aria-components";
 
+import fieldStyles from "#src/ui/primitives/fields.module.css";
 import styles from "#src/ui/primitives/SwitchField.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
@@ -42,14 +44,16 @@ export function SwitchField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      className={styles.switchField}
+      className={fieldStyles.smallControlField}
       isSelected={value}
       onChange={onChange}
       isDisabled={disabled}
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}
     >
-      <SwitchButton className={styles.switchButton}>
+      <SwitchButton
+        className={classNames(fieldStyles.button, styles.switchButton)}
+      >
         <SwitchIndicator checked={value} />
         {label}
       </SwitchButton>

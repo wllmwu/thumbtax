@@ -1,42 +1,31 @@
-.switch-field {
-  display: flex;
-  flex-direction: column;
+.switch-button {
+  .switch-indicator {
+    height: 1.5em;
+    position: relative;
+    stroke: var(--color-text-subdued);
+    stroke-width: 1px;
+    top: 0.3125em;
+    width: 2.625em;
 
-  .switch-button {
-    align-items: baseline;
-    display: flex;
-    flex-direction: row;
-    font-weight: 500;
-    gap: 0.25em;
-
-    .switch-indicator {
-      height: 1.5em;
-      position: relative;
-      stroke: var(--color-text-subdued);
-      stroke-width: 1px;
-      top: 0.3125em;
-      width: 2.625em;
-
-      circle {
-        fill: var(--color-background);
-        transition: cx 0.25s ease-out;
-      }
-
-      rect {
-        fill: var(--color-palette-primary);
-        fill-opacity: 0;
-        transition: fill-opacity 0.25s ease-out;
-      }
+    circle {
+      fill: var(--color-background);
+      transition: cx 0.25s ease-out;
     }
 
-    &[data-pressed] .switch-indicator {
-      filter: brightness(0.75);
+    rect {
+      fill: var(--color-palette-primary);
+      fill-opacity: 0;
+      transition: fill-opacity 0.25s ease-out;
     }
+  }
 
-    &[data-selected] .switch-indicator {
-      rect {
-        fill-opacity: 1;
-      }
+  &[data-pressed] .switch-indicator {
+    filter: brightness(0.75);
+  }
+
+  &[data-selected] .switch-indicator {
+    rect {
+      fill-opacity: 1;
     }
   }
 }

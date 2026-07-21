@@ -7,12 +7,15 @@
   --color-text-body: #000;
   --color-text-on-primary: #fff;
   --color-text-subdued: #404040;
+  --font-family-body: "Open Sans", sans-serif;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-text-body);
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-family-body);
   font-size: 16px;
   font-weight: normal;
   margin: 0;
@@ -47,4 +50,8 @@ a:hover {
 
 :is(h1, h2, h3, h4, h5, h6) a {
   color: inherit;
+}
+
+input {
+  font-family: var(--font-family-body);
 }

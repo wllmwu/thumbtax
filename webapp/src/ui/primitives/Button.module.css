@@ -1,6 +1,6 @@
 .button {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   margin: 0;
   padding: 0.25em 0.375em;
   border-radius: 0.5em;

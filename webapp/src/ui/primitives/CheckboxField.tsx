@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import {
   CheckboxButton,
   CheckboxField as AriaCheckboxField,
@@ -6,6 +7,7 @@ import {
 } from "react-aria-components";
 
 import styles from "#src/ui/primitives/CheckboxField.module.css";
+import fieldStyles from "#src/ui/primitives/fields.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
 import type React from "react";
@@ -42,14 +44,16 @@ export function CheckboxField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      className={styles.checkboxField}
+      className={fieldStyles.smallControlField}
       isSelected={value}
       onChange={onChange}
       isDisabled={disabled}
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}
     >
-      <CheckboxButton className={styles.checkboxButton}>
+      <CheckboxButton
+        className={classNames(fieldStyles.button, styles.checkboxButton)}
+      >
         <CheckboxIndicator checked={value} />
         {label}
       </CheckboxButton>
