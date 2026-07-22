@@ -1,0 +1,10 @@
+.selector-button {
+  align-items: center;
+  display: inline-flex;
+  flex-direction: row;
+  gap: 0.25em;
+
+  .chevrons {
+    margin: 0 -0.125em;
+  }
+}

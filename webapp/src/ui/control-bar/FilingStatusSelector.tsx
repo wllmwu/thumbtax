@@ -13,7 +13,7 @@ import {
 
 import { useStore } from "#src/state/useStore";
 import { formatFilingStatus } from "#src/ui/formatting/formatFilingStatus";
-import { Button } from "#src/ui/primitives/Button";
+import { SelectorButton } from "#src/ui/primitives/SelectField";
 
 export function FilingStatusSelector() {
   const filingStatus = useStore((state) => state.applicationState.filingStatus);
@@ -36,7 +36,8 @@ export function FilingStatusSelector() {
   return (
     <MenuTrigger>
       <Label>
-        Filing status<Button>{formatFilingStatus(filingStatus)}</Button>
+        Filing status
+        <SelectorButton>{formatFilingStatus(filingStatus)}</SelectorButton>
       </Label>
       <Popover>
         <Menu>

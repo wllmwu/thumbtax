@@ -6,6 +6,8 @@ import {
   Text,
 } from "react-aria-components";
 
+import fieldStyles from "#src/ui/primitives/fields.module.css";
+
 import type { FieldProps } from "#src/ui/types/fieldProps";
 
 type Props = FieldProps<string> & {
@@ -31,6 +33,7 @@ export function SearchField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      className={fieldStyles.inputBoxField}
       value={value}
       onChange={onChange}
       autoFocus={autoFocus}
