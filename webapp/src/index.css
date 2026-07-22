@@ -55,8 +55,3 @@ a:hover {
 input {
   font-family: var(--font-family-body);
 }
-
-.lucide {
-  height: 1em;
-  width: 1em;
-}
