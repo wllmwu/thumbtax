@@ -1,6 +1,39 @@
+.react-aria-MenuItem {
+  background-color: var(--color-background-surface);
+  cursor: pointer;
+  padding: 0.125rem 0.5rem;
+
+  &[data-disabled] {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  &[data-hovered] {
+    filter: brightness(0.875);
+  }
+}
+
+.react-aria-MenuSection {
+  .react-aria-Header {
+    font-weight: var(--font-weight-semibold);
+    padding: 0.125rem 0.5rem;
+  }
+
+  .react-aria-MenuItem {
+    padding: 0.125rem 1rem;
+  }
+}
+
 .react-aria-Popover {
   background-color: var(--color-background-surface);
   border: 1px solid var(--color-border);
-  border-radius: 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
   padding: 0.5rem;
+
+  &[data-trigger="MenuTrigger"],
+  &[data-trigger="SubmenuTrigger"] {
+    padding: 0;
+    overflow-y: auto;
+  }
 }
