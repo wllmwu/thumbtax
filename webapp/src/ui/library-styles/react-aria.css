@@ -24,6 +24,38 @@
   }
 }
 
+.react-aria-Modal {
+  background-color: var(--color-background);
+  border-color: var(--color-border);
+  border-radius: 1rem;
+  border-width: 1px;
+  max-height: calc(var(--visual-viewport-height) * 0.9);
+  max-width: min(512px, 90vw);
+  overflow: hidden;
+  padding: 1rem;
+
+  .react-aria-Heading {
+    margin: 0;
+  }
+}
+
+.react-aria-ModalOverlay {
+  align-items: center;
+  background-color: rgb(0 0 0 / 0.5);
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}
+
 .react-aria-Popover {
   background-color: var(--color-background-surface);
   border: 1px solid var(--color-border);
