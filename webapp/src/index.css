@@ -10,6 +10,18 @@
   --font-family-body: "Open Sans", sans-serif;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
+  --font-variation-semicondensed: "wdth" 87.5;
+  --z-index-modal: 3;
+  --z-index-navigation-bar: 2;
+}
+
+a {
+  color: var(--color-palette-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 body {
@@ -29,6 +41,10 @@ h4,
 h5,
 h6 {
   font-weight: bold;
+
+  a {
+    color: inherit;
+  }
 }
 
 h1 {
@@ -39,17 +55,9 @@ h2 {
   font-size: 1.5em;
 }
 
-a {
-  color: var(--color-palette-primary);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-:is(h1, h2, h3, h4, h5, h6) a {
-  color: inherit;
+html {
+  margin: 0;
+  padding: 0;
 }
 
 input {
