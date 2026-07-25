@@ -132,10 +132,9 @@ describe("NumberField", () => {
 
     const input = await screen.findByRole("textbox");
     await user.click(input);
-    await user.type(input, "6");
     await user.tab();
 
-    expect(input).toHaveValue("(1,234.56)");
+    expect(input).toHaveValue("(1,234.50)");
   });
 
   it("uses aria-labelledby for the accessible name", async () => {

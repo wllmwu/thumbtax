@@ -33,12 +33,13 @@ export function NumberField({ format, value, onChange, ...props }: Props) {
     };
   }, [format, locale]);
 
+  const [isFocused, setIsFocused] = React.useState(props.autoFocus ?? false);
   const [textValue, setTextValue] = React.useState(() => formatBoxValue(value));
 
-  const onFocus = React.useCallback(
-    () => setTextValue(textFormatter.format(value)),
-    [textFormatter, value],
-  );
+  const onFocus = React.useCallback(() => {
+    setIsFocused(true);
+    setTextValue(textFormatter.format(value));
+  }, [textFormatter, value]);
 
   const onChangeText = React.useCallback(
     (newText: string) => {
@@ -50,6 +51,7 @@ export function NumberField({ format, value, onChange, ...props }: Props) {
   );
 
   const onBlur = React.useCallback(() => {
+    setIsFocused(false);
     const newValue = textParser.parse(textValue);
     if (!Number.isNaN(newValue)) {
       const roundedNewValue = textParser.parse(textFormatter.format(newValue));
@@ -62,7 +64,7 @@ export function NumberField({ format, value, onChange, ...props }: Props) {
     <TextField
       {...props}
       inputMode="decimal"
-      value={textValue}
+      value={isFocused ? textValue : formatBoxValue(value)}
       onChange={onChangeText}
       onFocus={onFocus}
       onBlur={onBlur}
