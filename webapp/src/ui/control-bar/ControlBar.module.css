@@ -1,0 +1,13 @@
+.control-bar {
+  background-color: var(--color-background-surface);
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  margin: 0 calc(-1 * var(--size-margin-page));
+  padding: 0.25rem var(--size-margin-page);
+
+  div[role="separator"] {
+    height: auto;
+    margin: 0.125rem;
+  }
+}

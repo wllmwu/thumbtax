@@ -1,6 +1,7 @@
 import React from "react";
 
-import { ChevronsUpDown } from "lucide-react";
+import classNames from "classnames";
+import { ChevronsUpDownIcon } from "lucide-react";
 import {
   FieldError,
   type Key,
@@ -30,13 +31,15 @@ export const SelectFieldSection = ListBoxSection;
 
 export function SelectorButton({
   children,
+  className,
 }: {
   children: React.ReactNode;
+  className?: string;
 }): React.ReactNode {
   return (
-    <Button className={styles.selectorButton}>
+    <Button className={classNames(styles.selectorButton, className)}>
       {children}
-      <ChevronsUpDown className={styles.chevrons} />
+      <ChevronsUpDownIcon className={styles.chevrons} />
     </Button>
   );
 }

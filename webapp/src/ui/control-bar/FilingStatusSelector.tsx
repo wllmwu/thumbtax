@@ -14,6 +14,7 @@ import {
 import { useStore } from "#src/state/useStore";
 import { formatFilingStatus } from "#src/ui/formatting/formatFilingStatus";
 import { SelectorButton } from "#src/ui/primitives/SelectField";
+import styles from "#src/ui/control-bar/FilingStatusSelector.module.css";
 
 export function FilingStatusSelector() {
   const filingStatus = useStore((state) => state.applicationState.filingStatus);
@@ -37,7 +38,9 @@ export function FilingStatusSelector() {
     <MenuTrigger>
       <Label>
         Filing status
-        <SelectorButton>{formatFilingStatus(filingStatus)}</SelectorButton>
+        <SelectorButton className={styles.button}>
+          {formatFilingStatus(filingStatus)}
+        </SelectorButton>
       </Label>
       <Popover>
         <Menu>

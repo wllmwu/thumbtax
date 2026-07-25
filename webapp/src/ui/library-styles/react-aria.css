@@ -69,3 +69,16 @@
     overflow-y: auto;
   }
 }
+
+.react-aria-Separator {
+  background-color: var(--color-border);
+  border: none;
+  height: 1px;
+  width: 100%;
+
+  &[aria-orientation="vertical"] {
+    height: 100%;
+    min-height: 1rem;
+    width: 1px;
+  }
+}

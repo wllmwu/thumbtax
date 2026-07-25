@@ -6,7 +6,9 @@ export function Layout() {
   return (
     <div>
       <NavigationMenu />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 }
