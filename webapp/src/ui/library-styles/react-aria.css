@@ -1,3 +1,38 @@
+.react-aria-Button {
+  border-radius: 0.5em;
+  border-style: solid;
+  border-width: 1px;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+  padding: 0.25em 0.375em;
+
+  &[data-disabled] {
+    opacity: 0.5;
+  }
+
+  &[data-hovered] {
+    cursor: pointer;
+    filter: brightness(0.875);
+  }
+
+  &[data-pressed] {
+    filter: brightness(0.75);
+  }
+
+  &[data-variant="primary"] {
+    background-color: var(--color-palette-primary);
+    border-color: var(--color-palette-primary);
+    color: var(--color-text-on-primary);
+  }
+
+  &[data-variant="secondary"] {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+    color: var(--color-text-subdued);
+  }
+}
+
 .react-aria-MenuItem {
   background-color: var(--color-background-surface);
   cursor: pointer;
@@ -55,6 +90,20 @@
   right: 0;
   top: 0;
   z-index: var(--z-index-modal);
+}
+
+.react-aria-Popover {
+  background-color: var(--color-background-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  padding: 0.5rem;
+
+  &[data-trigger="MenuTrigger"],
+  &[data-trigger="SubmenuTrigger"] {
+    padding: 0;
+    overflow-y: auto;
+  }
 }
 
 .react-aria-Separator {

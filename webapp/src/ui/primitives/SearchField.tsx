@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import {
   FieldError,
   Input,
@@ -7,6 +6,7 @@ import {
   Text,
 } from "react-aria-components";
 
+import { racn } from "#src/ui/utils/racn";
 import fieldStyles from "#src/ui/primitives/fields.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
@@ -36,7 +36,7 @@ export function SearchField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      className={classNames(fieldStyles.inputBoxField, className)}
+      className={racn(fieldStyles.inputBoxField, className)}
       value={value}
       onChange={onChange}
       autoFocus={autoFocus}

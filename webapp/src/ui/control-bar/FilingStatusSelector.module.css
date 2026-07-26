@@ -1,3 +1,5 @@
-.button {
-  margin-left: 0.125rem;
+.label {
+  .button {
+    margin-left: 0.125rem;
+  }
 }

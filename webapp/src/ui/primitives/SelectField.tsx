@@ -1,6 +1,5 @@
 import React from "react";
 
-import classNames from "classnames";
 import { ChevronsUpDownIcon } from "lucide-react";
 import {
   FieldError,
@@ -9,13 +8,14 @@ import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
+  Popover,
   Select,
   SelectValue,
   Text,
 } from "react-aria-components";
 
 import { AriaButton } from "#src/ui/primitives/AriaButton";
-import { AriaPopover } from "#src/ui/primitives/AriaPopover";
+import { racn } from "#src/ui/utils/racn";
 import fieldStyles from "#src/ui/primitives/fields.module.css";
 import styles from "#src/ui/primitives/SelectField.module.css";
 
@@ -37,7 +37,7 @@ export function SelectorButton({
   className?: string;
 }): React.ReactNode {
   return (
-    <AriaButton className={classNames(styles.selectorButton, className)}>
+    <AriaButton className={racn(styles.selectorButton, className)}>
       {children}
       <ChevronsUpDownIcon className={styles.chevrons} />
     </AriaButton>
@@ -82,9 +82,9 @@ export function SelectField({
       </SelectorButton>
       {description && <Text slot="description">{description}</Text>}
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
-      <AriaPopover>
+      <Popover>
         <ListBox>{children}</ListBox>
-      </AriaPopover>
+      </Popover>
     </Select>
   );
 }

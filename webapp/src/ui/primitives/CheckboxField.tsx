@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import {
   CheckboxButton,
   CheckboxField as AriaCheckboxField,
@@ -6,6 +5,7 @@ import {
   Text,
 } from "react-aria-components";
 
+import { racn } from "#src/ui/utils/racn";
 import styles from "#src/ui/primitives/CheckboxField.module.css";
 import fieldStyles from "#src/ui/primitives/fields.module.css";
 
@@ -52,7 +52,7 @@ export function CheckboxField({
       isInvalid={!!errorMessage}
     >
       <CheckboxButton
-        className={classNames(fieldStyles.button, styles.checkboxButton)}
+        className={racn(fieldStyles.button, styles.checkboxButton)}
       >
         <CheckboxIndicator checked={value} />
         {label}
