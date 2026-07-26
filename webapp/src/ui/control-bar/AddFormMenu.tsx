@@ -16,6 +16,7 @@ import { useStore } from "#src/state/useStore";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { AriaPopover } from "#src/ui/primitives/AriaPopover";
 import { SearchField } from "#src/ui/primitives/SearchField";
+import styles from "#src/ui/control-bar/AddFormMenu.module.css";
 
 import type { FormSpecification } from "@thumbtax/forms";
 
@@ -94,7 +95,7 @@ export function AddFormMenu() {
   return (
     <MenuTrigger>
       <AriaButton>Add a form…</AriaButton>
-      <AriaPopover>
+      <AriaPopover className={styles.popover} placement="bottom left">
         <Autocomplete filter={filter.contains}>
           <SearchField
             aria-label="Search forms by title"
