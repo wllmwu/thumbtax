@@ -15,7 +15,7 @@ import {
   Text,
 } from "react-aria-components";
 
-import { Button } from "#src/ui/primitives/Button";
+import { AriaButton } from "#src/ui/primitives/AriaButton";
 import fieldStyles from "#src/ui/primitives/fields.module.css";
 import styles from "#src/ui/primitives/SelectField.module.css";
 
@@ -37,10 +37,10 @@ export function SelectorButton({
   className?: string;
 }): React.ReactNode {
   return (
-    <Button className={classNames(styles.selectorButton, className)}>
+    <AriaButton className={classNames(styles.selectorButton, className)}>
       {children}
       <ChevronsUpDownIcon className={styles.chevrons} />
-    </Button>
+    </AriaButton>
   );
 }
 

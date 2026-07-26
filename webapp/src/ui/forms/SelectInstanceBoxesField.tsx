@@ -9,7 +9,7 @@ import {
   Select,
 } from "react-aria-components";
 
-import { Button } from "#src/ui/primitives/Button";
+import { AriaButton } from "#src/ui/primitives/AriaButton";
 
 import type { SpecificationRegistry, ValueProvider } from "@thumbtax/forms";
 import type { BoxAddress } from "#src/common/types/boxAddress";
@@ -108,7 +108,7 @@ export function SelectInstanceBoxesField({
       value={selectedKeys}
       onChange={handleChange}
     >
-      <Button>{`${selectedKeys.length} form(s) selected`}</Button>
+      <AriaButton>{`${selectedKeys.length} form(s) selected`}</AriaButton>
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
       <Popover>
         <ListBox items={options}>{renderOptionItem}</ListBox>

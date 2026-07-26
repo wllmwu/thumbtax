@@ -14,7 +14,7 @@ import {
 } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
-import { Button } from "#src/ui/primitives/Button";
+import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { SearchField } from "#src/ui/primitives/SearchField";
 
 import type { FormSpecification } from "@thumbtax/forms";
@@ -93,7 +93,7 @@ export function AddFormMenu() {
 
   return (
     <MenuTrigger>
-      <Button>Add a form…</Button>
+      <AriaButton>Add a form…</AriaButton>
       <Popover>
         <Autocomplete filter={filter.contains}>
           <SearchField

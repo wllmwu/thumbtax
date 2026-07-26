@@ -10,7 +10,7 @@ import { useStore } from "#src/state/useStore";
 import { AddFormMenu } from "#src/ui/control-bar/AddFormMenu";
 import { FilingStatusSelector } from "#src/ui/control-bar/FilingStatusSelector";
 import { SettingsDialog } from "#src/ui/control-bar/SettingsDialog";
-import { Button } from "#src/ui/primitives/Button";
+import { AriaButton } from "#src/ui/primitives/AriaButton";
 import styles from "#src/ui/control-bar/ControlBar.module.css";
 
 export function ControlBar() {
@@ -23,16 +23,16 @@ export function ControlBar() {
     <Toolbar aria-label="App controls" className={styles.controlBar}>
       <FilingStatusSelector />
       <Separator orientation="vertical" />
-      <Button aria-label="Undo" isDisabled={isUndoDisabled} onPress={undo}>
+      <AriaButton aria-label="Undo" isDisabled={isUndoDisabled} onPress={undo}>
         <UndoIcon />
-      </Button>
-      <Button aria-label="Redo" isDisabled={isRedoDisabled} onPress={redo}>
+      </AriaButton>
+      <AriaButton aria-label="Redo" isDisabled={isRedoDisabled} onPress={redo}>
         <RedoIcon />
-      </Button>
+      </AriaButton>
       <AddFormMenu />
       <Separator orientation="vertical" />
       <DialogTrigger>
-        <Button>Settings</Button>
+        <AriaButton>Settings</AriaButton>
         <Modal isDismissable>
           <SettingsDialog />
         </Modal>

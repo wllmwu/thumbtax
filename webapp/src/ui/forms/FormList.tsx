@@ -4,8 +4,8 @@ import { useStore } from "#src/state/useStore";
 import { FormLink } from "#src/ui/forms/FormLink";
 import { FormTable } from "#src/ui/forms/FormTable";
 import { ProseContent } from "#src/ui/forms/ProseContent";
+import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { Badge } from "#src/ui/primitives/Badge";
-import { Button } from "#src/ui/primitives/Button";
 
 import type { FormSpecification } from "@thumbtax/forms";
 
@@ -44,24 +44,24 @@ function FormListItem({
         </h2>
         <Badge>{specification.category}</Badge>
         {specification.maxInstances !== 1 && <Badge>{instances.length}</Badge>}
-        <Button
+        <AriaButton
           id={moveUpButtonId}
           aria-labelledby={`${moveUpButtonId} ${formTitleHeadingId}`}
           isDisabled={index <= 0}
           onPress={() => moveFormClass(specification.class, -1)}
         >
           Move up
-        </Button>
-        <Button
+        </AriaButton>
+        <AriaButton
           id={moveDownButtonId}
           aria-labelledby={`${moveDownButtonId} ${formTitleHeadingId}`}
           isDisabled={index >= numFormClasses - 1}
           onPress={() => moveFormClass(specification.class, 1)}
         >
           Move down
-        </Button>
+        </AriaButton>
         {specification.maxInstances === 1 && (
-          <Button
+          <AriaButton
             id={deleteButtonId}
             aria-labelledby={`${deleteButtonId} ${formTitleHeadingId}`}
             onPress={() =>
@@ -69,7 +69,7 @@ function FormListItem({
             }
           >
             Delete
-          </Button>
+          </AriaButton>
         )}
       </span>
       {specification.subtitle && <span>{specification.subtitle}</span>}
@@ -84,7 +84,7 @@ function FormListItem({
         </span>
       )}
       <Disclosure>
-        <Button slot="trigger">Show/hide {specification.title}</Button>
+        <AriaButton slot="trigger">Show/hide {specification.title}</AriaButton>
         <DisclosurePanel>
           <FormTable
             specification={specification}

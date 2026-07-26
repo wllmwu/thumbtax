@@ -3,7 +3,7 @@ import React from "react";
 import { Dialog, Form, Heading } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
-import { Button } from "#src/ui/primitives/Button";
+import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { TextField } from "#src/ui/primitives/TextField";
 
 import type { FormClass } from "@thumbtax/common";
@@ -45,8 +45,8 @@ export function FormLabelDialog({ formClass, instanceId }: Props) {
               newLabel.length === 0 ? "Label is required" : undefined
             }
           />
-          <Button slot="close">Cancel</Button>
-          <Button type="submit">Done</Button>
+          <AriaButton slot="close">Cancel</AriaButton>
+          <AriaButton type="submit">Done</AriaButton>
         </Form>
       </>
     ),

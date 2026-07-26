@@ -7,7 +7,7 @@ import { useStore } from "#src/state/useStore";
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
 import { ProseContent } from "#src/ui/forms/ProseContent";
-import { Button } from "#src/ui/primitives/Button";
+import { AriaButton } from "#src/ui/primitives/AriaButton";
 import styles from "#src/ui/forms/FormTable.module.css";
 
 import type { FormLine, FormSpecification } from "@thumbtax/forms";
@@ -172,12 +172,12 @@ export function FormTable({
                 <div className={styles.formInstanceLabelCell}>
                   <span id={instanceLabelTextId}>{instance.label}</span>
                   <DialogTrigger>
-                    <Button
+                    <AriaButton
                       id={editLabelButtonId}
                       aria-labelledby={`${editLabelButtonId} ${instanceLabelTextId}`}
                     >
                       Edit label
-                    </Button>
+                    </AriaButton>
                     <Modal isDismissable>
                       <FormLabelDialog
                         formClass={instance.class}
@@ -185,7 +185,7 @@ export function FormTable({
                       />
                     </Modal>
                   </DialogTrigger>
-                  <Button
+                  <AriaButton
                     id={moveLeftButtonId}
                     aria-labelledby={`${moveLeftButtonId} ${instanceLabelTextId}`}
                     isDisabled={index <= 0}
@@ -194,8 +194,8 @@ export function FormTable({
                     }
                   >
                     Move left
-                  </Button>
-                  <Button
+                  </AriaButton>
+                  <AriaButton
                     id={moveRightButtonId}
                     aria-labelledby={`${moveRightButtonId} ${instanceLabelTextId}`}
                     isDisabled={index >= instances.length - 1}
@@ -204,8 +204,8 @@ export function FormTable({
                     }
                   >
                     Move right
-                  </Button>
-                  <Button
+                  </AriaButton>
+                  <AriaButton
                     id={deleteButtonId}
                     aria-labelledby={`${deleteButtonId} ${instanceLabelTextId}`}
                     onPress={() =>
@@ -213,7 +213,7 @@ export function FormTable({
                     }
                   >
                     Delete
-                  </Button>
+                  </AriaButton>
                 </div>
               </div>
             )}

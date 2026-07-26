@@ -12,7 +12,7 @@ import {
 } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
-import { Button } from "#src/ui/primitives/Button";
+import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { SwitchField } from "#src/ui/primitives/SwitchField";
 import fieldStyles from "#src/ui/primitives/fields.module.css";
 
@@ -62,10 +62,10 @@ export function SettingsDialog() {
             </Text>
             <FieldError>Must be between 0 and 1000.</FieldError>
           </NumberField>
-          <Button slot="close">Cancel</Button>
-          <Button type="submit" variant="primary">
+          <AriaButton slot="close">Cancel</AriaButton>
+          <AriaButton type="submit" variant="primary">
             Save
-          </Button>
+          </AriaButton>
         </Form>
       </>
     ),

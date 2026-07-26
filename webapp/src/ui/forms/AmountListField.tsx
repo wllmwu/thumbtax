@@ -3,7 +3,7 @@ import React from "react";
 import { produce } from "immer";
 import { FieldError, FieldErrorContext, Group } from "react-aria-components";
 
-import { Button } from "#src/ui/primitives/Button";
+import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { TextField } from "#src/ui/primitives/TextField";
 
@@ -122,10 +122,10 @@ export function AmountListField({
               value={amount}
               onChange={(newAmount) => onChangeAmount(index, newAmount)}
             />
-            <Button onPress={() => onRemoveEntry(index)}>Remove</Button>
+            <AriaButton onPress={() => onRemoveEntry(index)}>Remove</AriaButton>
           </div>
         ))}
-        <Button onPress={onAddEntry}>Add</Button>
+        <AriaButton onPress={onAddEntry}>Add</AriaButton>
       </Group>
       <FieldError id={errorMessageId}>{errorMessage}</FieldError>
     </FieldErrorContext.Provider>
