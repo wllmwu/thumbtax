@@ -3,11 +3,11 @@
   display: flex;
   flex-direction: row;
   gap: 0.25rem;
-  margin: 0 calc(-1 * var(--size-margin-page));
-  padding: 0.25rem var(--size-margin-page);
+  margin: 0;
+  padding: 0.5rem var(--size-margin-page);
 
   div[role="separator"] {
     height: auto;
-    margin: 0.125rem;
+    margin: 0.125rem 0.25rem;
   }
 }

@@ -14,7 +14,7 @@
   --font-variation-semicondensed: "wdth" 87.5;
   --size-margin-page: 4rem;
   --z-index-modal: 3;
-  --z-index-navigation-bar: 2;
+  --z-index-top-bar: 2;
 }
 
 a {
