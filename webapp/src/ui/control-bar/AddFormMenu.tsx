@@ -99,6 +99,7 @@ export function AddFormMenu() {
         <Autocomplete filter={filter.contains}>
           <SearchField
             aria-label="Search forms by title"
+            className={styles.searchBox}
             placeholder="w-2"
             value={searchValue}
             onChange={setSearchValue}

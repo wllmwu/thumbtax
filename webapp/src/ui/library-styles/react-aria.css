@@ -8,6 +8,7 @@
     opacity: 0.5;
   }
 
+  &[data-focused],
   &[data-hovered] {
     filter: brightness(0.875);
   }

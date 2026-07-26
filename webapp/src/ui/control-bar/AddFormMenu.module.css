@@ -1,4 +1,10 @@
 .popover {
   max-width: 90%;
   width: 40rem;
+
+  .search-box {
+    margin: 0.5rem;
+    max-width: 100%;
+    width: 20rem;
+  }
 }

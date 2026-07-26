@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import {
   FieldError,
   Input,
@@ -12,6 +13,7 @@ import type { FieldProps } from "#src/ui/types/fieldProps";
 
 type Props = FieldProps<string> & {
   autoFocus?: boolean;
+  className?: string;
 };
 
 export function SearchField({
@@ -19,6 +21,7 @@ export function SearchField({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
+  className,
   placeholder,
   description,
   disabled,
@@ -33,7 +36,7 @@ export function SearchField({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      className={fieldStyles.inputBoxField}
+      className={classNames(fieldStyles.inputBoxField, className)}
       value={value}
       onChange={onChange}
       autoFocus={autoFocus}
