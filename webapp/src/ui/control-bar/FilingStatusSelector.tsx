@@ -8,11 +8,11 @@ import {
   MenuItem,
   type MenuItemProps,
   MenuTrigger,
-  Popover,
 } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { formatFilingStatus } from "#src/ui/formatting/formatFilingStatus";
+import { AriaPopover } from "#src/ui/primitives/AriaPopover";
 import { SelectorButton } from "#src/ui/primitives/SelectField";
 import styles from "#src/ui/control-bar/FilingStatusSelector.module.css";
 
@@ -42,11 +42,11 @@ export function FilingStatusSelector() {
           {formatFilingStatus(filingStatus)}
         </SelectorButton>
       </Label>
-      <Popover>
+      <AriaPopover>
         <Menu>
           <Collection items={options}>{OptionItem}</Collection>
         </Menu>
-      </Popover>
+      </AriaPopover>
     </MenuTrigger>
   );
 }

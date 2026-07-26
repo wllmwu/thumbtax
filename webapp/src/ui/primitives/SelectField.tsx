@@ -9,13 +9,13 @@ import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
-  Popover,
   Select,
   SelectValue,
   Text,
 } from "react-aria-components";
 
 import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { AriaPopover } from "#src/ui/primitives/AriaPopover";
 import fieldStyles from "#src/ui/primitives/fields.module.css";
 import styles from "#src/ui/primitives/SelectField.module.css";
 
@@ -82,9 +82,9 @@ export function SelectField({
       </SelectorButton>
       {description && <Text slot="description">{description}</Text>}
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
-      <Popover>
+      <AriaPopover>
         <ListBox>{children}</ListBox>
-      </Popover>
+      </AriaPopover>
     </Select>
   );
 }

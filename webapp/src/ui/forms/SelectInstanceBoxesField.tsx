@@ -5,11 +5,11 @@ import {
   type Key,
   ListBox,
   ListBoxItem,
-  Popover,
   Select,
 } from "react-aria-components";
 
 import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { AriaPopover } from "#src/ui/primitives/AriaPopover";
 
 import type { SpecificationRegistry, ValueProvider } from "@thumbtax/forms";
 import type { BoxAddress } from "#src/common/types/boxAddress";
@@ -110,9 +110,9 @@ export function SelectInstanceBoxesField({
     >
       <AriaButton>{`${selectedKeys.length} form(s) selected`}</AriaButton>
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
-      <Popover>
+      <AriaPopover>
         <ListBox items={options}>{renderOptionItem}</ListBox>
-      </Popover>
+      </AriaPopover>
     </Select>
   );
 }

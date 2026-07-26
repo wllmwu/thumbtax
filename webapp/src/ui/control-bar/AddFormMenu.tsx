@@ -9,12 +9,12 @@ import {
   MenuItem,
   MenuSection,
   MenuTrigger,
-  Popover,
   useFilter,
 } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { AriaPopover } from "#src/ui/primitives/AriaPopover";
 import { SearchField } from "#src/ui/primitives/SearchField";
 
 import type { FormSpecification } from "@thumbtax/forms";
@@ -94,7 +94,7 @@ export function AddFormMenu() {
   return (
     <MenuTrigger>
       <AriaButton>Add a form…</AriaButton>
-      <Popover>
+      <AriaPopover>
         <Autocomplete filter={filter.contains}>
           <SearchField
             aria-label="Search forms by title"
@@ -114,7 +114,7 @@ export function AddFormMenu() {
             </MenuSection>
           </Menu>
         </Autocomplete>
-      </Popover>
+      </AriaPopover>
     </MenuTrigger>
   );
 }

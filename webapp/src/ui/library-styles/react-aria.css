@@ -56,20 +56,6 @@
   z-index: var(--z-index-modal);
 }
 
-.react-aria-Popover {
-  background-color: var(--color-background-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
-  overflow: hidden;
-  padding: 0.5rem;
-
-  &[data-trigger="MenuTrigger"],
-  &[data-trigger="SubmenuTrigger"] {
-    padding: 0;
-    overflow-y: auto;
-  }
-}
-
 .react-aria-Separator {
   background-color: var(--color-border);
   border: none;
