@@ -51,7 +51,7 @@
 
 .react-aria-MenuSection {
   .react-aria-Header {
-    font-weight: var(--font-weight-semibold);
+    font-weight: bold;
     padding: 0.125rem 0.5rem;
   }
 

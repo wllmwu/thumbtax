@@ -24,7 +24,25 @@ import type { FormSpecification } from "@thumbtax/forms";
 type FormOption = {
   id: string;
   disabled: boolean;
-} & Pick<FormSpecification, "category" | "class" | "subtitle" | "title">;
+  instanceCount: number;
+} & Pick<
+  FormSpecification,
+  "category" | "class" | "maxInstances" | "subtitle" | "title"
+>;
+
+function formatInstanceCount({
+  instanceCount,
+  maxInstances,
+}: {
+  instanceCount: number;
+  maxInstances: number | null;
+}): string {
+  if (maxInstances !== null) {
+    return `${instanceCount} of ${maxInstances} added`;
+  } else {
+    return `${instanceCount} added`;
+  }
+}
 
 export function AddFormMenu() {
   const specifications = useStore((state) => state.specifications);
@@ -45,6 +63,8 @@ export function AddFormMenu() {
           disabled: maxInstances !== null && numInstances >= maxInstances,
           category,
           class: formClass,
+          instanceCount: numInstances,
+          maxInstances,
           subtitle,
           title,
         };
@@ -76,19 +96,37 @@ export function AddFormMenu() {
   }, [options]);
 
   const OptionItem = React.useCallback(
-    ({ id, disabled, class: formClass, title, subtitle }: FormOption) => (
-      <MenuItem
-        id={id}
-        aria-label={`Add ${title}`}
-        className={racn(styles.menuItem)}
-        textValue={title}
-        isDisabled={disabled}
-        onAction={() => addFormInstance(formClass)}
-      >
-        <span>{title}</span>
-        <span>{subtitle}</span>
-      </MenuItem>
-    ),
+    ({
+      id,
+      disabled,
+      class: formClass,
+      instanceCount,
+      maxInstances,
+      title,
+      subtitle,
+    }: FormOption) => {
+      const titleId = `add-form-${formClass}`;
+      return (
+        <MenuItem
+          id={id}
+          aria-labelledby={titleId}
+          className={racn(styles.menuItem)}
+          textValue={title}
+          isDisabled={disabled}
+          onAction={() => addFormInstance(formClass)}
+        >
+          <span>
+            <span id={titleId} className={styles.itemTitle}>
+              {title}
+            </span>{" "}
+            <span className={styles.itemCount}>
+              ({formatInstanceCount({ instanceCount, maxInstances })})
+            </span>
+          </span>
+          {subtitle && <span>{subtitle}</span>}
+        </MenuItem>
+      );
+    },
     [addFormInstance],
   );
 

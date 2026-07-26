@@ -11,5 +11,13 @@
   .menu-item {
     display: flex;
     flex-direction: column;
+
+    .item-count {
+      font-weight: var(--font-weight-light);
+    }
+
+    .item-title {
+      font-weight: bold;
+    }
   }
 }
