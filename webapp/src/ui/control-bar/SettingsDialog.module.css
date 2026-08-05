@@ -1,0 +1,19 @@
+.button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.input-field {
+  input {
+    max-width: 10rem;
+  }
+}
+
+.vertical-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

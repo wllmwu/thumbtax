@@ -14,6 +14,8 @@ import {
 import { useStore } from "#src/state/useStore";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { SwitchField } from "#src/ui/primitives/SwitchField";
+import { racn } from "#src/ui/utils/racn";
+import styles from "#src/ui/control-bar/SettingsDialog.module.css";
 import fieldStyles from "#src/ui/primitives/fields.module.css";
 
 export function SettingsDialog() {
@@ -29,7 +31,7 @@ export function SettingsDialog() {
 
   const renderContent = React.useCallback(
     ({ close }: { close: () => void }) => (
-      <>
+      <div className={styles.verticalStack}>
         <Heading slot="title">Settings</Heading>
         <Form
           onSubmit={(event) => {
@@ -41,33 +43,37 @@ export function SettingsDialog() {
             close();
           }}
         >
-          <SwitchField
-            label="Autosave to this browser"
-            description="When enabled, this browser remembers the data you enter into Thumbtax. Otherwise, you'll lose your progress if you close the tab. Only enable this option on a device that belongs to you. Note: Even when this option is enabled, deleting your browsing history or clearing your cache might also delete your Thumbtax data. Download a save file to keep your data long-term."
-            value={isBrowserSaveEnabled}
-            onChange={setIsBrowserSaveEnabled}
-          />
-          <NumberField
-            className={fieldStyles.inputBoxField}
-            value={maxHistorySize}
-            onChange={setMaxHistorySize}
-            minValue={0}
-            maxValue={1000}
-            step={1}
-          >
-            <Label>Undo window size</Label>
-            <Input />
-            <Text slot="description">
-              The number of your most recent edits that you can undo.
-            </Text>
-            <FieldError>Must be between 0 and 1000.</FieldError>
-          </NumberField>
-          <AriaButton slot="close">Cancel</AriaButton>
-          <AriaButton type="submit" variant="primary">
-            Save
-          </AriaButton>
+          <div className={styles.verticalStack}>
+            <SwitchField
+              label="Autosave to this browser"
+              description="When enabled, this browser remembers the data you enter into Thumbtax. Otherwise, you'll lose your progress if you close the tab. Only enable this option on a device that belongs to you. Note: Even when this option is enabled, deleting your browsing history or clearing your cache might also delete your Thumbtax data. Download a save file to keep your data long-term."
+              value={isBrowserSaveEnabled}
+              onChange={setIsBrowserSaveEnabled}
+            />
+            <NumberField
+              className={racn(fieldStyles.inputBoxField, styles.inputField)}
+              value={maxHistorySize}
+              onChange={setMaxHistorySize}
+              minValue={0}
+              maxValue={1000}
+              step={1}
+            >
+              <Label>Undo window size</Label>
+              <Input />
+              <Text slot="description">
+                The number of your most recent edits that you can undo.
+              </Text>
+              <FieldError>Must be between 0 and 1000.</FieldError>
+            </NumberField>
+            <div className={styles.buttonGroup}>
+              <AriaButton slot="close">Cancel</AriaButton>
+              <AriaButton type="submit" variant="primary">
+                Save
+              </AriaButton>
+            </div>
+          </div>
         </Form>
-      </>
+      </div>
     ),
     [isBrowserSaveEnabled, maxHistorySize, updatePreferences],
   );
