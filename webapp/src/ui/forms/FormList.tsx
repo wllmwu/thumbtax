@@ -1,3 +1,4 @@
+import { MoveDownIcon, MoveUpIcon, Trash2Icon } from "lucide-react";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
@@ -6,6 +7,7 @@ import { FormTable } from "#src/ui/forms/FormTable";
 import { ProseContent } from "#src/ui/forms/ProseContent";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { Badge } from "#src/ui/primitives/Badge";
+import styles from "#src/ui/forms/FormList.module.css";
 
 import type { FormSpecification } from "@thumbtax/forms";
 
@@ -30,61 +32,61 @@ function FormListItem({
   }
 
   const formTitleHeadingId = `${specification.class}-title`;
-  const moveUpButtonId = `${specification.class}-move-up`;
-  const moveDownButtonId = `${specification.class}-move-down`;
-  const deleteButtonId = `${specification.class}-delete`;
 
   return (
     <li id={specification.class}>
-      <span>
-        <h2 id={formTitleHeadingId}>
-          <FormLink formClass={specification.class}>
-            {specification.title}
-          </FormLink>
-        </h2>
+      <div className={styles.itemHeading}>
+        <h2 id={formTitleHeadingId}>{specification.title}</h2>
+        <FormLink
+          aria-label={`link to ${specification.title}`}
+          formClass={specification.class}
+        >
+          #
+        </FormLink>
         <Badge>{specification.category}</Badge>
         {specification.maxInstances !== 1 && <Badge>{instances.length}</Badge>}
-        <AriaButton
-          id={moveUpButtonId}
-          aria-labelledby={`${moveUpButtonId} ${formTitleHeadingId}`}
-          isDisabled={index <= 0}
-          onPress={() => moveFormClass(specification.class, -1)}
-        >
-          Move up
-        </AriaButton>
-        <AriaButton
-          id={moveDownButtonId}
-          aria-labelledby={`${moveDownButtonId} ${formTitleHeadingId}`}
-          isDisabled={index >= numFormClasses - 1}
-          onPress={() => moveFormClass(specification.class, 1)}
-        >
-          Move down
-        </AriaButton>
-        {specification.maxInstances === 1 && (
-          <AriaButton
-            id={deleteButtonId}
-            aria-labelledby={`${deleteButtonId} ${formTitleHeadingId}`}
-            onPress={() =>
-              removeFormInstance(specification.class, instances[0].id)
-            }
-          >
-            Delete
-          </AriaButton>
-        )}
-      </span>
-      {specification.subtitle && <span>{specification.subtitle}</span>}
+      </div>
+      {specification.subtitle && <div>{specification.subtitle}</div>}
       {specification.instructions && (
-        <span>
+        <div>
           <ProseContent nodes={specification.instructions} />
-        </span>
+        </div>
       )}
       {specification.commentary && (
-        <span>
+        <div>
           <ProseContent nodes={specification.commentary} />
-        </span>
+        </div>
       )}
       <Disclosure>
-        <AriaButton slot="trigger">Show/hide {specification.title}</AriaButton>
+        <div className={styles.itemButtons}>
+          <AriaButton slot="trigger">
+            Show/hide {specification.title}
+          </AriaButton>
+          <AriaButton
+            aria-label="Move up"
+            isDisabled={index <= 0}
+            onPress={() => moveFormClass(specification.class, -1)}
+          >
+            <MoveUpIcon />
+          </AriaButton>
+          <AriaButton
+            aria-label="Move down"
+            isDisabled={index >= numFormClasses - 1}
+            onPress={() => moveFormClass(specification.class, 1)}
+          >
+            <MoveDownIcon />
+          </AriaButton>
+          <AriaButton
+            aria-label="Delete"
+            onPress={() => {
+              for (const { id } of instances) {
+                removeFormInstance(specification.class, id);
+              }
+            }}
+          >
+            <Trash2Icon />
+          </AriaButton>
+        </div>
         <DisclosurePanel>
           <FormTable
             specification={specification}
@@ -106,7 +108,7 @@ export function FormList() {
   }
 
   return (
-    <ul>
+    <ul className={styles.formList}>
       {formClasses.map((formClass, index) => (
         <FormListItem
           key={formClass}
