@@ -1,7 +1,12 @@
 import React from "react";
 
 import classNames from "classnames";
-import { MoveLeftIcon, MoveRightIcon, Trash2Icon } from "lucide-react";
+import {
+  EditIcon,
+  MoveLeftIcon,
+  MoveRightIcon,
+  Trash2Icon,
+} from "lucide-react";
 import { DialogTrigger, Modal } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
@@ -155,7 +160,9 @@ export function FormTable({ specification, instances }: Props) {
                 <h3>{instance.label}</h3>
                 <div className={styles.formInstanceButtonGroup}>
                   <DialogTrigger>
-                    <AriaButton>Edit label</AriaButton>
+                    <AriaButton aria-label="Edit label">
+                      <EditIcon />
+                    </AriaButton>
                     <Modal isDismissable>
                       <FormLabelDialog
                         formClass={instance.class}
