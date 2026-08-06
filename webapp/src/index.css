@@ -65,3 +65,7 @@ html {
 input {
   font-family: var(--font-family-body);
 }
+
+strong {
+  font-weight: var(--font-weight-semibold);
+}

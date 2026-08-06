@@ -1,6 +1,7 @@
 import React from "react";
 
 import classNames from "classnames";
+import { MoveLeftIcon, MoveRightIcon, Trash2Icon } from "lucide-react";
 import { DialogTrigger, Modal } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
@@ -17,7 +18,6 @@ import type { FormInstanceId } from "#src/common/types/formInstanceId";
 type Props = {
   specification: FormSpecification;
   instances: FormInstance[];
-  formTitleHeadingId: string;
 };
 
 function makeColumnIndexTextId(
@@ -104,11 +104,7 @@ function FormLineTableRow({
   );
 }
 
-export function FormTable({
-  specification,
-  instances,
-  formTitleHeadingId,
-}: Props) {
+export function FormTable({ specification, instances }: Props) {
   const moveFormInstance = useStore((state) => state.moveFormInstance);
   const removeFormInstance = useStore((state) => state.removeFormInstance);
 
@@ -151,33 +147,15 @@ export function FormTable({
         } as React.CSSProperties
       }
     >
-      {instances.map((instance, index) => {
-        const instanceLabelTextId = `${instance.id}-label`;
-        const editLabelButtonId = `${instance.id}-edit-label`;
-        const moveLeftButtonId = `${instance.id}-move-left`;
-        const moveRightButtonId = `${instance.id}-move-right`;
-        const deleteButtonId = `${instance.id}-delete`;
-
-        return (
-          <div
-            key={instance.id}
-            className={styles.formInstance}
-            role="group"
-            aria-labelledby={
-              allowsMultipleInstances ? instanceLabelTextId : formTitleHeadingId
-            }
-          >
-            {allowsMultipleInstances && (
-              <div className={styles.formTableRow}>
-                <div className={styles.formInstanceLabelCell}>
-                  <span id={instanceLabelTextId}>{instance.label}</span>
+      {instances.map((instance, index) => (
+        <div key={instance.id} className={styles.formInstance}>
+          {allowsMultipleInstances && (
+            <div className={styles.formTableRow}>
+              <div className={styles.formInstanceLabelCell}>
+                <h3>{instance.label}</h3>
+                <div className={styles.formInstanceButtonGroup}>
                   <DialogTrigger>
-                    <AriaButton
-                      id={editLabelButtonId}
-                      aria-labelledby={`${editLabelButtonId} ${instanceLabelTextId}`}
-                    >
-                      Edit label
-                    </AriaButton>
+                    <AriaButton>Edit label</AriaButton>
                     <Modal isDismissable>
                       <FormLabelDialog
                         formClass={instance.class}
@@ -186,135 +164,155 @@ export function FormTable({
                     </Modal>
                   </DialogTrigger>
                   <AriaButton
-                    id={moveLeftButtonId}
-                    aria-labelledby={`${moveLeftButtonId} ${instanceLabelTextId}`}
+                    aria-label="Move left"
                     isDisabled={index <= 0}
                     onPress={() =>
                       moveFormInstance(instance.class, instance.id, -1)
                     }
                   >
-                    Move left
+                    <MoveLeftIcon />
                   </AriaButton>
                   <AriaButton
-                    id={moveRightButtonId}
-                    aria-labelledby={`${moveRightButtonId} ${instanceLabelTextId}`}
+                    aria-label="Move right"
                     isDisabled={index >= instances.length - 1}
                     onPress={() =>
                       moveFormInstance(instance.class, instance.id, 1)
                     }
                   >
-                    Move right
+                    <MoveRightIcon />
                   </AriaButton>
                   <AriaButton
-                    id={deleteButtonId}
-                    aria-labelledby={`${deleteButtonId} ${instanceLabelTextId}`}
+                    aria-label="Delete"
                     onPress={() =>
                       removeFormInstance(instance.class, instance.id)
                     }
                   >
-                    Delete
+                    <Trash2Icon />
                   </AriaButton>
                 </div>
               </div>
-            )}
-            {specification.sections.map((section, sectionIndex) => (
-              <React.Fragment key={sectionIndex}>
-                {section.heading && (
-                  <div className={styles.formTableRow}>
-                    <h3
-                      className={classNames(
-                        styles.formSectionHeaderCell,
-                        styles.formTableRowHeader,
-                      )}
-                    >
-                      {section.heading}
-                    </h3>
-                  </div>
-                )}
-                {section.subtitle && (
-                  <div className={styles.formTableRow}>
-                    <span
-                      className={classNames(
-                        styles.formSectionHeaderCell,
-                        styles.formTableRowHeader,
-                      )}
-                    >
-                      {section.subtitle}
-                    </span>
-                  </div>
-                )}
-                {section.instructions && (
-                  <div className={styles.formTableRow}>
-                    <span
-                      className={classNames(
-                        styles.formSectionHeaderCell,
-                        styles.formTableRowHeader,
-                      )}
-                    >
-                      <ProseContent nodes={section.instructions} />
-                    </span>
-                  </div>
-                )}
-                {section.commentary && (
-                  <div className={styles.formTableRow}>
-                    <span
-                      className={classNames(
-                        styles.formSectionHeaderCell,
-                        styles.formTableRowHeader,
-                      )}
-                    >
-                      <ProseContent nodes={section.commentary} />
-                    </span>
-                  </div>
-                )}
+            </div>
+          )}
+          {specification.sections.map((section, sectionIndex) => (
+            <React.Fragment key={sectionIndex}>
+              {section.heading && (
                 <div className={styles.formTableRow}>
-                  <span className={styles.formTableRowHeader}>Line</span>
-                  <span className={styles.formTableRowHeader}>
-                    Instructions
+                  <span
+                    className={classNames(
+                      styles.formSectionHeaderCell,
+                      styles.formSectionHeading,
+                      styles.formTableRowHeader,
+                    )}
+                  >
+                    {section.heading}
                   </span>
-                  {section.columns ? (
-                    section.columns.map((column, index) => (
-                      <span
-                        key={column.index}
-                        className={styles.formLineColumn}
-                        style={
-                          {
-                            "--box-index": index,
-                            "--column-count": section.columns.length,
-                          } as React.CSSProperties
-                        }
-                      >
-                        <span
-                          id={makeColumnIndexTextId(instance.id, column.index)}
-                        >
-                          {column.index}
-                        </span>{" "}
-                        <span
-                          id={makeColumnDescriptionTextId(
-                            instance.id,
-                            column.index,
-                          )}
-                        >
-                          <ProseContent nodes={column.instructions} />
-                        </span>
-                      </span>
-                    ))
-                  ) : (
-                    <span className={styles.formLineColumn}>Value</span>
-                  )}
                 </div>
-                {section.lines.map((line) => (
-                  <FormLineTableRow
-                    key={line.index}
-                    line={line}
-                    instance={instance}
-                  />
-                ))}
-              </React.Fragment>
-            ))}
-          </div>
-        );
-      })}
+              )}
+              {section.subtitle && (
+                <div className={styles.formTableRow}>
+                  <span
+                    className={classNames(
+                      styles.formSectionHeaderCell,
+                      styles.formTableRowHeader,
+                    )}
+                  >
+                    {section.subtitle}
+                  </span>
+                </div>
+              )}
+              {section.instructions && (
+                <div className={styles.formTableRow}>
+                  <span
+                    className={classNames(
+                      styles.formSectionHeaderCell,
+                      styles.formTableRowHeader,
+                    )}
+                  >
+                    <ProseContent nodes={section.instructions} />
+                  </span>
+                </div>
+              )}
+              {section.commentary && (
+                <div className={styles.formTableRow}>
+                  <span
+                    className={classNames(
+                      styles.formSectionHeaderCell,
+                      styles.formTableRowHeader,
+                    )}
+                  >
+                    <ProseContent nodes={section.commentary} />
+                  </span>
+                </div>
+              )}
+              <div className={styles.formTableRow}>
+                <span
+                  className={classNames(
+                    styles.formColumnHeaderCell,
+                    styles.formTableRowHeader,
+                  )}
+                >
+                  Line
+                </span>
+                <span
+                  className={classNames(
+                    styles.formColumnHeaderCell,
+                    styles.formTableRowHeader,
+                  )}
+                >
+                  Instructions
+                </span>
+                {section.columns ? (
+                  section.columns.map((column, index) => (
+                    <span
+                      key={column.index}
+                      className={classNames(
+                        styles.formColumnHeaderCell,
+                        styles.formLineColumn,
+                      )}
+                      style={
+                        {
+                          "--box-index": index,
+                          "--column-count": section.columns.length,
+                        } as React.CSSProperties
+                      }
+                    >
+                      <span
+                        id={makeColumnIndexTextId(instance.id, column.index)}
+                      >
+                        {column.index}
+                      </span>{" "}
+                      <span
+                        id={makeColumnDescriptionTextId(
+                          instance.id,
+                          column.index,
+                        )}
+                      >
+                        <ProseContent nodes={column.instructions} />
+                      </span>
+                    </span>
+                  ))
+                ) : (
+                  <span
+                    className={classNames(
+                      styles.formColumnHeaderCell,
+                      styles.formLineColumn,
+                    )}
+                  >
+                    Value
+                  </span>
+                )}
+              </div>
+              {section.lines.map((line) => (
+                <FormLineTableRow
+                  key={line.index}
+                  line={line}
+                  instance={instance}
+                />
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }

@@ -31,12 +31,10 @@ function FormListItem({
     return null;
   }
 
-  const formTitleHeadingId = `${specification.class}-title`;
-
   return (
     <li id={specification.class}>
       <div className={styles.itemHeading}>
-        <h2 id={formTitleHeadingId}>{specification.title}</h2>
+        <h2>{specification.title}</h2>
         <FormLink
           aria-label={`link to ${specification.title}`}
           formClass={specification.class}
@@ -88,11 +86,7 @@ function FormListItem({
           </AriaButton>
         </div>
         <DisclosurePanel>
-          <FormTable
-            specification={specification}
-            instances={instances}
-            formTitleHeadingId={formTitleHeadingId}
-          />
+          <FormTable specification={specification} instances={instances} />
         </DisclosurePanel>
       </Disclosure>
     </li>
