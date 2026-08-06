@@ -8,4 +8,9 @@ button:has(> .lucide) {
   display: inline-flex;
   flex-direction: row;
   justify-content: center;
+
+  .lucide {
+    margin-bottom: 0.125em;
+    margin-top: 0.125em;
+  }
 }
