@@ -48,6 +48,7 @@
   }
 }
 
+.react-aria-ListBoxItem,
 .react-aria-MenuItem {
   background-color: var(--color-background-surface);
   cursor: pointer;
@@ -115,6 +116,7 @@
   padding: 0.5rem;
 
   &[data-trigger="MenuTrigger"],
+  &[data-trigger="Select"],
   &[data-trigger="SubmenuTrigger"] {
     padding: 0;
     overflow-y: auto;

@@ -12,6 +12,7 @@ import { NumberField } from "#src/ui/primitives/NumberField";
 import { RadioGroup, type RadioOption } from "#src/ui/primitives/RadioGroup";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 import { TextField } from "#src/ui/primitives/TextField";
+import styles from "#src/ui/forms/FormBoxContent.module.css";
 
 import type { BoxFormat, BoxIdentifier } from "@thumbtax/common";
 import type { FormBox, ValueProvider } from "@thumbtax/forms";
@@ -256,7 +257,7 @@ function OverrideNumberInputBox({
   const overrideLabelId = React.useId();
 
   return (
-    <div>
+    <div className={styles.smallGap}>
       {isOverridden ? (
         <NumberField
           aria-labelledby={ariaLabelledBy}
@@ -286,14 +287,18 @@ function OverrideNumberInputBox({
 }
 
 function SelectInstanceBoxesInputBox({
+  boxFormat,
   boxIdentifier,
   boxValue,
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
   instance,
+  value,
 }: InputBoxProps & {
+  boxFormat: BoxFormat;
   boxValue: Extract<ValueProvider, { type: "select_instance_boxes_input" }>;
+  value: number;
 }) {
   const specifications = useStore((state) => state.specifications);
   const instanceRegistry = useStore(
@@ -319,17 +324,26 @@ function SelectInstanceBoxesInputBox({
   }
 
   return (
-    <SelectInstanceBoxesField
-      aria-labelledby={ariaLabelledBy}
-      aria-describedby={ariaDescribedBy}
-      errorMessage={errorMessage}
-      specifications={specifications}
-      instanceRegistry={instanceRegistry}
-      boxAddress={{ instance: instance.id, box: boxIdentifier }}
-      valueProvider={boxValue}
-      selectedAddresses={selectedAddresses}
-      onChange={onChange}
-    />
+    <div className={styles.smallGap}>
+      <ValueDisplay
+        boxFormat={boxFormat}
+        errorMessage={errorMessage}
+        ariaLabelledBy={ariaLabelledBy}
+        ariaDescribedBy={ariaDescribedBy}
+        resolvedValue={value}
+      />
+      <SelectInstanceBoxesField
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        errorMessage={errorMessage}
+        specifications={specifications}
+        instanceRegistry={instanceRegistry}
+        boxAddress={{ instance: instance.id, box: boxIdentifier }}
+        valueProvider={boxValue}
+        selectedAddresses={selectedAddresses}
+        onChange={onChange}
+      />
+    </div>
   );
 }
 
@@ -472,12 +486,14 @@ export function FormBoxContent({
     case "select_instance_boxes_input":
       return (
         <SelectInstanceBoxesInputBox
+          boxFormat={boxFormat}
           boxIdentifier={box.identifier}
           boxValue={box.value}
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
           instance={instance}
+          value={resolvedBox.value}
         />
       );
     case "select_value_input":
