@@ -204,51 +204,23 @@ export function FormTable({ specification, instances }: Props) {
             <React.Fragment key={sectionIndex}>
               {section.heading && (
                 <div className={styles.formTableRow}>
-                  <span
-                    className={classNames(
-                      styles.formSectionHeaderCell,
-                      styles.formSectionHeading,
-                      styles.formTableRowHeader,
-                    )}
-                  >
-                    {section.heading}
-                  </span>
-                </div>
-              )}
-              {section.subtitle && (
-                <div className={styles.formTableRow}>
-                  <span
+                  <div
                     className={classNames(
                       styles.formSectionHeaderCell,
                       styles.formTableRowHeader,
                     )}
                   >
-                    {section.subtitle}
-                  </span>
-                </div>
-              )}
-              {section.instructions && (
-                <div className={styles.formTableRow}>
-                  <span
-                    className={classNames(
-                      styles.formSectionHeaderCell,
-                      styles.formTableRowHeader,
+                    <div className={styles.formSectionHeading}>
+                      {section.heading}
+                    </div>
+                    {section.subtitle && <div>{section.subtitle}</div>}
+                    {section.instructions && (
+                      <ProseContent nodes={section.instructions} />
                     )}
-                  >
-                    <ProseContent nodes={section.instructions} />
-                  </span>
-                </div>
-              )}
-              {section.commentary && (
-                <div className={styles.formTableRow}>
-                  <span
-                    className={classNames(
-                      styles.formSectionHeaderCell,
-                      styles.formTableRowHeader,
+                    {section.commentary && (
+                      <ProseContent nodes={section.commentary} />
                     )}
-                  >
-                    <ProseContent nodes={section.commentary} />
-                  </span>
+                  </div>
                 </div>
               )}
               <div className={styles.formTableRow}>

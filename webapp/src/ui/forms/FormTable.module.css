@@ -48,10 +48,13 @@
   grid-template-columns: subgrid;
   grid-template-rows: subgrid;
 
+  &:not(:first-child) {
+    padding-top: 0.25rem;
+  }
+
   &:not(:last-child) {
     border-bottom: 1px solid rgb(from var(--color-border) r g b / 0.5);
     padding-bottom: 0.25rem;
-    padding-top: 0.25rem;
   }
 }
 
@@ -79,12 +82,8 @@
 }
 
 .form-section-header-cell {
-  /* Grid layout */
   grid-row: auto / span 1;
   grid-column: 1 / -1;
-
-  /* Other */
-  margin: 0.5rem 0;
 }
 
 .form-section-heading {
