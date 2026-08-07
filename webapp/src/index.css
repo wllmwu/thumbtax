@@ -19,6 +19,10 @@
   --z-index-top-bar: 2;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   color: var(--color-palette-primary);
   text-decoration: none;

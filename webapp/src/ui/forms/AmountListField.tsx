@@ -1,11 +1,14 @@
 import React from "react";
 
 import { produce } from "immer";
+import { Trash2Icon } from "lucide-react";
 import { FieldError, FieldErrorContext, Group } from "react-aria-components";
 
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { TextField } from "#src/ui/primitives/TextField";
+import { racn } from "#src/ui/utils/racn";
+import styles from "#src/ui/forms/AmountListField.module.css";
 
 import type { UserInput } from "#src/common/types/userInput";
 import type { AccessibleLabelProps } from "#src/ui/types/accessibleLabelProps";
@@ -107,22 +110,29 @@ export function AmountListField({
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
         aria-describedby={describedBy}
+        className={racn(styles.group)}
         isInvalid={!!errorMessage}
       >
         {list.map(({ label, amount }, index) => (
-          <div key={index}>
+          <div key={index} className={styles.entry}>
             <TextField
-              aria-label={`Entry ${index + 1} label`}
-              value={label}
+              aria-label="Label"
               onChange={(newLabel) => onChangeLabel(index, newLabel)}
+              placeholder="My label"
+              value={label}
             />
             <NumberField
-              aria-label={`Entry ${index + 1} amount`}
+              aria-label="Amount"
               format="financial"
-              value={amount}
               onChange={(newAmount) => onChangeAmount(index, newAmount)}
+              value={amount}
             />
-            <AriaButton onPress={() => onRemoveEntry(index)}>Remove</AriaButton>
+            <AriaButton
+              aria-label="Delete entry"
+              onPress={() => onRemoveEntry(index)}
+            >
+              <Trash2Icon />
+            </AriaButton>
           </div>
         ))}
         <AriaButton onPress={onAddEntry}>Add</AriaButton>
