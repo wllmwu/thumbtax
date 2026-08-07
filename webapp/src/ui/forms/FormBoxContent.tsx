@@ -257,12 +257,6 @@ function OverrideNumberInputBox({
 
   return (
     <div>
-      <CheckboxField
-        label={<span id={overrideLabelId}>Override</span>}
-        aria-labelledby={`${overrideLabelId} ${ariaLabelledBy}`}
-        value={isOverridden}
-        onChange={onChangeIsOverridden}
-      />
       {isOverridden ? (
         <NumberField
           aria-labelledby={ariaLabelledBy}
@@ -281,6 +275,12 @@ function OverrideNumberInputBox({
           resolvedValue={value}
         />
       )}
+      <CheckboxField
+        label={<span id={overrideLabelId}>Override</span>}
+        aria-labelledby={`${overrideLabelId} ${ariaLabelledBy}`}
+        value={isOverridden}
+        onChange={onChangeIsOverridden}
+      />
     </div>
   );
 }

@@ -4,7 +4,7 @@
     position: relative;
     stroke: var(--color-border);
     stroke-width: 1px;
-    top: 0.0625em;
+    top: 0.125em;
     width: 1em;
 
     polyline {
@@ -19,10 +19,6 @@
 
   :is(&[data-disabled], &[data-readonly]) .checkbox-indicator {
     opacity: 0.5;
-  }
-
-  &[data-focus-visible] .checkbox-indicator {
-    /*  */
   }
 
   &[data-pressed] .checkbox-indicator {

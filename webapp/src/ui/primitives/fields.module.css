@@ -14,8 +14,11 @@
     font-weight: var(--font-weight-semibold);
   }
 
-  & > :not(input, label) {
+  & > :global(.react-aria-Text) {
     color: var(--color-text-subdued);
+  }
+
+  & > :not(input, label) {
     font-size: 0.875rem;
   }
 }

@@ -2,9 +2,11 @@
   --color-background: #fff;
   --color-background-surface: #f0f0f0;
   --color-border: #808080;
+  --color-border-error: #f00;
   --color-palette-primary: #00f;
   --color-palette-secondary: #66f;
   --color-text-body: #000;
+  --color-text-error: #f00;
   --color-text-on-primary: #fff;
   --color-text-subdued: #404040;
   --font-family-body: "Open Sans", sans-serif;

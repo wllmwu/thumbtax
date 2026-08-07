@@ -33,6 +33,21 @@
   }
 }
 
+.react-aria-FieldError {
+  color: var(--color-text-error);
+}
+
+.react-aria-Input {
+  &[data-invalid] {
+    border-color: var(--color-border-error);
+    color: var(--color-text-error);
+  }
+
+  &:read-only {
+    background-color: transparent;
+  }
+}
+
 .react-aria-MenuItem {
   background-color: var(--color-background-surface);
   cursor: pointer;
