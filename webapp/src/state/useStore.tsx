@@ -206,14 +206,31 @@ const useStoreInner = create<StoreState>((set) => ({
       applyApplicationStateChange((draft) => {
         const instances = draft.formInstances[formClass];
         if (!instances) return;
+
         const index = instances.findIndex(({ id }) => id === instanceId);
         if (index === -1) return;
+
         instances.splice(index, 1);
+
         if (instances.length === 0) {
           delete draft.formInstances[formClass];
           const classIndex = draft.formClasses.indexOf(formClass);
           if (classIndex !== -1) {
             draft.formClasses.splice(classIndex, 1);
+          }
+        }
+
+        for (const remainingInstances of Object.values(draft.formInstances)) {
+          for (const instance of remainingInstances) {
+            for (const input of Object.values(instance.inputs)) {
+              if (input?.type !== "instance_box_selections") continue;
+              const remainingSelections = input.selected.filter(
+                (address) => address.instance !== instanceId,
+              );
+              if (remainingSelections.length !== input.selected.length) {
+                input.selected = remainingSelections;
+              }
+            }
           }
         }
       }),

@@ -11,7 +11,7 @@ import {
 } from "#src/test/specificationFixtures";
 
 import type { FormClass } from "@thumbtax/common";
-import type { SpecificationRegistry } from "@thumbtax/forms";
+import type { FormLine, SpecificationRegistry } from "@thumbtax/forms";
 import type { UserInput } from "#src/common/types/userInput";
 import type { LoadError } from "#src/persistence/types/loadError";
 import type { ApplicationState } from "#src/state/types/applicationState";
@@ -24,8 +24,11 @@ const NUMBER_INPUT_BOX = "number-input-box";
 const AMOUNT_LIST_BOX = "amount-list-box";
 const SELECTION_BOX = "selection-box";
 const FILING_STATUS_BOX = "filing-status-box";
+const INSTANCE_SELECTIONS_BOX = "instance-selections-box";
 
-function makeTestRegistry(): SpecificationRegistry {
+function makeTestRegistry(
+  extraLines: FormLine<false>[] = [],
+): SpecificationRegistry {
   return makeRegistryFixture({
     [TEST_CLASS]: makeSpecificationFixture({
       class: TEST_CLASS,
@@ -82,9 +85,23 @@ function makeTestRegistry(): SpecificationRegistry {
                 },
               }),
             }),
+            ...extraLines,
           ],
         }),
       ],
+    }),
+  });
+}
+
+function makeInstanceSelectionsLineFixture(): FormLine<false> {
+  return makeLineFixture({
+    index: "5",
+    box: makeBoxFixture({
+      identifier: INSTANCE_SELECTIONS_BOX,
+      value: {
+        type: "select_instance_boxes_input",
+        options: [{ form: TEST_CLASS, box: NUMBER_INPUT_BOX }],
+      },
     }),
   });
 }
@@ -502,6 +519,98 @@ describe("useStore", () => {
 
       rerender();
       expect(result.current.workbook[id]).toBeUndefined();
+    });
+
+    it("removes the deleted instance from an instance_box_selections input on a remaining instance", () => {
+      const { result, rerender } = renderUseStore();
+      result.current.initialize(
+        DEFAULT_APPLICATION_STATE,
+        DEFAULT_UI_STATE,
+        DEFAULT_PREFERENCES,
+        makeTestRegistry([makeInstanceSelectionsLineFixture()]),
+      );
+
+      const removedId = result.current.addFormInstance(TEST_CLASS);
+      const keptId = result.current.addFormInstance(TEST_CLASS);
+      const holderId = result.current.addFormInstance(OTHER_CLASS);
+      result.current.setBoxInput(
+        OTHER_CLASS,
+        holderId,
+        INSTANCE_SELECTIONS_BOX,
+        {
+          type: "instance_box_selections",
+          selected: [
+            { instance: removedId, box: NUMBER_INPUT_BOX },
+            { instance: keptId, box: NUMBER_INPUT_BOX },
+          ],
+        },
+      );
+
+      result.current.removeFormInstance(TEST_CLASS, removedId);
+
+      rerender();
+      const holder = result.current.applicationState.formInstances[
+        OTHER_CLASS
+      ]?.find(({ id }) => id === holderId);
+      expect(holder?.inputs[INSTANCE_SELECTIONS_BOX]).toEqual({
+        type: "instance_box_selections",
+        selected: [{ instance: keptId, box: NUMBER_INPUT_BOX }],
+      });
+    });
+
+    it("removes every selected address referencing the deleted instance, even across multiple boxes on multiple instances", () => {
+      const { result, rerender } = renderUseStore();
+      result.current.initialize(
+        DEFAULT_APPLICATION_STATE,
+        DEFAULT_UI_STATE,
+        DEFAULT_PREFERENCES,
+        makeTestRegistry([makeInstanceSelectionsLineFixture()]),
+      );
+
+      const removedId = result.current.addFormInstance(TEST_CLASS);
+      const keptId = result.current.addFormInstance(TEST_CLASS);
+      const holder1Id = result.current.addFormInstance(TEST_CLASS);
+      const holder2Id = result.current.addFormInstance(OTHER_CLASS);
+      result.current.setBoxInput(
+        TEST_CLASS,
+        holder1Id,
+        INSTANCE_SELECTIONS_BOX,
+        {
+          type: "instance_box_selections",
+          selected: [
+            { instance: removedId, box: NUMBER_INPUT_BOX },
+            { instance: removedId, box: FILING_STATUS_BOX },
+            { instance: keptId, box: NUMBER_INPUT_BOX },
+          ],
+        },
+      );
+      result.current.setBoxInput(
+        OTHER_CLASS,
+        holder2Id,
+        INSTANCE_SELECTIONS_BOX,
+        {
+          type: "instance_box_selections",
+          selected: [{ instance: removedId, box: NUMBER_INPUT_BOX }],
+        },
+      );
+
+      result.current.removeFormInstance(TEST_CLASS, removedId);
+
+      rerender();
+      const holder1 = result.current.applicationState.formInstances[
+        TEST_CLASS
+      ]?.find(({ id }) => id === holder1Id);
+      const holder2 = result.current.applicationState.formInstances[
+        OTHER_CLASS
+      ]?.find(({ id }) => id === holder2Id);
+      expect(holder1?.inputs[INSTANCE_SELECTIONS_BOX]).toEqual({
+        type: "instance_box_selections",
+        selected: [{ instance: keptId, box: NUMBER_INPUT_BOX }],
+      });
+      expect(holder2?.inputs[INSTANCE_SELECTIONS_BOX]).toEqual({
+        type: "instance_box_selections",
+        selected: [],
+      });
     });
   });
 
