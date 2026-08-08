@@ -10,7 +10,7 @@
     "lint": "eslint",
     "preview": "vite preview",
     "typecheck": "tsc --build",
-    "test": "vitest"
+    "test": "vitest --run"
   },
   "dependencies": {
     "@internationalized/number": "^3.6.7",

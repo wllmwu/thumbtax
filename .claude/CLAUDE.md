@@ -29,3 +29,16 @@ These files provide context about the contents of each package or module.
 - Keep helpers discoverable.
   If a helper is used in multiple places, prefer to put it in its own file.
   Don't create dumping-ground files with multiple unrelated exports.
+
+## Commands
+
+The following commands are standardized across all of the packages.
+They have to be run from inside each package.
+
+- Type checks: `npm run typecheck` (maps to `tsc`)
+- Linter: `npm run lint` (maps to `eslint`)
+  - Auto-fix lint issues like formatting and import order: `npm run fixlint` (maps to `eslint --fix`)
+- Tests: `npm run test` (maps to `vitest --run`)
+  - `common` doesn't have any tests so this one doesn't exist there.
+
+You can target specific files by passing them through npm, such as: `cd common && npm run fixlint -- src/types`.

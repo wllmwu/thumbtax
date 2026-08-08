@@ -13,7 +13,7 @@
     "fixlint": "eslint --fix",
     "lint": "eslint",
     "prepare": "tsc --build",
-    "test": "vitest",
+    "test": "vitest --run",
     "typecheck": "tsc --build --noEmit"
   },
   "devDependencies": {
