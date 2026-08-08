@@ -13,10 +13,12 @@
   --font-weight-light: 300;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  --font-variation-semicondensed: "wdth" 87.5;
+  --size-height-top-bar: 0;
   --size-margin-page: 4rem;
   --z-index-modal: 3;
   --z-index-top-bar: 2;
+
+  scroll-padding-top: var(--size-height-top-bar);
 }
 
 * {
