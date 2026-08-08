@@ -23,7 +23,7 @@ describe("SwitchField", () => {
   it("renders unchecked state with label", async () => {
     renderComponent({ label: "Test", value: false });
 
-    expect(await screen.findByRole("switch")).toHaveAccessibleName("falseTest");
+    expect(await screen.findByRole("switch")).toHaveAccessibleName("Test");
     expect(await screen.findByRole("switch")).not.toBeChecked();
   });
 
@@ -37,7 +37,7 @@ describe("SwitchField", () => {
   it("renders checked state with label", async () => {
     renderComponent({ label: "Test", value: true });
 
-    expect(await screen.findByRole("switch")).toHaveAccessibleName("trueTest");
+    expect(await screen.findByRole("switch")).toHaveAccessibleName("Test");
     expect(await screen.findByRole("switch")).toBeChecked();
   });
 

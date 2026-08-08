@@ -116,10 +116,9 @@ describe("AmountListField", () => {
     });
     const user = userEvent.setup();
 
-    const removeButtons = await screen.findAllByRole("button", {
-      name: "Remove",
-    });
-    await user.click(removeButtons[0]);
+    await user.click(
+      await screen.findByRole("button", { name: "Remove entry 1" }),
+    );
 
     expect(onChange).toHaveBeenCalledWith([{ label: "second", amount: 200 }]);
   });

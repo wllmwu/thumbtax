@@ -42,7 +42,7 @@ describe("SelectInstanceBoxesField", () => {
     renderComponent();
 
     expect(await screen.findByLabelText("Test field")).toHaveTextContent(
-      "0 form(s) selected",
+      "0 of 2 selected",
     );
   });
 
@@ -55,7 +55,7 @@ describe("SelectInstanceBoxesField", () => {
     });
 
     expect(await screen.findByLabelText("Test field")).toHaveTextContent(
-      "2 form(s) selected",
+      "2 of 2 selected",
     );
   });
 

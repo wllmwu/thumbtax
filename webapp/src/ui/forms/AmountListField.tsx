@@ -116,19 +116,19 @@ export function AmountListField({
         {list.map(({ label, amount }, index) => (
           <div key={index} className={styles.entry}>
             <TextField
-              aria-label="Label"
+              aria-label={`Entry ${index + 1} label`}
               onChange={(newLabel) => onChangeLabel(index, newLabel)}
               placeholder="My label"
               value={label}
             />
             <NumberField
-              aria-label="Amount"
+              aria-label={`Entry ${index + 1} amount`}
               format="financial"
               onChange={(newAmount) => onChangeAmount(index, newAmount)}
               value={amount}
             />
             <AriaButton
-              aria-label="Delete entry"
+              aria-label={`Remove entry ${index + 1}`}
               onPress={() => onRemoveEntry(index)}
             >
               <Trash2Icon />
