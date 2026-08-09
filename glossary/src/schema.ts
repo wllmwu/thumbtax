@@ -5,15 +5,25 @@ import type { Config } from "@markdoc/markdoc";
 export const config: Config = {
   tags: {
     definition: {
+      render: "dd",
+    },
+    entry: {
       attributes: {
-        term: {
+        id: {
           type: "String",
           errorLevel: "error",
           matches: [...GLOSSARY_TERMS],
           required: true,
         },
       },
-      render: "GlossaryDefinition",
+      render: "div",
+    },
+    glossary: {
+      children: ["tag"],
+      render: "dl",
+    },
+    term: {
+      render: "dt",
     },
   },
 };
