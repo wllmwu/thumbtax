@@ -74,6 +74,10 @@ input {
   font-family: var(--font-family-body);
 }
 
+main {
+  padding: 0 var(--size-margin-page);
+}
+
 strong {
   font-weight: var(--font-weight-semibold);
 }
