@@ -10,9 +10,9 @@ import {
 import { DialogTrigger, Modal } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
+import { ProseContent } from "#src/ui/content/ProseContent";
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
-import { ProseContent } from "#src/ui/forms/ProseContent";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import styles from "#src/ui/forms/FormTable.module.css";
 

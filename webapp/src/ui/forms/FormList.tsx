@@ -2,9 +2,9 @@ import { MoveDownIcon, MoveUpIcon, Trash2Icon } from "lucide-react";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
-import { FormLink } from "#src/ui/forms/FormLink";
+import { FormLink } from "#src/ui/content/FormLink";
+import { ProseContent } from "#src/ui/content/ProseContent";
 import { FormTable } from "#src/ui/forms/FormTable";
-import { ProseContent } from "#src/ui/forms/ProseContent";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { Badge } from "#src/ui/primitives/Badge";
 import styles from "#src/ui/forms/FormList.module.css";
