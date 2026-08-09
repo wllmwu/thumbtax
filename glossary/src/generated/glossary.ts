@@ -1,4 +1,6 @@
-export const glossary = {
+import type { RenderableTreeNode } from "@markdoc/markdoc";
+
+export const glossary: RenderableTreeNode = {
   $$mdtype: "Tag",
   name: "article",
   attributes: {},

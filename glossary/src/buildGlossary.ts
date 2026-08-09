@@ -30,7 +30,9 @@ async function buildGlossary(): Promise<void> {
 
   const glossary = transform(documentNode, config);
   const outputPath = path.join(OUTPUT_DIRECTORY, OUTPUT_FILE_NAME);
-  const rawContent = `export const glossary = ${JSON.stringify(glossary)};
+  const rawContent = `import type { RenderableTreeNode } from "@markdoc/markdoc";
+
+  export const glossary: RenderableTreeNode = ${JSON.stringify(glossary)};
 `;
   const formattedContent = await prettier.format(rawContent, {
     filepath: outputPath,
