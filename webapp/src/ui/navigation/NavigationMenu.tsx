@@ -11,6 +11,9 @@ export function NavigationMenu() {
           <NavLink to="/">Main</NavLink>
         </li>
         <li>
+          <NavLink to="/glossary">Glossary</NavLink>
+        </li>
+        <li>
           <NavLink to="/about">About</NavLink>
         </li>
       </ul>

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 
 import { usePersistence } from "#src/persistence/usePersistence";
 import { AboutPage } from "#src/ui/pages/AboutPage";
+import { GlossaryPage } from "#src/ui/pages/GlossaryPage";
 import { Layout } from "#src/ui/pages/Layout";
 import { MainPage } from "#src/ui/pages/MainPage";
 
@@ -15,6 +16,7 @@ export function App() {
         <Route element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="about" element={<AboutPage />} />
+          <Route path="glossary" element={<GlossaryPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
