@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 
 import styles from "#src/ui/navigation/NavigationMenu.module.css";
 
@@ -8,10 +8,10 @@ export function NavigationMenu() {
       <span className={styles.wordmark}>📌 Thumbtax</span>
       <ul>
         <li>
-          <Link to="/">Main</Link>
+          <NavLink to="/">Main</NavLink>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <NavLink to="/about">About</NavLink>
         </li>
       </ul>
     </nav>
