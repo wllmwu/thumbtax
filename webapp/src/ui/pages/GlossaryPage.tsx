@@ -1,10 +1,25 @@
 import React from "react";
 
-import { renderers } from "@markdoc/markdoc";
-import { glossary } from "@thumbtax/glossary";
+import { glossary } from "@thumbtax/forms";
+
+import { ProseContent } from "#src/ui/content/ProseContent";
 
 export function GlossaryPage(): React.ReactNode {
-  return React.useMemo(() => {
-    return renderers.react(glossary, React);
+  const entries = React.useMemo(() => {
+    return Object.entries(glossary).map(([term, entry]) => (
+      <div key={term}>
+        <dt id={term}>{entry.name}</dt>
+        <dd>
+          <ProseContent nodes={entry.definition} />
+        </dd>
+      </div>
+    ));
   }, []);
+
+  return (
+    <div>
+      <h1>Glossary</h1>
+      <dl>{entries}</dl>
+    </div>
+  );
 }

@@ -8,15 +8,5 @@
       "property": "config",
       "watch": true
     }
-  },
-  {
-    "id": "thumbtax-glossary",
-    "path": "glossary/src",
-    "schema": {
-      "path": "glossary/schema-dist/schema.mjs",
-      "type": "esm",
-      "property": "config",
-      "watch": true
-    }
   }
 ]

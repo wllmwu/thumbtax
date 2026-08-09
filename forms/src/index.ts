@@ -24,9 +24,12 @@ import { fW2_12_codes } from "./generated/fW2_12_codes";
 import type { SpecificationRegistry } from "./types/specificationRegistry";
 
 export * from "./types/formSpecification";
+export * from "./types/glossaryTerm";
 export * from "./types/specificationRegistry";
 export * from "./types/valueProvider";
 export * from "./types/valueProviderType";
+
+export { glossary } from "./glossary/glossary";
 
 export const specifications: SpecificationRegistry = {
   f1040,
