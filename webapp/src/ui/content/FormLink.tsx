@@ -1,8 +1,7 @@
 import React from "react";
 
-import { Link } from "react-aria-components";
-
 import { useStore } from "#src/state/useStore";
+import { Link } from "#src/ui/primitives/Link";
 
 import type { FormClass } from "@thumbtax/common";
 
@@ -28,8 +27,8 @@ export function FormLink({
 
   return (
     <Link
-      href={`#${formClass}`}
       aria-label={ariaLabel}
+      href={`#${formClass}`}
       isDisabled={!classIsPresent}
     >
       {children}
