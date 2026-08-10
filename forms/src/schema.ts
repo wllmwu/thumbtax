@@ -10,6 +10,7 @@ import { validateChildren } from "./schema/validateChildren";
 import { validatePlainTextContent } from "./schema/validatePlainTextContent";
 import { validateProseContent } from "./schema/validateProseContent";
 import { optionTag, pieceTag, valueTag } from "./schema/valueTag";
+import { GLOSSARY_TERMS } from "./types/glossaryTerm";
 
 import type { Config } from "@markdoc/markdoc";
 
@@ -254,7 +255,7 @@ export const config: Config = {
       transform: makeTransformer("commentary"),
       validate: validateProseContent,
     },
-    fl: {
+    formlink: {
       attributes: {
         formClass: {
           type: "String",
@@ -263,6 +264,16 @@ export const config: Config = {
         },
       },
       render: "FormLink",
+    },
+    glossarylink: {
+      attributes: {
+        term: {
+          type: "String",
+          matches: [...GLOSSARY_TERMS],
+          errorLevel: "error",
+        },
+      },
+      render: "GlossaryLink",
     },
   },
   partials: {

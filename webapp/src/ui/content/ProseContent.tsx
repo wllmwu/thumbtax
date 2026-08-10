@@ -3,6 +3,7 @@ import React from "react";
 import { renderers } from "@markdoc/markdoc";
 
 import { FormLink } from "#src/ui/content/FormLink";
+import { GlossaryLink } from "#src/ui/content/GlossaryLink";
 
 import type { RenderableTreeNodes } from "@markdoc/markdoc";
 
@@ -15,6 +16,8 @@ export function ProseContent({ nodes }: Props): React.ReactNode {
     if (!nodes) {
       return null;
     }
-    return renderers.react(nodes, React, { components: { FormLink } });
+    return renderers.react(nodes, React, {
+      components: { FormLink, GlossaryLink },
+    });
   }, [nodes]);
 }

@@ -16,7 +16,7 @@ const PROSE_TYPES: NodeType[] = [
   "text",
 ];
 
-const ALLOWED_TAGS: Array<string | undefined> = ["fl"];
+const ALLOWED_TAGS: Array<string | undefined> = ["formlink", "glossarylink"];
 
 export function validateProseContent(node: Node): ValidationError[] {
   for (const descendant of node.walk()) {
