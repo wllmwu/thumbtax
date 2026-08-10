@@ -5,6 +5,7 @@ import { Dialog, Form, Heading } from "react-aria-components";
 import { useStore } from "#src/state/useStore";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { TextField } from "#src/ui/primitives/TextField";
+import dialogStyles from "#src/ui/primitives/dialogs.module.css";
 
 import type { FormClass } from "@thumbtax/common";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
@@ -27,7 +28,7 @@ export function FormLabelDialog({ formClass, instanceId }: Props) {
 
   const renderContent = React.useCallback(
     ({ close }: { close: () => void }) => (
-      <>
+      <div className={dialogStyles.verticalStack}>
         <Heading slot="title">Set form label</Heading>
         <Form
           onSubmit={(event) => {
@@ -45,10 +46,14 @@ export function FormLabelDialog({ formClass, instanceId }: Props) {
               newLabel.length === 0 ? "Label is required" : undefined
             }
           />
-          <AriaButton slot="close">Cancel</AriaButton>
-          <AriaButton type="submit">Done</AriaButton>
+          <div className={dialogStyles.buttonGroup}>
+            <AriaButton slot="close">Cancel</AriaButton>
+            <AriaButton type="submit" variant="primary">
+              Save
+            </AriaButton>
+          </div>
         </Form>
-      </>
+      </div>
     ),
     [formClass, instanceId, newLabel, setFormInstanceLabel],
   );

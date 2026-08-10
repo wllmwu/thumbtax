@@ -16,6 +16,7 @@ import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { SwitchField } from "#src/ui/primitives/SwitchField";
 import { racn } from "#src/ui/utils/racn";
 import styles from "#src/ui/control-bar/SettingsDialog.module.css";
+import dialogStyles from "#src/ui/primitives/dialogs.module.css";
 import fieldStyles from "#src/ui/primitives/fields.module.css";
 
 export function SettingsDialog() {
@@ -31,7 +32,7 @@ export function SettingsDialog() {
 
   const renderContent = React.useCallback(
     ({ close }: { close: () => void }) => (
-      <div className={styles.verticalStack}>
+      <div className={dialogStyles.verticalStack}>
         <Heading slot="title">Settings</Heading>
         <Form
           onSubmit={(event) => {
@@ -43,7 +44,7 @@ export function SettingsDialog() {
             close();
           }}
         >
-          <div className={styles.verticalStack}>
+          <div className={dialogStyles.verticalStack}>
             <SwitchField
               label="Autosave to this browser"
               description="When enabled, this browser remembers the data you enter into Thumbtax. Otherwise, you'll lose your progress if you close the tab. Only enable this option on a device that belongs to you. Note: Even when this option is enabled, deleting your browsing history or clearing your cache might also delete your Thumbtax data. Download a save file to keep your data long-term."
@@ -65,7 +66,7 @@ export function SettingsDialog() {
               </Text>
               <FieldError>Must be between 0 and 1000.</FieldError>
             </NumberField>
-            <div className={styles.buttonGroup}>
+            <div className={dialogStyles.buttonGroup}>
               <AriaButton slot="close">Cancel</AriaButton>
               <AriaButton type="submit" variant="primary">
                 Save
