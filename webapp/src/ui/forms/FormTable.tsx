@@ -76,7 +76,7 @@ function FormLineTableRow({
         line.boxes.map((box, index) => (
           <span
             key={box.identifier}
-            className={styles.formLineColumn}
+            className={classNames(styles.formLineColumn, styles.formBox)}
             style={
               {
                 "--box-index": index,
@@ -96,7 +96,7 @@ function FormLineTableRow({
           </span>
         ))
       ) : (
-        <span className={styles.formLineColumn}>
+        <span className={classNames(styles.formLineColumn, styles.formBox)}>
           <FormBoxContent
             instance={instance}
             box={line.box}

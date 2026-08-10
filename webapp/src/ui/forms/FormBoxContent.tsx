@@ -538,7 +538,7 @@ export function FormBoxContent({
       );
     case "unsupported":
     case "unused":
-      return null;
+      return "\u2014";
     default:
       absurd(valueType);
   }

@@ -100,3 +100,9 @@
   --column-count: 1;
   grid-column: calc(-1 - var(--column-count) + var(--box-index)) / span 1;
 }
+
+.form-box {
+  :global(.react-aria-Input) {
+    padding-block: 0.0625em;
+  }
+}
