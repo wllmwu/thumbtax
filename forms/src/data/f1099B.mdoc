@@ -6,6 +6,11 @@
 
 {% subtitle %}Proceeds from Broker and Barter Exchange Transactions{% /subtitle %}
 
+{% commentary %}
+If you sell stocks during the year, the brokerage files this form with the IRS and sends a copy to you.
+Generally, they report each transaction on a separate Form 1099-B.
+{% /commentary %}
+
 {% section %}
 {% lines %}
 - {% line index="1a" %}
@@ -22,10 +27,12 @@
   {% /line %}
 - {% line index="1d" %}
   - {% instructions %}Proceeds{% /instructions %}
+  - {% commentary %}Usually the sale price{% /commentary %}
   - {% box identifier="1d" %}{% value type="number_input" /%}{% /box %}
   {% /line %}
 - {% line index="1e" %}
   - {% instructions %}Cost or other basis{% /instructions %}
+  - {% commentary %}Usually the purchase price{% /commentary %}
   - {% box identifier="1e" %}{% value type="number_input" /%}{% /box %}
   {% /line %}
 - {% line index="1f" %}
@@ -33,7 +40,7 @@
   - {% box identifier="1f" %}{% value type="number_input" /%}{% /box %}
   {% /line %}
 - {% line index="1g" %}
-  - {% instructions %}Wash sale loss disallowed{% /instructions %}
+  - {% instructions %}{% glossarylink term="wash-sale" %}Wash sale{% /glossarylink %} loss disallowed{% /instructions %}
   - {% box identifier="1g" %}{% value type="number_input" /%}{% /box %}
   {% /line %}
 - {% line index="2" %}
@@ -41,11 +48,11 @@
   - {% box identifier="2" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
-  - {% instructions %}Check if proceeds are from collectibles or from a QOF{% /instructions %}
+  - {% instructions %}Check if proceeds are from {% glossarylink term="collectibles" %}collectibles{% /glossarylink %} or from a {% glossarylink term="qualified-opportunity-fund" %}QOF{% /glossarylink %}{% /instructions %}
   - {% box identifier="3" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="4" %}
-  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% instructions %}{% glossarylink term="federal-income-tax" %}Federal income tax{% /glossarylink %} {% glossarylink term="withholding" %}withheld{% /glossarylink %}{% /instructions %}
   - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
   {% /line %}
 - {% line index="6" %}

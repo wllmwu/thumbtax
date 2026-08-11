@@ -7,47 +7,125 @@ export const f1099DIV: FormSpecification = {
   maxInstances: null,
   title: "Form 1099-DIV",
   subtitle: "Dividends and Distributions",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "If you earn ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "dividends" },
+        children: ["dividends"],
+      },
+      " during the year, the bank or brokerage files this form with the IRS and sends a copy to you.",
+    ],
+  },
   sections: [
     {
       lines: [
         {
           index: "1a",
-          instructions: "Total ordinary dividends",
+          instructions: [
+            "Total ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "ordinary-dividends" },
+              children: ["ordinary dividends"],
+            },
+          ],
           box: { identifier: "1a", value: { type: "number_input" } },
         },
         {
           index: "1b",
-          instructions: "Qualified dividends",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "qualified-dividends" },
+            children: ["Qualified dividends"],
+          },
           box: { identifier: "1b", value: { type: "number_input" } },
         },
         {
           index: "2a",
-          instructions: "Total capital gain distributions",
+          instructions: [
+            "Total ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "capital-gain" },
+              children: ["capital gain"],
+            },
+            " distributions",
+          ],
           box: { identifier: "2a", value: { type: "number_input" } },
         },
         {
           index: "2b",
-          instructions: "Unrecaptured Section 1250 gain",
+          instructions: [
+            "Unrecaptured ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "section-1250" },
+              children: ["Section 1250"],
+            },
+            " gain",
+          ],
           box: { identifier: "2b", value: { type: "number_input" } },
         },
         {
           index: "2c",
-          instructions: "Section 1202 gain",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "section-1202" },
+              children: ["Section 1202"],
+            },
+            " gain",
+          ],
           box: { identifier: "2c", value: { type: "number_input" } },
         },
         {
           index: "2d",
-          instructions: "Collectibles (28%) gain",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "collectibles" },
+              children: ["Collectibles"],
+            },
+            " (28%) gain",
+          ],
           box: { identifier: "2d", value: { type: "number_input" } },
         },
         {
           index: "2e",
-          instructions: "Section 897 ordinary dividends",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "section-897" },
+              children: ["Section 897"],
+            },
+            " ordinary dividends",
+          ],
           box: { identifier: "2e", value: { type: "number_input" } },
         },
         {
           index: "2f",
-          instructions: "Section 897 capital gain",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "section-897" },
+              children: ["Section 897"],
+            },
+            " capital gain",
+          ],
           box: { identifier: "2f", value: { type: "number_input" } },
         },
         {
@@ -57,12 +135,34 @@ export const f1099DIV: FormSpecification = {
         },
         {
           index: "4",
-          instructions: "Federal income tax withheld",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "federal-income-tax" },
+              children: ["Federal income tax"],
+            },
+            " ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "withholding" },
+              children: ["withheld"],
+            },
+          ],
           box: { identifier: "4", value: { type: "number_input" } },
         },
         {
           index: "5",
-          instructions: "Section 199A dividends",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "section-199A" },
+              children: ["Section 199A"],
+            },
+            " dividends",
+          ],
           box: { identifier: "5", value: { type: "number_input" } },
         },
         {

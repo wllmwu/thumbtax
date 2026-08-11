@@ -1,3 +1,17 @@
-export const GLOSSARY_TERMS = ["test1", "test2"] as const;
+export const GLOSSARY_TERMS = [
+  "capital-gain",
+  "collectibles",
+  "dividends",
+  "federal-income-tax",
+  "ordinary-dividends",
+  "qualified-dividends",
+  "qualified-opportunity-fund",
+  "section-1202",
+  "section-1250",
+  "section-199A",
+  "section-897",
+  "wash-sale",
+  "withholding",
+] as const;
 
 export type GlossaryTerm = (typeof GLOSSARY_TERMS)[number];

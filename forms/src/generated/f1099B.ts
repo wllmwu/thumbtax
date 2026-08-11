@@ -7,6 +7,16 @@ export const f1099B: FormSpecification = {
   maxInstances: null,
   title: "Form 1099-B",
   subtitle: "Proceeds from Broker and Barter Exchange Transactions",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "If you sell stocks during the year, the brokerage files this form with the IRS and sends a copy to you.",
+      " ",
+      "Generally, they report each transaction on a separate Form 1099-B.",
+    ],
+  },
   sections: [
     {
       lines: [
@@ -28,11 +38,13 @@ export const f1099B: FormSpecification = {
         {
           index: "1d",
           instructions: "Proceeds",
+          commentary: "Usually the sale price",
           box: { identifier: "1d", value: { type: "number_input" } },
         },
         {
           index: "1e",
           instructions: "Cost or other basis",
+          commentary: "Usually the purchase price",
           box: { identifier: "1e", value: { type: "number_input" } },
         },
         {
@@ -42,7 +54,15 @@ export const f1099B: FormSpecification = {
         },
         {
           index: "1g",
-          instructions: "Wash sale loss disallowed",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "wash-sale" },
+              children: ["Wash sale"],
+            },
+            " loss disallowed",
+          ],
           box: { identifier: "1g", value: { type: "number_input" } },
         },
         {
@@ -52,12 +72,41 @@ export const f1099B: FormSpecification = {
         },
         {
           index: "3",
-          instructions: "Check if proceeds are from collectibles or from a QOF",
+          instructions: [
+            "Check if proceeds are from ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "collectibles" },
+              children: ["collectibles"],
+            },
+            " or from a ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "qualified-opportunity-fund" },
+              children: ["QOF"],
+            },
+          ],
           box: { identifier: "3", value: { type: "unused" } },
         },
         {
           index: "4",
-          instructions: "Federal income tax withheld",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "federal-income-tax" },
+              children: ["Federal income tax"],
+            },
+            " ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "withholding" },
+              children: ["withheld"],
+            },
+          ],
           box: { identifier: "4", value: { type: "number_input" } },
         },
         {
