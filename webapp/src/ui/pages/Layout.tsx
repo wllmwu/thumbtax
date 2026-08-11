@@ -1,17 +1,29 @@
-import { useEffect, useRef } from "react";
+import React from "react";
 
-import { Outlet, useMatch } from "react-router";
+import { Outlet, useLocation, useMatch } from "react-router";
 
 import { ControlBar } from "#src/ui/control-bar/ControlBar";
 import { NavigationMenu } from "#src/ui/navigation/NavigationMenu";
 import styles from "#src/ui/pages/Layout.module.css";
 
 export function Layout() {
+  const location = useLocation();
   const mainPageMatch = useMatch({ path: "/", end: true });
 
-  const topBarRef = useRef<HTMLDivElement>(null);
+  const topBarRef = React.useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  // Scroll to targeted element when URL fragment changes
+  React.useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView();
+      }
+    }
+  }, [location.hash]);
+
+  // Set `--size-height-top-bar` on the root element
+  React.useEffect(() => {
     const topBar = topBarRef.current;
     if (topBar === null) {
       return;
