@@ -78,6 +78,10 @@ main {
   padding: 0 var(--size-margin-page);
 }
 
+p {
+  margin-block: 0.5em;
+}
+
 strong {
   font-weight: var(--font-weight-semibold);
 }

@@ -19,6 +19,10 @@
       gap: 0.25rem;
     }
 
+    .item-disclosure {
+      margin-block: 1rem;
+    }
+
     .item-heading {
       align-items: baseline;
       display: flex;

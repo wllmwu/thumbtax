@@ -10,6 +10,7 @@ import {
 import { DialogTrigger, Modal } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
+import { CommentaryDisplay } from "#src/ui/content/CommentaryDisplay";
 import { ProseContent } from "#src/ui/content/ProseContent";
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
@@ -57,24 +58,20 @@ function FormLineTableRow({
 
   return (
     <div className={styles.formTableRow}>
-      <span id={lineIndexTextId} className={styles.formTableRowHeader}>
+      <div id={lineIndexTextId} className={styles.formTableRowHeader}>
         {line.index}
-      </span>
-      <span id={lineDescriptionTextId} className={styles.formTableRowHeader}>
+      </div>
+      <div id={lineDescriptionTextId} className={styles.formTableRowHeader}>
         {line.instructions && (
-          <span>
+          <div>
             <ProseContent nodes={line.instructions} />
-          </span>
+          </div>
         )}
-        {line.commentary && (
-          <span>
-            <ProseContent nodes={line.commentary} />
-          </span>
-        )}
-      </span>
+        {line.commentary && <CommentaryDisplay commentary={line.commentary} />}
+      </div>
       {"boxes" in line ? (
         line.boxes.map((box, index) => (
-          <span
+          <div
             key={box.identifier}
             className={classNames(styles.formLineColumn, styles.formBox)}
             style={
@@ -93,17 +90,17 @@ function FormLineTableRow({
               )}`}
               aria-describedby={lineDescriptionTextId}
             />
-          </span>
+          </div>
         ))
       ) : (
-        <span className={classNames(styles.formLineColumn, styles.formBox)}>
+        <div className={classNames(styles.formLineColumn, styles.formBox)}>
           <FormBoxContent
             instance={instance}
             box={line.box}
             aria-labelledby={lineIndexTextId}
             aria-describedby={lineDescriptionTextId}
           />
-        </span>
+        </div>
       )}
     </div>
   );
@@ -215,34 +212,36 @@ export function FormTable({ specification, instances }: Props) {
                     </div>
                     {section.subtitle && <div>{section.subtitle}</div>}
                     {section.instructions && (
-                      <ProseContent nodes={section.instructions} />
+                      <div>
+                        <ProseContent nodes={section.instructions} />
+                      </div>
                     )}
                     {section.commentary && (
-                      <ProseContent nodes={section.commentary} />
+                      <CommentaryDisplay commentary={section.commentary} />
                     )}
                   </div>
                 </div>
               )}
               <div className={styles.formTableRow}>
-                <span
+                <div
                   className={classNames(
                     styles.formColumnHeaderCell,
                     styles.formTableRowHeader,
                   )}
                 >
                   Line
-                </span>
-                <span
+                </div>
+                <div
                   className={classNames(
                     styles.formColumnHeaderCell,
                     styles.formTableRowHeader,
                   )}
                 >
                   Instructions
-                </span>
+                </div>
                 {section.columns ? (
                   section.columns.map((column, index) => (
-                    <span
+                    <div
                       key={column.index}
                       className={classNames(
                         styles.formColumnHeaderCell,
@@ -268,17 +267,17 @@ export function FormTable({ specification, instances }: Props) {
                       >
                         <ProseContent nodes={column.instructions} />
                       </span>
-                    </span>
+                    </div>
                   ))
                 ) : (
-                  <span
+                  <div
                     className={classNames(
                       styles.formColumnHeaderCell,
                       styles.formLineColumn,
                     )}
                   >
                     Value
-                  </span>
+                  </div>
                 )}
               </div>
               {section.lines.map((line) => (

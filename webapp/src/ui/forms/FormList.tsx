@@ -2,11 +2,13 @@ import { MoveDownIcon, MoveUpIcon, Trash2Icon } from "lucide-react";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
+import { CommentaryDisplay } from "#src/ui/content/CommentaryDisplay";
 import { FormLink } from "#src/ui/content/FormLink";
 import { ProseContent } from "#src/ui/content/ProseContent";
 import { FormTable } from "#src/ui/forms/FormTable";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { Badge } from "#src/ui/primitives/Badge";
+import { racn } from "#src/ui/utils/racn";
 import styles from "#src/ui/forms/FormList.module.css";
 
 import type { FormSpecification } from "@thumbtax/forms";
@@ -45,16 +47,6 @@ function FormListItem({
         {specification.maxInstances !== 1 && <Badge>{instances.length}</Badge>}
       </div>
       {specification.subtitle && <div>{specification.subtitle}</div>}
-      {specification.instructions && (
-        <div>
-          <ProseContent nodes={specification.instructions} />
-        </div>
-      )}
-      {specification.commentary && (
-        <div>
-          <ProseContent nodes={specification.commentary} />
-        </div>
-      )}
       <Disclosure>
         <div className={styles.itemButtons}>
           <AriaButton slot="trigger">
@@ -85,7 +77,15 @@ function FormListItem({
             <Trash2Icon />
           </AriaButton>
         </div>
-        <DisclosurePanel>
+        <DisclosurePanel className={racn(styles.itemDisclosure)}>
+          {specification.instructions && (
+            <div>
+              <ProseContent nodes={specification.instructions} />
+            </div>
+          )}
+          {specification.commentary && (
+            <CommentaryDisplay commentary={specification.commentary} />
+          )}
           <FormTable specification={specification} instances={instances} />
         </DisclosurePanel>
       </Disclosure>
