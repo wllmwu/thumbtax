@@ -46,3 +46,10 @@ You can target specific files by passing them through npm, such as: `cd common &
 ## Contributing
 
 If asked to write docs, place them in the `agent-docs` directory at the repo top level.
+
+## Technical debt
+
+- Many of the UI components currently set physical CSS properties (`margin-top`, `padding-right`, etc.) instead of logical properties (`margin-block-start`, `padding-inline-end`, etc.).
+  Moving forward, new components should use logical properties where applicable.
+- Many UI components also don't have unit test coverage.
+  Tests should be added/updated for new components and for existing components that have test files.
