@@ -5,6 +5,7 @@ import { deserializeUiState } from "#src/persistence/deserializeUiState";
 
 const validUiState = {
   connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
+  formClassExpansion: { fW2: true },
 };
 
 function validStored(overrides: Record<string, unknown> = {}) {
@@ -61,6 +62,34 @@ describe("deserializeUiState", () => {
     const result = deserializeUiState(
       validStored({
         uiState: { connectionsGraphNodePositions: { fW2: { x: "no", y: 2 } } },
+      }),
+    );
+    expect(result.ok).toBe(false);
+    if (result.ok) throw new Error("expected failure");
+    expect(result.errors[0].type).toBe("validation_failed");
+  });
+
+  it("rejects an unknown form class key in form class expansion", () => {
+    const result = deserializeUiState(
+      validStored({
+        uiState: {
+          connectionsGraphNodePositions: {},
+          formClassExpansion: { bogus: true },
+        },
+      }),
+    );
+    expect(result.ok).toBe(false);
+    if (result.ok) throw new Error("expected failure");
+    expect(result.errors[0].type).toBe("validation_failed");
+  });
+
+  it("rejects a non-boolean form class expansion value", () => {
+    const result = deserializeUiState(
+      validStored({
+        uiState: {
+          connectionsGraphNodePositions: {},
+          formClassExpansion: { fW2: "yes" },
+        },
       }),
     );
     expect(result.ok).toBe(false);

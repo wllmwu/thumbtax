@@ -33,6 +33,7 @@ describe("serializeUiState", () => {
   it("wraps the ui state with the current schema version", () => {
     const uiState: UiState = {
       connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
+      formClassExpansion: { fW2: true },
     };
     expect(serializeUiState(uiState)).toEqual({
       uiState,

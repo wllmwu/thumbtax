@@ -7,4 +7,5 @@ export const uiStateSchema = z.strictObject({
     formClassSchema,
     z.strictObject({ x: z.number(), y: z.number() }),
   ),
+  formClassExpansion: z.partialRecord(formClassSchema, z.boolean()),
 });

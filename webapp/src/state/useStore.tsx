@@ -55,6 +55,7 @@ type StoreState = {
     direction: -1 | 1,
   ) => void;
   moveFormClass: (formClass: FormClass, direction: -1 | 1) => void;
+  setFormClassExpanded: (formClass: FormClass, isExpanded: boolean) => void;
   setBoxInput: (
     formClass: FormClass,
     instanceId: FormInstanceId,
@@ -101,6 +102,17 @@ function applyApplicationStateChange(
       workbook: newWorkbook,
     };
   };
+}
+
+type UiStateRecipe = (draft: Draft<UiState>) => void;
+
+function applyUiStateChange(
+  recipe: UiStateRecipe,
+): (state: StoreState) => StoreState {
+  return (state) => ({
+    ...state,
+    uiState: produce(state.uiState, recipe),
+  });
 }
 
 const useStoreInner = create<StoreState>((set) => ({
@@ -279,6 +291,14 @@ const useStoreInner = create<StoreState>((set) => ({
         draft.formClasses.splice(newIndex, 0, moved);
       }),
       true,
+    );
+  },
+
+  setFormClassExpanded: (formClass, isExpanded) => {
+    set(
+      applyUiStateChange((draft) => {
+        draft.formClassExpansion[formClass] = isExpanded;
+      }),
     );
   },
 

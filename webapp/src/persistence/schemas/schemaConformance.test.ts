@@ -91,6 +91,7 @@ describe("schema/type conformance", () => {
     const result = currentPersistedUiStateSchema.safeParse({
       uiState: {
         connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
+        formClassExpansion: { fW2: true },
       },
       schemaVersion: 1,
     });

@@ -60,6 +60,7 @@ describe("usePersistence", () => {
       rerender();
       expect(result.current.applicationState.filingStatus).toBe("single");
       expect(result.current.uiState.connectionsGraphNodePositions).toEqual({});
+      expect(result.current.uiState.formClassExpansion).toEqual({});
       expect(result.current.userPreferences.browserSaveEnabled).toBe(false);
       expect(result.current.loadErrors).toEqual([]);
       expect(result.current.specifications).toBeDefined();
@@ -99,6 +100,7 @@ describe("usePersistence", () => {
         JSON.stringify({
           uiState: {
             connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
+            formClassExpansion: { fW2: true },
           },
           schemaVersion: CURRENT_SCHEMA_VERSION,
         }),
@@ -120,6 +122,9 @@ describe("usePersistence", () => {
       );
       expect(result.current.uiState.connectionsGraphNodePositions).toEqual({
         fW2: { x: 1, y: 2 },
+      });
+      expect(result.current.uiState.formClassExpansion).toEqual({
+        fW2: true,
       });
       expect(result.current.loadErrors).toEqual([]);
     });
@@ -259,6 +264,7 @@ describe("usePersistence", () => {
         JSON.stringify({
           uiState: {
             connectionsGraphNodePositions: { fW2: { x: 1, y: 1 } },
+            formClassExpansion: { fW2: true },
           },
           schemaVersion: CURRENT_SCHEMA_VERSION,
         }),
@@ -332,7 +338,10 @@ describe("usePersistence", () => {
       act(() => {
         store.current.initialize(
           store.current.applicationState,
-          { connectionsGraphNodePositions: { fW2: { x: 7, y: 8 } } },
+          {
+            connectionsGraphNodePositions: { fW2: { x: 7, y: 8 } },
+            formClassExpansion: { fW2: true },
+          },
           { browserSaveEnabled: false, maximumHistorySize: 12 },
           registry,
         );
@@ -366,6 +375,7 @@ describe("usePersistence", () => {
       expect(store.current.applicationState).toEqual(newApplicationState);
       expect(store.current.uiState).toEqual({
         connectionsGraphNodePositions: { fW2: { x: 7, y: 8 } },
+        formClassExpansion: { fW2: true },
       });
       expect(store.current.userPreferences).toEqual({
         browserSaveEnabled: false,

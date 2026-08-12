@@ -25,9 +25,13 @@ function FormListItem({
   const instances = useStore(
     (state) => state.applicationState.formInstances[specification.class],
   );
+  const isExpanded = useStore(
+    (state) => state.uiState.formClassExpansion[specification.class] ?? false,
+  );
 
   const moveFormClass = useStore((state) => state.moveFormClass);
   const removeFormInstance = useStore((state) => state.removeFormInstance);
+  const setFormClassExpanded = useStore((state) => state.setFormClassExpanded);
 
   if (!instances) {
     return null;
@@ -47,10 +51,17 @@ function FormListItem({
         {specification.maxInstances !== 1 && <Badge>{instances.length}</Badge>}
       </div>
       {specification.subtitle && <div>{specification.subtitle}</div>}
-      <Disclosure>
+      <Disclosure
+        isExpanded={isExpanded}
+        onExpandedChange={(newIsExpanded) =>
+          setFormClassExpanded(specification.class, newIsExpanded)
+        }
+      >
         <div className={styles.itemButtons}>
           <AriaButton slot="trigger">
-            Show/hide {specification.title}
+            {isExpanded
+              ? `Hide ${specification.title}`
+              : `Show ${specification.title}`}
           </AriaButton>
           <AriaButton
             aria-label="Move up"

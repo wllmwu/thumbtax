@@ -113,6 +113,7 @@ const DEFAULT_APPLICATION_STATE: ApplicationState = {
 };
 const DEFAULT_UI_STATE: UiState = {
   connectionsGraphNodePositions: {},
+  formClassExpansion: {},
 };
 const DEFAULT_PREFERENCES: UserPreferences = {
   browserSaveEnabled: true,
@@ -149,6 +150,7 @@ describe("useStore", () => {
       };
       const uiState: UiState = {
         connectionsGraphNodePositions: { [TEST_CLASS]: { x: 1, y: 2 } },
+        formClassExpansion: { [TEST_CLASS]: true },
       };
       const preferences: UserPreferences = {
         browserSaveEnabled: false,
@@ -887,6 +889,61 @@ describe("useStore", () => {
     });
   });
 
+  describe("setFormClassExpanded", () => {
+    it("records the expanded state for a form class", () => {
+      const { result, rerender } = renderUseStore();
+
+      result.current.setFormClassExpanded(TEST_CLASS, true);
+
+      rerender();
+      expect(result.current.uiState.formClassExpansion).toEqual({
+        [TEST_CLASS]: true,
+      });
+    });
+
+    it("overwrites a previously recorded state for the same class", () => {
+      const { result, rerender } = renderUseStore();
+
+      result.current.setFormClassExpanded(TEST_CLASS, true);
+      result.current.setFormClassExpanded(TEST_CLASS, false);
+
+      rerender();
+      expect(result.current.uiState.formClassExpansion).toEqual({
+        [TEST_CLASS]: false,
+      });
+    });
+
+    it("tracks multiple form classes independently", () => {
+      const { result, rerender } = renderUseStore();
+
+      result.current.setFormClassExpanded(TEST_CLASS, true);
+      result.current.setFormClassExpanded(OTHER_CLASS, false);
+
+      rerender();
+      expect(result.current.uiState.formClassExpansion).toEqual({
+        [TEST_CLASS]: true,
+        [OTHER_CLASS]: false,
+      });
+    });
+
+    it("does not affect applicationState, workbook, or history", () => {
+      const { result, rerender } = renderUseStore();
+
+      result.current.addFormInstance(TEST_CLASS);
+      rerender();
+      const stateBefore = result.current;
+
+      result.current.setFormClassExpanded(TEST_CLASS, true);
+
+      rerender();
+      expect(result.current.applicationState).toBe(
+        stateBefore.applicationState,
+      );
+      expect(result.current.workbook).toBe(stateBefore.workbook);
+      expect(result.current.history).toBe(stateBefore.history);
+    });
+  });
+
   describe("setBoxInput", () => {
     it("stores a number input on the specified box", () => {
       const { result, rerender } = renderUseStore();
@@ -1392,7 +1449,10 @@ describe("useStore", () => {
       const { result, rerender } = renderUseStore();
       result.current.initialize(
         DEFAULT_APPLICATION_STATE,
-        { connectionsGraphNodePositions: { [TEST_CLASS]: { x: 5, y: 6 } } },
+        {
+          connectionsGraphNodePositions: { [TEST_CLASS]: { x: 5, y: 6 } },
+          formClassExpansion: { [TEST_CLASS]: true },
+        },
         { browserSaveEnabled: false, maximumHistorySize: 12 },
         makeTestRegistry(),
       );
@@ -1413,6 +1473,7 @@ describe("useStore", () => {
       expect(result.current.applicationState).toEqual(next);
       expect(result.current.uiState).toEqual({
         connectionsGraphNodePositions: { [TEST_CLASS]: { x: 5, y: 6 } },
+        formClassExpansion: { [TEST_CLASS]: true },
       });
       expect(result.current.userPreferences).toEqual({
         browserSaveEnabled: false,
