@@ -23,4 +23,4 @@ Its main dependencies include:
   - `persistence/`: Handles saving/loading state to/from various formats
   - `state/`: Central state manager
   - `test/`: Test utilities
-  - `ui/`: Presentation layer, including all React code
+  - `ui/`: Presentation layer, including almost all React code
