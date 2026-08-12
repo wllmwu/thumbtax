@@ -42,3 +42,7 @@ They have to be run from inside each package.
   - `common` doesn't have any tests so this one doesn't exist there.
 
 You can target specific files by passing them through npm, such as: `cd common && npm run fixlint -- src/types`.
+
+## Contributing
+
+If asked to write docs, place them in the `agent-docs` directory at the repo top level.
