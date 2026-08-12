@@ -17,7 +17,7 @@ The code is split into these top-level Node packages:
 - `webapp`: Frontend React app
 
 Each package has an `index.md` file at its root and additional `index.md` files in each child directory (module).
-These files provide context about the contents of each package or module.
+Read these files for context about the contents of each package or module, for example when deciding where new code belongs.
 
 ## Patterns
 
