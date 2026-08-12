@@ -44,6 +44,21 @@ body {
   padding: 0;
 }
 
+dl {
+  & > div {
+    margin-block: 1em;
+  }
+
+  dd {
+    margin-block: 0.5em;
+  }
+
+  dt {
+    font-weight: bold;
+    margin-block: 0.5em;
+  }
+}
+
 h1,
 h2,
 h3,
