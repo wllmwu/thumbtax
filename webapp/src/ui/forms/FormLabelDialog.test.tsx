@@ -97,7 +97,7 @@ describe("FormLabelDialog", () => {
     const input = await openDialog(user);
     await user.clear(input);
     await user.type(input, "Updated label");
-    await user.click(screen.getByRole("button", { name: "Done" }));
+    await user.click(screen.getByRole("button", { name: "Save" }));
 
     rerender();
     expect(result.current).toEqual("Updated label");
@@ -133,7 +133,7 @@ describe("FormLabelDialog", () => {
 
     expect(await screen.findByText("Label is required")).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Done" }));
+    await user.click(screen.getByRole("button", { name: "Save" }));
 
     rerender();
     expect(result.current).toEqual(ORIGINAL_LABEL);
