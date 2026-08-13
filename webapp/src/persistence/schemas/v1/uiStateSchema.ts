@@ -8,4 +8,5 @@ export const uiStateSchema = z.strictObject({
     z.strictObject({ x: z.number(), y: z.number() }),
   ),
   formClassExpansion: z.partialRecord(formClassSchema, z.boolean()),
+  tableOfContentsExpanded: z.boolean(),
 });

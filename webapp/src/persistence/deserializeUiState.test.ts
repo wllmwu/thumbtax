@@ -6,6 +6,7 @@ import { deserializeUiState } from "#src/persistence/deserializeUiState";
 const validUiState = {
   connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
   formClassExpansion: { fW2: true },
+  tableOfContentsExpanded: true,
 };
 
 function validStored(overrides: Record<string, unknown> = {}) {
@@ -89,6 +90,20 @@ describe("deserializeUiState", () => {
         uiState: {
           connectionsGraphNodePositions: {},
           formClassExpansion: { fW2: "yes" },
+        },
+      }),
+    );
+    expect(result.ok).toBe(false);
+    if (result.ok) throw new Error("expected failure");
+    expect(result.errors[0].type).toBe("validation_failed");
+  });
+
+  it("rejects a missing tableOfContentsExpanded field", () => {
+    const result = deserializeUiState(
+      validStored({
+        uiState: {
+          connectionsGraphNodePositions: {},
+          formClassExpansion: {},
         },
       }),
     );

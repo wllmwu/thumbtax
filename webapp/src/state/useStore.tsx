@@ -56,6 +56,7 @@ type StoreState = {
   ) => void;
   moveFormClass: (formClass: FormClass, direction: -1 | 1) => void;
   setFormClassExpanded: (formClass: FormClass, isExpanded: boolean) => void;
+  setTableOfContentsExpanded: (isExpanded: boolean) => void;
   setBoxInput: (
     formClass: FormClass,
     instanceId: FormInstanceId,
@@ -298,6 +299,14 @@ const useStoreInner = create<StoreState>((set) => ({
     set(
       applyUiStateChange((draft) => {
         draft.formClassExpansion[formClass] = isExpanded;
+      }),
+    );
+  },
+
+  setTableOfContentsExpanded: (isExpanded) => {
+    set(
+      applyUiStateChange((draft) => {
+        draft.tableOfContentsExpanded = isExpanded;
       }),
     );
   },

@@ -101,6 +101,7 @@ describe("usePersistence", () => {
           uiState: {
             connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
             formClassExpansion: { fW2: true },
+            tableOfContentsExpanded: false,
           },
           schemaVersion: CURRENT_SCHEMA_VERSION,
         }),
@@ -126,6 +127,7 @@ describe("usePersistence", () => {
       expect(result.current.uiState.formClassExpansion).toEqual({
         fW2: true,
       });
+      expect(result.current.uiState.tableOfContentsExpanded).toBe(false);
       expect(result.current.loadErrors).toEqual([]);
     });
 
@@ -265,6 +267,7 @@ describe("usePersistence", () => {
           uiState: {
             connectionsGraphNodePositions: { fW2: { x: 1, y: 1 } },
             formClassExpansion: { fW2: true },
+            tableOfContentsExpanded: true,
           },
           schemaVersion: CURRENT_SCHEMA_VERSION,
         }),
@@ -341,6 +344,7 @@ describe("usePersistence", () => {
           {
             connectionsGraphNodePositions: { fW2: { x: 7, y: 8 } },
             formClassExpansion: { fW2: true },
+            tableOfContentsExpanded: true,
           },
           { browserSaveEnabled: false, maximumHistorySize: 12 },
           registry,
@@ -376,6 +380,7 @@ describe("usePersistence", () => {
       expect(store.current.uiState).toEqual({
         connectionsGraphNodePositions: { fW2: { x: 7, y: 8 } },
         formClassExpansion: { fW2: true },
+        tableOfContentsExpanded: true,
       });
       expect(store.current.userPreferences).toEqual({
         browserSaveEnabled: false,

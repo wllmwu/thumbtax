@@ -114,6 +114,7 @@ const DEFAULT_APPLICATION_STATE: ApplicationState = {
 const DEFAULT_UI_STATE: UiState = {
   connectionsGraphNodePositions: {},
   formClassExpansion: {},
+  tableOfContentsExpanded: true,
 };
 const DEFAULT_PREFERENCES: UserPreferences = {
   browserSaveEnabled: true,
@@ -151,6 +152,7 @@ describe("useStore", () => {
       const uiState: UiState = {
         connectionsGraphNodePositions: { [TEST_CLASS]: { x: 1, y: 2 } },
         formClassExpansion: { [TEST_CLASS]: true },
+        tableOfContentsExpanded: true,
       };
       const preferences: UserPreferences = {
         browserSaveEnabled: false,
@@ -944,6 +946,44 @@ describe("useStore", () => {
     });
   });
 
+  describe("setTableOfContentsExpanded", () => {
+    it("records the expanded state", () => {
+      const { result, rerender } = renderUseStore();
+
+      result.current.setTableOfContentsExpanded(false);
+
+      rerender();
+      expect(result.current.uiState.tableOfContentsExpanded).toBe(false);
+    });
+
+    it("overwrites a previously recorded state", () => {
+      const { result, rerender } = renderUseStore();
+
+      result.current.setTableOfContentsExpanded(false);
+      result.current.setTableOfContentsExpanded(true);
+
+      rerender();
+      expect(result.current.uiState.tableOfContentsExpanded).toBe(true);
+    });
+
+    it("does not affect applicationState, workbook, or history", () => {
+      const { result, rerender } = renderUseStore();
+
+      result.current.addFormInstance(TEST_CLASS);
+      rerender();
+      const stateBefore = result.current;
+
+      result.current.setTableOfContentsExpanded(false);
+
+      rerender();
+      expect(result.current.applicationState).toBe(
+        stateBefore.applicationState,
+      );
+      expect(result.current.workbook).toBe(stateBefore.workbook);
+      expect(result.current.history).toBe(stateBefore.history);
+    });
+  });
+
   describe("setBoxInput", () => {
     it("stores a number input on the specified box", () => {
       const { result, rerender } = renderUseStore();
@@ -1452,6 +1492,7 @@ describe("useStore", () => {
         {
           connectionsGraphNodePositions: { [TEST_CLASS]: { x: 5, y: 6 } },
           formClassExpansion: { [TEST_CLASS]: true },
+          tableOfContentsExpanded: true,
         },
         { browserSaveEnabled: false, maximumHistorySize: 12 },
         makeTestRegistry(),
@@ -1474,6 +1515,7 @@ describe("useStore", () => {
       expect(result.current.uiState).toEqual({
         connectionsGraphNodePositions: { [TEST_CLASS]: { x: 5, y: 6 } },
         formClassExpansion: { [TEST_CLASS]: true },
+        tableOfContentsExpanded: true,
       });
       expect(result.current.userPreferences).toEqual({
         browserSaveEnabled: false,

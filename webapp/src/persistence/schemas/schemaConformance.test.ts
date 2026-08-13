@@ -92,6 +92,7 @@ describe("schema/type conformance", () => {
       uiState: {
         connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
         formClassExpansion: { fW2: true },
+        tableOfContentsExpanded: true,
       },
       schemaVersion: 1,
     });

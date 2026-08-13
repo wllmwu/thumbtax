@@ -34,6 +34,7 @@ describe("serializeUiState", () => {
     const uiState: UiState = {
       connectionsGraphNodePositions: { fW2: { x: 1, y: 2 } },
       formClassExpansion: { fW2: true },
+      tableOfContentsExpanded: true,
     };
     expect(serializeUiState(uiState)).toEqual({
       uiState,

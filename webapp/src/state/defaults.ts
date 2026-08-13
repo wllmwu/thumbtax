@@ -11,6 +11,7 @@ export const DEFAULT_APPLICATION_STATE: ApplicationState = {
 export const DEFAULT_UI_STATE: UiState = {
   connectionsGraphNodePositions: {},
   formClassExpansion: {},
+  tableOfContentsExpanded: true,
 };
 
 export const DEFAULT_USER_PREFERENCES: UserPreferences = {
