@@ -7,38 +7,40 @@ import { TableOfContents } from "#src/ui/table-of-contents/TableOfContents";
 import type React from "react";
 
 function renderComponent(
-  headings: React.ComponentProps<typeof TableOfContents>["headings"],
+  props?: Partial<React.ComponentProps<typeof TableOfContents>>,
 ) {
   return render(
     <MemoryRouter initialEntries={["/glossary"]}>
-      <TableOfContents headings={headings} />
+      <TableOfContents headings={[]} {...props} />
     </MemoryRouter>,
   );
 }
 
 describe("TableOfContents", () => {
-  it("renders a link to each heading, in order", () => {
-    renderComponent([
-      { id: "fW2", label: "W-2" },
-      { id: "f1040", label: "Form 1040" },
-    ]);
+  it("renders a link to each heading, in order", async () => {
+    renderComponent({
+      headings: [
+        { id: "a", label: "Heading A" },
+        { id: "b", label: "Heading B" },
+      ],
+    });
 
     const links = within(
-      screen.getByRole("navigation", { name: "Table of contents" }),
+      await screen.findByRole("navigation", { name: "Contents" }),
     ).getAllByRole("link");
 
     expect(links).toHaveLength(2);
-    expect(links[0]).toHaveTextContent("W-2");
-    expect(links[0]).toHaveAttribute("href", "/glossary#fW2");
-    expect(links[1]).toHaveTextContent("Form 1040");
-    expect(links[1]).toHaveAttribute("href", "/glossary#f1040");
+    expect(links[0]).toHaveTextContent("Heading A");
+    expect(links[0]).toHaveAttribute("href", "/glossary#a");
+    expect(links[1]).toHaveTextContent("Heading B");
+    expect(links[1]).toHaveAttribute("href", "/glossary#b");
   });
 
-  it("renders no links when there are no headings", () => {
-    renderComponent([]);
+  it("renders no links when there are no headings", async () => {
+    renderComponent({ headings: [] });
 
     const links = within(
-      screen.getByRole("navigation", { name: "Table of contents" }),
+      await screen.findByRole("navigation", { name: "Contents" }),
     ).queryAllByRole("link");
 
     expect(links).toHaveLength(0);

@@ -1,8 +1,10 @@
+import React from "react";
+
 import { useStore } from "#src/state/useStore";
 import { FormList } from "#src/ui/forms/FormList";
-import { PageWithTableOfContents } from "#src/ui/table-of-contents/PageWithTableOfContents";
+import { Page } from "#src/ui/pages/Page";
 
-import type { TableOfContentsHeading } from "#src/ui/table-of-contents/tableOfContentsHeading";
+import type { TableOfContentsHeading } from "#src/ui/table-of-contents/types/tableOfContentsHeading";
 
 export function MainPage() {
   const formClasses = useStore((state) => state.applicationState.formClasses);
@@ -11,19 +13,22 @@ export function MainPage() {
   );
   const specifications = useStore((state) => state.specifications);
 
-  const headings: TableOfContentsHeading[] = specifications
-    ? formClasses
-        .filter((formClass) => formInstances[formClass] !== undefined)
-        .map((formClass) => ({
-          id: formClass,
-          label: specifications[formClass].title,
-        }))
-    : [];
+  const headings = React.useMemo<TableOfContentsHeading[]>(() => {
+    if (!specifications) {
+      return [];
+    }
+    return formClasses
+      .filter((formClass) => formInstances[formClass] !== undefined)
+      .map((formClass) => ({
+        id: formClass,
+        label: specifications[formClass].title,
+      }));
+  }, [formClasses, formInstances, specifications]);
 
   return (
-    <PageWithTableOfContents headings={headings}>
+    <Page headings={headings}>
       <h1>Tax forms</h1>
       <FormList />
-    </PageWithTableOfContents>
+    </Page>
   );
 }

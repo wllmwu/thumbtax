@@ -14,6 +14,6 @@ Styles are defined using CSS modules in `*.module.css` files colocated with the 
   - `navigation/`: Navigation menu
   - `pages/`: Layout wrapper and page components
   - `primitives/`: Primitive UI elements such as buttons and input fields. Most are wrappers around React Aria components that set project styles and/or shrink the interfaces.
-  - `table-of-contents/`: Collapsible table-of-contents sidebar shared by pages
+  - `table-of-contents/`: Table of contents component
   - `types/`: UI-specific types
   - `utils/`: UI-specific utility functions

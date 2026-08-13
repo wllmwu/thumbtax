@@ -10,11 +10,9 @@ import {
 } from "#src/state/defaults";
 import { useStore } from "#src/state/useStore";
 import { makeRegistryFixture } from "#src/test/specificationFixtures";
-import { PageWithTableOfContents } from "#src/ui/table-of-contents/PageWithTableOfContents";
+import { Page } from "#src/ui/pages/Page";
 
 import type { UiState } from "#src/state/types/uiState";
-
-const HEADINGS = [{ id: "fW2", label: "W-2" }];
 
 function initializeStore(uiState: UiState = DEFAULT_UI_STATE) {
   const { result } = renderHook(() => useStore((state) => state));
@@ -29,9 +27,9 @@ function initializeStore(uiState: UiState = DEFAULT_UI_STATE) {
 function renderComponent() {
   return render(
     <MemoryRouter>
-      <PageWithTableOfContents headings={HEADINGS}>
+      <Page headings={[{ id: "a", label: "Heading A" }]}>
         <p>Page content</p>
-      </PageWithTableOfContents>
+      </Page>
     </MemoryRouter>,
   );
 }
@@ -40,33 +38,35 @@ beforeEach(() => {
   initializeStore();
 });
 
-describe("PageWithTableOfContents", () => {
-  it("renders the page content", () => {
+describe("Page", () => {
+  it("renders the page content", async () => {
     renderComponent();
 
-    expect(screen.getByText("Page content")).toBeInTheDocument();
+    expect(await screen.findByText("Page content")).toBeInTheDocument();
   });
 
-  it("shows the table of contents expanded by default", () => {
+  it("shows the table of contents expanded", async () => {
     renderComponent();
 
     expect(
-      screen.getByRole("button", { name: "Hide table of contents" }),
+      await screen.findByRole("button", { name: "Hide table of contents" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "W-2" })).toBeInTheDocument();
+    expect(
+      await screen.findByRole("link", { name: "Heading A" }),
+    ).toBeInTheDocument();
   });
 
-  it("starts collapsed when the stored state says so", () => {
+  it("shows the table of contents collapsed", async () => {
     initializeStore({ ...DEFAULT_UI_STATE, tableOfContentsExpanded: false });
     renderComponent();
 
     expect(
-      screen.getByRole("button", { name: "Show table of contents" }),
+      await screen.findByRole("button", { name: "Show table of contents" }),
     ).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "W-2" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
-  it("collapses and updates the store when the expanded trigger is pressed", async () => {
+  it("collapses the table of contents when the trigger is pressed", async () => {
     const user = userEvent.setup();
     const { result } = renderHook(() =>
       useStore((state) => state.uiState.tableOfContentsExpanded),
@@ -80,11 +80,11 @@ describe("PageWithTableOfContents", () => {
     expect(
       await screen.findByRole("button", { name: "Show table of contents" }),
     ).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "W-2" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
     expect(result.current).toBe(false);
   });
 
-  it("expands and updates the store when the collapsed trigger is pressed", async () => {
+  it("expands the table of contents when the trigger is pressed", async () => {
     const user = userEvent.setup();
     initializeStore({ ...DEFAULT_UI_STATE, tableOfContentsExpanded: false });
     const { result } = renderHook(() =>
@@ -99,7 +99,7 @@ describe("PageWithTableOfContents", () => {
     expect(
       await screen.findByRole("button", { name: "Hide table of contents" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "W-2" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Heading A" })).toBeInTheDocument();
     expect(result.current).toBe(true);
   });
 });

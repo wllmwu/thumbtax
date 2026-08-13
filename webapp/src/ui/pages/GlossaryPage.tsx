@@ -3,19 +3,23 @@ import React from "react";
 import { glossary } from "@thumbtax/forms";
 
 import { ProseContent } from "#src/ui/content/ProseContent";
-import { PageWithTableOfContents } from "#src/ui/table-of-contents/PageWithTableOfContents";
+import { Page } from "#src/ui/pages/Page";
 
-import type { TableOfContentsHeading } from "#src/ui/table-of-contents/tableOfContentsHeading";
+import type { TableOfContentsHeading } from "#src/ui/table-of-contents/types/tableOfContentsHeading";
 
 export function GlossaryPage(): React.ReactNode {
-  const entries = Object.entries(glossary);
-  const headings: TableOfContentsHeading[] = entries.map(([term, entry]) => ({
-    id: term,
-    label: entry.name,
-  }));
+  const entries = React.useMemo(() => Object.entries(glossary), []);
+  const headings = React.useMemo<TableOfContentsHeading[]>(
+    () =>
+      entries.map(([term, entry]) => ({
+        id: term,
+        label: entry.name,
+      })),
+    [entries],
+  );
 
   return (
-    <PageWithTableOfContents headings={headings}>
+    <Page headings={headings}>
       <h1>Glossary</h1>
       <dl>
         {entries.map(([term, entry]) => (
@@ -27,6 +31,6 @@ export function GlossaryPage(): React.ReactNode {
           </div>
         ))}
       </dl>
-    </PageWithTableOfContents>
+    </Page>
   );
 }

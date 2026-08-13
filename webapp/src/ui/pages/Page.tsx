@@ -4,9 +4,9 @@ import { useStore } from "#src/state/useStore";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { TableOfContents } from "#src/ui/table-of-contents/TableOfContents";
 import { racn } from "#src/ui/utils/racn";
-import styles from "#src/ui/table-of-contents/PageWithTableOfContents.module.css";
+import styles from "#src/ui/pages/Page.module.css";
 
-import type { TableOfContentsHeading } from "#src/ui/table-of-contents/tableOfContentsHeading";
+import type { TableOfContentsHeading } from "#src/ui/table-of-contents/types/tableOfContentsHeading";
 import type React from "react";
 
 type Props = {
@@ -14,11 +14,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-/** Lays out a page's content next to a collapsible table-of-contents sidebar linking to `headings`. */
-export function PageWithTableOfContents({
-  headings,
-  children,
-}: Props): React.ReactNode {
+export function Page({ headings, children }: Props): React.ReactNode {
   const isExpanded = useStore((state) => state.uiState.tableOfContentsExpanded);
   const setTableOfContentsExpanded = useStore(
     (state) => state.setTableOfContentsExpanded,
