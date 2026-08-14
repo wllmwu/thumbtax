@@ -51,9 +51,7 @@ export function Layout() {
         <NavigationMenu />
         {mainPageMatch !== null && <ControlBar />}
       </div>
-      <main>
-        <Outlet />
-      </main>
+      <Outlet />
     </div>
   );
 }

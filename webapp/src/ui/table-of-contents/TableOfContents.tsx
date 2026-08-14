@@ -10,9 +10,14 @@ type Props = {
 
 export function TableOfContents({ headings }: Props): React.ReactNode {
   return (
-    <nav aria-labelledby="table-of-contents-title">
-      <p id="table-of-contents-title">Contents</p>
-      <ul className={styles.tableOfContents}>
+    <nav
+      aria-labelledby="table-of-contents-title"
+      className={styles.tableOfContents}
+    >
+      <p id="table-of-contents-title" className={styles.heading}>
+        Contents
+      </p>
+      <ul>
         {headings.map((heading) => (
           <li key={heading.id}>
             <Link href={`#${heading.id}`}>{heading.label}</Link>

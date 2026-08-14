@@ -19,8 +19,7 @@ export function GlossaryPage(): React.ReactNode {
   );
 
   return (
-    <Page headings={headings}>
-      <h1>Glossary</h1>
+    <Page headings={headings} header={<h1>Glossary</h1>}>
       <dl>
         {entries.map(([term, entry]) => (
           <div key={term}>

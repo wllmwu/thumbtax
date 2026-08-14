@@ -26,8 +26,7 @@ export function MainPage() {
   }, [formClasses, formInstances, specifications]);
 
   return (
-    <Page headings={headings}>
-      <h1>Tax forms</h1>
+    <Page headings={headings} header={<h1>Tax forms</h1>}>
       <FormList />
     </Page>
   );

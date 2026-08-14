@@ -1,3 +1,4 @@
+import { Minimize2Icon, TableOfContentsIcon } from "lucide-react";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
@@ -11,30 +12,38 @@ import type React from "react";
 
 type Props = {
   headings: TableOfContentsHeading[];
+  header: React.ReactNode;
   children: React.ReactNode;
 };
 
-export function Page({ headings, children }: Props): React.ReactNode {
+export function Page({ headings, header, children }: Props): React.ReactNode {
   const isExpanded = useStore((state) => state.uiState.tableOfContentsExpanded);
   const setTableOfContentsExpanded = useStore(
     (state) => state.setTableOfContentsExpanded,
   );
 
   return (
-    <div className={styles.page}>
-      <div className={styles.content}>{children}</div>
-      <Disclosure
-        className={racn(styles.sidebar)}
-        isExpanded={isExpanded}
-        onExpandedChange={setTableOfContentsExpanded}
-      >
-        <AriaButton slot="trigger">
-          {isExpanded ? "Hide table of contents" : "Show table of contents"}
-        </AriaButton>
-        <DisclosurePanel className={racn(styles.sidebarPanel)}>
-          <TableOfContents headings={headings} />
-        </DisclosurePanel>
-      </Disclosure>
-    </div>
+    <main className={styles.main}>
+      <div>{header}</div>
+      <aside className={styles.sidebar}>
+        <Disclosure
+          className={racn(styles.sidebarDisclosure)}
+          isExpanded={isExpanded}
+          onExpandedChange={setTableOfContentsExpanded}
+        >
+          <AriaButton
+            aria-label={isExpanded ? "Hide sidebar" : "Show sidebar"}
+            className={racn(styles.toggleButton)}
+            slot="trigger"
+          >
+            {isExpanded ? <Minimize2Icon /> : <TableOfContentsIcon />}
+          </AriaButton>
+          <DisclosurePanel>
+            <TableOfContents headings={headings} />
+          </DisclosurePanel>
+        </Disclosure>
+      </aside>
+      <div>{children}</div>
+    </main>
   );
 }
