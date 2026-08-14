@@ -47,11 +47,16 @@ export function Layout() {
 
   return (
     <div>
+      <a className={styles.skipLink} href="#main-content">
+        Skip to main content
+      </a>
       <div ref={topBarRef} className={styles.topBar}>
         <NavigationMenu />
         {mainPageMatch !== null && <ControlBar />}
       </div>
-      <Outlet />
+      <main id="main-content">
+        <Outlet />
+      </main>
     </div>
   );
 }

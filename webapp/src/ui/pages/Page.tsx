@@ -23,7 +23,7 @@ export function Page({ headings, header, children }: Props): React.ReactNode {
   );
 
   return (
-    <main className={styles.main}>
+    <div className={styles.page}>
       <div>{header}</div>
       <aside className={styles.sidebar}>
         <Disclosure
@@ -44,6 +44,6 @@ export function Page({ headings, header, children }: Props): React.ReactNode {
         </Disclosure>
       </aside>
       <div>{children}</div>
-    </main>
+    </div>
   );
 }

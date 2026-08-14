@@ -15,7 +15,8 @@
   --font-weight-semibold: 600;
   --size-height-top-bar: 0;
   --size-margin-page: 4rem;
-  --z-index-modal: 3;
+  --z-index-modal: 4;
+  --z-index-skip-link: 3;
   --z-index-top-bar: 2;
 
   scroll-padding-top: var(--size-height-top-bar);

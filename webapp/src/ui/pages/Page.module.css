@@ -1,4 +1,4 @@
-.main {
+.page {
   column-gap: var(--size-margin-page);
   display: grid;
   grid-template-columns: 1fr max-content;
