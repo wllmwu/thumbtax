@@ -9,6 +9,7 @@ import { FormTable } from "#src/ui/forms/FormTable";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { Badge } from "#src/ui/primitives/Badge";
 import { racn } from "#src/ui/utils/racn";
+import { useTargetedId } from "#src/ui/utils/useTargetedId";
 import styles from "#src/ui/forms/FormList.module.css";
 
 import type { FormSpecification } from "@thumbtax/forms";
@@ -33,12 +34,19 @@ function FormListItem({
   const removeFormInstance = useStore((state) => state.removeFormInstance);
   const setFormClassExpanded = useStore((state) => state.setFormClassExpanded);
 
+  const targetedId = useTargetedId();
+
   if (!instances) {
     return null;
   }
 
   return (
-    <li id={specification.class}>
+    <li
+      id={specification.class}
+      className={
+        targetedId === specification.class ? styles.targeted : undefined
+      }
+    >
       <div className={styles.itemHeading}>
         <h2>{specification.title}</h2>
         <FormLink

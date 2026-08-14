@@ -4,6 +4,8 @@ import { glossary } from "@thumbtax/forms";
 
 import { ProseContent } from "#src/ui/content/ProseContent";
 import { Page } from "#src/ui/pages/Page";
+import { useTargetedId } from "#src/ui/utils/useTargetedId";
+import styles from "#src/ui/pages/GlossaryPage.module.css";
 
 import type { TableOfContentsHeading } from "#src/ui/table-of-contents/types/tableOfContentsHeading";
 
@@ -18,12 +20,19 @@ export function GlossaryPage(): React.ReactNode {
     [entries],
   );
 
+  const targetedId = useTargetedId();
+
   return (
     <Page headings={headings} header={<h1>Glossary</h1>}>
       <dl>
         {entries.map(([term, entry]) => (
           <div key={term}>
-            <dt id={term}>{entry.name}</dt>
+            <dt
+              id={term}
+              className={targetedId === term ? styles.targeted : undefined}
+            >
+              {entry.name}
+            </dt>
             <dd>
               <ProseContent nodes={entry.definition} />
             </dd>
