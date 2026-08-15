@@ -1,6 +1,6 @@
 .lucide {
-  height: 1em;
-  width: 1em;
+  block-size: 1em;
+  inline-size: 1em;
 }
 
 button:has(> .lucide) {
@@ -10,7 +10,6 @@ button:has(> .lucide) {
   justify-content: center;
 
   .lucide {
-    margin-bottom: 0.125em;
-    margin-top: 0.125em;
+    margin-block: 0.125em;
   }
 }

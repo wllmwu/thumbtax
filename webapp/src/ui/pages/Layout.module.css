@@ -13,10 +13,10 @@
 }
 
 .top-bar {
+  inset-block-start: 0;
   margin: 0;
   overflow: hidden;
   padding: 0;
   position: sticky;
-  top: 0;
   z-index: var(--z-index-top-bar);
 }

@@ -3,7 +3,7 @@
   flex-direction: row;
   gap: 0.5rem;
   justify-content: flex-end;
-  margin-top: 0.5rem;
+  margin-block-start: 0.5rem;
 }
 
 .vertical-stack {

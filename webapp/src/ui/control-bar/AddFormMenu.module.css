@@ -1,11 +1,11 @@
 .popover {
-  max-width: 90%;
-  width: 40rem;
+  inline-size: 40rem;
+  max-inline-size: 90%;
 
   .search-box {
+    inline-size: 20rem;
     margin: 0.5rem;
-    max-width: 100%;
-    width: 20rem;
+    max-inline-size: 100%;
   }
 
   .menu-item {

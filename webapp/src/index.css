@@ -20,7 +20,7 @@
   --z-index-skip-link: 3;
   --z-index-top-bar: 2;
 
-  scroll-padding-top: var(--size-height-top-bar);
+  scroll-padding-block-start: var(--size-height-top-bar);
 }
 
 * {

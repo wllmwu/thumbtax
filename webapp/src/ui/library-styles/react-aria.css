@@ -1,11 +1,11 @@
 .react-aria-Button {
   border-radius: 0.5em;
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid var(--color-border);
   font-size: 0.875rem;
   font-weight: var(--font-weight-medium);
   margin: 0;
-  padding: 0.25em 0.375em;
+  padding-block: 0.25em;
+  padding-inline: 0.375em;
 
   &[data-disabled] {
     opacity: 0.5;
@@ -52,7 +52,8 @@
 .react-aria-MenuItem {
   background-color: var(--color-background-surface);
   cursor: pointer;
-  padding: 0.125rem 0.5rem;
+  padding-block: 0.125rem;
+  padding-inline: 0.5rem;
 
   &[data-disabled] {
     cursor: default;
@@ -68,21 +69,22 @@
 .react-aria-MenuSection {
   .react-aria-Header {
     font-weight: bold;
-    padding: 0.125rem 0.5rem;
+    padding-block: 0.125rem;
+    padding-inline: 0.5rem;
   }
 
   .react-aria-MenuItem {
-    padding: 0.125rem 1rem;
+    padding-block: 0.125rem;
+    padding-inline: 1rem;
   }
 }
 
 .react-aria-Modal {
   background-color: var(--color-background);
-  border-color: var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 1rem;
-  border-width: 1px;
-  max-height: calc(var(--visual-viewport-height) * 0.9);
-  max-width: min(512px, 90vw);
+  max-block-size: calc(var(--visual-viewport-height) * 0.9);
+  max-inline-size: min(512px, 90vw);
   overflow: hidden;
   padding: 1rem;
 
@@ -94,17 +96,14 @@
 .react-aria-ModalOverlay {
   align-items: center;
   background-color: rgb(0 0 0 / 0.5);
-  bottom: 0;
   display: flex;
   flex-direction: column;
+  inset: 0;
   justify-content: center;
-  left: 0;
   margin: 0;
   overflow: hidden;
   padding: 0;
   position: fixed;
-  right: 0;
-  top: 0;
   z-index: var(--z-index-modal);
 }
 
@@ -119,19 +118,19 @@
   &[data-trigger="Select"],
   &[data-trigger="SubmenuTrigger"] {
     padding: 0;
-    overflow-y: auto;
+    overflow-block: auto;
   }
 }
 
 .react-aria-Separator {
   background-color: var(--color-border);
+  block-size: 1px;
   border: none;
-  height: 1px;
-  width: 100%;
+  inline-size: 100%;
 
   &[aria-orientation="vertical"] {
-    height: 100%;
-    min-height: 1rem;
-    width: 1px;
+    block-size: 100%;
+    inline-size: 1px;
+    min-block-size: 1rem;
   }
 }

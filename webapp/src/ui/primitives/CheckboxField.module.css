@@ -1,11 +1,11 @@
 .checkbox-button {
   .checkbox-indicator {
-    height: 1em;
+    block-size: 1em;
+    inline-size: 1em;
+    inset-block-start: 0.125em;
     position: relative;
     stroke: var(--color-border);
     stroke-width: 1px;
-    top: 0.125em;
-    width: 1em;
 
     polyline {
       stroke: var(--color-text-on-primary);

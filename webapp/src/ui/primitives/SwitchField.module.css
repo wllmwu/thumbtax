@@ -1,5 +1,6 @@
 .switch-button {
   .switch-indicator {
+    /* Uses physical properties so SVG coordinates work */
     height: 1.5em;
     position: relative;
     stroke: var(--color-text-subdued);

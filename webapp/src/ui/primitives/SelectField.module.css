@@ -5,6 +5,7 @@
   gap: 0.25em;
 
   .chevrons {
-    margin: 0 -0.125em;
+    margin-block: 0;
+    margin-inline: -0.125em;
   }
 }
