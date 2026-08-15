@@ -3,6 +3,7 @@
 This module contains code used by the Markdoc schema.
 
 - `forms/src/schema/`
+  - `contentTags.ts`: Schema definitions for tags used in prose content
   - `makeTransformer.ts`: Creates a transform function for a Markdoc tag
   - `unwrapInlineTagChildren.ts`: Unwraps an inline tag
   - `unwrapListItemChildren.ts`: Unwraps list items

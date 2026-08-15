@@ -3,6 +3,7 @@ import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
 import alternativeMinimumTaxComputationPartial from "./data/partials/alternativeMinimumTaxComputation.mdoc";
 import taxComputationPartial from "./data/partials/taxComputation.mdoc";
+import { formLinkTag, glossaryLinkTag } from "./schema/contentTags";
 import { makeTransformer } from "./schema/makeTransformer";
 import { unwrapInlineTags } from "./schema/unwrapInlineTagChildren";
 import { unwrapListItemChildren } from "./schema/unwrapListItemChildren";
@@ -10,7 +11,6 @@ import { validateChildren } from "./schema/validateChildren";
 import { validatePlainTextContent } from "./schema/validatePlainTextContent";
 import { validateProseContent } from "./schema/validateProseContent";
 import { optionTag, pieceTag, valueTag } from "./schema/valueTag";
-import { GLOSSARY_TERMS } from "./types/glossaryTerm";
 
 import type { Config } from "@markdoc/markdoc";
 
@@ -255,26 +255,8 @@ export const config: Config = {
       transform: makeTransformer("commentary"),
       validate: validateProseContent,
     },
-    formlink: {
-      attributes: {
-        formClass: {
-          type: "String",
-          matches: [...FORM_CLASSES],
-          errorLevel: "error",
-        },
-      },
-      render: "FormLink",
-    },
-    glossarylink: {
-      attributes: {
-        term: {
-          type: "String",
-          matches: [...GLOSSARY_TERMS],
-          errorLevel: "error",
-        },
-      },
-      render: "GlossaryLink",
-    },
+    formlink: formLinkTag,
+    glossarylink: glossaryLinkTag,
   },
   partials: {
     alternativeMinimumTaxComputation: parse(
