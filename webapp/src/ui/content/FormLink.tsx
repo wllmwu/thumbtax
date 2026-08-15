@@ -28,7 +28,7 @@ export function FormLink({
   return (
     <Link
       aria-label={ariaLabel}
-      href={`#${formClass}`}
+      href={`/#${formClass}`}
       isDisabled={!classIsPresent}
     >
       {children}
