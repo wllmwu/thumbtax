@@ -1,0 +1,13 @@
+.react-aria-Button {
+  &[data-variant="primary"] {
+    background-color: var(--color-palette-primary);
+    border-color: var(--color-palette-primary);
+    color: var(--color-text-on-primary);
+  }
+
+  &[data-variant="secondary"] {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+    color: var(--color-text-subdued);
+  }
+}

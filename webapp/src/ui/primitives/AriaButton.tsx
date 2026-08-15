@@ -1,5 +1,7 @@
 import { Button } from "react-aria-components";
 
+import "#src/ui/primitives/AriaButton.css";
+
 import type React from "react";
 import type { ButtonProps } from "react-aria-components";
 
