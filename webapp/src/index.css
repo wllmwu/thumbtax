@@ -1,6 +1,7 @@
 :root {
   --color-background: #fff;
   --color-background-surface: #f0f0f0;
+  --color-background-tooltip: #000;
   --color-border: #808080;
   --color-border-error: #f00;
   --color-highlight-target: #ff0;
@@ -9,6 +10,7 @@
   --color-text-body: #000;
   --color-text-error: #f00;
   --color-text-on-primary: #fff;
+  --color-text-on-tooltip: #fff;
   --color-text-subdued: #404040;
   --font-family-body: "Open Sans", sans-serif;
   --font-weight-light: 300;

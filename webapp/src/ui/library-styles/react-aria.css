@@ -122,3 +122,45 @@
     min-block-size: 1rem;
   }
 }
+
+.react-aria-Tooltip {
+  background-color: var(--color-background-tooltip);
+  border-radius: 0.375em;
+  color: var(--color-text-on-tooltip);
+  font-size: 0.75rem;
+  padding-block: 0.125em;
+  padding-inline: 0.25em;
+
+  &[data-placement="bottom"] {
+    margin-top: 4px;
+
+    .react-aria-OverlayArrow svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  &[data-placement="left"] {
+    margin-right: 4px;
+
+    .react-aria-OverlayArrow svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &[data-placement="right"] {
+    margin-left: 4px;
+
+    .react-aria-OverlayArrow svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &[data-placement="top"] {
+    margin-bottom: 4px;
+  }
+
+  .react-aria-OverlayArrow svg {
+    display: block;
+    fill: var(--color-background-tooltip);
+  }
+}
