@@ -27,7 +27,10 @@ function initializeStore(uiState: UiState = DEFAULT_UI_STATE) {
 function renderComponent() {
   return render(
     <MemoryRouter>
-      <Page headings={[{ id: "a", label: "Heading A" }]}>
+      <Page
+        header={<h1>Page header</h1>}
+        headings={[{ id: "a", label: "Heading A" }]}
+      >
         <p>Page content</p>
       </Page>
     </MemoryRouter>,
@@ -42,6 +45,7 @@ describe("Page", () => {
   it("renders the page content", async () => {
     renderComponent();
 
+    expect(await screen.findByText("Page header")).toBeInTheDocument();
     expect(await screen.findByText("Page content")).toBeInTheDocument();
   });
 
@@ -49,7 +53,7 @@ describe("Page", () => {
     renderComponent();
 
     expect(
-      await screen.findByRole("button", { name: "Hide table of contents" }),
+      await screen.findByRole("button", { name: "Hide sidebar" }),
     ).toBeInTheDocument();
     expect(
       await screen.findByRole("link", { name: "Heading A" }),
@@ -61,7 +65,7 @@ describe("Page", () => {
     renderComponent();
 
     expect(
-      await screen.findByRole("button", { name: "Show table of contents" }),
+      await screen.findByRole("button", { name: "Show sidebar" }),
     ).toBeInTheDocument();
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
@@ -73,12 +77,10 @@ describe("Page", () => {
     );
     renderComponent();
 
-    await user.click(
-      screen.getByRole("button", { name: "Hide table of contents" }),
-    );
+    await user.click(screen.getByRole("button", { name: "Hide sidebar" }));
 
     expect(
-      await screen.findByRole("button", { name: "Show table of contents" }),
+      await screen.findByRole("button", { name: "Show sidebar" }),
     ).toBeInTheDocument();
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
     expect(result.current).toBe(false);
@@ -92,12 +94,10 @@ describe("Page", () => {
     );
     renderComponent();
 
-    await user.click(
-      screen.getByRole("button", { name: "Show table of contents" }),
-    );
+    await user.click(screen.getByRole("button", { name: "Show sidebar" }));
 
     expect(
-      await screen.findByRole("button", { name: "Hide table of contents" }),
+      await screen.findByRole("button", { name: "Hide sidebar" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Heading A" })).toBeInTheDocument();
     expect(result.current).toBe(true);
