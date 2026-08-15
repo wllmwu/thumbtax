@@ -135,7 +135,7 @@ export function AddFormMenu() {
   return (
     <MenuTrigger>
       <AriaButton>Add a form…</AriaButton>
-      <Popover className={racn(styles.popover)} placement="bottom left">
+      <Popover className={racn(styles.popover)} placement="bottom start">
         <Autocomplete filter={filter.contains}>
           <SearchField
             aria-label="Search forms by title"

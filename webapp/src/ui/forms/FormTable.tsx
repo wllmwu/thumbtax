@@ -1,12 +1,7 @@
 import React from "react";
 
 import classNames from "classnames";
-import {
-  EditIcon,
-  MoveLeftIcon,
-  MoveRightIcon,
-  Trash2Icon,
-} from "lucide-react";
+import { EditIcon, Trash2Icon } from "lucide-react";
 import { DialogTrigger, Modal } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
@@ -14,7 +9,8 @@ import { CommentaryDisplay } from "#src/ui/content/CommentaryDisplay";
 import { ProseContent } from "#src/ui/content/ProseContent";
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
-import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { MoveButton } from "#src/ui/forms/MoveButton";
+import { IconButton } from "#src/ui/primitives/IconButton";
 import styles from "#src/ui/forms/FormTable.module.css";
 
 import type { FormLine, FormSpecification } from "@thumbtax/forms";
@@ -157,9 +153,7 @@ export function FormTable({ specification, instances }: Props) {
                 <h3>{instance.label}</h3>
                 <div className={styles.formInstanceButtonGroup}>
                   <DialogTrigger>
-                    <AriaButton aria-label="Edit label">
-                      <EditIcon />
-                    </AriaButton>
+                    <IconButton icon={EditIcon} label="Edit label" />
                     <Modal isDismissable>
                       <FormLabelDialog
                         formClass={instance.class}
@@ -167,32 +161,29 @@ export function FormTable({ specification, instances }: Props) {
                       />
                     </Modal>
                   </DialogTrigger>
-                  <AriaButton
-                    aria-label="Move left"
+                  <MoveButton
+                    axis="inline"
+                    direction="backward"
                     isDisabled={index <= 0}
                     onPress={() =>
                       moveFormInstance(instance.class, instance.id, -1)
                     }
-                  >
-                    <MoveLeftIcon />
-                  </AriaButton>
-                  <AriaButton
-                    aria-label="Move right"
+                  />
+                  <MoveButton
+                    axis="inline"
+                    direction="forward"
                     isDisabled={index >= instances.length - 1}
                     onPress={() =>
                       moveFormInstance(instance.class, instance.id, 1)
                     }
-                  >
-                    <MoveRightIcon />
-                  </AriaButton>
-                  <AriaButton
-                    aria-label="Delete"
+                  />
+                  <IconButton
+                    icon={Trash2Icon}
+                    label="Delete"
                     onPress={() =>
                       removeFormInstance(instance.class, instance.id)
                     }
-                  >
-                    <Trash2Icon />
-                  </AriaButton>
+                  />
                 </div>
               </div>
             </div>

@@ -11,6 +11,7 @@ import { AddFormMenu } from "#src/ui/control-bar/AddFormMenu";
 import { FilingStatusSelector } from "#src/ui/control-bar/FilingStatusSelector";
 import { SettingsDialog } from "#src/ui/control-bar/SettingsDialog";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { IconButton } from "#src/ui/primitives/IconButton";
 import styles from "#src/ui/control-bar/ControlBar.module.css";
 
 export function ControlBar() {
@@ -23,12 +24,20 @@ export function ControlBar() {
     <Toolbar aria-label="App controls" className={styles.controlBar}>
       <FilingStatusSelector />
       <Separator orientation="vertical" />
-      <AriaButton aria-label="Undo" isDisabled={isUndoDisabled} onPress={undo}>
-        <UndoIcon />
-      </AriaButton>
-      <AriaButton aria-label="Redo" isDisabled={isRedoDisabled} onPress={redo}>
-        <RedoIcon />
-      </AriaButton>
+      <IconButton
+        icon={UndoIcon}
+        isDisabled={isUndoDisabled}
+        label="Undo"
+        onPress={undo}
+        tooltipPlacement="bottom"
+      />
+      <IconButton
+        icon={RedoIcon}
+        isDisabled={isRedoDisabled}
+        label="Redo"
+        onPress={redo}
+        tooltipPlacement="bottom"
+      />
       <AddFormMenu />
       <Separator orientation="vertical" />
       <DialogTrigger>

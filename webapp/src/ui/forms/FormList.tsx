@@ -1,4 +1,4 @@
-import { MoveDownIcon, MoveUpIcon, Trash2Icon } from "lucide-react";
+import { Trash2Icon } from "lucide-react";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
@@ -6,8 +6,10 @@ import { CommentaryDisplay } from "#src/ui/content/CommentaryDisplay";
 import { FormLink } from "#src/ui/content/FormLink";
 import { ProseContent } from "#src/ui/content/ProseContent";
 import { FormTable } from "#src/ui/forms/FormTable";
+import { MoveButton } from "#src/ui/forms/MoveButton";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { Badge } from "#src/ui/primitives/Badge";
+import { IconButton } from "#src/ui/primitives/IconButton";
 import { racn } from "#src/ui/utils/racn";
 import { useTargetedId } from "#src/ui/utils/useTargetedId";
 import styles from "#src/ui/forms/FormList.module.css";
@@ -71,30 +73,27 @@ function FormListItem({
               ? `Hide ${specification.title}`
               : `Show ${specification.title}`}
           </AriaButton>
-          <AriaButton
-            aria-label="Move up"
+          <MoveButton
+            axis="block"
+            direction="backward"
             isDisabled={index <= 0}
             onPress={() => moveFormClass(specification.class, -1)}
-          >
-            <MoveUpIcon />
-          </AriaButton>
-          <AriaButton
-            aria-label="Move down"
+          />
+          <MoveButton
+            axis="block"
+            direction="forward"
             isDisabled={index >= numFormClasses - 1}
             onPress={() => moveFormClass(specification.class, 1)}
-          >
-            <MoveDownIcon />
-          </AriaButton>
-          <AriaButton
-            aria-label="Delete"
+          />
+          <IconButton
+            icon={Trash2Icon}
+            label="Delete"
             onPress={() => {
               for (const { id } of instances) {
                 removeFormInstance(specification.class, id);
               }
             }}
-          >
-            <Trash2Icon />
-          </AriaButton>
+          />
         </div>
         <DisclosurePanel className={racn(styles.itemDisclosure)}>
           {specification.instructions && (

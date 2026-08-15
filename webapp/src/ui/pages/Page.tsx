@@ -2,7 +2,7 @@ import { Minimize2Icon, TableOfContentsIcon } from "lucide-react";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
-import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { IconButton } from "#src/ui/primitives/IconButton";
 import { TableOfContents } from "#src/ui/table-of-contents/TableOfContents";
 import { racn } from "#src/ui/utils/racn";
 import styles from "#src/ui/pages/Page.module.css";
@@ -31,13 +31,12 @@ export function Page({ headings, header, children }: Props): React.ReactNode {
           isExpanded={isExpanded}
           onExpandedChange={setTableOfContentsExpanded}
         >
-          <AriaButton
-            aria-label={isExpanded ? "Hide sidebar" : "Show sidebar"}
+          <IconButton
+            icon={isExpanded ? Minimize2Icon : TableOfContentsIcon}
             className={racn(styles.toggleButton)}
+            label={isExpanded ? "Hide sidebar" : "Show sidebar"}
             slot="trigger"
-          >
-            {isExpanded ? <Minimize2Icon /> : <TableOfContentsIcon />}
-          </AriaButton>
+          />
           <DisclosurePanel>
             <TableOfContents headings={headings} />
           </DisclosurePanel>
