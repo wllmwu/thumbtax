@@ -1,3 +1,7 @@
+#main-content {
+  scroll-padding-block-start: var(--size-height-top-bar);
+}
+
 .skip-link {
   inset-block-start: -2em;
   position: absolute;
