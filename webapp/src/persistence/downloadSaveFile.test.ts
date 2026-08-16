@@ -75,13 +75,15 @@ describe("downloadSaveFile", () => {
     expect(downloadAttribute).toBe("my-taxes.json");
   });
 
-  it("defaults the filename to thumbtax-YYYY-MM-DD.json when not given", () => {
+  it("defaults the filename to thumbtax-YYYY-MM-DD-hh_mm.json when not given", () => {
     let downloadAttribute: string | undefined;
     clickSpy.mockImplementation(function (this: HTMLAnchorElement) {
       downloadAttribute = this.getAttribute("download") ?? undefined;
     });
 
     downloadSaveFile(TEST_STATE);
-    expect(downloadAttribute).toMatch(/^thumbtax-\d{4}-\d{2}-\d{2}\.json$/);
+    expect(downloadAttribute).toMatch(
+      /^thumbtax-\d{4}-\d{2}-\d{2}-\d{2}_\d{2}\.json$/,
+    );
   });
 });
