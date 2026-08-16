@@ -10,7 +10,6 @@ import {
   SAVED_STATE_KEY,
   UI_STATE_KEY,
 } from "#src/persistence/localStorageKeys";
-import { parseUploadedFile } from "#src/persistence/parseUploadedFile";
 import {
   serializePersistedState,
   serializeUiState,
@@ -48,15 +47,8 @@ function readLocalStorageJson(key: string): {
   }
 }
 
-export type Persistence = {
-  loadFromUploadedFile: (file: File) => Promise<void>;
-};
-
-export function usePersistence(
-  specifications: SpecificationRegistry,
-): Persistence {
+export function useAutoSave(specifications: SpecificationRegistry): void {
   const initialize = useStore((state) => state.initialize);
-  const setApplicationState = useStore((state) => state.setApplicationState);
   const setLoadErrors = useStore((state) => state.setLoadErrors);
 
   React.useEffect(() => {
@@ -174,17 +166,4 @@ export function usePersistence(
       writeUiState.flush();
     };
   }, [initialize, setLoadErrors, specifications]);
-
-  const loadFromUploadedFile = React.useCallback(
-    async (file: File): Promise<void> => {
-      const result = await parseUploadedFile(file);
-      if (result.kind === "ok") {
-        setApplicationState(result.applicationState);
-      }
-      setLoadErrors(result.errors);
-    },
-    [setApplicationState, setLoadErrors],
-  );
-
-  return { loadFromUploadedFile };
 }

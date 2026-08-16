@@ -21,5 +21,6 @@ It was mostly written by Claude Code.
   - `migrations.ts`: Functions to migrate from vN to v(N+1). None currently exist because there is only v1.
   - `parseUploadedFile.ts`: Runs `deserializePersistedState` against an uploaded File object
   - `serialize.ts`: Mappers from internal state types to persisted state types
-  - `usePersistence.tsx`: React hook that handles browser autosave and loading from a save file
+  - `useAutoSave.tsx`: React hook that loads state from browser storage on mount and handles autosave
+  - `useUploadSaveFile.ts`: React callback hook that loads state from a save file
   - `zodIssuesToLoadError.ts`: Maps from Zod error to a LoadError

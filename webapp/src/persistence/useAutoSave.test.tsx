@@ -10,7 +10,7 @@ import {
   SAVED_STATE_KEY,
   UI_STATE_KEY,
 } from "#src/persistence/localStorageKeys";
-import { usePersistence } from "#src/persistence/usePersistence";
+import { useAutoSave } from "#src/persistence/useAutoSave";
 import { useStore } from "#src/state/useStore";
 import {
   makeBoxFixture,
@@ -44,7 +44,7 @@ function makeTestRegistry() {
 }
 
 function Harness() {
-  usePersistence(makeTestRegistry());
+  useAutoSave(makeTestRegistry());
   return null;
 }
 
@@ -52,7 +52,7 @@ function renderUseStore() {
   return renderHook(() => useStore((state) => state));
 }
 
-describe("usePersistence", () => {
+describe("useAutoSave", () => {
   describe("load on mount", () => {
     it("initializes the store with defaults when localStorage is empty", () => {
       const { result, rerender } = renderUseStore();
@@ -321,91 +321,6 @@ describe("usePersistence", () => {
       }
 
       vi.useRealTimers();
-    });
-  });
-
-  describe("loadFromUploadedFile bridge", () => {
-    function fileFromJson(value: unknown): File {
-      return new File([JSON.stringify(value)], "upload.json", {
-        type: "application/json",
-      });
-    }
-
-    it("replaces applicationState while preserving uiState and userPreferences", async () => {
-      const registry = makeTestRegistry();
-      const { result: persistence } = renderHook(() =>
-        usePersistence(registry),
-      );
-      const { result: store } = renderUseStore();
-
-      act(() => {
-        store.current.initialize(
-          store.current.applicationState,
-          {
-            connectionsGraphNodePositions: { fW2: { x: 7, y: 8 } },
-            formClassExpansion: { fW2: true },
-            tableOfContentsExpanded: true,
-          },
-          { browserSaveEnabled: false, maximumHistorySize: 12 },
-          registry,
-        );
-      });
-
-      const newApplicationState = {
-        filingStatus: "head_of_household" as const,
-        formClasses: ["fW2" as const],
-        formInstances: {
-          fW2: [
-            {
-              id: "abc",
-              class: "fW2" as const,
-              label: "Loaded",
-              inputs: { box1: { type: "number" as const, value: 99 } },
-            },
-          ],
-        },
-      };
-
-      await act(async () => {
-        await persistence.current.loadFromUploadedFile(
-          fileFromJson({
-            applicationState: newApplicationState,
-            schemaVersion: CURRENT_SCHEMA_VERSION,
-            taxYear: CURRENT_TAX_YEAR,
-          }),
-        );
-      });
-
-      expect(store.current.applicationState).toEqual(newApplicationState);
-      expect(store.current.uiState).toEqual({
-        connectionsGraphNodePositions: { fW2: { x: 7, y: 8 } },
-        formClassExpansion: { fW2: true },
-        tableOfContentsExpanded: true,
-      });
-      expect(store.current.userPreferences).toEqual({
-        browserSaveEnabled: false,
-        maximumHistorySize: 12,
-      });
-      expect(store.current.loadErrors).toEqual([]);
-    });
-
-    it("leaves applicationState unchanged on structural failure but reports errors", async () => {
-      const registry = makeTestRegistry();
-      const { result: persistence } = renderHook(() =>
-        usePersistence(registry),
-      );
-      const { result: store } = renderUseStore();
-
-      const before = store.current.applicationState;
-
-      await act(async () => {
-        await persistence.current.loadFromUploadedFile(
-          new File(["{ not json"], "bad.json"),
-        );
-      });
-
-      expect(store.current.applicationState).toBe(before);
-      expect(store.current.loadErrors).toEqual([{ type: "invalid_json" }]);
     });
   });
 });
