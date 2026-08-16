@@ -14,17 +14,28 @@ type Props = {
   term: GlossaryTerm;
 };
 
+const GlossaryLinkContext = React.createContext(false);
+
 export function GlossaryLink({ children, term }: Props): React.ReactNode {
+  const isInsidePreview = React.useContext(GlossaryLinkContext);
+
+  const link = <Link href={`/glossary#${term}`}>{children}</Link>;
+
+  if (isInsidePreview) {
+    return link;
+  }
   return (
     <PreviewTrigger closeDelay={0} delay={0}>
-      <Link href={`/glossary#${term}`}>{children}</Link>
+      {link}
       <Popover offset={4} placement="top start">
-        <div>
-          <div className={styles.name}>{glossary[term].name}</div>
+        <GlossaryLinkContext.Provider value={true}>
           <div>
-            <ProseContent nodes={glossary[term].definition} />
+            <div className={styles.name}>{glossary[term].name}</div>
+            <div>
+              <ProseContent nodes={glossary[term].definition} />
+            </div>
           </div>
-        </div>
+        </GlossaryLinkContext.Provider>
       </Popover>
     </PreviewTrigger>
   );
