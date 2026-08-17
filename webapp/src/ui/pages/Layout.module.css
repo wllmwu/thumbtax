@@ -1,5 +1,5 @@
-#main-content {
-  scroll-padding-block-start: var(--size-height-top-bar);
+main * {
+  scroll-margin-block-start: var(--size-height-top-bar);
 }
 
 .skip-link {
