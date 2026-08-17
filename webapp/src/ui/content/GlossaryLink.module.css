@@ -1,3 +1,22 @@
+.definition {
+  /* -webkit-box disables margin collapse like flexbox */
+  display: -webkit-box;
+  line-clamp: 4;
+  max-inline-size: 30rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+
+  & > * {
+    margin: 0;
+  }
+
+  & > :not(:first-child) {
+    margin-block-start: 0.25em;
+  }
+}
+
 .name {
   font-weight: bold;
+  margin-block-end: 0.25em;
 }

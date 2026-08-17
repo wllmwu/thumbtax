@@ -31,7 +31,7 @@ export function GlossaryLink({ children, term }: Props): React.ReactNode {
         <GlossaryLinkContext.Provider value={true}>
           <div>
             <div className={styles.name}>{glossary[term].name}</div>
-            <div>
+            <div className={styles.definition}>
               <ProseContent nodes={glossary[term].definition} />
             </div>
           </div>
