@@ -2,6 +2,7 @@ import React from "react";
 
 import { useStore } from "#src/state/useStore";
 import { FormList } from "#src/ui/forms/FormList";
+import { LoadErrorBanner } from "#src/ui/forms/LoadErrorBanner";
 import { Page } from "#src/ui/pages/Page";
 
 import type { TableOfContentsHeading } from "#src/ui/table-of-contents/types/tableOfContentsHeading";
@@ -27,6 +28,7 @@ export function MainPage() {
 
   return (
     <Page headings={headings} header={<h1>Tax forms</h1>}>
+      <LoadErrorBanner />
       <FormList />
     </Page>
   );
