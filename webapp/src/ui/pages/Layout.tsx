@@ -12,15 +12,30 @@ export function Layout() {
 
   const topBarRef = React.useRef<HTMLDivElement>(null);
 
-  // Scroll to targeted element when URL fragment changes
+  // Scroll to top/targeted element when URL path/fragment changes
   React.useEffect(() => {
-    if (location.hash) {
-      const element = document.querySelector(location.hash);
-      if (element) {
-        element.scrollIntoView();
-      }
+    if (!location.hash) {
+      window.scroll(0, 0);
+      return;
     }
-  }, [location.hash]);
+    let frame: number;
+    let attempts = 0;
+    const tryScroll = () => {
+      attempts++;
+      const element = document.querySelector(location.hash);
+      const topBarHeightVariable =
+        document.documentElement.style.getPropertyValue(
+          "--size-height-top-bar",
+        );
+      if (element && topBarHeightVariable) {
+        element.scrollIntoView();
+      } else if (attempts < 30) {
+        frame = window.requestAnimationFrame(tryScroll);
+      }
+    };
+    tryScroll();
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.hash, location.pathname]);
 
   // Set `--size-height-top-bar` on the root element
   React.useEffect(() => {
@@ -30,9 +45,6 @@ export function Layout() {
     }
 
     const resizeObserver = new ResizeObserver(([entry]) => {
-      if (entry === undefined) {
-        return;
-      }
       document.documentElement.style.setProperty(
         "--size-height-top-bar",
         `${entry.borderBoxSize[0]?.blockSize ?? entry.contentRect.height}px`,
