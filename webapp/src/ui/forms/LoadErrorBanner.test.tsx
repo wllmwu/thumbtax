@@ -49,13 +49,9 @@ describe("LoadErrorBanner", () => {
 
     render(<LoadErrorBanner />);
 
+    expect(screen.getByText("Expected JSON object")).toBeInTheDocument();
     expect(
-      screen.getByText("Your saved data isn't valid JSON."),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Your saved data is for tax year 2023, but this is tax year 2026.",
-      ),
+      screen.getByText("Expected tax year 2026, received 2023"),
     ).toBeInTheDocument();
   });
 

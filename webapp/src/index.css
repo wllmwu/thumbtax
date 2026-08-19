@@ -1,5 +1,6 @@
 :root {
   --color-background: #fff;
+  --color-background-error: #ffe0e0;
   --color-background-surface: #f0f0f0;
   --color-background-tooltip: #000;
   --color-border: #808080;

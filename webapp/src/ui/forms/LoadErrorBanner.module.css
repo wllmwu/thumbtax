@@ -1,42 +1,30 @@
 .banner {
-  background-color: var(--color-background-surface);
+  background-color: var(--color-background-error);
   border: 1px solid var(--color-border-error);
-  border-radius: 0.25rem;
-  margin-block-end: 1rem;
+  border-radius: 0.5rem;
+  max-inline-size: 50rem;
   padding: 1rem;
-}
+  position: relative;
 
-.heading {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
+  .heading {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
 
-  h2 {
-    color: var(--color-text-error);
-    flex: 1;
-    font-size: 1.1em;
-    margin: 0;
+    & > span {
+      color: var(--color-text-error);
+      flex: 1;
+      font-weight: bold;
+
+      & > svg {
+        inset-block-start: 0.125em;
+        margin-inline-end: 0.375em;
+        position: relative;
+      }
+    }
   }
-
-  svg {
-    color: var(--color-text-error);
-    flex-shrink: 0;
-  }
-}
-
-.errors {
-  margin-block: 0.5rem 0;
-  margin-inline: 0;
-  padding-inline-start: 1.5rem;
 
   li {
-    margin-block: 0.25rem;
+    word-break: break-word;
   }
-}
-
-.details {
-  margin-block: 0.25rem 0;
-  margin-inline: 0;
-  padding-inline-start: 1.5rem;
 }
