@@ -56,7 +56,7 @@ describe("UploadSaveFileButton", () => {
     render(<UploadSaveFileButton />);
 
     expect(
-      screen.getByRole("button", { name: "Upload save file" }),
+      screen.getByRole("button", { name: "Load from save file" }),
     ).toBeInTheDocument();
   });
 
@@ -77,7 +77,7 @@ describe("UploadSaveFileButton", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Uploading a save file will replace your current return. This can’t be undone.",
+        "Uploading a save file will replace your current data. This can't be undone.",
       ),
     ).toBeInTheDocument();
   });
