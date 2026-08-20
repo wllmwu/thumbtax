@@ -1,8 +1,10 @@
 export const GLOSSARY_TERMS = [
   "capital-gain",
   "collectibles",
-  "dividends",
+  "dividend",
   "federal-income-tax",
+  "income",
+  "income-tax",
   "ordinary-dividends",
   "qualified-dividends",
   "qualified-opportunity-fund",

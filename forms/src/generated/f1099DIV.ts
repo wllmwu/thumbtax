@@ -16,7 +16,7 @@ export const f1099DIV: FormSpecification = {
       {
         $$mdtype: "Tag",
         name: "GlossaryLink",
-        attributes: { term: "dividends" },
+        attributes: { term: "dividend" },
         children: ["dividends"],
       },
       " during the year, the bank or brokerage files this form with the IRS and sends a copy to you.",
