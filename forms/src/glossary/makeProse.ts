@@ -11,12 +11,16 @@ const config: Config = {
   },
 };
 
+const MAX_ERROR_SOURCE_LENGTH = 100;
+
 export function makeProse(markdoc: string): RenderableTreeNodes {
   const parsed = parse(markdoc);
   const errors = validate(parsed, config);
   if (errors.length > 0) {
     const truncatedMarkdoc =
-      markdoc.length > 20 ? `${markdoc.slice(0, 20)}...` : markdoc;
+      markdoc.length > MAX_ERROR_SOURCE_LENGTH
+        ? `${markdoc.slice(0, MAX_ERROR_SOURCE_LENGTH)}...`
+        : markdoc;
     throw new Error(
       `Invalid Markdoc: ${errors[0].error.message} ("${truncatedMarkdoc}")`,
     );

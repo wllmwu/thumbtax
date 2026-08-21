@@ -1,19 +1,25 @@
 export const GLOSSARY_TERMS = [
   "capital-gain",
   "collectibles",
+  "deduction",
   "dividend",
   "federal-income-tax",
+  "gross-income",
   "income",
   "income-tax",
   "ordinary-dividends",
+  "qualified-business-income",
   "qualified-dividends",
   "qualified-opportunity-fund",
+  "qualified-small-business-stock",
   "section-1202",
   "section-1250",
   "section-199A",
   "section-897",
+  "security",
+  "tax-withholding",
+  "wages",
   "wash-sale",
-  "withholding",
 ] as const;
 
 export type GlossaryTerm = (typeof GLOSSARY_TERMS)[number];

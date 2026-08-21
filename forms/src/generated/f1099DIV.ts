@@ -146,7 +146,7 @@ export const f1099DIV: FormSpecification = {
             {
               $$mdtype: "Tag",
               name: "GlossaryLink",
-              attributes: { term: "withholding" },
+              attributes: { term: "tax-withholding" },
               children: ["withheld"],
             },
           ],
