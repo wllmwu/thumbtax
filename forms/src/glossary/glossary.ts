@@ -9,6 +9,18 @@ type GlossaryEntry = {
 };
 
 export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
+  "adjusted-gross-income": {
+    name: "Adjusted gross income (AGI)",
+    definition: makeProse(`
+Amount of {% glossarylink term="gross-income" %}gross income{% /glossarylink %} after applying {% glossarylink term="adjustment" %}adjustments{% /glossarylink %}.
+After computing this value, you subtract {% glossarylink term="deduction" %}deductions{% /glossarylink %} from it to get your {% glossarylink term="taxable-income" %}taxable income{% /glossarylink %}.`),
+  },
+  adjustment: {
+    name: "Adjustment",
+    definition: makeProse(`
+Amount added to or subtracted from {% glossarylink term="gross-income" %}gross income{% /glossarylink %} to compute {% glossarylink term="adjusted-gross-income" %}adjusted gross income{% /glossarylink %}.
+The law designates certain categories of expenses, contributions, and received payments as adjustments, enumerated in {% formlink formClass="f1040s1" %}Schedule 1 (Form 1040){% /formlink %}.`),
+  },
   "capital-gain": {
     name: "Capital gain",
     definition: makeProse(`
@@ -33,7 +45,10 @@ Long-term {% glossarylink term="capital-gain" %}capital gains{% /glossarylink %}
   },
   deduction: {
     name: "Deduction",
-    definition: "TODO",
+    definition: makeProse(`
+Amount subtracted from {% glossarylink term="adjusted-gross-income" %}adjusted gross income{% /glossarylink %} to compute {% glossarylink term="taxable-income" %}taxable income{% /glossarylink %}.
+You can typically deduct things like capital losses, business expenses, healthcare costs, other taxes you paid, and donations to charity, up to a limit.
+For {% glossarylink term="federal-income-tax" %}federal income tax{% /glossarylink %}, you choose between the **standard deduction** (a fixed amount) and **itemized deductions** (precise amounts computed in {% formlink formClass="f1040sA" %}Schedule A (Form 1040){% /formlink %}) depending on which is larger.`),
   },
   dividend: {
     name: "Dividend",
@@ -52,13 +67,22 @@ In particular, your income is separated into brackets, and the money in each bra
   },
   "gross-income": {
     name: "Gross income",
-    definition: "TODO",
+    definition: makeProse(`
+Also called **total income.**
+
+For **individuals,** total amount of {% glossarylink term="income" %}income{% /glossarylink %} during the tax year.
+This generally includes all income from almost all sources, such as {% glossarylink term="wages" %}wages{% /glossarylink %}, {% glossarylink term="capital-gain" %}capital gains{% /glossarylink %}, and {% glossarylink term="dividend" %}dividends{% /glossarylink %}.
+However, certain sources are excluded, such as gifts and child support.
+
+After you compute your gross income, you apply {% glossarylink term="adjustment" %}adjustments{% /glossarylink %} to get your {% glossarylink term="adjusted-gross-income" %}adjusted gross income{% /glossarylink %}.
+
+For **businesses,** revenue minus cost of goods sold.`),
   },
   income: {
     name: "Income",
     definition: makeProse(`
 Generally speaking, any money that you receive.
-For the purpose of taxation, this can also include the monetary value of non-monetary things, such as physical gifts.`),
+For the purpose of taxation, this can also include the cash value of non-monetary things, such as physical gifts.`),
   },
   "income-tax": {
     name: "Income tax",
@@ -76,8 +100,10 @@ In other words, dividends are ordinary by default unless they "qualify" for the 
 If you receive dividends, the payor reports what amount is ordinary vs. qualified on {% formlink formClass="f1099DIV" %}Form 1099-DIV{% /formlink %}.`),
   },
   "qualified-business-income": {
-    name: "Qualified business income",
-    definition: "TODO",
+    name: "Qualified business income (QBI)",
+    definition: makeProse(`
+Broadly, income from self-employment or small business ownership, excluding certain items and subject to certain conditions and limits.
+Eligible individuals can {% glossarylink term="deduction" %}deduct{% /glossarylink %} their QBI to reduce their taxes.`),
   },
   "qualified-dividends": {
     name: "Qualified dividends",
@@ -95,7 +121,8 @@ QOFs are meant to incentivize investment into these regions, so you can defer ta
   },
   "qualified-small-business-stock": {
     name: "Qualified small business stock",
-    definition: "TODO",
+    definition: makeProse(`
+Shares in a qualified small business that have tax benefits for the {% glossarylink term="capital-gain" %}capital gains{% /glossarylink %} tax under certain conditions.`),
   },
   "section-1202": {
     name: "Section 1202",
@@ -119,9 +146,32 @@ Section of the U.S. tax code that requires foreign individuals or corporations w
   },
   security: {
     name: "Security",
-    definition: "TODO",
+    definition: makeProse(`
+In finance, a financial instrument with monetary value, such as stocks and bonds.`),
   },
-  "tax-withholding": {
+  "taxable-income": {
+    name: "Taxable income",
+    definition: makeProse(`
+Amount of {% glossarylink term="income" %}income{% /glossarylink %} used as the basis for computing {% glossarylink term="income-tax" %}income tax{% /glossarylink %}.
+For {% glossarylink term="federal-income-tax" %}federal income tax{% /glossarylink %}, this is the amount left over after subtracting {% glossarylink term="deduction" %}deductions{% /glossarylink %} from your {% glossarylink term="adjusted-gross-income" %}adjusted gross income{% /glossarylink %}.`),
+  },
+  wages: {
+    name: "Wages",
+    definition: makeProse(`
+{% glossarylink term="income" %}Income{% /glossarylink %} that an employee receives from their employer in exchange for their labor.
+This includes essentially all forms of compensation: base pay, bonuses, commissions, tips, company equity, and other benefits.
+
+There are exceptions for certain types of labor, such as agricultural labor, or employers, such as the federal government.
+In these cases the employee's income might be computed differently.`),
+  },
+  "wash-sale": {
+    name: "Wash sale",
+    definition: makeProse(`
+Act of selling a {% glossarylink term="security" %}security{% /glossarylink %} at a loss and buying a "substantially identical" security within 30 days before or after the sale.
+You can't claim {% glossarylink term="deduction" %}tax deductions{% /glossarylink %} for losses from wash sales.
+This rule is intended to prevent people from selling and immediately buying back securities just to reduce their taxes.`),
+  },
+  withholding: {
     name: "Withholding",
     definition: makeProse(`
 Practice where someone paying {% glossarylink term="income" %}income{% /glossarylink %} to you sends a portion of the payment to the government to pay {% glossarylink term="income-tax" %}income tax{% /glossarylink %} on your behalf.
@@ -129,16 +179,5 @@ For example, in the U.S., employers are usually required to withhold income tax 
 
 Not all income sources withhold taxes, and if you have multiple income sources then the combined withheld amount might be less than the actual tax you owe (because the income tax rate increases as your income increases).
 So, it's important to plan ahead in order to avoid owing a large amount at the end of the tax year.`),
-  },
-  wages: {
-    name: "Wages",
-    definition: "TODO",
-  },
-  "wash-sale": {
-    name: "Wash sale",
-    definition: makeProse(`
-Act of selling a {% glossarylink term="security" %}security{% /glossarylink %} at a loss and buying a "substantially identical" security within 30 days before or after the sale.
-You can't claim tax {% glossarylink term="deduction" %}deductions{% /glossarylink %} for losses from wash sales.
-This rule is intended to prevent people from selling and immediately buying back securities just to reduce their taxes.`),
   },
 };

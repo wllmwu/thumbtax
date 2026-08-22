@@ -1,4 +1,6 @@
 export const GLOSSARY_TERMS = [
+  "adjusted-gross-income",
+  "adjustment",
   "capital-gain",
   "collectibles",
   "deduction",
@@ -17,9 +19,10 @@ export const GLOSSARY_TERMS = [
   "section-199A",
   "section-897",
   "security",
-  "tax-withholding",
+  "taxable-income",
   "wages",
   "wash-sale",
+  "withholding",
 ] as const;
 
 export type GlossaryTerm = (typeof GLOSSARY_TERMS)[number];
