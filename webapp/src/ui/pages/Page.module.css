@@ -14,13 +14,14 @@
 
 .sidebar-disclosure {
   align-items: flex-start;
+  block-size: calc(100vh - var(--size-height-top-bar));
   display: flex;
   flex-direction: column;
   inset-block-start: var(--size-height-top-bar);
-  max-block-size: calc(100vh - var(--size-height-top-bar));
-  overflow: auto;
+  overflow-block: auto;
   padding: 1rem;
   position: sticky;
+  scrollbar-gutter: stable;
 
   &:not([data-expanded]) {
     :global(.react-aria-DisclosurePanel) {
