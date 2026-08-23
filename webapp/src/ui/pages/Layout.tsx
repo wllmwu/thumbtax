@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Outlet, useLocation, useMatch } from "react-router";
+import { Outlet, useLocation } from "react-router";
 
 import { ControlBar } from "#src/ui/control-bar/ControlBar";
 import { NavigationMenu } from "#src/ui/navigation/NavigationMenu";
@@ -8,7 +8,6 @@ import styles from "#src/ui/pages/Layout.module.css";
 
 export function Layout() {
   const location = useLocation();
-  const mainPageMatch = useMatch({ path: "/", end: true });
 
   const topBarRef = React.useRef<HTMLDivElement>(null);
 
@@ -64,7 +63,7 @@ export function Layout() {
       </a>
       <div ref={topBarRef} className={styles.topBar}>
         <NavigationMenu />
-        {mainPageMatch !== null && <ControlBar />}
+        <ControlBar />
       </div>
       <main id="main-content">
         <Outlet />
