@@ -12,6 +12,7 @@ import {
   Popover,
   useFilter,
 } from "react-aria-components";
+import { useNavigate } from "react-router";
 
 import { useStore } from "#src/state/useStore";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
@@ -45,6 +46,8 @@ function formatInstanceCount({
 }
 
 export function AddFormMenu() {
+  const navigate = useNavigate();
+
   const specifications = useStore((state) => state.specifications);
   const instances = useStore((state) => state.applicationState.formInstances);
   const addFormInstance = useStore((state) => state.addFormInstance);
@@ -113,7 +116,10 @@ export function AddFormMenu() {
           className={racn(styles.menuItem)}
           textValue={title}
           isDisabled={disabled}
-          onAction={() => addFormInstance(formClass)}
+          onAction={() => {
+            addFormInstance(formClass);
+            navigate({ pathname: "/", hash: `#${formClass}` });
+          }}
         >
           <span>
             <span id={titleId} className={styles.itemTitle}>
@@ -127,7 +133,7 @@ export function AddFormMenu() {
         </MenuItem>
       );
     },
-    [addFormInstance],
+    [addFormInstance, navigate],
   );
 
   const filter = useFilter({ sensitivity: "base" });
