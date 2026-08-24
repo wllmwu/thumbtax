@@ -13,7 +13,8 @@ import { validateProseContent } from "./schema/validateProseContent";
 import { optionTag, pieceTag, valueTag } from "./schema/valueTag";
 import { GLOSSARY_TERMS } from "./types/glossaryTerm";
 
-import type { Config } from "@markdoc/markdoc";
+import type { GlossaryTerm } from "./types/glossaryTerm";
+import type { Config, ValidationError } from "@markdoc/markdoc";
 
 export const config: Config = {
   nodes: {
@@ -80,7 +81,7 @@ export const config: Config = {
           { optional: true, options: [{ nodeType: "tag", tag: "columns" }] },
           { options: [{ nodeType: "tag", tag: "lines" }] },
         ]);
-        if (childErrors) {
+        if (childErrors.length > 0) {
           return childErrors;
         }
 
@@ -261,12 +262,69 @@ export const config: Config = {
     glossary: {
       transform: makeTransformer("glossary", unwrapListItemChildren),
       validate(node) {
-        return validateChildren(unwrapListItemChildren(node.children), [
+        const children = unwrapListItemChildren(node.children);
+        const childErrors = validateChildren(children, [
           {
             greedy: true,
             options: [{ nodeType: "tag", tag: "glossaryEntry" }],
           },
         ]);
+        if (childErrors.length > 0) {
+          return childErrors;
+        }
+
+        const termErrors: ValidationError[] = [];
+
+        const allTerms = new Set(GLOSSARY_TERMS);
+        const foundTerms = new Set<GlossaryTerm>();
+        for (const child of children) {
+          const term = child.attributes?.term;
+          if (!term) {
+            continue;
+          }
+          if (foundTerms.has(term)) {
+            termErrors.push({
+              id: "duplicate-glossary-term",
+              level: "error",
+              message: `Term ${term} appears more than once`,
+            });
+          }
+          foundTerms.add(term);
+        }
+        const missingTerms = allTerms.difference(foundTerms);
+        if (missingTerms.size > 0) {
+          termErrors.push({
+            id: "glossary-entry-missing",
+            level: "error",
+            message: `Missing entries for: ${missingTerms.values().toArray().join(", ")}`,
+          });
+        }
+
+        for (let i = 0; i < children.length - 1; i++) {
+          const termA = children[i].attributes?.term;
+          const termB = children[i + 1].attributes?.term;
+          const nameA = children[i].attributes?.name;
+          const nameB = children[i + 1].attributes?.name;
+          if (typeof nameA !== "string" || typeof nameB !== "string") {
+            continue;
+          }
+          const comparison = nameA.localeCompare(nameB);
+          if (comparison === 0) {
+            termErrors.push({
+              id: "terms-same-name",
+              level: "error",
+              message: `Terms ${termA} and ${termB} have the same name`,
+            });
+          } else if (comparison > 0) {
+            termErrors.push({
+              id: "terms-out-of-order",
+              level: "error",
+              message: `Terms ${termA} and ${termB} are not in locale order`,
+            });
+          }
+        }
+
+        return termErrors;
       },
     },
     glossaryEntry: {
