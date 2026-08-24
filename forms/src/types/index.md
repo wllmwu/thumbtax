@@ -6,6 +6,7 @@ String-union type values are also imported by the Markdoc schema to match agains
 - `forms/src/types/`
   - `formCategory.ts`: Categories assigned to each form
   - `formSpecification.ts`: Schema for the form specification objects
+  - `glossaryEntry.ts`: Glossary entry containing the definition for a glossary term
   - `glossaryTerm.ts`: Terms defined in the Glossary page and linked to by `glossaryLink` tags
   - `numberSign.ts`: Positive or negative
   - `roundingDirection.ts`: Up or down
