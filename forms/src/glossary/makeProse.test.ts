@@ -49,7 +49,7 @@ Line 4`);
 
   it("builds form link", () => {
     const result = makeProse(
-      'hello {% formlink formClass="fW2" %}link{% /formlink %} world',
+      'hello {% formLink formClass="fW2" %}link{% /formLink %} world',
     );
     expect(result).toEqual(
       expect.objectContaining({
@@ -69,7 +69,7 @@ Line 4`);
 
   it("builds glossary link", () => {
     const result = makeProse(
-      'hello {% glossarylink term="withholding" %}link{% /glossarylink %} world',
+      'hello {% glossaryLink term="withholding" %}link{% /glossaryLink %} world',
     );
     expect(result).toEqual(
       expect.objectContaining({
@@ -87,19 +87,19 @@ Line 4`);
     );
   });
 
-  it("throws error for invalid formlink", () => {
-    expect(() => makeProse("{% formlink %}link{% /formlink %}")).toThrow();
+  it("throws error for invalid formLink", () => {
+    expect(() => makeProse("{% formLink %}link{% /formLink %}")).toThrow();
     expect(() =>
-      makeProse('{% formlink formClass="foo" %}link{% /formlink %}'),
+      makeProse('{% formLink formClass="foo" %}link{% /formLink %}'),
     ).toThrow();
   });
 
-  it("throws error for invalid glossarylink", () => {
+  it("throws error for invalid glossaryLink", () => {
     expect(() =>
-      makeProse("{% glossarylink %}link{% /glossarylink %}"),
+      makeProse("{% glossaryLink %}link{% /glossaryLink %}"),
     ).toThrow();
     expect(() =>
-      makeProse('{% glossarylink term="foo" %}link{% /glossarylink %}'),
+      makeProse('{% glossaryLink term="foo" %}link{% /glossaryLink %}'),
     ).toThrow();
   });
 });

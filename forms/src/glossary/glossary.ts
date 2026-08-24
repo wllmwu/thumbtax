@@ -12,20 +12,20 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
   "adjusted-gross-income": {
     name: "Adjusted gross income (AGI)",
     definition: makeProse(`
-Amount of {% glossarylink term="gross-income" %}gross income{% /glossarylink %} after applying {% glossarylink term="adjustment" %}adjustments{% /glossarylink %}.
-After computing this value, you subtract {% glossarylink term="deduction" %}deductions{% /glossarylink %} from it to get your {% glossarylink term="taxable-income" %}taxable income{% /glossarylink %}.`),
+Amount of {% glossaryLink term="gross-income" %}gross income{% /glossaryLink %} after applying {% glossaryLink term="adjustment" %}adjustments{% /glossaryLink %}.
+After computing this value, you subtract {% glossaryLink term="deduction" %}deductions{% /glossaryLink %} from it to get your {% glossaryLink term="taxable-income" %}taxable income{% /glossaryLink %}.`),
   },
   adjustment: {
     name: "Adjustment",
     definition: makeProse(`
-Amount added to or subtracted from {% glossarylink term="gross-income" %}gross income{% /glossarylink %} to compute {% glossarylink term="adjusted-gross-income" %}adjusted gross income{% /glossarylink %}.
-The law designates certain categories of expenses, contributions, and received payments as adjustments, enumerated in {% formlink formClass="f1040s1" %}Schedule 1 (Form 1040){% /formlink %}.`),
+Amount added to or subtracted from {% glossaryLink term="gross-income" %}gross income{% /glossaryLink %} to compute {% glossaryLink term="adjusted-gross-income" %}adjusted gross income{% /glossaryLink %}.
+The law designates certain categories of expenses, contributions, and received payments as adjustments, enumerated in {% formLink formClass="f1040s1" %}Schedule 1 (Form 1040){% /formLink %}.`),
   },
   "capital-gain": {
     name: "Capital gain",
     definition: makeProse(`
 Profit from selling capital assets, such as a home, a vehicle, stocks, or bonds.
-Capital gain is considered {% glossarylink term="income" %}income{% /glossarylink %} and subject to {% glossarylink term="income-tax" %}income tax{% /glossarylink %}.
+Capital gain is considered {% glossaryLink term="income" %}income{% /glossaryLink %} and subject to {% glossaryLink term="income-tax" %}income tax{% /glossaryLink %}.
 
 You earn capital gain when you sell the asset for more than it cost you to buy it.
 If you sell it for less than it cost, then it's a **capital loss,** which can decrease your income and income tax up to a limit.
@@ -41,14 +41,14 @@ Typically, **short-term capital gains** are held for one year or less and are ta
     name: "Collectibles",
     definition: makeProse(`
 Category of capital asset that includes works of art, stamps, coins, cards, precious metals and gemstones, antiques, and other rare items.
-Long-term {% glossarylink term="capital-gain" %}capital gains{% /glossarylink %} earned from selling collectibles are taxed at a special rate, up to 28%.`),
+Long-term {% glossaryLink term="capital-gain" %}capital gains{% /glossaryLink %} earned from selling collectibles are taxed at a special rate, up to 28%.`),
   },
   deduction: {
     name: "Deduction",
     definition: makeProse(`
-Amount subtracted from {% glossarylink term="adjusted-gross-income" %}adjusted gross income{% /glossarylink %} to compute {% glossarylink term="taxable-income" %}taxable income{% /glossarylink %}.
+Amount subtracted from {% glossaryLink term="adjusted-gross-income" %}adjusted gross income{% /glossaryLink %} to compute {% glossaryLink term="taxable-income" %}taxable income{% /glossaryLink %}.
 You can typically deduct things like capital losses, business expenses, healthcare costs, other taxes you paid, and donations to charity, up to a limit.
-For {% glossarylink term="federal-income-tax" %}federal income tax{% /glossarylink %}, you choose between the **standard deduction** (a fixed amount) and **itemized deductions** (precise amounts computed in {% formlink formClass="f1040sA" %}Schedule A (Form 1040){% /formlink %}) depending on which is larger.`),
+For {% glossaryLink term="federal-income-tax" %}federal income tax{% /glossaryLink %}, you choose between the **standard deduction** (a fixed amount) and **itemized deductions** (precise amounts computed in {% formLink formClass="f1040sA" %}Schedule A (Form 1040){% /formLink %}) depending on which is larger.`),
   },
   dividend: {
     name: "Dividend",
@@ -56,12 +56,12 @@ For {% glossarylink term="federal-income-tax" %}federal income tax{% /glossaryli
 Payment from a corporation to its shareholders.
 Corporations often invest some of their profits back into the company and distribute the rest as dividends.
 
-{% glossarylink term="ordinary-dividends" %}Ordinary{% /glossarylink %} and {% glossarylink term="qualified-dividends" %}qualified dividends{% /glossarylink %} are taxed at different rates.`),
+{% glossaryLink term="ordinary-dividends" %}Ordinary{% /glossaryLink %} and {% glossaryLink term="qualified-dividends" %}qualified dividends{% /glossaryLink %} are taxed at different rates.`),
   },
   "federal-income-tax": {
     name: "Federal income tax",
     definition: makeProse(`
-{% glossarylink term="income-tax" %}Income tax{% /glossarylink %} levied by the federal government.
+{% glossaryLink term="income-tax" %}Income tax{% /glossaryLink %} levied by the federal government.
 It is a **progressive tax,** meaning the tax rate increases as your income increases.
 In particular, your income is separated into brackets, and the money in each bracket is taxed at a specific percentage.`),
   },
@@ -70,11 +70,11 @@ In particular, your income is separated into brackets, and the money in each bra
     definition: makeProse(`
 Also called **total income.**
 
-For **individuals,** total amount of {% glossarylink term="income" %}income{% /glossarylink %} during the tax year.
-This generally includes all income from almost all sources, such as {% glossarylink term="wages" %}wages{% /glossarylink %}, {% glossarylink term="capital-gain" %}capital gains{% /glossarylink %}, and {% glossarylink term="dividend" %}dividends{% /glossarylink %}.
+For **individuals,** total amount of {% glossaryLink term="income" %}income{% /glossaryLink %} during the tax year.
+This generally includes all income from almost all sources, such as {% glossaryLink term="wages" %}wages{% /glossaryLink %}, {% glossaryLink term="capital-gain" %}capital gains{% /glossaryLink %}, and {% glossaryLink term="dividend" %}dividends{% /glossaryLink %}.
 However, certain sources are excluded, such as gifts and child support.
 
-After you compute your gross income, you apply {% glossarylink term="adjustment" %}adjustments{% /glossarylink %} to get your {% glossarylink term="adjusted-gross-income" %}adjusted gross income{% /glossarylink %}.
+After you compute your gross income, you apply {% glossaryLink term="adjustment" %}adjustments{% /glossaryLink %} to get your {% glossaryLink term="adjusted-gross-income" %}adjusted gross income{% /glossaryLink %}.
 
 For **businesses,** revenue minus cost of goods sold.`),
   },
@@ -87,29 +87,29 @@ For the purpose of taxation, this can also include the cash value of non-monetar
   "income-tax": {
     name: "Income tax",
     definition: makeProse(`
-Tax on {% glossarylink term="income" %}income{% /glossarylink %}.
+Tax on {% glossaryLink term="income" %}income{% /glossaryLink %}.
 There are many types of income tax that apply to different sources of income.`),
   },
   "ordinary-dividends": {
     name: "Ordinary dividends",
     definition: makeProse(`
-{% glossarylink term="dividend" %}Dividends{% /glossarylink %} that are not {% glossarylink term="qualified-dividends" %}qualified dividends{% /glossarylink %}.
-Ordinary dividends are {% glossarylink term="income-tax" %}taxed as regular income{% /glossarylink %}, whereas qualified dividends are taxed as {% glossarylink term="capital-gain" %}capital gains{% /glossarylink %}.
+{% glossaryLink term="dividend" %}Dividends{% /glossaryLink %} that are not {% glossaryLink term="qualified-dividends" %}qualified dividends{% /glossaryLink %}.
+Ordinary dividends are {% glossaryLink term="income-tax" %}taxed as regular income{% /glossaryLink %}, whereas qualified dividends are taxed as {% glossaryLink term="capital-gain" %}capital gains{% /glossaryLink %}.
 In other words, dividends are ordinary by default unless they "qualify" for the capital gains tax by meeting certain conditions.
 
-If you receive dividends, the payor reports what amount is ordinary vs. qualified on {% formlink formClass="f1099DIV" %}Form 1099-DIV{% /formlink %}.`),
+If you receive dividends, the payor reports what amount is ordinary vs. qualified on {% formLink formClass="f1099DIV" %}Form 1099-DIV{% /formLink %}.`),
   },
   "qualified-business-income": {
     name: "Qualified business income (QBI)",
     definition: makeProse(`
 Broadly, income from self-employment or small business ownership, excluding certain items and subject to certain conditions and limits.
-Eligible individuals can {% glossarylink term="deduction" %}deduct{% /glossarylink %} their QBI to reduce their taxes.`),
+Eligible individuals can {% glossaryLink term="deduction" %}deduct{% /glossaryLink %} their QBI to reduce their taxes.`),
   },
   "qualified-dividends": {
     name: "Qualified dividends",
     definition: makeProse(`
-{% glossarylink term="dividend" %}Dividends{% /glossarylink %} that "qualify" as {% glossarylink term="capital-gain" %}capital gains{% /glossarylink %} instead of ordinary income ({% glossarylink term="ordinary-dividends" %}ordinary dividends{% /glossarylink %}).
-If you receive dividends, the payor reports what amount is ordinary vs. qualified on {% formlink formClass="f1099DIV" %}Form 1099-DIV{% /formlink %}.
+{% glossaryLink term="dividend" %}Dividends{% /glossaryLink %} that "qualify" as {% glossaryLink term="capital-gain" %}capital gains{% /glossaryLink %} instead of ordinary income ({% glossaryLink term="ordinary-dividends" %}ordinary dividends{% /glossaryLink %}).
+If you receive dividends, the payor reports what amount is ordinary vs. qualified on {% formLink formClass="f1099DIV" %}Form 1099-DIV{% /formLink %}.
 
 Specifically, a dividend is qualified if you held the stock for more than 60 days in the 121 day period starting 60 days before its **ex-dividend date,** which is one market day before its **record date,** which is the date that you must be marked as a shareholder in the company's records in order to receive the dividend.`),
   },
@@ -122,12 +122,12 @@ QOFs are meant to incentivize investment into these regions, so you can defer ta
   "qualified-small-business-stock": {
     name: "Qualified small business stock",
     definition: makeProse(`
-Shares in a qualified small business that have tax benefits for the {% glossarylink term="capital-gain" %}capital gains{% /glossarylink %} tax under certain conditions.`),
+Shares in a qualified small business that have tax benefits for the {% glossaryLink term="capital-gain" %}capital gains{% /glossaryLink %} tax under certain conditions.`),
   },
   "section-1202": {
     name: "Section 1202",
     definition: makeProse(`
-Section of the U.S. tax code that allows individuals to exclude from {% glossarylink term="gross-income" %}gross income{% /glossarylink %} certain gains from the sale or exchange of {% glossarylink term="qualified-small-business-stock" %}qualified small business stock{% /glossarylink %}.`),
+Section of the U.S. tax code that allows individuals to exclude from {% glossaryLink term="gross-income" %}gross income{% /glossaryLink %} certain gains from the sale or exchange of {% glossaryLink term="qualified-small-business-stock" %}qualified small business stock{% /glossaryLink %}.`),
   },
   "section-1250": {
     name: "Section 1250",
@@ -137,7 +137,7 @@ Section of the U.S. tax code that describes the tax treatment of certain real es
   "section-199A": {
     name: "Section 199A",
     definition: makeProse(`
-Section of the U.S. tax code that allows individuals to {% glossarylink term="deduction" %}deduct{% /glossarylink %} their {% glossarylink term="qualified-business-income" %}qualified business income{% /glossarylink %}, up to a limit.`),
+Section of the U.S. tax code that allows individuals to {% glossaryLink term="deduction" %}deduct{% /glossaryLink %} their {% glossaryLink term="qualified-business-income" %}qualified business income{% /glossaryLink %}, up to a limit.`),
   },
   "section-897": {
     name: "Section 897",
@@ -152,13 +152,13 @@ In finance, a financial instrument with monetary value, such as stocks and bonds
   "taxable-income": {
     name: "Taxable income",
     definition: makeProse(`
-Amount of {% glossarylink term="income" %}income{% /glossarylink %} used as the basis for computing {% glossarylink term="income-tax" %}income tax{% /glossarylink %}.
-For {% glossarylink term="federal-income-tax" %}federal income tax{% /glossarylink %}, this is the amount left over after subtracting {% glossarylink term="deduction" %}deductions{% /glossarylink %} from your {% glossarylink term="adjusted-gross-income" %}adjusted gross income{% /glossarylink %}.`),
+Amount of {% glossaryLink term="income" %}income{% /glossaryLink %} used as the basis for computing {% glossaryLink term="income-tax" %}income tax{% /glossaryLink %}.
+For {% glossaryLink term="federal-income-tax" %}federal income tax{% /glossaryLink %}, this is the amount left over after subtracting {% glossaryLink term="deduction" %}deductions{% /glossaryLink %} from your {% glossaryLink term="adjusted-gross-income" %}adjusted gross income{% /glossaryLink %}.`),
   },
   wages: {
     name: "Wages",
     definition: makeProse(`
-{% glossarylink term="income" %}Income{% /glossarylink %} that an employee receives from their employer in exchange for their labor.
+{% glossaryLink term="income" %}Income{% /glossaryLink %} that an employee receives from their employer in exchange for their labor.
 This includes essentially all forms of compensation: base pay, bonuses, commissions, tips, company equity, and other benefits.
 
 There are exceptions for certain types of labor, such as agricultural labor, or employers, such as the federal government.
@@ -167,15 +167,15 @@ In these cases the employee's income might be computed differently.`),
   "wash-sale": {
     name: "Wash sale",
     definition: makeProse(`
-Act of selling a {% glossarylink term="security" %}security{% /glossarylink %} at a loss and buying a "substantially identical" security within 30 days before or after the sale.
-You can't claim {% glossarylink term="deduction" %}tax deductions{% /glossarylink %} for losses from wash sales.
+Act of selling a {% glossaryLink term="security" %}security{% /glossaryLink %} at a loss and buying a "substantially identical" security within 30 days before or after the sale.
+You can't claim {% glossaryLink term="deduction" %}tax deductions{% /glossaryLink %} for losses from wash sales.
 This rule is intended to prevent people from selling and immediately buying back securities just to reduce their taxes.`),
   },
   withholding: {
     name: "Withholding",
     definition: makeProse(`
-Practice where someone paying {% glossarylink term="income" %}income{% /glossarylink %} to you sends a portion of the payment to the government to pay {% glossarylink term="income-tax" %}income tax{% /glossarylink %} on your behalf.
-For example, in the U.S., employers are usually required to withhold income tax on your {% glossarylink term="wages" %}wages{% /glossarylink %} and report the withheld amount on {% formlink formClass="fW2" %}Form W-2{% /formlink %}.
+Practice where someone paying {% glossaryLink term="income" %}income{% /glossaryLink %} to you sends a portion of the payment to the government to pay {% glossaryLink term="income-tax" %}income tax{% /glossaryLink %} on your behalf.
+For example, in the U.S., employers are usually required to withhold income tax on your {% glossaryLink term="wages" %}wages{% /glossaryLink %} and report the withheld amount on {% formLink formClass="fW2" %}Form W-2{% /formLink %}.
 
 Not all income sources withhold taxes, and if you have multiple income sources then the combined withheld amount might be less than the actual tax you owe (because the income tax rate increases as your income increases).
 So, it's important to plan ahead in order to avoid owing a large amount at the end of the tax year.`),

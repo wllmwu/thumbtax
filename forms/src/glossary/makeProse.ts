@@ -6,8 +6,8 @@ import type { Config, RenderableTreeNodes } from "@markdoc/markdoc";
 
 const config: Config = {
   tags: {
-    formlink: formLinkTag,
-    glossarylink: glossaryLinkTag,
+    formLink: formLinkTag,
+    glossaryLink: glossaryLinkTag,
   },
 };
 

@@ -255,8 +255,8 @@ export const config: Config = {
       transform: makeTransformer("commentary"),
       validate: validateProseContent,
     },
-    formlink: formLinkTag,
-    glossarylink: glossaryLinkTag,
+    formLink: formLinkTag,
+    glossaryLink: glossaryLinkTag,
   },
   partials: {
     alternativeMinimumTaxComputation: parse(
