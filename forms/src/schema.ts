@@ -11,6 +11,7 @@ import { validateChildren } from "./schema/validateChildren";
 import { validatePlainTextContent } from "./schema/validatePlainTextContent";
 import { validateProseContent } from "./schema/validateProseContent";
 import { optionTag, pieceTag, valueTag } from "./schema/valueTag";
+import { GLOSSARY_TERMS } from "./types/glossaryTerm";
 
 import type { Config } from "@markdoc/markdoc";
 
@@ -257,6 +258,51 @@ export const config: Config = {
     },
     formLink: formLinkTag,
     glossaryLink: glossaryLinkTag,
+    glossary: {
+      transform: makeTransformer("glossary", unwrapListItemChildren),
+      validate(node) {
+        return validateChildren(unwrapListItemChildren(node.children), [
+          {
+            greedy: true,
+            options: [{ nodeType: "tag", tag: "glossaryEntry" }],
+          },
+        ]);
+      },
+    },
+    glossaryEntry: {
+      attributes: {
+        term: {
+          type: "String",
+          matches: [...GLOSSARY_TERMS],
+          required: true,
+          errorLevel: "error",
+        },
+        name: {
+          type: "String",
+          required: true,
+          errorLevel: "error",
+        },
+      },
+      transform: makeTransformer("glossaryEntry", unwrapListItemChildren),
+      validate(node) {
+        return validateChildren(unwrapListItemChildren(node.children), [
+          { options: [{ nodeType: "tag", tag: "definition" }] },
+          { optional: true, options: [{ nodeType: "tag", tag: "learnMore" }] },
+        ]);
+      },
+    },
+    definition: {
+      transform: makeTransformer("definition"),
+      validate: validateProseContent,
+    },
+    learnMore: {
+      transform: makeTransformer("learnMore", unwrapListItemChildren),
+      validate(node) {
+        return validateChildren(unwrapListItemChildren(node.children), [
+          { greedy: true, options: [{ nodeType: "link" }] },
+        ]);
+      },
+    },
   },
   partials: {
     alternativeMinimumTaxComputation: parse(
