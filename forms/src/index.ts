@@ -29,7 +29,7 @@ export * from "./types/specificationRegistry";
 export * from "./types/valueProvider";
 export * from "./types/valueProviderType";
 
-export { glossary } from "./glossary/glossary";
+export { glossary } from "./generated/glossary";
 
 export const specifications: SpecificationRegistry = {
   f1040,
