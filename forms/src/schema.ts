@@ -7,6 +7,7 @@ import { formLinkTag, glossaryLinkTag } from "./schema/contentTags";
 import { makeTransformer } from "./schema/makeTransformer";
 import { unwrapInlineTags } from "./schema/unwrapInlineTagChildren";
 import { unwrapListItemChildren } from "./schema/unwrapListItemChildren";
+import { unwrapParagraphChild } from "./schema/unwrapParagraphChild";
 import { validateChildren } from "./schema/validateChildren";
 import { validatePlainTextContent } from "./schema/validatePlainTextContent";
 import { validateProseContent } from "./schema/validateProseContent";
@@ -354,10 +355,13 @@ export const config: Config = {
       validate: validateProseContent,
     },
     learnMore: {
-      transform: makeTransformer("learnMore", unwrapListItemChildren),
+      transform: makeTransformer("learnMore", unwrapParagraphChild),
       validate(node) {
-        return validateChildren(unwrapListItemChildren(node.children), [
-          { greedy: true, options: [{ nodeType: "link" }] },
+        return validateChildren(unwrapParagraphChild(node.children), [
+          {
+            greedy: true,
+            options: [{ nodeType: "link" }, { nodeType: "text" }],
+          },
         ]);
       },
     },

@@ -62,7 +62,7 @@ export function validateChildren(
       error = {
         id: "child-type",
         level: "error",
-        message: `Child number ${childIndex + 1} should have type ${optionTypes}`,
+        message: `Child number ${childIndex + 1} should have type ${optionTypes}, got ${child.type}`,
       };
     } else if (
       !matchingTypeAndTag.some(

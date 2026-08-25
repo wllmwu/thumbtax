@@ -18,9 +18,13 @@ function mapGlossaryEntry(entryNode: Tag): GlossaryEntry {
       `Glossary entry "${String(entryNode.attributes.term)}" is missing a definition`,
     );
   }
+  const learnMoreNode = entryNode.children.find((child) =>
+    isTagNamed(child, "learnMore"),
+  );
   return {
     name: requireString(entryNode.attributes.name),
     definition: extractProse(definitionNode),
+    learnMore: learnMoreNode ? extractProse(learnMoreNode) : undefined,
   };
 }
 

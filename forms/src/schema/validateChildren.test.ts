@@ -111,7 +111,7 @@ describe("validateChildren", () => {
       {
         id: "child-type",
         level: "error",
-        message: "Child number 1 should have type heading",
+        message: "Child number 1 should have type heading, got text",
       },
     ]);
 
@@ -123,7 +123,7 @@ describe("validateChildren", () => {
       {
         id: "child-type",
         level: "error",
-        message: "Child number 1 should have type heading",
+        message: "Child number 1 should have type heading, got tag",
       },
     ]);
 
@@ -135,7 +135,7 @@ describe("validateChildren", () => {
       {
         id: "child-type",
         level: "error",
-        message: "Child number 1 should have type tag",
+        message: "Child number 1 should have type tag, got text",
       },
     ]);
   });
@@ -149,7 +149,7 @@ describe("validateChildren", () => {
       {
         id: "child-type",
         level: "error",
-        message: "Child number 1 should have type tag(bar)",
+        message: "Child number 1 should have type tag(bar), got tag",
       },
     ]);
   });
