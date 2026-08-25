@@ -10,7 +10,7 @@ export function Link(props: Props): React.ReactNode {
     <AriaLink
       {...props}
       render={(domProps) =>
-        "href" in domProps ? (
+        "href" in domProps && !props.isDisabled ? (
           <RouterLink {...domProps} to={domProps.href} />
         ) : (
           <span {...domProps} />
