@@ -1,3 +1,7 @@
+.learn-more {
+  font-weight: var(--font-weight-semibold);
+}
+
 .targeted {
   background-color: var(--color-highlight-target);
 }

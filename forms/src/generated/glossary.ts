@@ -42,6 +42,25 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ".",
       ],
     },
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.irs.gov/filing/adjusted-gross-income",
+        },
+        children: ["Adjusted gross income (IRS.gov)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.law.cornell.edu/wex/adjusted_gross_income_%28agi%29",
+        },
+        children: ["adjusted gross income (Cornell LII)"],
+      },
+    ],
   },
   adjustment: {
     name: "Adjustment",
@@ -157,6 +176,21 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ],
       },
     ],
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.irs.gov/taxtopics/tc409" },
+        children: ["Capital gains and losses (IRS topic 409)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/capital_gains" },
+        children: ["capital gains (Cornell LII)"],
+      },
+    ],
   },
   collectibles: {
     name: "Collectibles",
@@ -176,6 +210,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         },
         " earned from selling collectibles are taxed at a special rate, up to 28%.",
       ],
+    },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: {
+        href: "https://www.investopedia.com/articles/personal-finance/061715/how-are-collectibles-taxed.asp",
+      },
+      children: ["How Collectibles Are Taxed (Investopedia)"],
     },
   },
   deduction: {
@@ -234,6 +276,21 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ") depending on which is larger.",
       ],
     },
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.irs.gov/credits-and-deductions" },
+        children: ["Credits and deductions (IRS.gov)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/deduction" },
+        children: ["deduction (Cornell LII)"],
+      },
+    ],
   },
   dividend: {
     name: "Dividend",
@@ -270,6 +327,23 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ],
       },
     ],
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.irs.gov/taxtopics/tc404" },
+        children: [
+          "Dividends and other corporate distributions (IRS topic 404)",
+        ],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/dividend" },
+        children: ["dividend (Cornell LII)"],
+      },
+    ],
   },
   "federal-income-tax": {
     name: "Federal income tax",
@@ -298,6 +372,25 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         "In particular, your income is separated into brackets, and the money in each bracket is taxed at a specific percentage.",
       ],
     },
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.irs.gov/forms-pubs/about-publication-17",
+        },
+        children: ["Your Federal Income Tax (For Individuals) (IRS pub. 17)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.irs.gov/filing/federal-income-tax-rates-and-brackets",
+        },
+        children: ["Federal income tax rates and brackets (IRS.gov)"],
+      },
+    ],
   },
   "gross-income": {
     name: "Gross income",
@@ -401,6 +494,12 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ],
       },
     ],
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.law.cornell.edu/wex/gross_income" },
+      children: ["gross income (Cornell LII)"],
+    },
   },
   income: {
     name: "Income",
@@ -493,6 +592,16 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ],
       },
     ],
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: {
+        href: "https://www.investopedia.com/terms/q/qualifieddividend.asp",
+      },
+      children: [
+        "What Are Qualified Dividends, and How Are They Taxed? (Investopedia)",
+      ],
+    },
   },
   "qualified-business-income": {
     name: "Qualified business income (QBI)",
@@ -512,6 +621,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         },
         " their QBI to reduce their taxes.",
       ],
+    },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: {
+        href: "https://www.irs.gov/newsroom/qualified-business-income-deduction",
+      },
+      children: ["Qualified business income deduction (IRS.gov)"],
     },
   },
   "qualified-dividends": {
@@ -577,6 +694,16 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ],
       },
     ],
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: {
+        href: "https://www.investopedia.com/terms/q/qualifieddividend.asp",
+      },
+      children: [
+        "What Are Qualified Dividends, and How Are They Taxed? (Investopedia)",
+      ],
+    },
   },
   "qualified-opportunity-fund": {
     name: "Qualified Opportunity Fund (QOF)",
@@ -597,6 +724,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         "QOFs are meant to incentivize investment into these regions, so you can defer taxes on contributions you make to a QOF.",
       ],
     },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: {
+        href: "https://www.irs.gov/credits-deductions/businesses/invest-in-a-qualified-opportunity-fund",
+      },
+      children: ["Invest in a Qualified Opportunity Fund (IRS.gov)"],
+    },
   },
   "qualified-small-business-stock": {
     name: "Qualified small business stock",
@@ -613,6 +748,16 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
           children: ["capital gains"],
         },
         " tax under certain conditions.",
+      ],
+    },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: {
+        href: "https://www.investopedia.com/terms/q/qsbs-qualified-small-business-stock.asp",
+      },
+      children: [
+        "Qualified Small Business Stock (QSBS): Definition and Tax Benefits (Investopedia)",
       ],
     },
   },
@@ -640,6 +785,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ".",
       ],
     },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.law.cornell.edu/uscode/text/26/1202" },
+      children: [
+        "26 U.S. Code § 1202 - Partial exclusion for gain from certain small business stock (Cornell LII)",
+      ],
+    },
   },
   "section-1250": {
     name: "Section 1250",
@@ -649,6 +802,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       attributes: {},
       children: [
         "Section of the U.S. tax code that describes the tax treatment of certain real estate gains.",
+      ],
+    },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.law.cornell.edu/uscode/text/26/1250" },
+      children: [
+        "26 U.S. Code § 1250 - Gain from dispositions of certain depreciable realty (Cornell LII)",
       ],
     },
   },
@@ -676,6 +837,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ", up to a limit.",
       ],
     },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.law.cornell.edu/uscode/text/26/199A" },
+      children: [
+        "26 U.S. Code § 199A - Qualified business income (Cornell LII)",
+      ],
+    },
   },
   "section-897": {
     name: "Section 897",
@@ -685,6 +854,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       attributes: {},
       children: [
         "Section of the U.S. tax code that requires foreign individuals or corporations who own real estate in the U.S. to pay property tax on it.",
+      ],
+    },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.law.cornell.edu/uscode/text/26/897" },
+      children: [
+        "26 U.S. Code § 897 - Disposition of investment in United States real property (Cornell LII)",
       ],
     },
   },
@@ -698,6 +875,23 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         "In finance, a financial instrument with monetary value, such as stocks and bonds.",
       ],
     },
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/security" },
+        children: ["security (Cornell LII)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.investopedia.com/terms/s/security.asp",
+        },
+        children: ["What Are Financial Securities? (Investopedia)"],
+      },
+    ],
   },
   "taxable-income": {
     name: "Taxable income",
@@ -746,6 +940,30 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ".",
       ],
     },
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.irs.gov/filing/taxable-income" },
+        children: ["Taxable income (IRS.gov)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.irs.gov/businesses/small-businesses-self-employed/what-is-taxable-and-nontaxable-income",
+        },
+        children: ["What is taxable and nontaxable income? (IRS.gov)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/taxable_income" },
+        children: ["taxable income (Cornell LII)"],
+      },
+    ],
   },
   wages: {
     name: "Wages",
@@ -777,6 +995,21 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         ],
       },
     ],
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.irs.gov/taxtopics/tc401" },
+        children: ["Wages and salaries (IRS topic 401)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/wages" },
+        children: ["wages (Cornell LII)"],
+      },
+    ],
   },
   "wash-sale": {
     name: "Wash sale",
@@ -806,6 +1039,23 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         "This rule is intended to prevent people from selling and immediately buying back securities just to reduce their taxes.",
       ],
     },
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.investor.gov/introduction-investing/investing-basics/glossary/wash-sales",
+        },
+        children: ["Wash Sales (Investor.gov)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/wash_sale" },
+        children: ["wash sale (Cornell LII)"],
+      },
+    ],
   },
   withholding: {
     name: "Withholding",
@@ -846,6 +1096,15 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
             children: ["Form W-2"],
           },
           ".",
+          " ",
+          "Any withheld amount is still included in your ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "gross-income" },
+            children: ["gross income"],
+          },
+          ".",
         ],
       },
       {
@@ -857,6 +1116,23 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
           " ",
           "So, it's important to plan ahead in order to avoid owing a large amount at the end of the tax year.",
         ],
+      },
+    ],
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.irs.gov/individuals/employees/tax-withholding",
+        },
+        children: ["Tax withholding (IRS.gov)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/tax_withholding" },
+        children: ["tax withholding (Cornell LII)"],
       },
     ],
   },

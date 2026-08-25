@@ -35,6 +35,12 @@ export function GlossaryPage(): React.ReactNode {
             </dt>
             <dd>
               <ProseContent nodes={entry.definition} />
+              {entry.learnMore && (
+                <p>
+                  <span className={styles.learnMore}>Learn more:</span>{" "}
+                  {<ProseContent nodes={entry.learnMore} />}
+                </p>
+              )}
             </dd>
           </div>
         ))}
