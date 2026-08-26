@@ -24,3 +24,7 @@ Its main dependencies include:
   - `state/`: Central state manager
   - `test/`: Test utilities
   - `ui/`: Presentation layer, including almost all React code
+  - `App.tsx`: Global providers and routing configuration
+  - `index.css`: Global stylesheet
+  - `main.tsx`: React entry point
+- `webapp/index.html`: Main HTML file
