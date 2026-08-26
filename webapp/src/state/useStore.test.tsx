@@ -57,10 +57,12 @@ function makeTestRegistry(
                   type: "select_value_input",
                   options: [
                     {
+                      key: "a",
                       label: "A",
                       value: { type: "number_constant", value: 10 },
                     },
                     {
+                      key: "b",
                       label: "B",
                       value: { type: "number_constant", value: 20 },
                     },
@@ -1023,7 +1025,7 @@ describe("useStore", () => {
       const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
-      const value: UserInput = { type: "selection", selectedIndex: 1 };
+      const value: UserInput = { type: "selection", selectedKey: "b" };
 
       result.current.setBoxInput(TEST_CLASS, id, SELECTION_BOX, value);
 
@@ -1067,7 +1069,7 @@ describe("useStore", () => {
 
       result.current.setBoxInput(TEST_CLASS, id, SELECTION_BOX, {
         type: "selection",
-        selectedIndex: 0,
+        selectedKey: "a",
       });
 
       rerender();

@@ -18,7 +18,6 @@ import type { BoxFormat, BoxIdentifier } from "@thumbtax/common";
 import type { FormBox, ValueProvider } from "@thumbtax/forms";
 import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { FormInstance } from "#src/common/types/formInstance";
-import type { Key } from "react-aria-components";
 
 type Props = {
   instance: FormInstance;
@@ -360,25 +359,17 @@ function SelectValueInputBox({
   const setBoxInput = useStore((state) => state.setBoxInput);
 
   const input = instance.inputs[boxIdentifier];
-  const selectedIndex = input?.type === "selection" ? input.selectedIndex : 0;
-  const options = boxValue.options.map(({ label }, index) => ({
-    id: `${instance.id}-${boxIdentifier}-option-${index}`,
-    label,
-  }));
-  const selectedId = options[selectedIndex].id;
+  const options = boxValue.options;
+  const selectedKey = input?.type === "selection" ? input.selectedKey : "";
 
   const onChange = React.useCallback(
-    (newSelectedId: Key) => {
-      for (const [index, option] of options.entries()) {
-        if (option.id === newSelectedId) {
-          setBoxInput(instance.class, instance.id, boxIdentifier, {
-            type: "selection",
-            selectedIndex: index,
-          });
-        }
-      }
+    (newSelectedKey: string) => {
+      setBoxInput(instance.class, instance.id, boxIdentifier, {
+        type: "selection",
+        selectedKey: newSelectedKey,
+      });
     },
-    [boxIdentifier, instance.class, instance.id, options, setBoxInput],
+    [boxIdentifier, instance.class, instance.id, setBoxInput],
   );
 
   return (
@@ -386,11 +377,11 @@ function SelectValueInputBox({
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       errorMessage={errorMessage}
-      value={selectedId}
+      value={selectedKey}
       onChange={onChange}
     >
-      {options.map(({ id, label }) => (
-        <SelectFieldItem key={id} id={id}>
+      {options.map(({ key, label }) => (
+        <SelectFieldItem key={key} id={key}>
           {label}
         </SelectFieldItem>
       ))}

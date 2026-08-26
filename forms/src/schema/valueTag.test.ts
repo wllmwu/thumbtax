@@ -508,7 +508,7 @@ describe("valueTag", () => {
     it("accepts one option", () => {
       const document = `
 {% value type="select_value_input" %}
-- {% value type="number_constant" value=1 label="First" /%}
+- {% value type="number_constant" value=1 key="first" label="First" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -518,9 +518,9 @@ describe("valueTag", () => {
     it("accepts multiple options", () => {
       const document = `
 {% value type="select_value_input" %}
-- {% value type="number_constant" value=1 label="First" /%}
-- {% value type="number_constant" value=2 label="Second" /%}
-- {% value type="number_constant" value=3 label="Third" /%}
+- {% value type="number_constant" value=1 key="first" label="First" /%}
+- {% value type="number_constant" value=2 key="second" label="Second" /%}
+- {% value type="number_constant" value=3 key="third" label="Third" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -535,6 +535,34 @@ describe("valueTag", () => {
       const errors = validateValueTags(document);
       expect(errors).toEqual([
         expect.objectContaining({ id: "missing-required-child" }),
+      ]);
+    });
+
+    it("rejects when child is missing key", () => {
+      const document = `
+{% value type="select_value_input" %}
+- {% value type="number_constant" value=1 key="first" label="First" /%}
+- {% value type="number_constant" value=2 label="Second" /%}
+- {% value type="number_constant" value=3 key="third" label="Third" /%}
+{% /value %}
+`;
+      const errors = validateValueTags(document);
+      expect(errors).toEqual([
+        expect.objectContaining({ id: "missing-key-or-label" }),
+      ]);
+    });
+
+    it("rejects when child is missing label", () => {
+      const document = `
+{% value type="select_value_input" %}
+- {% value type="number_constant" value=1 key="first" label="First" /%}
+- {% value type="number_constant" value=2 key="second" /%}
+- {% value type="number_constant" value=3 key="third" label="Third" /%}
+{% /value %}
+`;
+      const errors = validateValueTags(document);
+      expect(errors).toEqual([
+        expect.objectContaining({ id: "missing-key-or-label" }),
       ]);
     });
   });

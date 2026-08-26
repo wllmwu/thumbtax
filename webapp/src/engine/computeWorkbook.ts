@@ -449,7 +449,9 @@ function resolveValue(
       const formInstance = instances.get(address.instance);
       const userInput = formInstance?.inputs[address.box];
       if (userInput && userInput.type === "selection") {
-        const option = provider.options[userInput.selectedIndex];
+        const option = provider.options.find(
+          ({ key }) => key === userInput.selectedKey,
+        );
         if (option) {
           return resolveRecursive(option.value);
         }

@@ -333,10 +333,12 @@ describe("computeWorkbook", () => {
                         type: "select_value_input",
                         options: [
                           {
+                            key: "a",
                             label: "A", // 3494
                             value: { type: "box_reference", box: "3" },
                           },
                           {
+                            key: "b",
                             label: "B",
                             value: {
                               type: "box_reference",
@@ -380,7 +382,7 @@ describe("computeWorkbook", () => {
                 },
                 [BOX_UNDER_TEST_ID]: {
                   type: "selection",
-                  selectedIndex: 0,
+                  selectedKey: "a",
                 },
               },
             }),

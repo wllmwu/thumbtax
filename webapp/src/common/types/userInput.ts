@@ -8,4 +8,4 @@ export type UserInput =
     }
   | { type: "number"; value: number }
   | { type: "override"; override: number | null }
-  | { type: "selection"; selectedIndex: number };
+  | { type: "selection"; selectedKey: string };

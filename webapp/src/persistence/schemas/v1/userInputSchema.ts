@@ -16,5 +16,5 @@ export const userInputSchema = z.discriminatedUnion("type", [
     type: z.literal("override"),
     override: z.number().nullable(),
   }),
-  z.strictObject({ type: z.literal("selection"), selectedIndex: z.number() }),
+  z.strictObject({ type: z.literal("selection"), selectedKey: z.string() }),
 ]);

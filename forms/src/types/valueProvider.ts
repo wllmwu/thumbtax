@@ -97,7 +97,11 @@ type UserInputValueProvider =
     }
   | {
       type: "select_value_input";
-      options: Array<{ label: string; value: ComputedValueProvider }>;
+      options: Array<{
+        key: string;
+        label: string;
+        value: ComputedValueProvider;
+      }>;
     };
 
 export type ValueProvider = ComputedValueProvider | UserInputValueProvider;

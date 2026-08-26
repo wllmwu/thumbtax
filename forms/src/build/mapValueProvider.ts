@@ -280,6 +280,7 @@ export function mapValueProvider(node: Tag): ValueProvider {
       return {
         type: valueType,
         options: valueTagChildren(node).map((child) => ({
+          key: requireString(child.attributes.key),
           label: requireString(child.attributes.label),
           value: mapComputedValueProvider(child),
         })),

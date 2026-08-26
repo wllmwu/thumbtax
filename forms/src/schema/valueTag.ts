@@ -16,7 +16,13 @@ import type { Node, Schema, ValidationError } from "@markdoc/markdoc";
 const PARTIAL_PASSTHROUGH_VALUE_TYPE = "_partial_passthrough";
 type PartialPassthroughValueType = typeof PARTIAL_PASSTHROUGH_VALUE_TYPE;
 
-const STRUCTURAL_ATTRIBUTES = ["slot", "type", "filingStatusKey", "label"];
+const STRUCTURAL_ATTRIBUTES = [
+  "filingStatusKey",
+  "key",
+  "label",
+  "slot",
+  "type",
+];
 
 function validateAttributes(
   node: Node,
@@ -190,12 +196,15 @@ const selectValueInputChildren = (node: Node): ValidationError[] => {
   }
 
   for (const [index, child] of unwrappedChildren.entries()) {
-    if (typeof child.attributes.label !== "string") {
+    if (
+      typeof child.attributes.key !== "string" ||
+      typeof child.attributes.label !== "string"
+    ) {
       return [
         {
-          id: "missing-label",
+          id: "missing-key-or-label",
           level: "error",
-          message: `Child number ${index + 1} should have a label attribute`,
+          message: `Child number ${index + 1} should have a key and a label attribute`,
         },
       ];
     }
@@ -406,6 +415,10 @@ export const valueTag: Schema = {
     form: {
       type: "String",
       matches: [...FORM_CLASSES],
+      errorLevel: "error",
+    },
+    key: {
+      type: "String",
       errorLevel: "error",
     },
     label: {
