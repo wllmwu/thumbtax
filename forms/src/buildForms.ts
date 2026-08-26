@@ -93,4 +93,8 @@ async function buildForms(): Promise<void> {
   }
 }
 
-await buildForms();
+try {
+  await buildForms();
+} catch (error) {
+  console.error(error);
+}

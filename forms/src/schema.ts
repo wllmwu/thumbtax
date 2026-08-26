@@ -65,7 +65,8 @@ export const config: Config = {
     section: {
       transform: makeTransformer("section", unwrapInlineTags),
       validate(node) {
-        const childErrors = validateChildren(unwrapInlineTags(node.children), [
+        const children = unwrapInlineTags(node.children);
+        const childErrors = validateChildren(children, [
           {
             optional: true,
             options: [{ nodeType: "heading", attributes: { level: 2 } }],
@@ -86,12 +87,16 @@ export const config: Config = {
           return childErrors;
         }
 
-        const maybeColumnsTag = node.children.at(1);
-        if (
-          maybeColumnsTag?.type === "tag" &&
-          maybeColumnsTag?.tag === "columns"
-        ) {
-          const sectionColumns = maybeColumnsTag.children.reduce<string[]>(
+        const columnsTag = children.find(
+          (child) => child.type === "tag" && child.tag === "columns",
+        );
+        const linesTag = children.find(
+          (child) => child.type === "tag" && child.tag === "lines",
+        );
+        const linesChildren = unwrapListItemChildren(linesTag?.children ?? []);
+        if (columnsTag) {
+          const columnsChildren = unwrapListItemChildren(columnsTag.children);
+          const sectionColumns = columnsChildren.reduce<string[]>(
             (acc, curr) => {
               if (
                 curr.type === "tag" &&
@@ -104,9 +109,9 @@ export const config: Config = {
             },
             [],
           );
-          const lines = unwrapListItemChildren(node.children[2].children);
-          for (const line of lines) {
-            const lineColumns = line.children.reduce<string[]>((acc, curr) => {
+          for (const line of linesChildren) {
+            const lineChildren = unwrapListItemChildren(line.children);
+            const lineColumns = lineChildren.reduce<string[]>((acc, curr) => {
               if (
                 curr.type === "tag" &&
                 curr.tag === "box" &&
@@ -132,9 +137,9 @@ export const config: Config = {
             }
           }
         } else {
-          const lines = unwrapListItemChildren(node.children[1].children);
-          for (const line of lines) {
-            const boxes = line.children.filter(
+          for (const line of linesChildren) {
+            const lineChildren = unwrapListItemChildren(line.children);
+            const boxes = lineChildren.filter(
               (child) => child.type === "tag" && child.tag === "box",
             );
             if (
