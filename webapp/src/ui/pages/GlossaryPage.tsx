@@ -7,7 +7,7 @@ import { Page } from "#src/ui/pages/Page";
 import { useTargetedId } from "#src/ui/utils/useTargetedId";
 import styles from "#src/ui/pages/GlossaryPage.module.css";
 
-import type { TableOfContentsHeading } from "#src/ui/table-of-contents/types/tableOfContentsHeading";
+import type { TableOfContentsHeading } from "#src/ui/types/tableOfContentsHeading";
 
 export function GlossaryPage(): React.ReactNode {
   const entries = React.useMemo(() => Object.entries(glossary), []);

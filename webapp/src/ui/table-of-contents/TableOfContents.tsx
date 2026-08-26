@@ -1,7 +1,7 @@
 import { Link } from "#src/ui/primitives/Link";
 import styles from "#src/ui/table-of-contents/TableOfContents.module.css";
 
-import type { TableOfContentsHeading } from "#src/ui/table-of-contents/types/tableOfContentsHeading";
+import type { TableOfContentsHeading } from "#src/ui/types/tableOfContentsHeading";
 import type React from "react";
 
 type Props = {

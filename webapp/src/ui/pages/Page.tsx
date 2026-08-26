@@ -7,7 +7,7 @@ import { TableOfContents } from "#src/ui/table-of-contents/TableOfContents";
 import { racn } from "#src/ui/utils/racn";
 import styles from "#src/ui/pages/Page.module.css";
 
-import type { TableOfContentsHeading } from "#src/ui/table-of-contents/types/tableOfContentsHeading";
+import type { TableOfContentsHeading } from "#src/ui/types/tableOfContentsHeading";
 import type React from "react";
 
 type Props = {

@@ -5,7 +5,7 @@ import { FormList } from "#src/ui/forms/FormList";
 import { LoadErrorBanner } from "#src/ui/forms/LoadErrorBanner";
 import { Page } from "#src/ui/pages/Page";
 
-import type { TableOfContentsHeading } from "#src/ui/table-of-contents/types/tableOfContentsHeading";
+import type { TableOfContentsHeading } from "#src/ui/types/tableOfContentsHeading";
 
 export function MainPage() {
   const formClasses = useStore((state) => state.applicationState.formClasses);
