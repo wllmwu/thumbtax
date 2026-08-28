@@ -18,6 +18,7 @@ export const COMPUTED_VALUE_PROVIDER_TYPES = [
   "piecewise_function",
   "product",
   "quotient",
+  "rounding",
   "sum",
   "unsupported",
   "unused",

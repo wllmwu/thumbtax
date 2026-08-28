@@ -19,7 +19,11 @@ type ArithmeticValueProvider =
       type: "quotient";
       dividend: ComputedValueProvider;
       divisor: ComputedValueProvider;
-      round?: RoundingDirection;
+    }
+  | {
+      type: "rounding";
+      direction: RoundingDirection;
+      value: ComputedValueProvider;
     }
   | { type: "sum"; values: Array<ComputedValueProvider> };
 
