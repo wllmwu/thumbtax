@@ -2,24 +2,18 @@ import type { NumberSign } from "./numberSign";
 import type { RoundingDirection } from "./roundingDirection";
 import type { BoxIdentifier, FilingStatus, FormClass } from "@thumbtax/common";
 
-type ConstantValueProvider = { type: "number_constant"; value: number };
-
-type ReferenceValueProvider =
-  | {
-      type: "box_reference";
-      form?: FormClass;
-      box: BoxIdentifier;
-      required?: boolean;
-    }
-  | { type: "form_instance_count"; form: FormClass };
-
 type ArithmeticValueProvider =
-  | { type: "sum"; values: Array<ComputedValueProvider> }
+  | { type: "absolute_value"; value: ComputedValueProvider }
   | {
       type: "difference";
       minuend: ComputedValueProvider;
       subtrahend: ComputedValueProvider;
     }
+  | { type: "maximum"; values: Array<ComputedValueProvider> }
+  | { type: "minimum"; values: Array<ComputedValueProvider> }
+  | { type: "non_negative_clamp"; value: ComputedValueProvider }
+  | { type: "non_positive_clamp"; value: ComputedValueProvider }
+  | { type: "numerical_negation"; value: ComputedValueProvider }
   | { type: "product"; values: Array<ComputedValueProvider> }
   | {
       type: "quotient";
@@ -27,12 +21,7 @@ type ArithmeticValueProvider =
       divisor: ComputedValueProvider;
       round?: RoundingDirection;
     }
-  | { type: "minimum"; values: Array<ComputedValueProvider> }
-  | { type: "maximum"; values: Array<ComputedValueProvider> }
-  | { type: "absolute_value"; value: ComputedValueProvider }
-  | { type: "non_negative_clamp"; value: ComputedValueProvider }
-  | { type: "non_positive_clamp"; value: ComputedValueProvider }
-  | { type: "numerical_negation"; value: ComputedValueProvider };
+  | { type: "sum"; values: Array<ComputedValueProvider> };
 
 type BooleanValueProvider =
   | {
@@ -46,12 +35,19 @@ type BooleanValueProvider =
   | { type: "disjunction"; values: Array<ComputedValueProvider> }
   | { type: "logical_negation"; value: ComputedValueProvider };
 
+type ConstantValueProvider = { type: "number_constant"; value: number };
+
 type ControlFlowValueProvider =
   | {
       type: "conditional";
       condition: ComputedValueProvider;
       trueValue: ComputedValueProvider;
       falseValue: ComputedValueProvider;
+    }
+  | {
+      type: "filing_status_map";
+      values: Partial<Record<FilingStatus, ComputedValueProvider>>;
+      default?: ComputedValueProvider;
     }
   | {
       type: "piecewise_function";
@@ -61,21 +57,25 @@ type ControlFlowValueProvider =
         output: ComputedValueProvider;
       }>;
       lastOutput: ComputedValueProvider;
-    }
-  | {
-      type: "filing_status_map";
-      values: Partial<Record<FilingStatus, ComputedValueProvider>>;
-      default?: ComputedValueProvider;
     };
+
+type ReferenceValueProvider =
+  | {
+      type: "box_reference";
+      form?: FormClass;
+      box: BoxIdentifier;
+      required?: boolean;
+    }
+  | { type: "form_instance_count"; form: FormClass };
 
 type UnusedValueProvider = { type: "unused" } | { type: "unsupported" };
 
 export type ComputedValueProvider =
-  | ConstantValueProvider
-  | ReferenceValueProvider
   | ArithmeticValueProvider
   | BooleanValueProvider
+  | ConstantValueProvider
   | ControlFlowValueProvider
+  | ReferenceValueProvider
   | UnusedValueProvider;
 
 type UserInputValueProvider =
