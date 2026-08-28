@@ -1,0 +1,81 @@
+{% form category="income" class="helper_income" irsPageUrl="" %}
+# My income
+
+{% subtitle %}
+Helper form: My income
+{% /subtitle %}
+
+{% instructions %}
+Thumbtax uses this "helper" form to model a part of your income.
+This isn't a real tax form.
+You can modify these values directly or use the wizard again to replace them.
+{% /instructions %}
+
+{% section %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Amount{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Interval{% /instructions %}
+  - {% box identifier="2" %}
+    {% value type="select_value_input" %}
+    - {% value
+         key="year"
+         label="One time or whole year"
+         type="number_constant"
+         value=1 /%}
+    - {% value key="hour" label="Per hour" type="unsupported" /%}
+    - {% value key="week" label="Per week" type="unsupported" /%}
+    - {% value key="two_weeks" label="Per 2 weeks" type="unsupported" /%}
+    - {% value key="month" label="Per month" type="number_constant" value=12 /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Annual multiplier{% /instructions %}
+  - {% box identifier="3" %}{% value type="box_reference" box="2" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Annual amount{% /instructions %}
+  - {% box identifier="4" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="1" /%}
+    - {% value type="box_reference" box="3" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}Start date{% /instructions %}
+  - {% box identifier="5" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}End date{% /instructions %}
+  - {% box identifier="6" %}{% value type="unsupported" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Proration basis{% /instructions %}
+  - {% box identifier="7" %}
+    {% value type="select_value_input" %}
+    - {% value key="business_days" label="Business days" type="unsupported" /%}
+    - {% value key="calendar_days" label="Calendar days" type="unsupported" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Proration factor{% /instructions %}
+  - {% box identifier="8" %}{% value type="box_reference" box="7" /%}{% /box %}
+  {% /line %}
+- {% line index="9" %}
+  - {% instructions %}Gross amount{% /instructions %}
+  - {% box identifier="9" %}
+    {% value type="product" %}
+    - {% value type="box_reference" box="4" /%}
+    - {% value type="box_reference" box="8" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}
