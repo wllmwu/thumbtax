@@ -19,6 +19,8 @@ The code is split into these top-level Node packages:
 Each package has an `index.md` file at its root and additional `index.md` files in each child directory (module).
 Read these files for context about the contents of each package or module, for example when deciding where new code belongs.
 
+When you make a change to one package, you must run `npm install` in its dependent packages for them to see the change.
+
 ## Patterns
 
 - Don't abbreviate too much.
@@ -49,5 +51,5 @@ If asked to write docs, place them in the `agent-docs` directory at the repo top
 
 ## Technical debt
 
-- Many UI components also don't have unit test coverage.
-  Tests should be added/updated for new components and for existing components that have test files.
+- Some code files don't have unit test coverage yet.
+  Tests should be added/updated for new code and for existing code that has test files.
