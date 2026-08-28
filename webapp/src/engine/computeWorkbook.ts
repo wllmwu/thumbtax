@@ -70,6 +70,7 @@ function resolveDependencies(
     case "non_negative_clamp":
     case "non_positive_clamp":
     case "numerical_negation":
+    case "rounding":
       return resolveDependencies(address, provider.value, instanceRegistry);
     case "select_value_input":
       return traverse(provider.options.map(({ value }) => value));
@@ -399,14 +400,15 @@ function resolveValue(
       if (divisor.value === 0) {
         return { value: 0, errors: [...errors, { type: "divide_by_zero" }] };
       }
-      const quotient = dividend.value / divisor.value;
-      const value =
-        provider.round === "down"
-          ? Math.floor(quotient)
-          : provider.round === "up"
-            ? Math.ceil(quotient)
-            : quotient;
-      return { value, errors };
+      return { value: dividend.value / divisor.value, errors };
+    }
+    case "rounding": {
+      const { value, errors } = resolveRecursive(provider.value);
+      return {
+        value:
+          provider.direction === "down" ? Math.floor(value) : Math.ceil(value),
+        errors,
+      };
     }
     case "select_instance_boxes_input": {
       const formInstance = instances.get(address.instance);

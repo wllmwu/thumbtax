@@ -1,6 +1,7 @@
 import { Tag, transform as markdocTransform } from "@markdoc/markdoc";
 import { FILING_STATUSES, FORM_CLASSES } from "@thumbtax/common";
 
+import { ROUNDING_DIRECTIONS } from "../types/roundingDirection";
 import {
   isValueProviderType,
   VALUE_PROVIDER_TYPES,
@@ -349,8 +350,13 @@ const TYPE_SPECS: Record<
   },
   quotient: {
     requiredAttributes: [],
-    optionalAttributes: ["round"],
+    optionalAttributes: [],
     validateChildren: orderedSlots([{ slot: "dividend" }, { slot: "divisor" }]),
+  },
+  rounding: {
+    requiredAttributes: ["direction"],
+    optionalAttributes: [],
+    validateChildren: oneUnslottedValue,
   },
   select_instance_boxes_input: {
     requiredAttributes: [],
@@ -407,6 +413,11 @@ export const valueTag: Schema = {
       matches: ["negative", "positive"],
       errorLevel: "error",
     },
+    direction: {
+      type: "String",
+      matches: [...ROUNDING_DIRECTIONS],
+      errorLevel: "error",
+    },
     filingStatusKey: {
       type: "String",
       matches: [...FILING_STATUSES],
@@ -427,11 +438,6 @@ export const valueTag: Schema = {
     },
     required: {
       type: "Boolean",
-      errorLevel: "error",
-    },
-    round: {
-      type: "String",
-      matches: ["down", "up"],
       errorLevel: "error",
     },
     strict: {

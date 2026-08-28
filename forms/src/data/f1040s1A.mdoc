@@ -147,9 +147,11 @@
 - {% line index="11" %}
   - {% instructions %}Divide line 10 by $1,000. If the resulting number isn't a whole number, decrease the result to the next lower whole number{% /instructions %}
   - {% box identifier="11" %}
-    {% value type="quotient" round="down" %}
-    - {% value slot="dividend" type="box_reference" box="10" /%}
-    - {% value slot="divisor" type="number_constant" value=1000 /%}
+    {% value type="rounding" direction="down" %}
+    - {% value type="quotient" %}
+      - {% value slot="dividend" type="box_reference" box="10" /%}
+      - {% value slot="divisor" type="number_constant" value=1000 /%}
+      {% /value %}
     {% /value %}
     {% /box %}
   {% /line %}
@@ -253,9 +255,11 @@
 - {% line index="19" %}
   - {% instructions %}Divide line 18 by $1,000. If the resulting number isn't a whole number, decrease the result to the next lower whole number{% /instructions %}
   - {% box identifier="19" %}
-    {% value type="quotient" round="down" %}
-    - {% value slot="dividend" type="box_reference" box="18" /%}
-    - {% value slot="divisor" type="number_constant" value=1000 /%}
+    {% value type="rounding" direction="down" %}
+    - {% value type="quotient" %}
+      - {% value slot="dividend" type="box_reference" box="18" /%}
+      - {% value slot="divisor" type="number_constant" value=1000 /%}
+      {% /value %}
     {% /value %}
     {% /box %}
   {% /line %}
@@ -383,9 +387,11 @@
   - {% box identifier="28_skip_i" column="(i)" %}{% value type="unused" /%}{% /box %}
   - {% box identifier="28_skip_ii" column="(ii)" %}{% value type="unused" /%}{% /box %}
   - {% box identifier="28" column="(iii)" %}
-    {% value type="quotient" round="up" %}
-    - {% value slot="dividend" type="box_reference" box="27" /%}
-    - {% value slot="divisor" type="number_constant" value=1000 /%}
+    {% value type="rounding" direction="up" %}
+    - {% value type="quotient" %}
+      - {% value slot="dividend" type="box_reference" box="27" /%}
+      - {% value slot="divisor" type="number_constant" value=1000 /%}
+      {% /value %}
     {% /value %}
     {% /box %}
   {% /line %}

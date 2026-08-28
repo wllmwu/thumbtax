@@ -217,10 +217,13 @@ export const f1040s1A: FormSpecification = {
           box: {
             identifier: "11",
             value: {
-              type: "quotient",
-              dividend: { type: "box_reference", box: "10" },
-              divisor: { type: "number_constant", value: 1000 },
-              round: "down",
+              type: "rounding",
+              direction: "down",
+              value: {
+                type: "quotient",
+                dividend: { type: "box_reference", box: "10" },
+                divisor: { type: "number_constant", value: 1000 },
+              },
             },
           },
         },
@@ -377,10 +380,13 @@ export const f1040s1A: FormSpecification = {
           box: {
             identifier: "19",
             value: {
-              type: "quotient",
-              dividend: { type: "box_reference", box: "18" },
-              divisor: { type: "number_constant", value: 1000 },
-              round: "down",
+              type: "rounding",
+              direction: "down",
+              value: {
+                type: "quotient",
+                dividend: { type: "box_reference", box: "18" },
+                divisor: { type: "number_constant", value: 1000 },
+              },
             },
           },
         },
@@ -645,10 +651,13 @@ export const f1040s1A: FormSpecification = {
             {
               identifier: "28",
               value: {
-                type: "quotient",
-                dividend: { type: "box_reference", box: "27" },
-                divisor: { type: "number_constant", value: 1000 },
-                round: "up",
+                type: "rounding",
+                direction: "up",
+                value: {
+                  type: "quotient",
+                  dividend: { type: "box_reference", box: "27" },
+                  divisor: { type: "number_constant", value: 1000 },
+                },
               },
               column: "(iii)",
             },

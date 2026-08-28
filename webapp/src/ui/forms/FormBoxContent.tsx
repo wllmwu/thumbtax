@@ -517,6 +517,7 @@ export function FormBoxContent({
     case "piecewise_function":
     case "product":
     case "quotient":
+    case "rounding":
     case "sum":
       return (
         <ValueDisplay

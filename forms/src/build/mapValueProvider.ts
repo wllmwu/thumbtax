@@ -257,10 +257,15 @@ export function mapValueProvider(node: Tag): ValueProvider {
         divisor: mapComputedValueProvider(
           findBySlot(valueTagChildren(node), "divisor"),
         ),
-        round:
-          node.attributes.round === undefined
-            ? undefined
-            : requireOneOf(node.attributes.round, ROUNDING_DIRECTIONS),
+      };
+
+    case "rounding":
+      return {
+        type: valueType,
+        direction: requireOneOf(node.attributes.direction, ROUNDING_DIRECTIONS),
+        value: mapComputedValueProvider(
+          findSingleUnslotted(valueTagChildren(node)),
+        ),
       };
 
     case "select_instance_boxes_input": {
