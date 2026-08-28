@@ -21,6 +21,7 @@ import { f8995 } from "./generated/f8995";
 import { fW2 } from "./generated/fW2";
 import { fW2_12_codes } from "./generated/fW2_12_codes";
 import { helper_income } from "./generated/helper_income";
+import { helper_withholding } from "./generated/helper_withholding";
 
 import type { SpecificationRegistry } from "./types/specificationRegistry";
 
@@ -56,4 +57,5 @@ export const specifications: SpecificationRegistry = {
   fW2,
   fW2_12_codes,
   helper_income,
+  helper_withholding,
 };

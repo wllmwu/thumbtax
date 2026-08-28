@@ -22,6 +22,7 @@ export const FORM_CLASSES = [
   "fW2",
   "fW2_12_codes",
   "helper_income",
+  "helper_withholding",
 ] as const;
 
 export type FormClass = (typeof FORM_CLASSES)[number];
