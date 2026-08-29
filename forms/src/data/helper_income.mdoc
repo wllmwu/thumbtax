@@ -13,66 +13,101 @@ You can modify these values directly or use the wizard again to replace them.
 
 {% section %}
 {% lines %}
+- {% line index="virtual_year_start" virtual=true %}
+  - {% box identifier="virtual_year_start" %}{% value type="number_constant" value=20454 /%}{% /box %}
+  {% /line %}
+- {% line index="virtual_year_end" virtual=true %}
+  - {% box identifier="virtual_year_end" %}{% value type="number_constant" value=20819 /%}{% /box %}
+  {% /line %}
 - {% line index="1" %}
   - {% instructions %}Amount{% /instructions %}
   - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
   {% /line %}
-- {% line index="2" %}
+- {% line index="2a" %}
+  - {% instructions %}Hours per week{% /instructions %}
+  - {% box identifier="2a" %}{% value type="number_input" /%}{% /box %}
+  {% /line %}
+- {% line index="2b" %}
   - {% instructions %}Interval{% /instructions %}
-  - {% box identifier="2" %}
+  - {% box identifier="2b" %}
     {% value type="select_value_input" %}
     - {% value
          key="year"
          label="One time or whole year"
          type="number_constant"
          value=1 /%}
-    - {% value key="hour" label="Per hour" type="unsupported" /%}
-    - {% value key="week" label="Per week" type="unsupported" /%}
-    - {% value key="two_weeks" label="Per 2 weeks" type="unsupported" /%}
+    - {% value key="hour" label="Per hour" type="product" %}
+      - {% value type="box_reference" box="2a" /%}
+      - {% value type="number_constant" value=52 /%}
+      {% /value %}
+    - {% value key="week" label="Per week" type="number_constant" value=52 /%}
+    - {% value
+         key="two_weeks"
+         label="Per 2 weeks"
+         type="number_constant"
+         value=26 /%}
     - {% value key="month" label="Per month" type="number_constant" value=12 /%}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="3" %}
+- {% line index="2c" %}
   - {% instructions %}Annual multiplier{% /instructions %}
-  - {% box identifier="3" %}{% value type="box_reference" box="2" /%}{% /box %}
+  - {% box identifier="2c" %}{% value type="box_reference" box="2b" /%}{% /box %}
   {% /line %}
-- {% line index="4" %}
+- {% line index="2d" %}
   - {% instructions %}Annual amount{% /instructions %}
-  - {% box identifier="4" %}
+  - {% box identifier="2d" %}
     {% value type="product" %}
     - {% value type="box_reference" box="1" /%}
-    - {% value type="box_reference" box="3" /%}
+    - {% value type="box_reference" box="2c" /%}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="5" %}
+- {% line index="3a" %}
   - {% instructions %}Start date{% /instructions %}
-  - {% box identifier="5" %}{% value type="unsupported" /%}{% /box %}
+  - {% box identifier="3a" %}{% value type="date_input" /%}{% /box %}
   {% /line %}
-- {% line index="6" %}
+- {% line index="3b" %}
   - {% instructions %}End date{% /instructions %}
-  - {% box identifier="6" %}{% value type="unsupported" /%}{% /box %}
+  - {% box identifier="3b" %}{% value type="date_input" /%}{% /box %}
   {% /line %}
-- {% line index="7" %}
+- {% line index="3c" %}
   - {% instructions %}Proration basis{% /instructions %}
-  - {% box identifier="7" %}
+  - {% box identifier="3c" %}
     {% value type="select_value_input" %}
-    - {% value key="business_days" label="Business days" type="unsupported" /%}
-    - {% value key="calendar_days" label="Calendar days" type="unsupported" /%}
+    - {% value key="calendar_days" label="Calendar days" type="quotient" %}
+      - {% value slot="dividend" type="date_range_length" unit="day" %}
+        - {% value slot="rangeStart" type="box_reference" box="3a" /%}
+        - {% value slot="rangeEnd" type="box_reference" box="3b" /%}
+        {% /value %}
+      - {% value slot="divisor" type="date_range_length" unit="day" %}
+        - {% value slot="rangeStart" type="box_reference" box="virtual_year_start" /%}
+        - {% value slot="rangeEnd" type="box_reference" box="virtual_year_start" /%}
+        {% /value %}
+      {% /value %}
+    - {% value key="weekdays" label="Weekdays" type="quotient" %}
+      - {% value slot="dividend" type="date_range_length" unit="weekday" %}
+        - {% value slot="rangeStart" type="box_reference" box="3a" /%}
+        - {% value slot="rangeEnd" type="box_reference" box="3b" /%}
+        {% /value %}
+      - {% value slot="divisor" type="date_range_length" unit="weekday" %}
+        - {% value slot="rangeStart" type="box_reference" box="virtual_year_start" /%}
+        - {% value slot="rangeEnd" type="box_reference" box="virtual_year_start" /%}
+        {% /value %}
+      {% /value %}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="8" %}
+- {% line index="3d" %}
   - {% instructions %}Proration factor{% /instructions %}
-  - {% box identifier="8" %}{% value type="box_reference" box="7" /%}{% /box %}
+  - {% box identifier="3d" %}{% value type="box_reference" box="3c" /%}{% /box %}
   {% /line %}
-- {% line index="9" %}
+- {% line index="4" %}
   - {% instructions %}Gross amount{% /instructions %}
-  - {% box identifier="9" %}
+  - {% box identifier="4" %}
     {% value type="product" %}
-    - {% value type="box_reference" box="4" /%}
-    - {% value type="box_reference" box="8" /%}
+    - {% value type="box_reference" box="2d" /%}
+    - {% value type="box_reference" box="3d" /%}
     {% /value %}
     {% /box %}
   {% /line %}

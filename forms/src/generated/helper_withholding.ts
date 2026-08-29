@@ -29,15 +29,15 @@ export const helper_withholding: FormSpecification = {
             identifier: "1",
             value: {
               type: "select_instance_boxes_input",
-              options: [{ form: "helper_income", box: "9" }],
+              options: [{ form: "helper_income", box: "4" }],
             },
           },
         },
         {
-          index: "2",
+          index: "2a",
           instructions: "Federal income type",
           box: {
-            identifier: "2",
+            identifier: "2a",
             value: {
               type: "select_value_input",
               options: [
@@ -469,27 +469,27 @@ export const helper_withholding: FormSpecification = {
           },
         },
         {
-          index: "3",
+          index: "2b",
           instructions: "Federal income tax withholding rate",
           box: {
-            identifier: "3",
+            identifier: "2b",
             value: {
               type: "override_number_input",
-              computedValue: { type: "box_reference", box: "2" },
+              computedValue: { type: "box_reference", box: "2a" },
             },
             format: "percentage",
           },
         },
         {
-          index: "4",
+          index: "2c",
           instructions: "Additional federal withholding",
-          box: { identifier: "4", value: { type: "number_input" } },
+          box: { identifier: "2c", value: { type: "number_input" } },
         },
         {
-          index: "5",
+          index: "2d",
           instructions: "Federal income tax withheld",
           box: {
-            identifier: "5",
+            identifier: "2d",
             value: {
               type: "sum",
               values: [
@@ -497,19 +497,19 @@ export const helper_withholding: FormSpecification = {
                   type: "product",
                   values: [
                     { type: "box_reference", box: "1" },
-                    { type: "box_reference", box: "3" },
+                    { type: "box_reference", box: "2b" },
                   ],
                 },
-                { type: "box_reference", box: "4" },
+                { type: "box_reference", box: "2c" },
               ],
             },
           },
         },
         {
-          index: "6",
+          index: "3a",
           instructions: "Social Security tax withholding rate",
           box: {
-            identifier: "6",
+            identifier: "3a",
             value: {
               type: "override_number_input",
               computedValue: { type: "number_constant", value: 0.062 },
@@ -518,10 +518,10 @@ export const helper_withholding: FormSpecification = {
           },
         },
         {
-          index: "7",
+          index: "3b",
           instructions: "Social Security tax withheld",
           box: {
-            identifier: "7",
+            identifier: "3b",
             value: {
               type: "override_number_input",
               computedValue: {
@@ -534,7 +534,7 @@ export const helper_withholding: FormSpecification = {
                       { type: "number_constant", value: 184500 },
                     ],
                   },
-                  { type: "box_reference", box: "6" },
+                  { type: "box_reference", box: "3a" },
                 ],
               },
             },
@@ -542,10 +542,10 @@ export const helper_withholding: FormSpecification = {
           },
         },
         {
-          index: "8",
+          index: "4a",
           instructions: "Medicare tax withholding rate",
           box: {
-            identifier: "8",
+            identifier: "4a",
             value: {
               type: "override_number_input",
               computedValue: { type: "number_constant", value: 0.0145 },
@@ -554,17 +554,17 @@ export const helper_withholding: FormSpecification = {
           },
         },
         {
-          index: "9",
+          index: "4b",
           instructions: "Medicare tax withheld",
           box: {
-            identifier: "9",
+            identifier: "4b",
             value: {
               type: "override_number_input",
               computedValue: {
                 type: "product",
                 values: [
                   { type: "box_reference", box: "1" },
-                  { type: "box_reference", box: "8" },
+                  { type: "box_reference", box: "4a" },
                 ],
               },
             },
@@ -572,10 +572,10 @@ export const helper_withholding: FormSpecification = {
           },
         },
         {
-          index: "10",
+          index: "5a",
           instructions: "Additional Medicare tax withholding rate",
           box: {
-            identifier: "10",
+            identifier: "5a",
             value: {
               type: "override_number_input",
               computedValue: { type: "number_constant", value: 0.009 },
@@ -584,10 +584,10 @@ export const helper_withholding: FormSpecification = {
           },
         },
         {
-          index: "11",
+          index: "5b",
           instructions: "Additional Medicare tax withheld",
           box: {
-            identifier: "11",
+            identifier: "5b",
             value: {
               type: "override_number_input",
               computedValue: {
@@ -601,7 +601,7 @@ export const helper_withholding: FormSpecification = {
                       subtrahend: { type: "number_constant", value: 200000 },
                     },
                   },
-                  { type: "box_reference", box: "10" },
+                  { type: "box_reference", box: "5a" },
                 ],
               },
             },

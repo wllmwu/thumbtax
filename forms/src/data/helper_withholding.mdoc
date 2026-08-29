@@ -17,13 +17,13 @@ You can modify these values directly or use the wizard again to replace them.
   - {% instructions %}Gross amount{% /instructions %}
   - {% box identifier="1" %}
     {% value type="select_instance_boxes_input" %}
-    - {% option form="helper_income" box="9" /%}
+    - {% option form="helper_income" box="4" /%}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="2" %}
+- {% line index="2a" %}
   - {% instructions %}Federal income type{% /instructions %}
-  - {% box identifier="2" %}
+  - {% box identifier="2a" %}
     {% value type="select_value_input" %}
     - {% value key="regular" label="Regular income" type="quotient" %}
       - {% value slot="dividend" type="_partial_passthrough" %}
@@ -40,84 +40,82 @@ You can modify these values directly or use the wizard again to replace them.
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="3" %}
+- {% line index="2b" %}
   - {% instructions %}Federal income tax withholding rate{% /instructions %}
-  - {% box identifier="3" format="percentage" %}
+  - {% box identifier="2b" format="percentage" %}
     {% value type="override_number_input" %}
-    - {% value slot="computedValue" type="box_reference" box="2" /%}
+    - {% value slot="computedValue" type="box_reference" box="2a" /%}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="4" %}
+- {% line index="2c" %}
   - {% instructions %}Additional federal withholding{% /instructions %}
-  - {% box identifier="4" %}
-    {% value type="number_input" /%}
-    {% /box %}
+  - {% box identifier="2c" %}{% value type="number_input" /%}{% /box %}
   {% /line %}
-- {% line index="5" %}
+- {% line index="2d" %}
   - {% instructions %}Federal income tax withheld{% /instructions %}
-  - {% box identifier="5" %}
+  - {% box identifier="2d" %}
     {% value type="sum" %}
     - {% value type="product" %}
       - {% value type="box_reference" box="1" /%}
-      - {% value type="box_reference" box="3" /%}
+      - {% value type="box_reference" box="2b" /%}
       {% /value %}
-    - {% value type="box_reference" box="4" /%}
+    - {% value type="box_reference" box="2c" /%}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="6" %}
+- {% line index="3a" %}
   - {% instructions %}Social Security tax withholding rate{% /instructions %}
-  - {% box identifier="6" format="percentage" %}
+  - {% box identifier="3a" format="percentage" %}
     {% value type="override_number_input" %}
     - {% value slot="computedValue" type="number_constant" value=0.062 /%}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="7" %}
+- {% line index="3b" %}
   - {% instructions %}Social Security tax withheld{% /instructions %}
-  - {% box identifier="7" format="percentage" %}
+  - {% box identifier="3b" format="percentage" %}
     {% value type="override_number_input" %}
     - {% value slot="computedValue" type="product" %}
       - {% value type="minimum" %}
         - {% value type="box_reference" box="1" /%}
         - {% value type="number_constant" value=184500 /%}
         {% /value %}
-      - {% value type="box_reference" box="6" /%}
+      - {% value type="box_reference" box="3a" /%}
       {% /value %}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="8" %}
+- {% line index="4a" %}
   - {% instructions %}Medicare tax withholding rate{% /instructions %}
-  - {% box identifier="8" format="percentage" %}
+  - {% box identifier="4a" format="percentage" %}
     {% value type="override_number_input" %}
     - {% value slot="computedValue" type="number_constant" value=0.0145 /%}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="9" %}
+- {% line index="4b" %}
   - {% instructions %}Medicare tax withheld{% /instructions %}
-  - {% box identifier="9" format="percentage" %}
+  - {% box identifier="4b" format="percentage" %}
     {% value type="override_number_input" %}
     - {% value slot="computedValue" type="product" %}
       - {% value type="box_reference" box="1" /%}
-      - {% value type="box_reference" box="8" /%}
+      - {% value type="box_reference" box="4a" /%}
       {% /value %}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="10" %}
+- {% line index="5a" %}
   - {% instructions %}Additional Medicare tax withholding rate{% /instructions %}
-  - {% box identifier="10" format="percentage" %}
+  - {% box identifier="5a" format="percentage" %}
     {% value type="override_number_input" %}
     - {% value slot="computedValue" type="number_constant" value=0.009 /%}
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="11" %}
+- {% line index="5b" %}
   - {% instructions %}Additional Medicare tax withheld{% /instructions %}
-  - {% box identifier="11" format="percentage" %}
+  - {% box identifier="5b" format="percentage" %}
     {% value type="override_number_input" %}
     - {% value slot="computedValue" type="product" %}
       - {% value type="non_negative_clamp" %}
@@ -126,7 +124,7 @@ You can modify these values directly or use the wizard again to replace them.
           - {% value slot="subtrahend" type="number_constant" value=200000 /%}
           {% /value %}
         {% /value %}
-      - {% value type="box_reference" box="10" /%}
+      - {% value type="box_reference" box="5a" /%}
       {% /value %}
     {% /value %}
     {% /box %}

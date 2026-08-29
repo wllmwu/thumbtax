@@ -23,15 +23,36 @@ export const helper_income: FormSpecification = {
     {
       lines: [
         {
+          index: "virtual_year_start",
+          virtual: true,
+          box: {
+            identifier: "virtual_year_start",
+            value: { type: "number_constant", value: 20454 },
+          },
+        },
+        {
+          index: "virtual_year_end",
+          virtual: true,
+          box: {
+            identifier: "virtual_year_end",
+            value: { type: "number_constant", value: 20819 },
+          },
+        },
+        {
           index: "1",
           instructions: "Amount",
           box: { identifier: "1", value: { type: "number_input" } },
         },
         {
-          index: "2",
+          index: "2a",
+          instructions: "Hours per week",
+          box: { identifier: "2a", value: { type: "number_input" } },
+        },
+        {
+          index: "2b",
           instructions: "Interval",
           box: {
-            identifier: "2",
+            identifier: "2b",
             value: {
               type: "select_value_input",
               options: [
@@ -43,17 +64,23 @@ export const helper_income: FormSpecification = {
                 {
                   key: "hour",
                   label: "Per hour",
-                  value: { type: "unsupported" },
+                  value: {
+                    type: "product",
+                    values: [
+                      { type: "box_reference", box: "2a" },
+                      { type: "number_constant", value: 52 },
+                    ],
+                  },
                 },
                 {
                   key: "week",
                   label: "Per week",
-                  value: { type: "unsupported" },
+                  value: { type: "number_constant", value: 52 },
                 },
                 {
                   key: "two_weeks",
                   label: "Per 2 weeks",
-                  value: { type: "unsupported" },
+                  value: { type: "number_constant", value: 26 },
                 },
                 {
                   key: "month",
@@ -65,71 +92,117 @@ export const helper_income: FormSpecification = {
           },
         },
         {
-          index: "3",
+          index: "2c",
           instructions: "Annual multiplier",
-          box: { identifier: "3", value: { type: "box_reference", box: "2" } },
+          box: {
+            identifier: "2c",
+            value: { type: "box_reference", box: "2b" },
+          },
+        },
+        {
+          index: "2d",
+          instructions: "Annual amount",
+          box: {
+            identifier: "2d",
+            value: {
+              type: "product",
+              values: [
+                { type: "box_reference", box: "1" },
+                { type: "box_reference", box: "2c" },
+              ],
+            },
+          },
+        },
+        {
+          index: "3a",
+          instructions: "Start date",
+          box: { identifier: "3a", value: { type: "date_input" } },
+        },
+        {
+          index: "3b",
+          instructions: "End date",
+          box: { identifier: "3b", value: { type: "date_input" } },
+        },
+        {
+          index: "3c",
+          instructions: "Proration basis",
+          box: {
+            identifier: "3c",
+            value: {
+              type: "select_value_input",
+              options: [
+                {
+                  key: "calendar_days",
+                  label: "Calendar days",
+                  value: {
+                    type: "quotient",
+                    dividend: {
+                      type: "date_range_length",
+                      unit: "day",
+                      rangeStart: { type: "box_reference", box: "3a" },
+                      rangeEnd: { type: "box_reference", box: "3b" },
+                    },
+                    divisor: {
+                      type: "date_range_length",
+                      unit: "day",
+                      rangeStart: {
+                        type: "box_reference",
+                        box: "virtual_year_start",
+                      },
+                      rangeEnd: {
+                        type: "box_reference",
+                        box: "virtual_year_start",
+                      },
+                    },
+                  },
+                },
+                {
+                  key: "weekdays",
+                  label: "Weekdays",
+                  value: {
+                    type: "quotient",
+                    dividend: {
+                      type: "date_range_length",
+                      unit: "weekday",
+                      rangeStart: { type: "box_reference", box: "3a" },
+                      rangeEnd: { type: "box_reference", box: "3b" },
+                    },
+                    divisor: {
+                      type: "date_range_length",
+                      unit: "weekday",
+                      rangeStart: {
+                        type: "box_reference",
+                        box: "virtual_year_start",
+                      },
+                      rangeEnd: {
+                        type: "box_reference",
+                        box: "virtual_year_start",
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+        {
+          index: "3d",
+          instructions: "Proration factor",
+          box: {
+            identifier: "3d",
+            value: { type: "box_reference", box: "3c" },
+          },
         },
         {
           index: "4",
-          instructions: "Annual amount",
+          instructions: "Gross amount",
           box: {
             identifier: "4",
             value: {
               type: "product",
               values: [
-                { type: "box_reference", box: "1" },
-                { type: "box_reference", box: "3" },
-              ],
-            },
-          },
-        },
-        {
-          index: "5",
-          instructions: "Start date",
-          box: { identifier: "5", value: { type: "unsupported" } },
-        },
-        {
-          index: "6",
-          instructions: "End date",
-          box: { identifier: "6", value: { type: "unsupported" } },
-        },
-        {
-          index: "7",
-          instructions: "Proration basis",
-          box: {
-            identifier: "7",
-            value: {
-              type: "select_value_input",
-              options: [
-                {
-                  key: "business_days",
-                  label: "Business days",
-                  value: { type: "unsupported" },
-                },
-                {
-                  key: "calendar_days",
-                  label: "Calendar days",
-                  value: { type: "unsupported" },
-                },
-              ],
-            },
-          },
-        },
-        {
-          index: "8",
-          instructions: "Proration factor",
-          box: { identifier: "8", value: { type: "box_reference", box: "7" } },
-        },
-        {
-          index: "9",
-          instructions: "Gross amount",
-          box: {
-            identifier: "9",
-            value: {
-              type: "product",
-              values: [
-                { type: "box_reference", box: "4" },
-                { type: "box_reference", box: "8" },
+                { type: "box_reference", box: "2d" },
+                { type: "box_reference", box: "3d" },
               ],
             },
           },
