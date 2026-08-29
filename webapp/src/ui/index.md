@@ -10,6 +10,7 @@ Styles are defined using CSS modules in `*.module.css` files colocated with the 
   - `control-bar/`: Control bar on the main page
   - `formatting/`: Data formatting helpers
   - `forms/`: Components involved in displaying and interacting with form instances
+  - `intake/`: Wizard that guides the user through modeling their income and then maps it to form inputs
   - `library-styles/`: Global stylesheets for applying styles to library CSS classes
   - `navigation/`: Navigation menu
   - `pages/`: Layout wrapper and page components
