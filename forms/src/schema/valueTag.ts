@@ -1,6 +1,7 @@
 import { Tag, transform as markdocTransform } from "@markdoc/markdoc";
 import { FILING_STATUSES, FORM_CLASSES } from "@thumbtax/common";
 
+import { DATE_RANGE_UNITS } from "../types/dateRangeUnit";
 import { ROUNDING_DIRECTIONS } from "../types/roundingDirection";
 import {
   isValueProviderType,
@@ -126,12 +127,14 @@ const comparisonChildren = (node: Node): ValidationError[] => {
     : unexpectedSlotErrors(unwrappedChildren.slice(0, 1));
 };
 
-const piecewiseFunctionChildren = (node: Node): ValidationError[] =>
-  validateChildren(unwrapListItemChildren(node.children), [
-    { options: [valueChildSpec("input")] },
-    { greedy: true, options: [{ nodeType: "tag", tag: "piece" }] },
-    { options: [valueChildSpec("lastOutput")] },
+const dateRangeLengthChildren = (node: Node): ValidationError[] => {
+  const unwrappedChildren = unwrapListItemChildren(node.children);
+  const errors = validateChildren(unwrappedChildren, [
+    { options: [valueChildSpec("rangeStart")] },
+    { options: [valueChildSpec("rangeEnd")] },
   ]);
+  return errors;
+};
 
 const filingStatusMapChildren = (node: Node): ValidationError[] => {
   const seenFilingStatusKeys = new Set<string>();
@@ -181,6 +184,13 @@ const filingStatusMapChildren = (node: Node): ValidationError[] => {
   }
   return [];
 };
+
+const piecewiseFunctionChildren = (node: Node): ValidationError[] =>
+  validateChildren(unwrapListItemChildren(node.children), [
+    { options: [valueChildSpec("input")] },
+    { greedy: true, options: [{ nodeType: "tag", tag: "piece" }] },
+    { options: [valueChildSpec("lastOutput")] },
+  ]);
 
 const selectInstanceBoxesInputChildren = (node: Node): ValidationError[] =>
   validateChildren(unwrapListItemChildren(node.children), [
@@ -264,6 +274,16 @@ const TYPE_SPECS: Record<
     requiredAttributes: [],
     optionalAttributes: [],
     validateChildren: unslottedValues,
+  },
+  date_input: {
+    requiredAttributes: [],
+    optionalAttributes: [],
+    validateChildren: noChildren,
+  },
+  date_range_length: {
+    requiredAttributes: ["unit"],
+    optionalAttributes: [],
+    validateChildren: dateRangeLengthChildren,
   },
   difference: {
     requiredAttributes: [],
@@ -442,6 +462,11 @@ export const valueTag: Schema = {
     },
     strict: {
       type: "Boolean",
+      errorLevel: "error",
+    },
+    unit: {
+      type: "String",
+      matches: [...DATE_RANGE_UNITS],
       errorLevel: "error",
     },
     value: {

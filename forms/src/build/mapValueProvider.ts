@@ -1,5 +1,6 @@
 import { absurd, FILING_STATUSES, FORM_CLASSES } from "@thumbtax/common";
 
+import { DATE_RANGE_UNITS } from "../types/dateRangeUnit";
 import { NUMBER_SIGNS } from "../types/numberSign";
 import { ROUNDING_DIRECTIONS } from "../types/roundingDirection";
 import {
@@ -114,6 +115,7 @@ export function mapValueProvider(node: Tag): ValueProvider {
       };
 
     case "checkbox_input":
+    case "date_input":
     case "list_amounts_input":
     case "unsupported":
     case "unused":
@@ -165,6 +167,18 @@ export function mapValueProvider(node: Tag): ValueProvider {
           mapComputedValueProvider,
         ),
       };
+
+    case "date_range_length": {
+      const children = valueTagChildren(node);
+      return {
+        type: valueType,
+        unit: requireOneOf(node.attributes.unit, DATE_RANGE_UNITS),
+        rangeStart: mapComputedValueProvider(
+          findBySlot(children, "rangeStart"),
+        ),
+        rangeEnd: mapComputedValueProvider(findBySlot(children, "rangeEnd")),
+      };
+    }
 
     case "difference": {
       const children = valueTagChildren(node);

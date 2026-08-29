@@ -313,75 +313,66 @@ describe("valueTag", () => {
     });
   });
 
-  describe("validate: piecewise_function children", () => {
-    it("accepts valid shapes", () => {
-      const documents = [
-        `
-{% value type="piecewise_function" %}
-- {% value slot="input" type="box_reference" box="1" /%}
-- {% piece %}
-  - {% value slot="inputUpperBound" type="number_constant" value=100 /%}
-  - {% value slot="output" type="number_constant" value=5 /%}
-  {% /piece %}
-- {% value slot="lastOutput" type="number_constant" value=10 /%}
+  describe("validate: date_range_length children", () => {
+    it("accepts required slots in order", () => {
+      const document = `
+{% value type="date_range_length" unit="day" %}
+- {% value slot="rangeStart" type="date_input" /%}
+- {% value slot="rangeEnd" type="date_input" /%}
 {% /value %}
-`,
-        `
-{% value type="piecewise_function" %}
-- {% value slot="input" type="box_reference" box="1" /%}
-- {% piece %}
-  - {% value slot="inputUpperBound" type="number_constant" value=100 /%}
-  - {% value slot="output" type="number_constant" value=5 /%}
-  {% /piece %}
-- {% piece %}
-  - {% value slot="inputUpperBound" type="number_constant" value=200 /%}
-  - {% value slot="output" type="number_constant" value=10 /%}
-  {% /piece %}
-- {% piece %}
-  - {% value slot="inputUpperBound" type="number_constant" value=300 /%}
-  - {% value slot="output" type="number_constant" value=15 /%}
-  {% /piece %}
-- {% value slot="lastOutput" type="number_constant" value=20 /%}
-{% /value %}
-`,
-      ];
-      for (const [index, document] of documents.entries()) {
-        const errors = validateValueTags(document);
-        expect(errors, `test input index ${index}`).toEqual([]);
-      }
+`;
+      const errors = validateValueTags(document);
+      expect(errors).toEqual([]);
     });
 
-    it("rejects invalid shapes", () => {
-      const documents = [
-        `
-{% value type="piecewise_function" %}
-- {% piece %}
-  - {% value slot="inputUpperBound" type="number_constant" value=100 /%}
-  - {% value slot="output" type="number_constant" value=5 /%}
-  {% /piece %}
-- {% value slot="lastOutput" type="number_constant" value=10 /%}
+    it("rejects when child has incorrect slot", () => {
+      const document = `
+{% value type="date_range_length" unit="day" %}
+- {% value slot="minuend" type="date_input" /%}
+- {% value slot="rangeEnd" type="date_input" /%}
 {% /value %}
-`,
-        `
-{% value type="piecewise_function" %}
-- {% value slot="input" type="box_reference" box="1" /%}
-- {% value slot="lastOutput" type="number_constant" value=10 /%}
+`;
+      const errors = validateValueTags(document);
+      expect(errors).toEqual([
+        expect.objectContaining({ id: "child-attributes" }),
+      ]);
+    });
+
+    it("rejects when required slots are out of order", () => {
+      const document = `
+{% value type="date_range_length" unit="day" %}
+- {% value slot="rangeEnd" type="date_input" /%}
+- {% value slot="rangeStart" type="date_input" /%}
 {% /value %}
-`,
-        `
-{% value type="piecewise_function" %}
-- {% value slot="input" type="box_reference" box="1" /%}
-- {% piece %}
-  - {% value slot="inputUpperBound" type="number_constant" value=100 /%}
-  - {% value slot="output" type="number_constant" value=5 /%}
-  {% /piece %}
+`;
+      const errors = validateValueTags(document);
+      expect(errors).toEqual([
+        expect.objectContaining({ id: "child-attributes" }),
+      ]);
+    });
+
+    it("rejects when required slot is missing", () => {
+      const document = `
+{% value type="date_range_length" unit="day" %}
+- {% value slot="rangeStart" type="date_input" /%}
 {% /value %}
-`,
-      ];
-      for (const [index, document] of documents.entries()) {
-        const errors = validateValueTags(document);
-        expect(errors.length, `test input index ${index}`).not.toEqual(0);
-      }
+`;
+      const errors = validateValueTags(document);
+      expect(errors).toEqual([
+        expect.objectContaining({ id: "missing-required-child" }),
+      ]);
+    });
+
+    it("rejects extra children", () => {
+      const document = `
+{% value type="date_range_length" unit="day" %}
+- {% value slot="rangeStart" type="date_input" /%}
+- {% value slot="rangeEnd" type="date_input" /%}
+- {% value slot="rangeEnd" type="date_input" /%}
+{% /value %}
+`;
+      const errors = validateValueTags(document);
+      expect(errors).toEqual([expect.objectContaining({ id: "extra-child" })]);
     });
   });
 
@@ -450,6 +441,78 @@ describe("valueTag", () => {
         `
 {% value type="filing_status_map" %}
 - {% value type="number_constant" value=1 /%}
+{% /value %}
+`,
+      ];
+      for (const [index, document] of documents.entries()) {
+        const errors = validateValueTags(document);
+        expect(errors.length, `test input index ${index}`).not.toEqual(0);
+      }
+    });
+  });
+
+  describe("validate: piecewise_function children", () => {
+    it("accepts valid shapes", () => {
+      const documents = [
+        `
+{% value type="piecewise_function" %}
+- {% value slot="input" type="box_reference" box="1" /%}
+- {% piece %}
+  - {% value slot="inputUpperBound" type="number_constant" value=100 /%}
+  - {% value slot="output" type="number_constant" value=5 /%}
+  {% /piece %}
+- {% value slot="lastOutput" type="number_constant" value=10 /%}
+{% /value %}
+`,
+        `
+{% value type="piecewise_function" %}
+- {% value slot="input" type="box_reference" box="1" /%}
+- {% piece %}
+  - {% value slot="inputUpperBound" type="number_constant" value=100 /%}
+  - {% value slot="output" type="number_constant" value=5 /%}
+  {% /piece %}
+- {% piece %}
+  - {% value slot="inputUpperBound" type="number_constant" value=200 /%}
+  - {% value slot="output" type="number_constant" value=10 /%}
+  {% /piece %}
+- {% piece %}
+  - {% value slot="inputUpperBound" type="number_constant" value=300 /%}
+  - {% value slot="output" type="number_constant" value=15 /%}
+  {% /piece %}
+- {% value slot="lastOutput" type="number_constant" value=20 /%}
+{% /value %}
+`,
+      ];
+      for (const [index, document] of documents.entries()) {
+        const errors = validateValueTags(document);
+        expect(errors, `test input index ${index}`).toEqual([]);
+      }
+    });
+
+    it("rejects invalid shapes", () => {
+      const documents = [
+        `
+{% value type="piecewise_function" %}
+- {% piece %}
+  - {% value slot="inputUpperBound" type="number_constant" value=100 /%}
+  - {% value slot="output" type="number_constant" value=5 /%}
+  {% /piece %}
+- {% value slot="lastOutput" type="number_constant" value=10 /%}
+{% /value %}
+`,
+        `
+{% value type="piecewise_function" %}
+- {% value slot="input" type="box_reference" box="1" /%}
+- {% value slot="lastOutput" type="number_constant" value=10 /%}
+{% /value %}
+`,
+        `
+{% value type="piecewise_function" %}
+- {% value slot="input" type="box_reference" box="1" /%}
+- {% piece %}
+  - {% value slot="inputUpperBound" type="number_constant" value=100 /%}
+  - {% value slot="output" type="number_constant" value=5 /%}
+  {% /piece %}
 {% /value %}
 `,
       ];
