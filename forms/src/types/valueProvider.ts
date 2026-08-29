@@ -1,3 +1,4 @@
+import type { DateRangeUnit } from "./dateRangeUnit";
 import type { NumberSign } from "./numberSign";
 import type { RoundingDirection } from "./roundingDirection";
 import type { BoxIdentifier, FilingStatus, FormClass } from "@thumbtax/common";
@@ -63,6 +64,13 @@ type ControlFlowValueProvider =
       lastOutput: ComputedValueProvider;
     };
 
+type DateValueProvider = {
+  type: "date_range_length";
+  rangeEnd: ComputedValueProvider;
+  rangeStart: ComputedValueProvider;
+  unit: DateRangeUnit;
+};
+
 type ReferenceValueProvider =
   | {
       type: "box_reference";
@@ -79,11 +87,13 @@ export type ComputedValueProvider =
   | BooleanValueProvider
   | ConstantValueProvider
   | ControlFlowValueProvider
+  | DateValueProvider
   | ReferenceValueProvider
   | UnusedValueProvider;
 
 type UserInputValueProvider =
   | { type: "checkbox_input" }
+  | { type: "date_input" }
   | { type: "list_amounts_input" }
   | {
       type: "number_input";

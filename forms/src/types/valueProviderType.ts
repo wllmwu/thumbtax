@@ -4,6 +4,7 @@ export const COMPUTED_VALUE_PROVIDER_TYPES = [
   "comparison",
   "conditional",
   "conjunction",
+  "date_range_length",
   "difference",
   "disjunction",
   "filing_status_map",
@@ -26,6 +27,7 @@ export const COMPUTED_VALUE_PROVIDER_TYPES = [
 
 export const USER_INPUT_VALUE_PROVIDER_TYPES = [
   "checkbox_input",
+  "date_input",
   "list_amounts_input",
   "number_input",
   "override_number_input",
