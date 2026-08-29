@@ -440,6 +440,8 @@ export function FormBoxContent({
           errorMessage={errorMessage}
         />
       );
+    case "date_input":
+      return "TODO";
     case "list_amounts_input":
       return (
         <ListAmountsInputBox
@@ -503,6 +505,7 @@ export function FormBoxContent({
     case "comparison":
     case "conditional":
     case "conjunction":
+    case "date_range_length":
     case "disjunction":
     case "difference":
     case "filing_status_map":

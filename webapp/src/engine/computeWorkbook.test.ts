@@ -7,6 +7,8 @@ import { checkbox_input } from "#src/engine/test/checkbox_input.fixture";
 import { comparison } from "#src/engine/test/comparison.fixture";
 import { conditional } from "#src/engine/test/conditional.fixture";
 import { conjunction } from "#src/engine/test/conjunction.fixture";
+import { date_input } from "#src/engine/test/date_input.fixture";
+import { date_range_length } from "#src/engine/test/date_range_length.fixture";
 import { difference } from "#src/engine/test/difference.fixture";
 import { disjunction } from "#src/engine/test/disjunction.fixture";
 import { filing_status_map } from "#src/engine/test/filing_status_map.fixture";
@@ -103,6 +105,8 @@ const providerFixtures: Record<ValueProvider["type"], ValueProviderFixture[]> =
     comparison,
     conditional,
     conjunction,
+    date_input,
+    date_range_length,
     difference,
     disjunction,
     filing_status_map,

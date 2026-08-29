@@ -1,6 +1,8 @@
 import { absurd } from "@thumbtax/common";
 import { isEqual } from "lodash";
+import { Temporal } from "temporal-polyfill";
 
+import { EPOCH_DATE } from "#src/common/epochDate";
 import { DependencyGraph } from "#src/engine/dependencyGraph";
 
 import type { FilingStatus } from "@thumbtax/common";
@@ -29,6 +31,13 @@ function resolveDependencies(
 
   const type = provider.type;
   switch (type) {
+    case "absolute_value":
+    case "logical_negation":
+    case "non_negative_clamp":
+    case "non_positive_clamp":
+    case "numerical_negation":
+    case "rounding":
+      return resolveDependencies(address, provider.value, instanceRegistry);
     case "box_reference":
       if (provider.form) {
         const instances = instanceRegistry[provider.form];
@@ -38,13 +47,43 @@ function resolveDependencies(
       } else {
         return [{ instance: address.instance, box: provider.box }];
       }
-    case "select_instance_boxes_input":
-      return provider.options.flatMap(({ form, box }) => {
-        const instances = instanceRegistry[form];
-        return instances
-          ? instances.map(({ id }) => ({ instance: id, box }))
-          : [];
-      });
+    case "checkbox_input":
+    case "date_input":
+    case "form_instance_count":
+    case "list_amounts_input":
+    case "number_constant":
+    case "unsupported":
+    case "unused":
+      return [];
+    case "comparison":
+      return traverse(
+        [provider.value, provider.maximum, provider.minimum].filter(
+          (vp) => vp !== undefined,
+        ),
+      );
+    case "conditional":
+      return traverse([
+        provider.condition,
+        provider.falseValue,
+        provider.trueValue,
+      ]);
+    case "conjunction":
+    case "disjunction":
+    case "maximum":
+    case "minimum":
+    case "product":
+    case "sum":
+      return traverse(provider.values);
+    case "date_range_length":
+      return traverse([provider.rangeEnd, provider.rangeStart]);
+    case "difference":
+      return traverse([provider.minuend, provider.subtrahend]);
+    case "filing_status_map":
+      return traverse(
+        [...Object.values(provider.values), provider.default].filter(
+          (vp) => vp !== undefined,
+        ),
+      );
     case "number_input":
       if (provider.skipCondition) {
         return resolveDependencies(
@@ -54,44 +93,6 @@ function resolveDependencies(
         );
       }
       return [];
-    case "conjunction":
-    case "disjunction":
-    case "maximum":
-    case "minimum":
-    case "product":
-    case "sum":
-      return traverse(provider.values);
-    case "difference":
-      return traverse([provider.minuend, provider.subtrahend]);
-    case "quotient":
-      return traverse([provider.dividend, provider.divisor]);
-    case "absolute_value":
-    case "logical_negation":
-    case "non_negative_clamp":
-    case "non_positive_clamp":
-    case "numerical_negation":
-    case "rounding":
-      return resolveDependencies(address, provider.value, instanceRegistry);
-    case "select_value_input":
-      return traverse(provider.options.map(({ value }) => value));
-    case "conditional":
-      return traverse([
-        provider.condition,
-        provider.falseValue,
-        provider.trueValue,
-      ]);
-    case "comparison":
-      return traverse(
-        [provider.value, provider.maximum, provider.minimum].filter(
-          (vp) => vp !== undefined,
-        ),
-      );
-    case "filing_status_map":
-      return traverse(
-        [...Object.values(provider.values), provider.default].filter(
-          (vp) => vp !== undefined,
-        ),
-      );
     case "override_number_input":
       return traverse([provider.computedValue]);
     case "piecewise_function":
@@ -103,13 +104,17 @@ function resolveDependencies(
         ]),
         provider.lastOutput,
       ]);
-    case "checkbox_input":
-    case "form_instance_count":
-    case "list_amounts_input":
-    case "number_constant":
-    case "unsupported":
-    case "unused":
-      return [];
+    case "quotient":
+      return traverse([provider.dividend, provider.divisor]);
+    case "select_instance_boxes_input":
+      return provider.options.flatMap(({ form, box }) => {
+        const instances = instanceRegistry[form];
+        return instances
+          ? instances.map(({ id }) => ({ instance: id, box }))
+          : [];
+      });
+    case "select_value_input":
+      return traverse(provider.options.map(({ value }) => value));
     default:
       absurd(type);
   }
@@ -255,6 +260,48 @@ function resolveValue(
         },
         { value: 1, errors: [] },
       );
+    }
+    case "date_input": {
+      const formInstance = instances.get(address.instance);
+      const userInput = formInstance?.inputs[address.box];
+      if (userInput && userInput.type === "number") {
+        return { value: userInput.value, errors: [] };
+      }
+      return { value: 0, errors: [] };
+    }
+    case "date_range_length": {
+      const { value: dStart, errors: startErrors } = resolveRecursive(
+        provider.rangeStart,
+      );
+      const { value: dEnd, errors: endErrors } = resolveRecursive(
+        provider.rangeEnd,
+      );
+      if (dStart >= dEnd) {
+        return { value: 0, errors: [...startErrors, ...endErrors] };
+      }
+      const tStart = EPOCH_DATE.add(new Temporal.Duration(0, 0, 0, dStart));
+      const tEnd = EPOCH_DATE.add(new Temporal.Duration(0, 0, 0, dEnd));
+      switch (provider.unit) {
+        case "day":
+          return {
+            value: tStart.until(tEnd).days,
+            errors: [...startErrors, ...endErrors],
+          };
+        case "weekday": {
+          const duration = tStart.until(tEnd, { largestUnit: "week" });
+          const weeks = duration.weeks;
+          const days = duration.days;
+          const additionalWeekdays = Array.from(new Array(days))
+            .map((_, i) => ((tStart.dayOfWeek + i - 1) % 7) + 1)
+            .filter((d) => d < 6).length;
+          return {
+            value: weeks * 5 + additionalWeekdays,
+            errors: [...startErrors, ...endErrors],
+          };
+        }
+        default:
+          return absurd(provider.unit);
+      }
     }
     case "difference": {
       const minuend = resolveRecursive(provider.minuend);
