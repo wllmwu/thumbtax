@@ -13,6 +13,7 @@
     "test": "vitest --run"
   },
   "dependencies": {
+    "@internationalized/date": "^3.12.3",
     "@internationalized/number": "^3.6.7",
     "@markdoc/markdoc": "^0.5.7",
     "@thumbtax/common": "file:../common",
