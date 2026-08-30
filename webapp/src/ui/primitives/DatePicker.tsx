@@ -19,6 +19,8 @@ import {
 import { Temporal } from "temporal-polyfill";
 
 import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { racn } from "#src/ui/utils/racn";
+import styles from "#src/ui/primitives/DatePicker.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
 import type { InputProps } from "#src/ui/types/inputProps";
@@ -78,7 +80,7 @@ export function DatePicker({
       value={ariaDateValue}
     >
       {label && <Label>{label}</Label>}
-      <Group>
+      <Group className={racn(styles.group)}>
         <DateInput>{renderDateSegment}</DateInput>
         <AriaButton>
           <CalendarDaysIcon />
@@ -88,7 +90,7 @@ export function DatePicker({
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
       <Popover>
         <Calendar>
-          <div>
+          <div className={styles.monthHeader}>
             <AriaButton slot="previous">Previous</AriaButton>
             <CalendarHeading />
             <AriaButton slot="next">Next</AriaButton>

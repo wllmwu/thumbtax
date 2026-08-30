@@ -21,6 +21,66 @@
   }
 }
 
+.react-aria-Calendar {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.react-aria-CalendarCell {
+  border-radius: 0.375rem;
+  padding-block: 0.25rem;
+  padding-inline: 0.375rem;
+  text-align: center;
+
+  &[data-disabled] {
+    opacity: 0.5;
+  }
+
+  &[data-hovered] {
+    background-color: rgb(0 0 0 / 0.125);
+    cursor: pointer;
+  }
+
+  &[data-selected] {
+    background-color: var(--color-palette-primary);
+    color: var(--color-text-on-primary);
+    font-weight: var(--font-weight-medium);
+  }
+}
+
+.react-aria-CalendarHeading {
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  min-inline-size: fit-content;
+}
+
+.react-aria-CalendarHeaderCell {
+  padding: 0.125rem;
+}
+
+.react-aria-DateInput {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  padding: 0.25rem;
+}
+
+.react-aria-DateSegment {
+  border-radius: 0.25em;
+  padding-inline: 0.125em;
+
+  &[data-focused] {
+    background-color: var(--color-palette-primary);
+    color: var(--color-text-on-primary);
+    font-weight: var(--font-weight-medium);
+    outline: none;
+  }
+}
+
 .react-aria-FieldError {
   color: var(--color-text-error);
 }
@@ -101,6 +161,11 @@
   border-radius: 0.5rem;
   overflow: hidden;
   padding: 0.5rem;
+
+  &[data-trigger="DatePicker"] {
+    min-block-size: fit-content;
+    min-inline-size: fit-content;
+  }
 
   &[data-trigger="MenuTrigger"],
   &[data-trigger="Select"],

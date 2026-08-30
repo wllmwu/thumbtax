@@ -1,0 +1,17 @@
+.group {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
+.month-header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+
+  :global(.react-aria-CalendarHeading) {
+    flex-grow: 1;
+    text-align: center;
+  }
+}
