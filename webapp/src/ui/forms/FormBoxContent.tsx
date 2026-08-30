@@ -3,11 +3,13 @@ import React from "react";
 import { absurd } from "@thumbtax/common";
 import { noop } from "lodash";
 
+import { EPOCH_DATE } from "#src/common/epochDate";
 import { useStore } from "#src/state/useStore";
 import { useFormatBoxValue } from "#src/ui/formatting/useFormatBoxValue";
 import { AmountListField } from "#src/ui/forms/AmountListField";
 import { SelectInstanceBoxesField } from "#src/ui/forms/SelectInstanceBoxesField";
 import { CheckboxField } from "#src/ui/primitives/CheckboxField";
+import { DatePicker } from "#src/ui/primitives/DatePicker";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { RadioGroup, type RadioOption } from "#src/ui/primitives/RadioGroup";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
@@ -18,6 +20,7 @@ import type { BoxFormat, BoxIdentifier } from "@thumbtax/common";
 import type { FormBox, ValueProvider } from "@thumbtax/forms";
 import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { FormInstance } from "#src/common/types/formInstance";
+import type { Temporal } from "temporal-polyfill";
 
 type Props = {
   instance: FormInstance;
@@ -137,6 +140,46 @@ function CheckboxInputBox({
     />
   ) : (
     <CheckboxField
+      aria-labelledby={ariaLabelledBy}
+      aria-describedby={ariaDescribedBy}
+      errorMessage={errorMessage}
+      value={value}
+      onChange={onChange}
+    />
+  );
+}
+
+function DateInputBox({
+  boxIdentifier,
+  errorMessage,
+  ariaLabelledBy,
+  ariaDescribedBy,
+  instance,
+}: InputBoxProps) {
+  const setBoxInput = useStore((state) => state.setBoxInput);
+
+  const input = instance.inputs[boxIdentifier];
+  const value = React.useMemo(
+    () =>
+      input?.type === "number" ? EPOCH_DATE.add({ days: input.value }) : null,
+    [input],
+  );
+
+  const onChange = React.useCallback(
+    (newValue: Temporal.PlainDate | null) => {
+      if (!newValue) {
+        return;
+      }
+      setBoxInput(instance.class, instance.id, boxIdentifier, {
+        type: "number",
+        value: newValue.since(EPOCH_DATE).days,
+      });
+    },
+    [boxIdentifier, instance.class, instance.id, setBoxInput],
+  );
+
+  return (
+    <DatePicker
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       errorMessage={errorMessage}
@@ -441,7 +484,15 @@ export function FormBoxContent({
         />
       );
     case "date_input":
-      return "TODO";
+      return (
+        <DateInputBox
+          boxIdentifier={box.identifier}
+          ariaLabelledBy={ariaLabelledBy}
+          ariaDescribedBy={ariaDescribedBy}
+          instance={instance}
+          errorMessage={errorMessage}
+        />
+      );
     case "list_amounts_input":
       return (
         <ListAmountsInputBox
