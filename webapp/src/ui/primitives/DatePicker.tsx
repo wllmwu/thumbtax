@@ -72,6 +72,7 @@ export function DatePicker({
       aria-labelledby={ariaLabelledBy}
       autoFocus={autoFocus}
       isDisabled={disabled}
+      isInvalid={!!errorMessage}
       isReadOnly={readOnly}
       onBlur={onBlur}
       onChange={handleChange}
@@ -91,9 +92,13 @@ export function DatePicker({
       <Popover>
         <Calendar>
           <div className={styles.monthHeader}>
-            <AriaButton slot="previous">Previous</AriaButton>
+            <AriaButton slot="previous" aria-label="Previous month">
+              Prev
+            </AriaButton>
             <CalendarHeading />
-            <AriaButton slot="next">Next</AriaButton>
+            <AriaButton slot="next" aria-label="Next month">
+              Next
+            </AriaButton>
           </div>
           <CalendarGrid>{renderCalendarCell}</CalendarGrid>
         </Calendar>
