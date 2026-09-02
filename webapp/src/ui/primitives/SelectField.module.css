@@ -4,6 +4,11 @@
   flex-direction: row;
   gap: 0.25em;
 
+  :global(.react-aria-SelectValue) {
+    flex-grow: 1;
+    text-align: start;
+  }
+
   .chevrons {
     margin-block: 0;
     margin-inline: -0.125em;
