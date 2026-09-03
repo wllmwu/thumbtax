@@ -20,32 +20,33 @@ type Withholding = {
   socialSecurity: "off" | "regular";
 };
 
-type IncomeType =
-  | "brokerage_sale"
-  | "dividends"
-  | "interest"
-  | "non_employee_compensation"
-  | "other"
-  | "retirement_distributions"
-  | "wages";
-
-type IncomeComponent<TIncomeType extends IncomeType> = {
+export type IncomeComponent = {
   dateRange: DateRange;
-  label: string;
   paymentSchedule: PaymentSchedule;
   prorationBasis: "day" | "weekday";
-  type: TIncomeType;
   withholding: Withholding;
+};
+
+type Wage = {
+  income: IncomeComponent;
+  label: string;
 };
 
 type Job = {
   employer: string;
-  wages: IncomeComponent<"wages">[];
+  wages: Wage[];
 };
 
 type OtherIncome = {
+  income: IncomeComponent;
   source: string;
-  income: IncomeComponent<Exclude<IncomeType, "wages">>;
+  type:
+    | "brokerage_sale"
+    | "dividends"
+    | "interest"
+    | "non_employee_compensation"
+    | "other"
+    | "retirement_distributions";
 };
 
 export type IntakeWizardState = {

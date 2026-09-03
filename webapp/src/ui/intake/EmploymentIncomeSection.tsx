@@ -25,12 +25,10 @@ export function EmploymentIncomeSection({ control }: Props): React.ReactNode {
             control={control}
             name={`jobs.${index}.employer`}
             render={({ field }) => (
-              <>
-                <TextField label="Employer name" {...field} />
-                <CompensationList control={control} jobIndex={index} />
-              </>
+              <TextField label="Employer name" {...field} />
             )}
           />
+          <CompensationList control={control} jobIndex={index} />
         </div>
       ))}
       <AriaButton onPress={() => append({ employer: "", wages: [] })}>
