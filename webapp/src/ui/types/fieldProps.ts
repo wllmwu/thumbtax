@@ -1,7 +1,10 @@
 import type { AccessibleLabelProps } from "#src/ui/types/accessibleLabelProps";
 import type React from "react";
 
-export type FieldProps<TValue> = AccessibleLabelProps & {
+export type FieldProps<
+  TValue,
+  TOnChangeValue = TValue,
+> = AccessibleLabelProps & {
   label?: React.ReactNode;
   placeholder?: string;
   description?: React.ReactNode;
@@ -9,5 +12,5 @@ export type FieldProps<TValue> = AccessibleLabelProps & {
   readOnly?: boolean;
   errorMessage?: React.ReactNode;
   value: TValue;
-  onChange: (value: TValue) => void;
+  onChange: (value: TOnChangeValue) => void;
 };

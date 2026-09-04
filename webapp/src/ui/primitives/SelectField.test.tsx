@@ -15,7 +15,7 @@ function renderComponent({
   ...props
 }: Partial<React.ComponentProps<typeof SelectField>> = {}) {
   return render(
-    <SelectField value="apple" onChange={vi.fn()} {...props}>
+    <SelectField value={null} onChange={vi.fn()} {...props}>
       {children ?? (
         <>
           <SelectFieldItem id="apple">Apple</SelectFieldItem>
@@ -32,6 +32,14 @@ describe("SelectField", () => {
     renderComponent({ label: "Fruit", value: "apple" });
 
     expect(await screen.findByRole("button")).toHaveTextContent("Apple");
+  });
+
+  it("renders default text when value is null", async () => {
+    renderComponent({ label: "Fruit", value: null });
+
+    expect(await screen.findByRole("button")).toHaveTextContent(
+      "Select an item",
+    );
   });
 
   it("renders label when provided", async () => {

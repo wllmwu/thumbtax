@@ -46,7 +46,8 @@ type OtherIncome = {
     | "interest"
     | "non_employee_compensation"
     | "other"
-    | "retirement_distributions";
+    | "retirement_distributions"
+    | null;
 };
 
 export type IntakeWizardState = {

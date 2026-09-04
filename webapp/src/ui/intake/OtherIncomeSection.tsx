@@ -61,7 +61,7 @@ export function OtherIncomeSection({ control }: Props): React.ReactNode {
           append({
             income: DEFAULT_INCOME_COMPONENT,
             source: "",
-            type: "brokerage_sale",
+            type: null,
           })
         }
       >

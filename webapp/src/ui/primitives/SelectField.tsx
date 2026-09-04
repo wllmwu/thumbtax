@@ -21,7 +21,10 @@ import styles from "#src/ui/primitives/SelectField.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
 
-type Props = Omit<FieldProps<string>, "placeholder" | "readonly"> & {
+type Props = Omit<
+  FieldProps<string | null, string>,
+  "placeholder" | "readonly"
+> & {
   children: React.ReactNode;
 };
 

@@ -403,7 +403,7 @@ function SelectValueInputBox({
 
   const input = instance.inputs[boxIdentifier];
   const options = boxValue.options;
-  const selectedKey = input?.type === "selection" ? input.selectedKey : "";
+  const selectedKey = input?.type === "selection" ? input.selectedKey : null;
 
   const onChange = React.useCallback(
     (newSelectedKey: string) => {
