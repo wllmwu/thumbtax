@@ -18,10 +18,10 @@ export const DEFAULT_INCOME_COMPONENT: IncomeComponent = {
   prorationBasis: "weekday",
   withholding: {
     additionalFederalIncomeAmount: 0,
-    additionalMedicare: "off",
+    additionalMedicare: "regular",
     customFederalIncomeRate: 0,
-    federalIncome: "off",
-    medicare: "off",
-    socialSecurity: "off",
+    federalIncome: "regular",
+    medicare: "regular",
+    socialSecurity: "regular",
   },
 };

@@ -1,5 +1,7 @@
-import { Controller } from "react-hook-form";
+import { VisuallyHidden } from "react-aria-components";
+import { Controller, useWatch } from "react-hook-form";
 
+import { CheckboxField } from "#src/ui/primitives/CheckboxField";
 import { DatePicker } from "#src/ui/primitives/DatePicker";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
@@ -19,6 +21,11 @@ export function IncomeComponentFields({
   control,
   path,
 }: Props): React.ReactNode {
+  const federalIncomeWithholdingSelection = useWatch({
+    control,
+    name: `${path}.withholding.federalIncome`,
+  });
+
   return (
     <>
       <Controller
@@ -68,6 +75,86 @@ export function IncomeComponentFields({
             <SelectFieldItem id="weekday">Weekdays</SelectFieldItem>
             <SelectFieldItem id="day">Calendar days</SelectFieldItem>
           </SelectField>
+        )}
+      />
+      <p>Withholding</p>
+      <Controller
+        control={control}
+        name={`${path}.withholding.federalIncome`}
+        render={({ field }) => (
+          <SelectField label="Federal income tax withholding rate" {...field}>
+            <SelectFieldItem id="regular">Regular rate</SelectFieldItem>
+            <SelectFieldItem id="supplemental">
+              Supplemental rate
+            </SelectFieldItem>
+            <SelectFieldItem id="custom">Custom rate</SelectFieldItem>
+            <SelectFieldItem id="off">None</SelectFieldItem>
+          </SelectField>
+        )}
+      />
+      <VisuallyHidden aria-live="polite">
+        {federalIncomeWithholdingSelection === "custom"
+          ? "Set the custom rate in the next input."
+          : null}
+      </VisuallyHidden>
+      <Controller
+        control={control}
+        name={`${path}.withholding.customFederalIncomeRate`}
+        render={({ field }) => (
+          <div hidden={federalIncomeWithholdingSelection !== "custom"}>
+            <NumberField
+              format="percentage"
+              label="Custom federal income tax withholding rate"
+              {...field}
+            />
+          </div>
+        )}
+      />
+      <Controller
+        control={control}
+        name={`${path}.withholding.additionalFederalIncomeAmount`}
+        render={({ field }) => (
+          <NumberField
+            format="financial"
+            label="Additional federal income withholding amount"
+            {...field}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name={`${path}.withholding.socialSecurity`}
+        render={({ field: { onChange, value, ...field } }) => (
+          <CheckboxField
+            label="Social Security tax withholding"
+            onChange={(isChecked) => onChange(isChecked ? "regular" : "off")}
+            value={value === "regular"}
+            {...field}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name={`${path}.withholding.medicare`}
+        render={({ field: { onChange, value, ...field } }) => (
+          <CheckboxField
+            label="Medicare tax withholding"
+            onChange={(isChecked) => onChange(isChecked ? "regular" : "off")}
+            value={value === "regular"}
+            {...field}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name={`${path}.withholding.additionalMedicare`}
+        render={({ field: { onChange, value, ...field } }) => (
+          <CheckboxField
+            label="Additional Medicare tax withholding"
+            onChange={(isChecked) => onChange(isChecked ? "regular" : "off")}
+            value={value === "regular"}
+            {...field}
+          />
         )}
       />
     </>
