@@ -21,6 +21,10 @@ export function IncomeComponentFields({
   control,
   path,
 }: Props): React.ReactNode {
+  const paymentIntervalSelection = useWatch({
+    control,
+    name: `${path}.paymentSchedule.interval`,
+  });
   const federalIncomeWithholdingSelection = useWatch({
     control,
     name: `${path}.withholding.federalIncome`,
@@ -37,13 +41,6 @@ export function IncomeComponentFields({
       />
       <Controller
         control={control}
-        name={`${path}.paymentSchedule.hoursPerWeek`}
-        render={({ field }) => (
-          <NumberField format="plain" label="Hours per week" {...field} />
-        )}
-      />
-      <Controller
-        control={control}
         name={`${path}.paymentSchedule.interval`}
         render={({ field }) => (
           <SelectField label="Interval" {...field}>
@@ -55,6 +52,20 @@ export function IncomeComponentFields({
             <SelectFieldItem id="two_weeks">Per 2 weeks</SelectFieldItem>
             <SelectFieldItem id="month">Per month</SelectFieldItem>
           </SelectField>
+        )}
+      />
+      <VisuallyHidden aria-live="polite">
+        {paymentIntervalSelection === "hour"
+          ? "Set the hours per week in the next input."
+          : null}
+      </VisuallyHidden>
+      <Controller
+        control={control}
+        name={`${path}.paymentSchedule.hoursPerWeek`}
+        render={({ field }) => (
+          <div hidden={paymentIntervalSelection !== "hour"}>
+            <NumberField format="plain" label="Hours per week" {...field} />
+          </div>
         )}
       />
       <Controller
