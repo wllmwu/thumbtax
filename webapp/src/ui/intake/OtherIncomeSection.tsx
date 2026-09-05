@@ -26,15 +26,24 @@ export function OtherIncomeSection({ control }: Props): React.ReactNode {
           <Controller
             control={control}
             name={`otherIncome.${index}.source`}
-            render={({ field }) => (
-              <TextField label="Income source" {...field} />
+            render={({ field, fieldState }) => (
+              <TextField
+                label="Income source"
+                {...field}
+                errorMessage={fieldState.error?.message}
+              />
             )}
+            rules={{ required: "Income source is required." }}
           />
           <Controller
             control={control}
             name={`otherIncome.${index}.type`}
-            render={({ field }) => (
-              <SelectField label="Income type" {...field}>
+            render={({ field, fieldState }) => (
+              <SelectField
+                label="Income type"
+                {...field}
+                errorMessage={fieldState.error?.message}
+              >
                 <SelectFieldItem id="brokerage_sale">
                   Brokerage sale
                 </SelectFieldItem>
@@ -49,6 +58,7 @@ export function OtherIncomeSection({ control }: Props): React.ReactNode {
                 <SelectFieldItem id="other">Other</SelectFieldItem>
               </SelectField>
             )}
+            rules={{ required: "Income type is required." }}
           />
           <IncomeComponentFields
             control={control}

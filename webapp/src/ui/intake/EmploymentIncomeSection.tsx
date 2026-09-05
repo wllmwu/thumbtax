@@ -24,9 +24,14 @@ export function EmploymentIncomeSection({ control }: Props): React.ReactNode {
           <Controller
             control={control}
             name={`jobs.${index}.employer`}
-            render={({ field }) => (
-              <TextField label="Employer name" {...field} />
+            render={({ field, fieldState }) => (
+              <TextField
+                label="Employer name"
+                {...field}
+                errorMessage={fieldState.error?.message}
+              />
             )}
+            rules={{ required: "Employer name is required." }}
           />
           <CompensationList control={control} jobIndex={index} />
         </div>

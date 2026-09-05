@@ -32,7 +32,14 @@ export function CompensationList({
           <Controller
             control={control}
             name={`jobs.${jobIndex}.wages.${index}.label`}
-            render={({ field }) => <TextField label="Label" {...field} />}
+            render={({ field, fieldState }) => (
+              <TextField
+                label="Label"
+                {...field}
+                errorMessage={fieldState.error?.message}
+              />
+            )}
+            rules={{ required: "Label is required." }}
           />
           <IncomeComponentFields
             control={control}
