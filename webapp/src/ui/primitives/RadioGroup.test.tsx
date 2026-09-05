@@ -1,3 +1,5 @@
+import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
@@ -5,7 +7,6 @@ import { describe, expect, it, vi } from "vitest";
 import { RadioGroup } from "#src/ui/primitives/RadioGroup";
 
 import type { RadioOption } from "#src/ui/primitives/RadioGroup";
-import type React from "react";
 
 const defaultOptions: Array<RadioOption<string>> = [
   { value: "apple", label: "Apple" },
@@ -145,6 +146,15 @@ describe("RadioGroup", () => {
     ).toHaveAttribute("aria-readonly", "true");
   });
 
+  it("renders name attribute when provided", async () => {
+    renderComponent({ name: "testName" });
+
+    const radios = await screen.findAllByRole("radio");
+    for (const radio of radios) {
+      expect(radio).toHaveAttribute("name", "testName");
+    }
+  });
+
   it("calls onChange when selecting a different option", async () => {
     const onChange = vi.fn();
     renderComponent({ value: "apple", onChange });
@@ -223,5 +233,22 @@ describe("RadioGroup", () => {
     const group = await screen.findByRole("radiogroup");
     expect(group).toHaveAccessibleDescription(/External description/);
     expect(group).toHaveAccessibleDescription(/Bad value/);
+  });
+
+  it("forwards ref to the field element", async () => {
+    const ref = React.createRef<React.ComponentRef<typeof RadioGroup>>();
+    render(
+      <RadioGroup
+        ref={ref}
+        label="Test label"
+        value="apple"
+        onChange={vi.fn()}
+        options={defaultOptions}
+      />,
+    );
+
+    const group = await screen.findByRole("radiogroup");
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toContainElement(group);
   });
 });

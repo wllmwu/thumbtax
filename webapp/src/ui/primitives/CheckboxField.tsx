@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   CheckboxButton,
   CheckboxField as AriaCheckboxField,
@@ -10,7 +12,6 @@ import styles from "#src/ui/primitives/CheckboxField.module.css";
 import fieldStyles from "#src/ui/primitives/fields.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
-import type React from "react";
 
 type Props = Omit<FieldProps<boolean>, "placeholder">;
 
@@ -27,26 +28,32 @@ function CheckboxIndicator({ checked }: { checked: boolean }): React.ReactNode {
   );
 }
 
-export function CheckboxField({
-  label,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  "aria-describedby": ariaDescribedBy,
-  description,
-  disabled,
-  readOnly,
-  errorMessage,
-  value,
-  onChange,
-}: Props) {
+export const CheckboxField = React.forwardRef(function CheckboxField(
+  {
+    label,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    description,
+    disabled,
+    readOnly,
+    errorMessage,
+    value,
+    onChange,
+    name,
+  }: Props,
+  ref: React.ForwardedRef<React.ComponentRef<typeof AriaCheckboxField>>,
+) {
   return (
     <AriaCheckboxField
+      ref={ref}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       className={fieldStyles.smallControlField}
       isSelected={value}
       onChange={onChange}
+      name={name}
       isDisabled={disabled}
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}
@@ -61,4 +68,4 @@ export function CheckboxField({
       {description && <Text slot="description">{description}</Text>}
     </AriaCheckboxField>
   );
-}
+});

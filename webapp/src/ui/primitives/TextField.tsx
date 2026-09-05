@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   FieldError,
   Input,
@@ -17,25 +19,30 @@ type Props = FieldProps<string> &
     inputMode?: TextFieldProps["inputMode"];
   };
 
-export function TextField({
-  label,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  "aria-describedby": ariaDescribedBy,
-  inputMode,
-  placeholder,
-  description,
-  disabled,
-  readOnly,
-  errorMessage,
-  value,
-  onChange,
-  autoFocus,
-  onFocus,
-  onBlur,
-}: Props) {
+export const TextField = React.forwardRef(function TextField(
+  {
+    label,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    inputMode,
+    placeholder,
+    description,
+    disabled,
+    readOnly,
+    errorMessage,
+    value,
+    onChange,
+    name,
+    autoFocus,
+    onFocus,
+    onBlur,
+  }: Props,
+  ref: React.ForwardedRef<React.ComponentRef<typeof AriaTextField>>,
+) {
   return (
     <AriaTextField
+      ref={ref}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
@@ -43,6 +50,7 @@ export function TextField({
       inputMode={inputMode}
       value={value}
       onChange={onChange}
+      name={name}
       isDisabled={disabled}
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}
@@ -56,4 +64,4 @@ export function TextField({
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
     </AriaTextField>
   );
-}
+});

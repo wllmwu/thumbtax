@@ -13,4 +13,5 @@ export type FieldProps<
   errorMessage?: React.ReactNode;
   value: TValue;
   onChange: (value: TOnChangeValue) => void;
+  name?: string;
 };

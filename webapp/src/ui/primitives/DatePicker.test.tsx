@@ -1,11 +1,11 @@
+import React from "react";
+
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Temporal } from "temporal-polyfill";
 import { describe, expect, it, vi } from "vitest";
 
 import { DatePicker } from "#src/ui/primitives/DatePicker";
-
-import type React from "react";
 
 function renderComponent(
   props?: Partial<React.ComponentProps<typeof DatePicker>>,
@@ -99,6 +99,16 @@ describe("DatePicker", () => {
     expect(
       await screen.findByRole("button", { name: "Calendar Test label" }),
     ).toBeDisabled();
+  });
+
+  it("renders name attribute when provided", async () => {
+    const { container } = renderComponent({ name: "testName" });
+
+    await screen.findByRole("group");
+    expect(container.querySelector("input[hidden]")).toHaveAttribute(
+      "name",
+      "testName",
+    );
   });
 
   it("uses aria-labelledby for the accessible name", async () => {
@@ -287,5 +297,21 @@ describe("DatePicker", () => {
     expect(onChange).toHaveBeenCalledWith(
       expect.objectContaining({ day: 31, month: 3, year: 2024 }),
     );
+  });
+
+  it("forwards ref to the field element", async () => {
+    const ref = React.createRef<React.ComponentRef<typeof DatePicker>>();
+    render(
+      <DatePicker
+        ref={ref}
+        label="Test label"
+        value={null}
+        onChange={vi.fn()}
+      />,
+    );
+
+    const group = await screen.findByRole("group");
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toContainElement(group);
   });
 });

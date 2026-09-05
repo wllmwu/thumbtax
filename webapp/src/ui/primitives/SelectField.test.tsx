@@ -1,3 +1,5 @@
+import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
@@ -7,8 +9,6 @@ import {
   SelectFieldItem,
   SelectFieldSection,
 } from "#src/ui/primitives/SelectField";
-
-import type React from "react";
 
 function renderComponent({
   children,
@@ -73,6 +73,16 @@ describe("SelectField", () => {
     });
 
     expect(await screen.findByLabelText("Fruit")).toBeDisabled();
+  });
+
+  it("renders name attribute when provided", async () => {
+    const { container } = renderComponent({ label: "Fruit", name: "testName" });
+
+    await screen.findByRole("button");
+    expect(container.querySelector("select")).toHaveAttribute(
+      "name",
+      "testname",
+    );
   });
 
   it("opens popover with provided options when button is pressed", async () => {
@@ -211,5 +221,18 @@ describe("SelectField", () => {
     const button = await screen.findByRole("button");
     expect(button).toHaveAccessibleDescription(/External description/);
     expect(button).toHaveAccessibleDescription(/Bad value/);
+  });
+
+  it("forwards ref to the field element", async () => {
+    const ref = React.createRef<React.ComponentRef<typeof SelectField>>();
+    render(
+      <SelectField ref={ref} label="Fruit" value={null} onChange={vi.fn()}>
+        <SelectFieldItem id="apple">Apple</SelectFieldItem>
+      </SelectField>,
+    );
+
+    const button = await screen.findByRole("button");
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toContainElement(button);
   });
 });

@@ -1,10 +1,10 @@
+import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { SwitchField } from "#src/ui/primitives/SwitchField";
-
-import type React from "react";
 
 function renderComponent(
   props?: Partial<React.ComponentProps<typeof SwitchField>>,
@@ -72,6 +72,15 @@ describe("SwitchField", () => {
     expect(await screen.findByRole("switch")).toHaveAttribute(
       "aria-readonly",
       "true",
+    );
+  });
+
+  it("renders name attribute when provided", async () => {
+    renderComponent({ name: "testName" });
+
+    expect(await screen.findByRole("switch")).toHaveAttribute(
+      "name",
+      "testName",
     );
   });
 
@@ -147,5 +156,21 @@ describe("SwitchField", () => {
     const switchControl = await screen.findByRole("switch");
     expect(switchControl).toHaveAccessibleDescription(/External description/);
     expect(switchControl).toHaveAccessibleDescription(/Bad value/);
+  });
+
+  it("forwards ref to the field element", async () => {
+    const ref = React.createRef<React.ComponentRef<typeof SwitchField>>();
+    render(
+      <SwitchField
+        ref={ref}
+        label="Test label"
+        value={false}
+        onChange={vi.fn()}
+      />,
+    );
+
+    const switchControl = await screen.findByRole("switch");
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toContainElement(switchControl);
   });
 });

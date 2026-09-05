@@ -1,10 +1,10 @@
+import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { CheckboxField } from "#src/ui/primitives/CheckboxField";
-
-import type React from "react";
 
 function renderComponent(
   props?: Partial<React.ComponentProps<typeof CheckboxField>>,
@@ -72,6 +72,15 @@ describe("CheckboxField", () => {
     expect(await screen.findByRole("checkbox")).toHaveAttribute(
       "aria-readonly",
       "true",
+    );
+  });
+
+  it("renders name attribute when provided", async () => {
+    renderComponent({ name: "testName" });
+
+    expect(await screen.findByRole("checkbox")).toHaveAttribute(
+      "name",
+      "testName",
     );
   });
 
@@ -147,5 +156,21 @@ describe("CheckboxField", () => {
     const checkbox = await screen.findByRole("checkbox");
     expect(checkbox).toHaveAccessibleDescription(/External description/);
     expect(checkbox).toHaveAccessibleDescription(/Bad value/);
+  });
+
+  it("forwards ref to the field element", async () => {
+    const ref = React.createRef<React.ComponentRef<typeof CheckboxField>>();
+    render(
+      <CheckboxField
+        ref={ref}
+        label="Test label"
+        value={false}
+        onChange={vi.fn()}
+      />,
+    );
+
+    const checkbox = await screen.findByRole("checkbox");
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toContainElement(checkbox);
   });
 });

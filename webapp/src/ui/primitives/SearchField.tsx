@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   FieldError,
   Input,
@@ -16,29 +18,35 @@ type Props = FieldProps<string> & {
   className?: string;
 };
 
-export function SearchField({
-  label,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  "aria-describedby": ariaDescribedBy,
-  className,
-  placeholder,
-  description,
-  disabled,
-  readOnly,
-  errorMessage,
-  value,
-  onChange,
-  autoFocus,
-}: Props) {
+export const SearchField = React.forwardRef(function SearchField(
+  {
+    label,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    className,
+    placeholder,
+    description,
+    disabled,
+    readOnly,
+    errorMessage,
+    value,
+    onChange,
+    name,
+    autoFocus,
+  }: Props,
+  ref: React.ForwardedRef<React.ComponentRef<typeof AriaSearchField>>,
+) {
   return (
     <AriaSearchField
+      ref={ref}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       className={racn(fieldStyles.inputBoxField, className)}
       value={value}
       onChange={onChange}
+      name={name}
       autoFocus={autoFocus}
       isDisabled={disabled}
       isReadOnly={readOnly}
@@ -50,4 +58,4 @@ export function SearchField({
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
     </AriaSearchField>
   );
-}
+});

@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   FieldError,
   SwitchButton,
@@ -10,7 +12,6 @@ import fieldStyles from "#src/ui/primitives/fields.module.css";
 import styles from "#src/ui/primitives/SwitchField.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
-import type React from "react";
 
 type Props = Omit<FieldProps<boolean>, "placeholder">;
 
@@ -27,26 +28,32 @@ function SwitchIndicator({ checked }: { checked: boolean }): React.ReactNode {
   );
 }
 
-export function SwitchField({
-  label,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  "aria-describedby": ariaDescribedBy,
-  description,
-  disabled,
-  readOnly,
-  errorMessage,
-  value,
-  onChange,
-}: Props) {
+export const SwitchField = React.forwardRef(function SwitchField(
+  {
+    label,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    description,
+    disabled,
+    readOnly,
+    errorMessage,
+    value,
+    onChange,
+    name,
+  }: Props,
+  ref: React.ForwardedRef<React.ComponentRef<typeof AriaSwitchField>>,
+) {
   return (
     <AriaSwitchField
+      ref={ref}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       className={fieldStyles.smallControlField}
       isSelected={value}
       onChange={onChange}
+      name={name}
       isDisabled={disabled}
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}
@@ -59,4 +66,4 @@ export function SwitchField({
       {description && <Text slot="description">{description}</Text>}
     </AriaSwitchField>
   );
-}
+});

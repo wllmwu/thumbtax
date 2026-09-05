@@ -1,10 +1,10 @@
+import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { NumberField } from "#src/ui/primitives/NumberField";
-
-import type React from "react";
 
 function renderComponent(
   props?: Partial<React.ComponentProps<typeof NumberField>>,
@@ -67,6 +67,15 @@ describe("NumberField", () => {
     renderComponent({ readOnly: true });
 
     expect(await screen.findByRole("textbox")).toHaveAttribute("readonly");
+  });
+
+  it("renders name attribute when provided", async () => {
+    renderComponent({ name: "testName" });
+
+    expect(await screen.findByRole("textbox")).toHaveAttribute(
+      "name",
+      "testName",
+    );
   });
 
   it("calls onChange only when input blurs", async () => {
@@ -192,5 +201,22 @@ describe("NumberField", () => {
     const input = await screen.findByRole("textbox");
     expect(input).toHaveAccessibleDescription(/External description/);
     expect(input).toHaveAccessibleDescription(/Bad value/);
+  });
+
+  it("forwards ref to the field element", async () => {
+    const ref = React.createRef<React.ComponentRef<typeof NumberField>>();
+    render(
+      <NumberField
+        ref={ref}
+        label="Test label"
+        format="plain"
+        value={0}
+        onChange={vi.fn()}
+      />,
+    );
+
+    const input = await screen.findByRole("textbox");
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toContainElement(input);
   });
 });

@@ -22,19 +22,23 @@ type Props<TValue extends string> = Omit<FieldProps<TValue>, "placeholder"> & {
   options: Array<RadioOption<TValue>>;
 };
 
-export function RadioGroup<TValue extends string>({
-  label,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  "aria-describedby": ariaDescribedBy,
-  description,
-  disabled,
-  readOnly,
-  errorMessage,
-  value: selectedValue,
-  onChange,
-  options,
-}: Props<TValue>) {
+function RadioGroupRender<TValue extends string>(
+  {
+    label,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    description,
+    disabled,
+    readOnly,
+    errorMessage,
+    value: selectedValue,
+    onChange,
+    name,
+    options,
+  }: Props<TValue>,
+  ref: React.ForwardedRef<React.ComponentRef<typeof AriaRadioGroup>>,
+) {
   const handleChange = React.useCallback(
     (newValue: string) => {
       const matchedOption = options.find((option) => option.value === newValue);
@@ -47,6 +51,7 @@ export function RadioGroup<TValue extends string>({
 
   return (
     <AriaRadioGroup
+      ref={ref}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
@@ -55,6 +60,7 @@ export function RadioGroup<TValue extends string>({
       isInvalid={!!errorMessage}
       value={selectedValue}
       onChange={handleChange}
+      name={name}
     >
       {label && <Label>{label}</Label>}
       <div>
@@ -79,3 +85,10 @@ export function RadioGroup<TValue extends string>({
     </AriaRadioGroup>
   );
 }
+
+export const RadioGroup = React.forwardRef(RadioGroupRender) as <
+  TValue extends string,
+>(
+  props: Props<TValue> &
+    React.RefAttributes<React.ComponentRef<typeof AriaRadioGroup>>,
+) => React.ReactElement | null;

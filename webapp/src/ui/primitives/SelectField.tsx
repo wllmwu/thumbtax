@@ -47,18 +47,22 @@ export function SelectorButton({
   );
 }
 
-export function SelectField({
-  label,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  "aria-describedby": ariaDescribedBy,
-  description,
-  disabled,
-  errorMessage,
-  value,
-  onChange,
-  children,
-}: Props) {
+export const SelectField = React.forwardRef(function SelectField(
+  {
+    label,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    description,
+    disabled,
+    errorMessage,
+    value,
+    onChange,
+    name,
+    children,
+  }: Props,
+  ref: React.ForwardedRef<React.ComponentRef<typeof Select>>,
+) {
   const handleChange = React.useCallback(
     (value: Key | null) => {
       if (typeof value === "string") {
@@ -70,12 +74,14 @@ export function SelectField({
 
   return (
     <Select
+      ref={ref}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       className={fieldStyles.inputBoxField}
       value={value}
       onChange={handleChange}
+      name={name}
       isDisabled={disabled}
       isInvalid={!!errorMessage}
     >
@@ -90,4 +96,4 @@ export function SelectField({
       </Popover>
     </Select>
   );
-}
+});

@@ -28,21 +28,25 @@ import type { InputProps } from "#src/ui/types/inputProps";
 type Props = Omit<FieldProps<Temporal.PlainDate | null>, "placeholder"> &
   InputProps;
 
-export function DatePicker({
-  "aria-describedby": ariaDescribedBy,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  autoFocus,
-  description,
-  disabled,
-  errorMessage,
-  label,
-  onBlur,
-  onChange,
-  onFocus,
-  readOnly,
-  value,
-}: Props): React.ReactNode {
+export const DatePicker = React.forwardRef(function DatePicker(
+  {
+    "aria-describedby": ariaDescribedBy,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    autoFocus,
+    description,
+    disabled,
+    errorMessage,
+    label,
+    name,
+    onBlur,
+    onChange,
+    onFocus,
+    readOnly,
+    value,
+  }: Props,
+  ref: React.ForwardedRef<React.ComponentRef<typeof AriaDatePicker>>,
+): React.ReactNode {
   const renderDateSegment = React.useCallback<
     React.ComponentProps<typeof DateInput>["children"]
   >((segment) => <DateSegment segment={segment} />, []);
@@ -67,10 +71,12 @@ export function DatePicker({
 
   return (
     <AriaDatePicker
+      ref={ref}
       aria-describedby={ariaDescribedBy}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       autoFocus={autoFocus}
+      name={name}
       isDisabled={disabled}
       isInvalid={!!errorMessage}
       isReadOnly={readOnly}
@@ -105,4 +111,4 @@ export function DatePicker({
       </Popover>
     </AriaDatePicker>
   );
-}
+});

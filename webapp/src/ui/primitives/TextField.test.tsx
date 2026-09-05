@@ -1,10 +1,10 @@
+import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { TextField } from "#src/ui/primitives/TextField";
-
-import type React from "react";
 
 function renderComponent(
   props?: Partial<React.ComponentProps<typeof TextField>>,
@@ -61,6 +61,15 @@ describe("TextField", () => {
     renderComponent({ readOnly: true });
 
     expect(await screen.findByRole("textbox")).toHaveAttribute("readonly");
+  });
+
+  it("renders name attribute when provided", async () => {
+    renderComponent({ name: "testName" });
+
+    expect(await screen.findByRole("textbox")).toHaveAttribute(
+      "name",
+      "testName",
+    );
   });
 
   it("calls onChange when value changes", async () => {
@@ -148,5 +157,16 @@ describe("TextField", () => {
     const input = await screen.findByRole("textbox");
     expect(input).toHaveAccessibleDescription(/External description/);
     expect(input).toHaveAccessibleDescription(/Bad value/);
+  });
+
+  it("forwards ref to the field element", async () => {
+    const ref = React.createRef<React.ComponentRef<typeof TextField>>();
+    render(
+      <TextField ref={ref} label="Test label" value="" onChange={vi.fn()} />,
+    );
+
+    const input = await screen.findByRole("textbox");
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toContainElement(input);
   });
 });

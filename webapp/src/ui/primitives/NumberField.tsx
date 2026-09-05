@@ -15,7 +15,10 @@ type Props = FieldProps<number> &
     format: BoxFormat;
   };
 
-export function NumberField({ format, value, onChange, ...props }: Props) {
+export const NumberField = React.forwardRef(function NumberField(
+  { format, value, onChange, ...props }: Props,
+  ref: React.ForwardedRef<React.ComponentRef<typeof TextField>>,
+) {
   const { locale } = useLocale();
 
   const formatBoxValue = useFormatBoxValue({ format });
@@ -62,6 +65,7 @@ export function NumberField({ format, value, onChange, ...props }: Props) {
 
   return (
     <TextField
+      ref={ref}
       {...props}
       inputMode="decimal"
       value={isFocused ? textValue : formatBoxValue(value)}
@@ -70,4 +74,4 @@ export function NumberField({ format, value, onChange, ...props }: Props) {
       onBlur={onBlur}
     />
   );
-}
+});
