@@ -1,0 +1,12 @@
+.disclosure {
+  background-color: var(--color-background-surface);
+  inline-size: 100%;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.list {
+  inline-size: 100%;
+}

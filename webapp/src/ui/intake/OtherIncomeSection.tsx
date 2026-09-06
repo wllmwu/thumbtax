@@ -4,6 +4,7 @@ import { Controller, useFieldArray } from "react-hook-form";
 
 import { DEFAULT_INCOME_COMPONENT } from "#src/ui/intake/defaults";
 import { IncomeComponentFields } from "#src/ui/intake/IncomeComponentFields";
+import { ListItemDisclosure } from "#src/ui/intake/ListItemDisclosure";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 import { TextField } from "#src/ui/primitives/TextField";
@@ -16,13 +17,26 @@ type Props = {
 };
 
 export function OtherIncomeSection({ control }: Props): React.ReactNode {
-  const { append, fields } = useFieldArray({ control, name: "otherIncome" });
+  const { append, fields, move, remove } = useFieldArray({
+    control,
+    name: "otherIncome",
+  });
 
   return (
     <section>
       <h3>Other income</h3>
-      {fields.map((field, index) => (
-        <div key={field.id}>
+      {fields.map((arrayField, index) => (
+        <ListItemDisclosure
+          key={arrayField.id}
+          canMoveBackward={index > 0}
+          canMoveForward={index < fields.length - 1}
+          control={control}
+          expandedFieldName={`otherIncome.${index}.ui.expanded`}
+          labelFieldName={`otherIncome.${index}.source`}
+          onDelete={() => remove(index)}
+          onMoveBackward={() => move(index, index - 1)}
+          onMoveForward={() => move(index, index + 1)}
+        >
           <Controller
             control={control}
             name={`otherIncome.${index}.source`}
@@ -64,7 +78,7 @@ export function OtherIncomeSection({ control }: Props): React.ReactNode {
             control={control}
             path={`otherIncome.${index}.income`}
           />
-        </div>
+        </ListItemDisclosure>
       ))}
       <AriaButton
         onPress={() =>
@@ -72,6 +86,7 @@ export function OtherIncomeSection({ control }: Props): React.ReactNode {
             income: DEFAULT_INCOME_COMPONENT,
             source: "",
             type: null,
+            ui: { expanded: true },
           })
         }
       >

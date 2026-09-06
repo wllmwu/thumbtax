@@ -5,6 +5,7 @@ import { CheckboxField } from "#src/ui/primitives/CheckboxField";
 import { DatePicker } from "#src/ui/primitives/DatePicker";
 import { NumberField } from "#src/ui/primitives/NumberField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
+import styles from "#src/ui/intake/IncomeComponentFields.module.css";
 
 import type { IntakeWizardState } from "#src/ui/intake/types/intakeWizardState";
 import type React from "react";
@@ -88,7 +89,7 @@ export function IncomeComponentFields({
           </SelectField>
         )}
       />
-      <p>Withholding</p>
+      <p className={styles.heading}>Withholding</p>
       <Controller
         control={control}
         name={`${path}.withholding.federalIncome`}

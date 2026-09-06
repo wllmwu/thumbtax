@@ -103,7 +103,16 @@
 }
 
 .form-box {
+  :global(.react-aria-DateInput) {
+    padding-block: 0.125rem;
+  }
+
   :global(.react-aria-Input) {
-    padding-block: 0.0625em;
+    align-self: stretch;
+    padding-block: 0.0625rem;
+  }
+
+  :global(.react-aria-Button) {
+    padding-block: 0.125rem;
   }
 }

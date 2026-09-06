@@ -1,7 +1,7 @@
 .page {
   column-gap: var(--size-margin-page);
   display: grid;
-  grid-template-columns: 1fr max-content;
+  grid-template-columns: minmax(0, 1fr) max-content;
   grid-template-rows: max-content max-content;
   padding-inline-start: var(--size-margin-page);
 }

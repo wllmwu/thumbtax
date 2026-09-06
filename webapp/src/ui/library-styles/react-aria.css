@@ -224,6 +224,7 @@
 .react-aria-Select,
 .react-aria-NumberField,
 .react-aria-TextField {
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: 0.125rem;

@@ -30,10 +30,16 @@ export type IncomeComponent = {
 type Wage = {
   income: IncomeComponent;
   label: string;
+  ui: {
+    expanded: boolean;
+  };
 };
 
 type Job = {
   employer: string;
+  ui: {
+    expanded: boolean;
+  };
   wages: Wage[];
 };
 
@@ -48,6 +54,9 @@ type OtherIncome = {
     | "other"
     | "retirement_distributions"
     | null;
+  ui: {
+    expanded: boolean;
+  };
 };
 
 export type IntakeWizardState = {
