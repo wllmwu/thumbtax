@@ -9,7 +9,6 @@ import {
 
 import { racn } from "#src/ui/utils/racn";
 import styles from "#src/ui/primitives/CheckboxField.module.css";
-import fieldStyles from "#src/ui/primitives/fields.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
 
@@ -50,7 +49,6 @@ export const CheckboxField = React.forwardRef(function CheckboxField(
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      className={fieldStyles.smallControlField}
       isSelected={value}
       onChange={onChange}
       name={name}
@@ -58,9 +56,7 @@ export const CheckboxField = React.forwardRef(function CheckboxField(
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}
     >
-      <CheckboxButton
-        className={racn(fieldStyles.button, styles.checkboxButton)}
-      >
+      <CheckboxButton className={racn(styles.checkboxButton)}>
         <CheckboxIndicator checked={value} />
         {label}
       </CheckboxButton>

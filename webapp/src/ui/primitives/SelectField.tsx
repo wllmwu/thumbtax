@@ -16,7 +16,6 @@ import {
 
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { racn } from "#src/ui/utils/racn";
-import fieldStyles from "#src/ui/primitives/fields.module.css";
 import styles from "#src/ui/primitives/SelectField.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
@@ -78,7 +77,6 @@ export const SelectField = React.forwardRef(function SelectField(
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      className={fieldStyles.inputBoxField}
       value={value}
       onChange={handleChange}
       name={name}

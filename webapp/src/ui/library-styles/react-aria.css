@@ -1,11 +1,11 @@
 .react-aria-Button {
-  border-radius: 0.5em;
+  border-radius: 0.5rem;
   border: 1px solid var(--color-border);
   font-size: 0.875rem;
   font-weight: var(--font-weight-medium);
   margin: 0;
-  padding-block: 0.25em;
-  padding-inline: 0.375em;
+  padding-block: 0.25rem;
+  padding-inline: 0.375rem;
 
   &[data-disabled] {
     opacity: 0.5;
@@ -61,6 +61,29 @@
   padding: 0.125rem;
 }
 
+.react-aria-CheckboxField,
+.react-aria-SwitchField {
+  align-items: baseline;
+  column-gap: 0.25rem;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+
+  & > .react-aria-CheckboxButton,
+  .react-aria-SwitchButton {
+    align-items: baseline;
+    display: grid;
+    font-weight: var(--font-weight-semibold);
+    grid-template-columns: subgrid;
+    grid-column: 1 / 3;
+  }
+
+  & > :not(.react-aria-CheckboxButton, .react-aria-SwitchButton) {
+    color: var(--color-text-subdued);
+    font-size: 0.875rem;
+    grid-column: 2 / 3;
+  }
+}
+
 .react-aria-DateInput {
   background-color: var(--color-background);
   border: 1px solid var(--color-border);
@@ -70,8 +93,8 @@
 }
 
 .react-aria-DateSegment {
-  border-radius: 0.25em;
-  padding-inline: 0.125em;
+  border-radius: 0.25rem;
+  padding-inline: 0.125rem;
 
   &[data-focused] {
     background-color: var(--color-palette-primary);
@@ -86,6 +109,12 @@
 }
 
 .react-aria-Input {
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  padding-block: 0.25rem;
+  padding-inline: 0.375rem;
+
   &[data-invalid] {
     border-color: var(--color-border-error);
     color: var(--color-text-error);
@@ -94,6 +123,10 @@
   &:read-only {
     background-color: transparent;
   }
+}
+
+.react-aria-Label {
+  font-weight: var(--font-weight-semibold);
 }
 
 .react-aria-ListBoxItem,
@@ -175,6 +208,29 @@
   }
 }
 
+.react-aria-SearchField,
+.react-aria-Select,
+.react-aria-NumberField,
+.react-aria-TextField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+
+  & > :not(.react-aria-Label) {
+    color: var(--color-text-subdued);
+    font-size: 0.875rem;
+  }
+}
+
+.react-aria-Select {
+  &[data-invalid] {
+    .react-aria-Button {
+      border-color: var(--color-border-error);
+      color: var(--color-text-error);
+    }
+  }
+}
+
 .react-aria-Separator {
   background-color: var(--color-border);
   block-size: 1px;
@@ -190,11 +246,11 @@
 
 .react-aria-Tooltip {
   background-color: var(--color-background-tooltip);
-  border-radius: 0.375em;
+  border-radius: 0.375rem;
   color: var(--color-text-on-tooltip);
   font-size: 0.75rem;
-  padding-block: 0.125em;
-  padding-inline: 0.25em;
+  padding-block: 0.125rem;
+  padding-inline: 0.25rem;
 
   &[data-placement="bottom"] {
     margin-top: 4px;

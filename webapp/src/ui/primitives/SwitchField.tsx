@@ -8,7 +8,6 @@ import {
 } from "react-aria-components";
 
 import { racn } from "#src/ui/utils/racn";
-import fieldStyles from "#src/ui/primitives/fields.module.css";
 import styles from "#src/ui/primitives/SwitchField.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
@@ -50,7 +49,6 @@ export const SwitchField = React.forwardRef(function SwitchField(
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      className={fieldStyles.smallControlField}
       isSelected={value}
       onChange={onChange}
       name={name}
@@ -58,7 +56,7 @@ export const SwitchField = React.forwardRef(function SwitchField(
       isReadOnly={readOnly}
       isInvalid={!!errorMessage}
     >
-      <SwitchButton className={racn(fieldStyles.button, styles.switchButton)}>
+      <SwitchButton className={racn(styles.switchButton)}>
         <SwitchIndicator checked={value} />
         {label}
       </SwitchButton>

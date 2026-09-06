@@ -12,6 +12,7 @@ export function IntakeWizard(): React.ReactNode {
 
   return (
     <form onSubmit={handleSubmit((data) => console.log(JSON.stringify(data)))}>
+      <h2>Income builder</h2>
       <EmploymentIncomeSection control={control} />
       <OtherIncomeSection control={control} />
       <AriaButton type="submit">Submit</AriaButton>

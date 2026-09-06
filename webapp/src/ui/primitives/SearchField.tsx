@@ -9,7 +9,6 @@ import {
 } from "react-aria-components";
 
 import { racn } from "#src/ui/utils/racn";
-import fieldStyles from "#src/ui/primitives/fields.module.css";
 
 import type { FieldProps } from "#src/ui/types/fieldProps";
 
@@ -43,7 +42,7 @@ export const SearchField = React.forwardRef(function SearchField(
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      className={racn(fieldStyles.inputBoxField, className)}
+      className={racn(className)}
       value={value}
       onChange={onChange}
       name={name}

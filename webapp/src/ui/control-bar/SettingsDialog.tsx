@@ -17,7 +17,6 @@ import { SwitchField } from "#src/ui/primitives/SwitchField";
 import { racn } from "#src/ui/utils/racn";
 import styles from "#src/ui/control-bar/SettingsDialog.module.css";
 import dialogStyles from "#src/ui/primitives/dialogs.module.css";
-import fieldStyles from "#src/ui/primitives/fields.module.css";
 
 export function SettingsDialog() {
   const preferences = useStore((state) => state.userPreferences);
@@ -52,7 +51,7 @@ export function SettingsDialog() {
               onChange={setIsBrowserSaveEnabled}
             />
             <NumberField
-              className={racn(fieldStyles.inputBoxField, styles.inputField)}
+              className={racn(styles.inputField)}
               value={maxHistorySize}
               onChange={setMaxHistorySize}
               minValue={0}
