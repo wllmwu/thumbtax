@@ -6,7 +6,7 @@ import type React from "react";
 import type { ButtonProps } from "react-aria-components";
 
 type Props = ButtonProps & {
-  variant?: "primary" | "secondary";
+  variant?: "destructive" | "primary" | "secondary";
 };
 
 export function AriaButton({

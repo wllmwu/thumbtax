@@ -1,4 +1,10 @@
 .react-aria-Button {
+  &[data-variant="destructive"] {
+    background-color: var(--color-background-destructive);
+    border-color: var(--color-border);
+    color: var(--color-text-on-destructive);
+  }
+
   &[data-variant="primary"] {
     background-color: var(--color-palette-primary);
     border-color: var(--color-palette-primary);
