@@ -8,6 +8,7 @@ import {
   ListBoxItem,
   Popover,
   Select,
+  SelectValue,
 } from "react-aria-components";
 
 import { SelectorButton } from "#src/ui/primitives/SelectField";
@@ -127,7 +128,9 @@ export function SelectInstanceBoxesField({
       value={selectedKeys}
       onChange={handleChange}
     >
-      <SelectorButton>{`${selectedKeys.length} of ${options.length} selected`}</SelectorButton>
+      <SelectorButton>
+        <SelectValue>{`${selectedKeys.length} of ${options.length} selected`}</SelectValue>
+      </SelectorButton>
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
       <Popover>
         <ListBox items={options}>{renderOptionItem}</ListBox>

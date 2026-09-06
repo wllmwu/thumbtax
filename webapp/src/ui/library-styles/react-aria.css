@@ -232,6 +232,10 @@
     color: var(--color-text-subdued);
     font-size: 0.875rem;
   }
+
+  &[data-invalid] > :not(.react-aria-Label) {
+    color: var(--color-text-error);
+  }
 }
 
 .react-aria-Select {
