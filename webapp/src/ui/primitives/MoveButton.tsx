@@ -13,11 +13,13 @@ import { IconButton } from "#src/ui/primitives/IconButton";
 type Props = Omit<React.ComponentProps<typeof IconButton>, "icon" | "label"> & {
   axis: "block" | "inline";
   direction: "backward" | "forward";
+  labelOverride?: string;
 };
 
 export function MoveButton({
   axis,
   direction,
+  labelOverride,
   ...props
 }: Props): React.ReactNode {
   const { icon, label } = React.useMemo(() => {
@@ -36,5 +38,5 @@ export function MoveButton({
     }
   }, [axis, direction]);
 
-  return <IconButton icon={icon} label={label} {...props} />;
+  return <IconButton icon={icon} label={labelOverride ?? label} {...props} />;
 }

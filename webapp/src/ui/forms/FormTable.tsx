@@ -9,8 +9,8 @@ import { CommentaryDisplay } from "#src/ui/content/CommentaryDisplay";
 import { ProseContent } from "#src/ui/content/ProseContent";
 import { FormBoxContent } from "#src/ui/forms/FormBoxContent";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
-import { MoveButton } from "#src/ui/forms/MoveButton";
 import { IconButton } from "#src/ui/primitives/IconButton";
+import { MoveButton } from "#src/ui/primitives/MoveButton";
 import styles from "#src/ui/forms/FormTable.module.css";
 
 import type { FormLine, FormSpecification } from "@thumbtax/forms";

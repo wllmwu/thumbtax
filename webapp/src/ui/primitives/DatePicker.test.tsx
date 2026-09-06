@@ -34,7 +34,7 @@ describe("DatePicker", () => {
     expect(spinButtons[2]).toHaveTextContent("yyyy");
 
     expect(
-      await screen.findByRole("button", { name: "Calendar Test" }),
+      await screen.findByRole("button", { name: "Open calendar Test" }),
     ).toBeInTheDocument();
   });
 
@@ -54,7 +54,7 @@ describe("DatePicker", () => {
     expect(spinButtons[2]).toHaveTextContent("2026");
 
     expect(
-      await screen.findByRole("button", { name: "Calendar Test" }),
+      await screen.findByRole("button", { name: "Open calendar Test" }),
     ).toBeInTheDocument();
   });
 
@@ -85,7 +85,7 @@ describe("DatePicker", () => {
       "true",
     );
     expect(
-      await screen.findByRole("button", { name: "Calendar Test label" }),
+      await screen.findByRole("button", { name: "Open calendar Test label" }),
     ).toBeDisabled();
   });
 
@@ -97,7 +97,7 @@ describe("DatePicker", () => {
       "true",
     );
     expect(
-      await screen.findByRole("button", { name: "Calendar Test label" }),
+      await screen.findByRole("button", { name: "Open calendar Test label" }),
     ).toBeDisabled();
   });
 
@@ -174,7 +174,7 @@ describe("DatePicker", () => {
     expect(screen.queryByRole("application")).not.toBeInTheDocument();
 
     await user.click(
-      await screen.findByRole("button", { name: "Calendar Test" }),
+      await screen.findByRole("button", { name: "Open calendar Test" }),
     );
 
     expect(
@@ -222,7 +222,7 @@ describe("DatePicker", () => {
     const user = userEvent.setup();
 
     await user.click(
-      await screen.findByRole("button", { name: "Calendar Test" }),
+      await screen.findByRole("button", { name: "Open calendar Test" }),
     );
     expect(
       await screen.findByRole("application", { name: "February 2024" }),
@@ -287,7 +287,7 @@ describe("DatePicker", () => {
     expect(onChange).not.toHaveBeenCalled();
 
     await user.click(
-      await screen.findByRole("button", { name: "Calendar Test" }),
+      await screen.findByRole("button", { name: "Open calendar Test" }),
     );
     await user.click(await screen.findByRole("button", { name: "Next month" }));
     await user.click(

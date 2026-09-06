@@ -18,7 +18,8 @@ import {
 } from "react-aria-components";
 import { Temporal } from "temporal-polyfill";
 
-import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { IconButton } from "#src/ui/primitives/IconButton";
+import { MoveButton } from "#src/ui/primitives/MoveButton";
 import { racn } from "#src/ui/utils/racn";
 import styles from "#src/ui/primitives/DatePicker.module.css";
 
@@ -89,22 +90,26 @@ export const DatePicker = React.forwardRef(function DatePicker(
       {label && <Label>{label}</Label>}
       <Group className={racn(styles.group)}>
         <DateInput>{renderDateSegment}</DateInput>
-        <AriaButton>
-          <CalendarDaysIcon />
-        </AriaButton>
+        <IconButton icon={CalendarDaysIcon} label="Open calendar" />
       </Group>
       {description && <Text slot="description">{description}</Text>}
       {errorMessage && <FieldError>{errorMessage}</FieldError>}
       <Popover>
         <Calendar>
           <div className={styles.monthHeader}>
-            <AriaButton slot="previous" aria-label="Previous month">
-              Prev
-            </AriaButton>
+            <MoveButton
+              slot="previous"
+              axis="inline"
+              direction="backward"
+              labelOverride="Previous month"
+            />
             <CalendarHeading />
-            <AriaButton slot="next" aria-label="Next month">
-              Next
-            </AriaButton>
+            <MoveButton
+              slot="next"
+              axis="inline"
+              direction="forward"
+              labelOverride="Next month"
+            />
           </div>
           <CalendarGrid>{renderCalendarCell}</CalendarGrid>
         </Calendar>
