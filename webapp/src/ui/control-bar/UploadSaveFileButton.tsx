@@ -11,8 +11,8 @@ import {
 
 import { useUploadSaveFile } from "#src/persistence/useUploadSaveFile";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { DialogFooter } from "#src/ui/primitives/DialogFooter";
 import { IconButton } from "#src/ui/primitives/IconButton";
-import dialogStyles from "#src/ui/primitives/dialogs.module.css";
 
 const ACCEPTED_FILE_TYPES = ["application/json"];
 
@@ -59,28 +59,26 @@ export function UploadSaveFileButton() {
         }}
       >
         <Dialog>
-          <div className={dialogStyles.verticalStack}>
-            <Heading slot="title">Replace current data?</Heading>
-            <Text slot="description">
-              Uploading a save file will replace your current data. This can't
-              be undone.
-            </Text>
-            <div className={dialogStyles.buttonGroup}>
-              <AriaButton
-                isDisabled={isUploading}
-                onPress={() => setPendingFile(null)}
-              >
-                Cancel
-              </AriaButton>
-              <AriaButton
-                variant="primary"
-                isDisabled={isUploading}
-                onPress={handleUpload}
-              >
-                Upload
-              </AriaButton>
-            </div>
-          </div>
+          <Heading slot="title">Replace current data?</Heading>
+          <Text slot="description">
+            Uploading a save file will replace your current data. This can't be
+            undone.
+          </Text>
+          <DialogFooter>
+            <AriaButton
+              isDisabled={isUploading}
+              onPress={() => setPendingFile(null)}
+            >
+              Cancel
+            </AriaButton>
+            <AriaButton
+              variant="primary"
+              isDisabled={isUploading}
+              onPress={handleUpload}
+            >
+              Upload
+            </AriaButton>
+          </DialogFooter>
         </Dialog>
       </Modal>
     </>

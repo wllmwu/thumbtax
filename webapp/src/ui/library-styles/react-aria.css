@@ -104,6 +104,18 @@
   }
 }
 
+.react-aria-Dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .react-aria-Form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
 .react-aria-FieldError {
   color: var(--color-text-error);
 }
