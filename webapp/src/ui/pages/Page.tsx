@@ -44,7 +44,7 @@ export function Page({ headings, header, children }: Props): React.ReactNode {
           </Disclosure>
         )}
       </aside>
-      <div>{children}</div>
+      <div className={styles.pageContent}>{children}</div>
     </div>
   );
 }

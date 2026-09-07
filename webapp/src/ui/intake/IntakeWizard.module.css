@@ -3,7 +3,7 @@
 }
 
 .submit-block {
-  margin-block-start: 1rem;
+  margin-block-start: 1.5rem;
 }
 
 .wizard {
@@ -11,14 +11,14 @@
   border-radius: 2rem;
   inline-size: 50rem;
   max-inline-size: 100%;
-  padding-block: 1.5rem;
+  padding-block: 0;
   padding-inline: 2rem;
 
   & > :first-child {
-    margin-block-start: 0;
+    margin-block-start: 1.5rem;
   }
 
   & > :last-child {
-    margin-block-end: 0;
+    margin-block-end: 1.5rem;
   }
 }

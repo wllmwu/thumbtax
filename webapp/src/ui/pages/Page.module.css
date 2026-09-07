@@ -3,8 +3,11 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) max-content;
   grid-template-rows: max-content min-content;
-  padding-block-end: 4rem;
   padding-inline-start: var(--size-margin-page);
+}
+
+.page-content {
+  padding-block-end: 4rem;
 }
 
 .sidebar {
