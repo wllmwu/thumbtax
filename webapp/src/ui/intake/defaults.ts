@@ -1,6 +1,9 @@
 import { Temporal } from "temporal-polyfill";
 
-import type { IncomeComponent } from "#src/ui/intake/types/intakeWizardState";
+import type {
+  IncomeComponent,
+  IntakeWizardState,
+} from "#src/ui/intake/types/intakeWizardState";
 
 // TODO: put year in application state
 const YEAR = 2026;
@@ -24,4 +27,9 @@ export const DEFAULT_INCOME_COMPONENT: IncomeComponent = {
     medicare: "regular",
     socialSecurity: "regular",
   },
+};
+
+export const DEFAULT_STATE: IntakeWizardState = {
+  jobs: [],
+  otherIncome: [],
 };

@@ -55,7 +55,7 @@ export function EmploymentIncomeSection({ control }: Props): React.ReactNode {
           append({ employer: "", ui: { expanded: true }, wages: [] })
         }
       >
-        Add job
+        Add employer
       </AriaButton>
     </section>
   );
