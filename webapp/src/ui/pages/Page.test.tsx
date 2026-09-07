@@ -13,6 +13,7 @@ import { makeRegistryFixture } from "#src/test/specificationFixtures";
 import { Page } from "#src/ui/pages/Page";
 
 import type { UiState } from "#src/state/types/uiState";
+import type React from "react";
 
 function initializeStore(uiState: UiState = DEFAULT_UI_STATE) {
   const { result } = renderHook(() => useStore((state) => state));
@@ -24,13 +25,10 @@ function initializeStore(uiState: UiState = DEFAULT_UI_STATE) {
   );
 }
 
-function renderComponent() {
+function renderComponent(props?: Partial<React.ComponentProps<typeof Page>>) {
   return render(
     <MemoryRouter>
-      <Page
-        header={<h1>Page header</h1>}
-        headings={[{ id: "a", label: "Heading A" }]}
-      >
+      <Page header={<h1>Page header</h1>} headings={null} {...props}>
         <p>Page content</p>
       </Page>
     </MemoryRouter>,
@@ -49,8 +47,20 @@ describe("Page", () => {
     expect(await screen.findByText("Page content")).toBeInTheDocument();
   });
 
+  it("doesn't render table of contents when headings is null", async () => {
+    renderComponent({ headings: null });
+
+    expect(await screen.findByText("Page header")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Show sidebar" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Hide sidebar" }),
+    ).not.toBeInTheDocument();
+  });
+
   it("shows the table of contents expanded", async () => {
-    renderComponent();
+    renderComponent({ headings: [{ id: "a", label: "Heading A" }] });
 
     expect(
       await screen.findByRole("button", { name: "Hide sidebar" }),
@@ -62,7 +72,7 @@ describe("Page", () => {
 
   it("shows the table of contents collapsed", async () => {
     initializeStore({ ...DEFAULT_UI_STATE, tableOfContentsExpanded: false });
-    renderComponent();
+    renderComponent({ headings: [{ id: "a", label: "Heading A" }] });
 
     expect(
       await screen.findByRole("button", { name: "Show sidebar" }),
@@ -75,7 +85,7 @@ describe("Page", () => {
     const { result } = renderHook(() =>
       useStore((state) => state.uiState.tableOfContentsExpanded),
     );
-    renderComponent();
+    renderComponent({ headings: [{ id: "a", label: "Heading A" }] });
 
     await user.click(screen.getByRole("button", { name: "Hide sidebar" }));
 
@@ -92,7 +102,7 @@ describe("Page", () => {
     const { result } = renderHook(() =>
       useStore((state) => state.uiState.tableOfContentsExpanded),
     );
-    renderComponent();
+    renderComponent({ headings: [{ id: "a", label: "Heading A" }] });
 
     await user.click(screen.getByRole("button", { name: "Show sidebar" }));
 

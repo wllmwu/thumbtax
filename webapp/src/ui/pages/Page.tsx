@@ -11,7 +11,7 @@ import type { TableOfContentsHeading } from "#src/ui/types/tableOfContentsHeadin
 import type React from "react";
 
 type Props = {
-  headings: TableOfContentsHeading[];
+  headings: TableOfContentsHeading[] | null;
   header: React.ReactNode;
   children: React.ReactNode;
 };
@@ -26,21 +26,23 @@ export function Page({ headings, header, children }: Props): React.ReactNode {
     <div className={styles.page}>
       <div>{header}</div>
       <aside className={styles.sidebar}>
-        <Disclosure
-          className={racn(styles.sidebarDisclosure)}
-          isExpanded={isExpanded}
-          onExpandedChange={setTableOfContentsExpanded}
-        >
-          <IconButton
-            icon={isExpanded ? Minimize2Icon : TableOfContentsIcon}
-            className={racn(styles.toggleButton)}
-            label={isExpanded ? "Hide sidebar" : "Show sidebar"}
-            slot="trigger"
-          />
-          <DisclosurePanel>
-            <TableOfContents headings={headings} />
-          </DisclosurePanel>
-        </Disclosure>
+        {headings && (
+          <Disclosure
+            className={racn(styles.sidebarDisclosure)}
+            isExpanded={isExpanded}
+            onExpandedChange={setTableOfContentsExpanded}
+          >
+            <IconButton
+              icon={isExpanded ? Minimize2Icon : TableOfContentsIcon}
+              className={racn(styles.toggleButton)}
+              label={isExpanded ? "Hide sidebar" : "Show sidebar"}
+              slot="trigger"
+            />
+            <DisclosurePanel>
+              <TableOfContents headings={headings} />
+            </DisclosurePanel>
+          </Disclosure>
+        )}
       </aside>
       <div>{children}</div>
     </div>
