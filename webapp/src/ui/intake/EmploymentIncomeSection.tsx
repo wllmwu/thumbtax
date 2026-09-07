@@ -22,7 +22,7 @@ export function EmploymentIncomeSection({ control }: Props): React.ReactNode {
 
   return (
     <section>
-      <h3>Employment income</h3>
+      <h2>Employment income</h2>
       {fields.map((arrayField, index) => (
         <ListItemDisclosure
           key={arrayField.id}

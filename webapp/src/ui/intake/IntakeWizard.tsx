@@ -11,7 +11,11 @@ import styles from "#src/ui/intake/IntakeWizard.module.css";
 
 import type { IntakeWizardState } from "#src/ui/intake/types/intakeWizardState";
 
-export function IntakeWizard(): React.ReactNode {
+type Props = {
+  onSubmit: (state: IntakeWizardState) => void;
+};
+
+export function IntakeWizard({ onSubmit }: Props): React.ReactNode {
   const {
     control,
     formState: { isDirty, isSubmitted, isValid },
@@ -25,10 +29,7 @@ export function IntakeWizard(): React.ReactNode {
   return (
     <>
       <NavigationBlocker isFormDirty={isDirty} />
-      <form
-        onSubmit={handleSubmit((data) => console.log(JSON.stringify(data)))}
-      >
-        <h2>Income builder</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <EmploymentIncomeSection control={control} />
         <OtherIncomeSection control={control} />
         <AriaButton
