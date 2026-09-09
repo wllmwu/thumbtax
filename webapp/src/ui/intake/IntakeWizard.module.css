@@ -4,6 +4,12 @@
 
 .submit-block {
   margin-block-start: 1.5rem;
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
 }
 
 .wizard {

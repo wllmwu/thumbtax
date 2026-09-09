@@ -8,22 +8,28 @@ import { DialogFooter } from "#src/ui/primitives/DialogFooter";
 
 type Props = {
   isFormDirty: boolean;
+  isFormSubmitting: boolean;
 };
 
-export function NavigationBlocker({ isFormDirty }: Props): React.ReactNode {
+export function NavigationBlocker({
+  isFormDirty,
+  isFormSubmitting,
+}: Props): React.ReactNode {
+  const shouldBlock = isFormDirty && !isFormSubmitting;
+
   const beforeUnload = React.useCallback(
     (event: BeforeUnloadEvent) => {
-      if (isFormDirty) {
+      if (shouldBlock) {
         event.stopPropagation();
         event.returnValue = true;
         return true;
       }
     },
-    [isFormDirty],
+    [shouldBlock],
   );
   useBeforeUnload(beforeUnload);
 
-  const blocker = useBlocker(isFormDirty);
+  const blocker = useBlocker(shouldBlock);
 
   return (
     <Modal

@@ -12,13 +12,14 @@ import styles from "#src/ui/intake/IntakeWizard.module.css";
 import type { IntakeWizardState } from "#src/ui/intake/types/intakeWizardState";
 
 type Props = {
+  onCancel: (() => void) | undefined;
   onSubmit: (state: IntakeWizardState) => void;
 };
 
-export function IntakeWizard({ onSubmit }: Props): React.ReactNode {
+export function IntakeWizard({ onCancel, onSubmit }: Props): React.ReactNode {
   const {
     control,
-    formState: { isDirty, isSubmitted, isValid },
+    formState: { isDirty, isSubmitted, isSubmitting, isValid },
     handleSubmit,
   } = useForm<IntakeWizardState>({
     defaultValues: DEFAULT_STATE,
@@ -28,13 +29,23 @@ export function IntakeWizard({ onSubmit }: Props): React.ReactNode {
 
   return (
     <form className={styles.wizard} onSubmit={handleSubmit(onSubmit)}>
-      <NavigationBlocker isFormDirty={isDirty} />
+      <NavigationBlocker
+        isFormDirty={isDirty}
+        isFormSubmitting={isSubmitting}
+      />
       <EmploymentIncomeSection control={control} />
       <OtherIncomeSection control={control} />
       <div className={styles.submitBlock}>
-        <AriaButton type="submit" isDisabled={hasErrors} variant="primary">
-          Submit
-        </AriaButton>
+        <div className={styles.buttons}>
+          {onCancel && (
+            <AriaButton variant="secondary" onPress={onCancel}>
+              Cancel
+            </AriaButton>
+          )}
+          <AriaButton type="submit" isDisabled={hasErrors} variant="primary">
+            Submit
+          </AriaButton>
+        </div>
         <div aria-live="polite">
           {hasErrors && (
             <p className={styles.errorFeedback}>
