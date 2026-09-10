@@ -60,6 +60,11 @@ type OtherIncome = {
 };
 
 export type IntakeWizardState = {
+  acknowledgements: {
+    notAdvice: boolean;
+    notAffiliated: boolean;
+    notGuaranteed: boolean;
+  };
   jobs: Job[];
   otherIncome: OtherIncome[];
 };

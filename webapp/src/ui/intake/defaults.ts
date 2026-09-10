@@ -30,6 +30,11 @@ export const DEFAULT_INCOME_COMPONENT: IncomeComponent = {
 };
 
 export const DEFAULT_STATE: IntakeWizardState = {
+  acknowledgements: {
+    notAdvice: false,
+    notAffiliated: false,
+    notGuaranteed: false,
+  },
   jobs: [],
   otherIncome: [],
 };

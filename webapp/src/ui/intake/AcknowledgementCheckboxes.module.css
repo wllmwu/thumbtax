@@ -1,0 +1,11 @@
+.box {
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  margin-block: 1rem;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+
+  :global(.react-aria-CheckboxField) {
+    margin-block: 0.25rem;
+  }
+}

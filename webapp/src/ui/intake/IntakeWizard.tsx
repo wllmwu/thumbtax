@@ -2,6 +2,7 @@ import React from "react";
 
 import { useForm } from "react-hook-form";
 
+import { AcknowledgementCheckboxes } from "#src/ui/intake/AcknowledgementCheckboxes";
 import { DEFAULT_STATE } from "#src/ui/intake/defaults";
 import { EmploymentIncomeSection } from "#src/ui/intake/EmploymentIncomeSection";
 import { NavigationBlocker } from "#src/ui/intake/NavigationBlocker";
@@ -36,6 +37,7 @@ export function IntakeWizard({ onCancel, onSubmit }: Props): React.ReactNode {
       <EmploymentIncomeSection control={control} />
       <OtherIncomeSection control={control} />
       <div className={styles.submitBlock}>
+        <AcknowledgementCheckboxes control={control} />
         <div className={styles.buttons}>
           {onCancel && (
             <AriaButton variant="secondary" onPress={onCancel}>

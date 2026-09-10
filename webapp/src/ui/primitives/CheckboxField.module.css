@@ -21,6 +21,10 @@
     opacity: 0.5;
   }
 
+  &[data-invalid] .checkbox-indicator rect {
+    stroke: var(--color-border-error);
+  }
+
   &[data-pressed] .checkbox-indicator {
     filter: brightness(0.75);
   }

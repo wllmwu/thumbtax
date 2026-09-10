@@ -88,6 +88,10 @@
     font-size: 0.875rem;
     grid-column: 2 / 3;
   }
+
+  &[data-invalid] > :not(.react-aria-CheckboxButton, .react-aria-SwitchButton) {
+    color: var(--color-text-error);
+  }
 }
 
 .react-aria-DateInput {
