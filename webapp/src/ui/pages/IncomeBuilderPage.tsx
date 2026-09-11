@@ -16,6 +16,7 @@ export function IncomeBuilderPage(): React.ReactNode {
   return (
     <Page headings={null} header={<h1>Income builder</h1>}>
       <IntakeWizard
+        initialState={undefined}
         onCancel={hasAnyForms ? () => navigate("/") : undefined}
         onSubmit={() => {
           navigate("/");

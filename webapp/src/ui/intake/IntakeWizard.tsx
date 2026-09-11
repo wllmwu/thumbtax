@@ -13,17 +13,22 @@ import styles from "#src/ui/intake/IntakeWizard.module.css";
 import type { IntakeWizardState } from "#src/ui/intake/types/intakeWizardState";
 
 type Props = {
+  initialState: IntakeWizardState | undefined;
   onCancel: (() => void) | undefined;
   onSubmit: (state: IntakeWizardState) => void;
 };
 
-export function IntakeWizard({ onCancel, onSubmit }: Props): React.ReactNode {
+export function IntakeWizard({
+  initialState = DEFAULT_STATE,
+  onCancel,
+  onSubmit,
+}: Props): React.ReactNode {
   const {
     control,
     formState: { isDirty, isSubmitted, isSubmitting, isValid },
     handleSubmit,
   } = useForm<IntakeWizardState>({
-    defaultValues: DEFAULT_STATE,
+    defaultValues: initialState,
   });
 
   const hasErrors = isSubmitted && !isValid;
