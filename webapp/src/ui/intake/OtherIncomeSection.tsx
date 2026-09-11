@@ -51,6 +51,18 @@ export function OtherIncomeSection({ control }: Props): React.ReactNode {
           />
           <Controller
             control={control}
+            name={`otherIncome.${index}.label`}
+            render={({ field, fieldState }) => (
+              <TextField
+                label="Label"
+                {...field}
+                errorMessage={fieldState.error?.message}
+              />
+            )}
+            rules={{ required: "Label is required." }}
+          />
+          <Controller
+            control={control}
             name={`otherIncome.${index}.type`}
             render={({ field, fieldState }) => (
               <SelectField
@@ -84,6 +96,7 @@ export function OtherIncomeSection({ control }: Props): React.ReactNode {
         onPress={() =>
           append({
             income: DEFAULT_INCOME_COMPONENT,
+            label: "",
             source: "",
             type: null,
             ui: { expanded: true },

@@ -45,6 +45,7 @@ type Job = {
 
 type OtherIncome = {
   income: IncomeComponent;
+  label: string;
   source: string;
   type:
     | "brokerage_sale"
