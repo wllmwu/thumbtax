@@ -1,0 +1,27 @@
+{% form
+   category="income"
+   class="helper_withholding_federal_additional"
+   irsPageUrl="" %}
+# My federal income withholding (additional)
+
+{% subtitle %}
+Helper form: Federal income tax withholding (additional)
+{% /subtitle %}
+
+{% instructions %}
+Thumbtax uses this "helper" form to model a part of your income tax withholding.
+This isn't a real tax form.
+You can modify these values directly or use the wizard again to replace them.
+{% /instructions %}
+
+{% section %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Federal income tax additional withholding amount{% /instructions %}
+  - {% box identifier="1" %}
+    {% value type="number_input" /%}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

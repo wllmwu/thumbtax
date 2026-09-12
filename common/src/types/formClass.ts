@@ -22,7 +22,13 @@ export const FORM_CLASSES = [
   "fW2",
   "fW2_12_codes",
   "helper_income",
-  "helper_withholding",
+  "helper_withholding_additionalmedicare",
+  "helper_withholding_federal_additional",
+  "helper_withholding_federal_custom",
+  "helper_withholding_federal_regular",
+  "helper_withholding_federal_supplemental",
+  "helper_withholding_medicare",
+  "helper_withholding_socialsecurity",
 ] as const;
 
 export type FormClass = (typeof FORM_CLASSES)[number];

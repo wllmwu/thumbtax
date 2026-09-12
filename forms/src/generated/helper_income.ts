@@ -6,7 +6,7 @@ export const helper_income: FormSpecification = {
   category: "income",
   maxInstances: null,
   title: "My income",
-  subtitle: "Helper form: My income",
+  subtitle: "Helper form: Income",
   instructions: {
     $$mdtype: "Tag",
     name: "p",

@@ -21,7 +21,13 @@ import { f8995 } from "./generated/f8995";
 import { fW2 } from "./generated/fW2";
 import { fW2_12_codes } from "./generated/fW2_12_codes";
 import { helper_income } from "./generated/helper_income";
-import { helper_withholding } from "./generated/helper_withholding";
+import { helper_withholding_additionalmedicare } from "./generated/helper_withholding_additionalmedicare";
+import { helper_withholding_federal_additional } from "./generated/helper_withholding_federal_additional";
+import { helper_withholding_federal_custom } from "./generated/helper_withholding_federal_custom";
+import { helper_withholding_federal_regular } from "./generated/helper_withholding_federal_regular";
+import { helper_withholding_federal_supplemental } from "./generated/helper_withholding_federal_supplemental";
+import { helper_withholding_medicare } from "./generated/helper_withholding_medicare";
+import { helper_withholding_socialsecurity } from "./generated/helper_withholding_socialsecurity";
 
 import type { SpecificationRegistry } from "./types/specificationRegistry";
 
@@ -57,5 +63,11 @@ export const specifications: SpecificationRegistry = {
   fW2,
   fW2_12_codes,
   helper_income,
-  helper_withholding,
+  helper_withholding_additionalmedicare,
+  helper_withholding_federal_additional,
+  helper_withholding_federal_custom,
+  helper_withholding_federal_regular,
+  helper_withholding_federal_supplemental,
+  helper_withholding_medicare,
+  helper_withholding_socialsecurity,
 };
