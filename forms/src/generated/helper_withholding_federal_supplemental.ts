@@ -51,7 +51,45 @@ export const helper_withholding_federal_supplemental: FormSpecification = {
             identifier: "3",
             value: {
               type: "override_number_input",
-              computedValue: { type: "number_constant", value: 0.22 },
+              computedValue: {
+                type: "quotient",
+                dividend: {
+                  type: "sum",
+                  values: [
+                    {
+                      type: "product",
+                      values: [
+                        {
+                          type: "minimum",
+                          values: [
+                            { type: "box_reference", box: "2" },
+                            { type: "number_constant", value: 1000000 },
+                          ],
+                        },
+                        { type: "number_constant", value: 0.22 },
+                      ],
+                    },
+                    {
+                      type: "product",
+                      values: [
+                        {
+                          type: "non_negative_clamp",
+                          value: {
+                            type: "difference",
+                            minuend: { type: "box_reference", box: "2" },
+                            subtrahend: {
+                              type: "number_constant",
+                              value: 1000000,
+                            },
+                          },
+                        },
+                        { type: "number_constant", value: 0.37 },
+                      ],
+                    },
+                  ],
+                },
+                divisor: { type: "box_reference", box: "2" },
+              },
             },
             format: "percentage",
           },

@@ -36,7 +36,27 @@ You can modify these values directly or use the wizard again to replace them.
   - {% instructions %}Withholding rate{% /instructions %}
   - {% box identifier="3" format="percentage" %}
     {% value type="override_number_input" %}
-    - {% value slot="computedValue" type="number_constant" value=0.22 /%}
+    - {% value slot="computedValue" type="quotient" %}
+      - {% value slot="dividend" type="sum" %}
+        - {% value type="product" %}
+          - {% value type="minimum" %}
+            - {% value type="box_reference" box="2" /%}
+            - {% value type="number_constant" value=1000000 /%}
+            {% /value %}
+          - {% value type="number_constant" value=0.22 /%}
+          {% /value %}
+        - {% value type="product" %}
+          - {% value type="non_negative_clamp" %}
+            - {% value type="difference" %}
+              - {% value slot="minuend" type="box_reference" box="2" /%}
+              - {% value slot="subtrahend" type="number_constant" value=1000000 /%}
+              {% /value %}
+            {% /value %}
+          - {% value type="number_constant" value=0.37 /%}
+          {% /value %}
+        {% /value %}
+      - {% value slot="divisor" type="box_reference" box="2" /%}
+      {% /value %}
     {% /value %}
     {% /box %}
   {% /line %}
