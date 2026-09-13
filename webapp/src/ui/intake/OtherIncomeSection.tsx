@@ -2,10 +2,11 @@ import React from "react";
 
 import { Controller, useFieldArray } from "react-hook-form";
 
-import { DEFAULT_INCOME_COMPONENT } from "#src/ui/intake/defaults";
+import { DEFAULT_OTHER_INCOME_COMPONENT } from "#src/ui/intake/defaults";
 import { IncomeComponentFields } from "#src/ui/intake/IncomeComponentFields";
 import { ListItemDisclosure } from "#src/ui/intake/ListItemDisclosure";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
+import { CheckboxField } from "#src/ui/primitives/CheckboxField";
 import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 import { TextField } from "#src/ui/primitives/TextField";
 
@@ -89,13 +90,24 @@ export function OtherIncomeSection({ control }: Props): React.ReactNode {
           <IncomeComponentFields
             control={control}
             path={`otherIncome.${index}.income`}
+            withholdingFields={
+              <>
+                <Controller
+                  control={control}
+                  name={`otherIncome.${index}.income.withholding.federalBackup`}
+                  render={({ field }) => (
+                    <CheckboxField label="Backup withholding" {...field} />
+                  )}
+                />
+              </>
+            }
           />
         </ListItemDisclosure>
       ))}
       <AriaButton
         onPress={() =>
           append({
-            income: DEFAULT_INCOME_COMPONENT,
+            income: DEFAULT_OTHER_INCOME_COMPONENT,
             label: "",
             source: "",
             type: null,

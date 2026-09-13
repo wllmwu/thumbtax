@@ -8,10 +8,10 @@ type DateRange = {
 type PaymentSchedule = {
   amount: number;
   hoursPerWeek: number;
-  interval: "hour" | "month" | "one_time" | "two_weeks" | "week";
+  interval: "hour" | "month" | "one_time" | "two_weeks" | "week" | "year";
 };
 
-type Withholding = {
+type FederalEmploymentWithholding = {
   additionalFederalIncomeAmount: number;
   additionalMedicare: "off" | "regular";
   customFederalIncomeRate: number;
@@ -20,15 +20,24 @@ type Withholding = {
   socialSecurity: "off" | "regular";
 };
 
-export type IncomeComponent = {
+type FederalBackupWithholding = {
+  federalBackup: boolean;
+};
+
+type IncomeComponent<TWithholding> = {
   dateRange: DateRange;
   paymentSchedule: PaymentSchedule;
   prorationBasis: "day" | "weekday";
-  withholding: Withholding;
+  withholding: TWithholding;
 };
 
+export type EmploymentIncomeComponent =
+  IncomeComponent<FederalEmploymentWithholding>;
+
+export type OtherIncomeComponent = IncomeComponent<FederalBackupWithholding>;
+
 type Wage = {
-  income: IncomeComponent;
+  income: EmploymentIncomeComponent;
   label: string;
   ui: {
     expanded: boolean;
@@ -43,8 +52,8 @@ type Job = {
   wages: Wage[];
 };
 
-type OtherIncome = {
-  income: IncomeComponent;
+export type OtherIncome = {
+  income: OtherIncomeComponent;
   label: string;
   source: string;
   type:
