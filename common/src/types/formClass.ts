@@ -24,6 +24,7 @@ export const FORM_CLASSES = [
   "helper_income",
   "helper_withholding_additionalmedicare",
   "helper_withholding_federal_additional",
+  "helper_withholding_federal_backup",
   "helper_withholding_federal_custom",
   "helper_withholding_federal_regular",
   "helper_withholding_federal_supplemental",

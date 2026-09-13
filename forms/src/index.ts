@@ -23,6 +23,7 @@ import { fW2_12_codes } from "./generated/fW2_12_codes";
 import { helper_income } from "./generated/helper_income";
 import { helper_withholding_additionalmedicare } from "./generated/helper_withholding_additionalmedicare";
 import { helper_withholding_federal_additional } from "./generated/helper_withholding_federal_additional";
+import { helper_withholding_federal_backup } from "./generated/helper_withholding_federal_backup";
 import { helper_withholding_federal_custom } from "./generated/helper_withholding_federal_custom";
 import { helper_withholding_federal_regular } from "./generated/helper_withholding_federal_regular";
 import { helper_withholding_federal_supplemental } from "./generated/helper_withholding_federal_supplemental";
@@ -65,6 +66,7 @@ export const specifications: SpecificationRegistry = {
   helper_income,
   helper_withholding_additionalmedicare,
   helper_withholding_federal_additional,
+  helper_withholding_federal_backup,
   helper_withholding_federal_custom,
   helper_withholding_federal_regular,
   helper_withholding_federal_supplemental,
