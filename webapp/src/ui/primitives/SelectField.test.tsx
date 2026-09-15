@@ -81,7 +81,7 @@ describe("SelectField", () => {
     await screen.findByRole("button");
     expect(container.querySelector("select")).toHaveAttribute(
       "name",
-      "testname",
+      "testName",
     );
   });
 
