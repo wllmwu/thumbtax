@@ -31,12 +31,12 @@
 - {% line index="1a" %}
   - {% instructions %}Totals for all short-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 1b{% /instructions %}
   - {% box identifier="1a(d)" column="(d)" %}
-    {% value type="select_instance_boxes_input" %}
+    {% value type="select_instance_boxes_input" inputKey="1a(d)" %}
     - {% option form="f1099B" box="1d" /%}
     {% /value %}
     {% /box %}
   - {% box identifier="1a(e)" column="(e)" %}
-    {% value type="select_instance_boxes_input" %}
+    {% value type="select_instance_boxes_input" inputKey="1a(e)" %}
     - {% option form="f1099B" box="1e" /%}
     {% /value %}
     {% /box %}
@@ -53,9 +53,9 @@
   {% /line %}
 - {% line index="1b" %}
   - {% instructions %}Totals for all transactions reported on Form(s) 8949 with Box A or Box G checked{% /instructions %}
-  - {% box identifier="1b(d)" column="(d)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="1b(e)" column="(e)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="1b(g)" column="(g)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1b(d)" column="(d)" %}{% value type="number_input" inputKey="1b(d)" /%}{% /box %}
+  - {% box identifier="1b(e)" column="(e)" %}{% value type="number_input" inputKey="1b(e)" /%}{% /box %}
+  - {% box identifier="1b(g)" column="(g)" %}{% value type="number_input" inputKey="1b(g)" /%}{% /box %}
   - {% box identifier="1b(h)" column="(h)" %}
     {% value type="sum" %}
     - {% value type="difference" %}
@@ -68,9 +68,9 @@
   {% /line %}
 - {% line index="2" %}
   - {% instructions %}Totals for all transactions reported on Form(s) 8949 with Box B or Box H checked{% /instructions %}
-  - {% box identifier="2(d)" column="(d)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="2(e)" column="(e)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="2(g)" column="(g)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2(d)" column="(d)" %}{% value type="number_input" inputKey="2(d)" /%}{% /box %}
+  - {% box identifier="2(e)" column="(e)" %}{% value type="number_input" inputKey="2(e)" /%}{% /box %}
+  - {% box identifier="2(g)" column="(g)" %}{% value type="number_input" inputKey="2(g)" /%}{% /box %}
   - {% box identifier="2(h)" column="(h)" %}
     {% value type="sum" %}
     - {% value type="difference" %}
@@ -83,9 +83,9 @@
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}Totals for all transactions reported on Form(s) 8949 with Box C or Box I checked{% /instructions %}
-  - {% box identifier="3(d)" column="(d)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="3(e)" column="(e)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="3(g)" column="(g)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="3(d)" column="(d)" %}{% value type="number_input" inputKey="3(d)" /%}{% /box %}
+  - {% box identifier="3(e)" column="(e)" %}{% value type="number_input" inputKey="3(e)" /%}{% /box %}
+  - {% box identifier="3(g)" column="(g)" %}{% value type="number_input" inputKey="3(g)" /%}{% /box %}
   - {% box identifier="3(h)" column="(h)" %}
     {% value type="sum" %}
     - {% value type="difference" %}
@@ -105,15 +105,15 @@
 {% lines %}
 - {% line index="4" %}
   - {% instructions %}Short-term gain from Form 6252 and short-term gain or (loss) from Forms 4684, 6781, and 8824{% /instructions %}
-  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="4" %}{% value type="number_input" inputKey="4" /%}{% /box %}
   {% /line %}
 - {% line index="5" %}
   - {% instructions %}Net short-term gain or (loss) from partnerships, S corporations, estates, and trusts from Schedule(s) K-1{% /instructions %}
-  - {% box identifier="5" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="5" %}{% value type="number_input" inputKey="5" /%}{% /box %}
   {% /line %}
 - {% line index="6" %}
   - {% instructions %}Short-term capital loss carryover. Enter the amount, if any, from line 8 of your Capital Loss Carryover Worksheet in the instructions{% /instructions %}
-  - {% box identifier="6" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  - {% box identifier="6" %}{% value type="number_input" inputKey="6" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="7" %}
   - {% instructions %}**Net short-term capital gain or (loss).** Combine lines 1a through 6 in column (h). If you have any long-term capital gains or losses, go to Part II below. Otherwise, go to Part III on the back{% /instructions %}
@@ -156,12 +156,12 @@
 - {% line index="8a" %}
   - {% instructions %}Totals for all long-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 8b{% /instructions %}
   - {% box identifier="8a(d)" column="(d)" %}
-    {% value type="select_instance_boxes_input" %}
+    {% value type="select_instance_boxes_input" inputKey="8a(d)" %}
     - {% option form="f1099B" box="1d" /%}
     {% /value %}
     {% /box %}
   - {% box identifier="8a(e)" column="(e)" %}
-    {% value type="select_instance_boxes_input" %}
+    {% value type="select_instance_boxes_input" inputKey="8a(e)" %}
     - {% option form="f1099B" box="1e" /%}
     {% /value %}
     {% /box %}
@@ -178,9 +178,9 @@
   {% /line %}
 - {% line index="8b" %}
   - {% instructions %}Totals for all transactions reported on Form(s) 8949 with Box D or Box J checked{% /instructions %}
-  - {% box identifier="8b(d)" column="(d)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="8b(e)" column="(e)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="8b(g)" column="(g)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8b(d)" column="(d)" %}{% value type="number_input" inputKey="8b(d)" /%}{% /box %}
+  - {% box identifier="8b(e)" column="(e)" %}{% value type="number_input" inputKey="8b(e)" /%}{% /box %}
+  - {% box identifier="8b(g)" column="(g)" %}{% value type="number_input" inputKey="8b(g)" /%}{% /box %}
   - {% box identifier="8b(h)" column="(h)" %}
     {% value type="sum" %}
     - {% value type="difference" %}
@@ -193,9 +193,9 @@
   {% /line %}
 - {% line index="9" %}
   - {% instructions %}Totals for all transactions reported on Form(s) 8949 with Box E or Box K checked{% /instructions %}
-  - {% box identifier="9(d)" column="(d)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="9(e)" column="(e)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="9(g)" column="(g)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="9(d)" column="(d)" %}{% value type="number_input" inputKey="9(d)" /%}{% /box %}
+  - {% box identifier="9(e)" column="(e)" %}{% value type="number_input" inputKey="9(e)" /%}{% /box %}
+  - {% box identifier="9(g)" column="(g)" %}{% value type="number_input" inputKey="9(g)" /%}{% /box %}
   - {% box identifier="9(h)" column="(h)" %}
     {% value type="sum" %}
     - {% value type="difference" %}
@@ -208,9 +208,9 @@
   {% /line %}
 - {% line index="10" %}
   - {% instructions %}Totals for all transactions reported on Form(s) 8949 with Box F or Box L checked{% /instructions %}
-  - {% box identifier="10(d)" column="(d)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="10(e)" column="(e)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="10(g)" column="(g)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="10(d)" column="(d)" %}{% value type="number_input" inputKey="10(d)" /%}{% /box %}
+  - {% box identifier="10(e)" column="(e)" %}{% value type="number_input" inputKey="10(e)" /%}{% /box %}
+  - {% box identifier="10(g)" column="(g)" %}{% value type="number_input" inputKey="10(g)" /%}{% /box %}
   - {% box identifier="10(h)" column="(h)" %}
     {% value type="sum" %}
     - {% value type="difference" %}
@@ -230,11 +230,11 @@
 {% lines %}
 - {% line index="11" %}
   - {% instructions %}Gain from Form 4797, Part I; long-term gain from Forms 2439 and 6252; and long-term gain or (loss) from Forms 4684, 6781, and 8824{% /instructions %}
-  - {% box identifier="11" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="11" %}{% value type="number_input" inputKey="11" /%}{% /box %}
   {% /line %}
 - {% line index="12" %}
   - {% instructions %}Net long-term gain or (loss) from partnerships, S corporations, estates, and trusts from Schedule(s) K-1{% /instructions %}
-  - {% box identifier="12" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="12" %}{% value type="number_input" inputKey="12" /%}{% /box %}
   {% /line %}
 - {% line index="13" %}
   - {% instructions %}Capital gain distributions. See the instructions{% /instructions %}
@@ -242,7 +242,7 @@
   {% /line %}
 - {% line index="14" %}
   - {% instructions %}Long-term capital loss carryover. Enter the amount, if any, from line 13 of your Capital Loss Carryover Worksheet in the instructions{% /instructions %}
-  - {% box identifier="14" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  - {% box identifier="14" %}{% value type="number_input" inputKey="14" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="15" %}
   - {% instructions %}**Net long-term capital gain or (loss).** Combine lines 8a through 14 in column (h). Then, go to Part III on the back{% /instructions %}
@@ -306,7 +306,7 @@
 - {% line index="18" %}
   - {% instructions %}If you are required to complete the 28% Rate Gain Worksheet (see instructions), enter the amount, if any, from line 7 of that worksheet{% /instructions %}
   - {% box identifier="18" %}
-    {% value type="number_input" %}
+    {% value type="number_input" inputKey="18" %}
     - {% value slot="skipCondition" type="disjunction" %}
       - {% value type="comparison" %}
         - {% value type="box_reference" box="16" /%}
@@ -322,7 +322,7 @@
 - {% line index="19" %}
   - {% instructions %}If you are required to complete the Unrecaptured Section 1250 Gain Worksheet (see instructions), enter the amount, if any, from line 18 of that worksheet{% /instructions %}
   - {% box identifier="19" %}
-    {% value type="number_input" %}
+    {% value type="number_input" inputKey="19" %}
     - {% value slot="skipCondition" type="disjunction" %}
       - {% value type="comparison" %}
         - {% value type="box_reference" box="16" /%}

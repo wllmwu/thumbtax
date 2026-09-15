@@ -25,6 +25,10 @@ const AMOUNT_LIST_BOX = "amount-list-box";
 const SELECTION_BOX = "selection-box";
 const FILING_STATUS_BOX = "filing-status-box";
 const INSTANCE_SELECTIONS_BOX = "instance-selections-box";
+const NUMBER_INPUT_KEY = "number-input-key";
+const AMOUNT_LIST_KEY = "amount-list-key";
+const SELECTION_KEY = "selection-key";
+const INSTANCE_SELECTIONS_KEY = "instance-selections-key";
 
 function makeTestRegistry(
   extraLines: FormLine<false>[] = [],
@@ -39,14 +43,17 @@ function makeTestRegistry(
               index: "1",
               box: makeBoxFixture({
                 identifier: NUMBER_INPUT_BOX,
-                value: { type: "number_input" },
+                value: { type: "number_input", inputKey: NUMBER_INPUT_KEY },
               }),
             }),
             makeLineFixture({
               index: "2",
               box: makeBoxFixture({
                 identifier: AMOUNT_LIST_BOX,
-                value: { type: "list_amounts_input" },
+                value: {
+                  type: "list_amounts_input",
+                  inputKey: AMOUNT_LIST_KEY,
+                },
               }),
             }),
             makeLineFixture({
@@ -55,6 +62,7 @@ function makeTestRegistry(
                 identifier: SELECTION_BOX,
                 value: {
                   type: "select_value_input",
+                  inputKey: SELECTION_KEY,
                   options: [
                     {
                       key: "a",
@@ -102,6 +110,7 @@ function makeInstanceSelectionsLineFixture(): FormLine<false> {
       identifier: INSTANCE_SELECTIONS_BOX,
       value: {
         type: "select_instance_boxes_input",
+        inputKey: INSTANCE_SELECTIONS_KEY,
         options: [{ form: TEST_CLASS, box: NUMBER_INPUT_BOX }],
       },
     }),
@@ -209,7 +218,7 @@ describe("useStore", () => {
               id: "x",
               class: TEST_CLASS,
               label: "",
-              inputs: { [NUMBER_INPUT_BOX]: { type: "number", value: 42 } },
+              inputs: { [NUMBER_INPUT_KEY]: { type: "number", value: 42 } },
             },
           ],
         },
@@ -542,7 +551,7 @@ describe("useStore", () => {
       result.current.setBoxInput(
         OTHER_CLASS,
         holderId,
-        INSTANCE_SELECTIONS_BOX,
+        INSTANCE_SELECTIONS_KEY,
         {
           type: "instance_box_selections",
           selected: [
@@ -558,7 +567,7 @@ describe("useStore", () => {
       const holder = result.current.applicationState.formInstances[
         OTHER_CLASS
       ]?.find(({ id }) => id === holderId);
-      expect(holder?.inputs[INSTANCE_SELECTIONS_BOX]).toEqual({
+      expect(holder?.inputs[INSTANCE_SELECTIONS_KEY]).toEqual({
         type: "instance_box_selections",
         selected: [{ instance: keptId, box: NUMBER_INPUT_BOX }],
       });
@@ -580,7 +589,7 @@ describe("useStore", () => {
       result.current.setBoxInput(
         TEST_CLASS,
         holder1Id,
-        INSTANCE_SELECTIONS_BOX,
+        INSTANCE_SELECTIONS_KEY,
         {
           type: "instance_box_selections",
           selected: [
@@ -593,7 +602,7 @@ describe("useStore", () => {
       result.current.setBoxInput(
         OTHER_CLASS,
         holder2Id,
-        INSTANCE_SELECTIONS_BOX,
+        INSTANCE_SELECTIONS_KEY,
         {
           type: "instance_box_selections",
           selected: [{ instance: removedId, box: NUMBER_INPUT_BOX }],
@@ -609,11 +618,11 @@ describe("useStore", () => {
       const holder2 = result.current.applicationState.formInstances[
         OTHER_CLASS
       ]?.find(({ id }) => id === holder2Id);
-      expect(holder1?.inputs[INSTANCE_SELECTIONS_BOX]).toEqual({
+      expect(holder1?.inputs[INSTANCE_SELECTIONS_KEY]).toEqual({
         type: "instance_box_selections",
         selected: [{ instance: keptId, box: NUMBER_INPUT_BOX }],
       });
-      expect(holder2?.inputs[INSTANCE_SELECTIONS_BOX]).toEqual({
+      expect(holder2?.inputs[INSTANCE_SELECTIONS_KEY]).toEqual({
         type: "instance_box_selections",
         selected: [],
       });
@@ -625,7 +634,7 @@ describe("useStore", () => {
       const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
-      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
+      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_KEY, {
         type: "number",
         value: 7,
       });
@@ -636,7 +645,7 @@ describe("useStore", () => {
       const instance =
         result.current.applicationState.formInstances[TEST_CLASS]?.[0];
       expect(instance?.label).toEqual("Updated");
-      expect(instance?.inputs[NUMBER_INPUT_BOX]).toEqual({
+      expect(instance?.inputs[NUMBER_INPUT_KEY]).toEqual({
         type: "number",
         value: 7,
       });
@@ -993,12 +1002,12 @@ describe("useStore", () => {
       const id = result.current.addFormInstance(TEST_CLASS);
       const value: UserInput = { type: "number", value: 42 };
 
-      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, value);
+      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_KEY, value);
 
       rerender();
       const instance =
         result.current.applicationState.formInstances[TEST_CLASS]?.[0];
-      expect(instance?.inputs[NUMBER_INPUT_BOX]).toEqual(value);
+      expect(instance?.inputs[NUMBER_INPUT_KEY]).toEqual(value);
     });
 
     it("stores an amount_list input on the specified box", () => {
@@ -1013,12 +1022,12 @@ describe("useStore", () => {
         ],
       };
 
-      result.current.setBoxInput(TEST_CLASS, id, AMOUNT_LIST_BOX, value);
+      result.current.setBoxInput(TEST_CLASS, id, AMOUNT_LIST_KEY, value);
 
       rerender();
       const instance =
         result.current.applicationState.formInstances[TEST_CLASS]?.[0];
-      expect(instance?.inputs[AMOUNT_LIST_BOX]).toEqual(value);
+      expect(instance?.inputs[AMOUNT_LIST_KEY]).toEqual(value);
     });
 
     it("stores a selection input on the specified box", () => {
@@ -1027,24 +1036,24 @@ describe("useStore", () => {
       const id = result.current.addFormInstance(TEST_CLASS);
       const value: UserInput = { type: "selection", selectedKey: "b" };
 
-      result.current.setBoxInput(TEST_CLASS, id, SELECTION_BOX, value);
+      result.current.setBoxInput(TEST_CLASS, id, SELECTION_KEY, value);
 
       rerender();
       const instance =
         result.current.applicationState.formInstances[TEST_CLASS]?.[0];
-      expect(instance?.inputs[SELECTION_BOX]).toEqual(value);
+      expect(instance?.inputs[SELECTION_KEY]).toEqual(value);
     });
 
     it("overwrites a prior input on the same box", () => {
       const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
-      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
+      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_KEY, {
         type: "number",
         value: 1,
       });
 
-      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
+      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_KEY, {
         type: "number",
         value: 999,
       });
@@ -1052,7 +1061,7 @@ describe("useStore", () => {
       rerender();
       const instance =
         result.current.applicationState.formInstances[TEST_CLASS]?.[0];
-      expect(instance?.inputs[NUMBER_INPUT_BOX]).toEqual({
+      expect(instance?.inputs[NUMBER_INPUT_KEY]).toEqual({
         type: "number",
         value: 999,
       });
@@ -1062,12 +1071,12 @@ describe("useStore", () => {
       const { result, rerender } = renderUseStore();
 
       const id = result.current.addFormInstance(TEST_CLASS);
-      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
+      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_KEY, {
         type: "number",
         value: 5,
       });
 
-      result.current.setBoxInput(TEST_CLASS, id, SELECTION_BOX, {
+      result.current.setBoxInput(TEST_CLASS, id, SELECTION_KEY, {
         type: "selection",
         selectedKey: "a",
       });
@@ -1075,7 +1084,7 @@ describe("useStore", () => {
       rerender();
       const instance =
         result.current.applicationState.formInstances[TEST_CLASS]?.[0];
-      expect(instance?.inputs[NUMBER_INPUT_BOX]).toEqual({
+      expect(instance?.inputs[NUMBER_INPUT_KEY]).toEqual({
         type: "number",
         value: 5,
       });
@@ -1086,12 +1095,12 @@ describe("useStore", () => {
 
       const id1 = result.current.addFormInstance(TEST_CLASS);
       const id2 = result.current.addFormInstance(TEST_CLASS);
-      result.current.setBoxInput(TEST_CLASS, id1, NUMBER_INPUT_BOX, {
+      result.current.setBoxInput(TEST_CLASS, id1, NUMBER_INPUT_KEY, {
         type: "number",
         value: 11,
       });
 
-      result.current.setBoxInput(TEST_CLASS, id2, NUMBER_INPUT_BOX, {
+      result.current.setBoxInput(TEST_CLASS, id2, NUMBER_INPUT_KEY, {
         type: "number",
         value: 22,
       });
@@ -1100,7 +1109,7 @@ describe("useStore", () => {
       const instances =
         result.current.applicationState.formInstances[TEST_CLASS];
       expect(
-        instances?.find(({ id }) => id === id1)?.inputs[NUMBER_INPUT_BOX],
+        instances?.find(({ id }) => id === id1)?.inputs[NUMBER_INPUT_KEY],
       ).toEqual({ type: "number", value: 11 });
     });
 
@@ -1112,7 +1121,7 @@ describe("useStore", () => {
       rerender();
       expect(result.current.workbook[id][NUMBER_INPUT_BOX].value).toEqual(0);
 
-      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
+      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_KEY, {
         type: "number",
         value: 42,
       });
@@ -1135,7 +1144,7 @@ describe("useStore", () => {
       rerender();
       expect(result.current.history.future.length).toEqual(1);
 
-      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_BOX, {
+      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_KEY, {
         type: "number",
         value: 1,
       });
@@ -1158,7 +1167,7 @@ describe("useStore", () => {
       result.current.setBoxInput(
         OTHER_CLASS,
         "any-id",
-        NUMBER_INPUT_BOX,
+        NUMBER_INPUT_KEY,
         value,
       );
 
@@ -1171,7 +1180,7 @@ describe("useStore", () => {
       result.current.setBoxInput(
         TEST_CLASS,
         "no-such-id",
-        NUMBER_INPUT_BOX,
+        NUMBER_INPUT_KEY,
         value,
       );
 
@@ -1437,7 +1446,7 @@ describe("useStore", () => {
       expect(boxResult.current).toEqual({ value: 0, errors: [] });
 
       result.current.setFilingStatus("head_of_household");
-      result.current.setBoxInput(TEST_CLASS, instanceId, NUMBER_INPUT_BOX, {
+      result.current.setBoxInput(TEST_CLASS, instanceId, NUMBER_INPUT_KEY, {
         type: "number",
         value: 10,
       });
@@ -1567,7 +1576,7 @@ describe("useStore", () => {
               id: "abc",
               class: TEST_CLASS,
               label: "L",
-              inputs: { [NUMBER_INPUT_BOX]: { type: "number", value: 42 } },
+              inputs: { [NUMBER_INPUT_KEY]: { type: "number", value: 42 } },
             },
           ],
         },

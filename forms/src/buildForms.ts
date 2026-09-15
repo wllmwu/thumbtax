@@ -4,6 +4,7 @@ import * as path from "node:path";
 import * as process from "node:process";
 import * as prettier from "prettier";
 
+import { assertUniqueInputKeys } from "./build/assertUniqueInputKeys";
 import { mapFormSpecification } from "./build/mapFormSpecification";
 import { mapGlossary } from "./build/mapGlossary";
 import { config } from "./schema";
@@ -34,13 +35,14 @@ async function buildForm(fileName: string): Promise<void> {
   const formSpecification = mapFormSpecification(
     transform(documentNode, config),
   );
+  assertUniqueInputKeys(formSpecification);
   const outputPath = path.join(
     OUTPUT_DIRECTORY,
     `${formSpecification.class}.ts`,
   );
-  const rawContent = `import type { FormSpecification } from "../types/formSpecification";
+  const rawContent = `import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const ${formSpecification.class}: FormSpecification = ${JSON.stringify(formSpecification)};
+export const ${formSpecification.class} = defineFormSpecification(${JSON.stringify(formSpecification)});
 `;
   const formattedContent = await prettier.format(rawContent, {
     filepath: outputPath,

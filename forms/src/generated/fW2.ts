@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const fW2: FormSpecification = {
+export const fW2 = defineFormSpecification({
   class: "fW2",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-w-2",
   category: "income",
@@ -13,53 +13,83 @@ export const fW2: FormSpecification = {
         {
           index: "1",
           instructions: "Wages, tips, other compensation",
-          box: { identifier: "1", value: { type: "number_input" } },
+          box: {
+            identifier: "1",
+            value: { type: "number_input", inputKey: "1" },
+          },
         },
         {
           index: "2",
           instructions: "Federal income tax withheld",
-          box: { identifier: "2", value: { type: "number_input" } },
+          box: {
+            identifier: "2",
+            value: { type: "number_input", inputKey: "2" },
+          },
         },
         {
           index: "3",
           instructions: "Social security wages",
-          box: { identifier: "3", value: { type: "number_input" } },
+          box: {
+            identifier: "3",
+            value: { type: "number_input", inputKey: "3" },
+          },
         },
         {
           index: "4",
           instructions: "Social security tax withheld",
-          box: { identifier: "4", value: { type: "number_input" } },
+          box: {
+            identifier: "4",
+            value: { type: "number_input", inputKey: "4" },
+          },
         },
         {
           index: "5",
           instructions: "Medicare wages and tips",
-          box: { identifier: "5", value: { type: "number_input" } },
+          box: {
+            identifier: "5",
+            value: { type: "number_input", inputKey: "5" },
+          },
         },
         {
           index: "6",
           instructions: "Medicare tax withheld",
-          box: { identifier: "6", value: { type: "number_input" } },
+          box: {
+            identifier: "6",
+            value: { type: "number_input", inputKey: "6" },
+          },
         },
         {
           index: "7",
           instructions: "Social security tips",
-          box: { identifier: "7", value: { type: "number_input" } },
+          box: {
+            identifier: "7",
+            value: { type: "number_input", inputKey: "7" },
+          },
         },
         {
           index: "8",
           instructions: "Allocated tips",
-          box: { identifier: "8", value: { type: "number_input" } },
+          box: {
+            identifier: "8",
+            value: { type: "number_input", inputKey: "8" },
+          },
         },
         { index: "9", box: { identifier: "9", value: { type: "unused" } } },
         {
           index: "10",
           instructions: "Dependent care benefits",
-          box: { identifier: "10", value: { type: "number_input" } },
+          box: {
+            identifier: "10",
+            value: { type: "number_input", inputKey: "10" },
+          },
         },
         {
           index: "11",
           instructions: "Nonqualified plans",
-          box: { identifier: "11", value: { type: "number_input" } },
+          box: {
+            identifier: "11",
+            value: { type: "number_input", inputKey: "11" },
+          },
         },
         {
           index: "12a–d",
@@ -75,7 +105,10 @@ export const fW2: FormSpecification = {
         {
           index: "14a",
           instructions: "Other",
-          box: { identifier: "14a", value: { type: "number_input" } },
+          box: {
+            identifier: "14a",
+            value: { type: "number_input", inputKey: "14a" },
+          },
         },
         {
           index: "14b",
@@ -90,22 +123,34 @@ export const fW2: FormSpecification = {
         {
           index: "16",
           instructions: "State wages, tips, etc.",
-          box: { identifier: "16", value: { type: "number_input" } },
+          box: {
+            identifier: "16",
+            value: { type: "number_input", inputKey: "16" },
+          },
         },
         {
           index: "17",
           instructions: "State income tax",
-          box: { identifier: "17", value: { type: "number_input" } },
+          box: {
+            identifier: "17",
+            value: { type: "number_input", inputKey: "17" },
+          },
         },
         {
           index: "18",
           instructions: "Local wages, tips, etc.",
-          box: { identifier: "18", value: { type: "number_input" } },
+          box: {
+            identifier: "18",
+            value: { type: "number_input", inputKey: "18" },
+          },
         },
         {
           index: "19",
           instructions: "Local income tax",
-          box: { identifier: "19", value: { type: "number_input" } },
+          box: {
+            identifier: "19",
+            value: { type: "number_input", inputKey: "19" },
+          },
         },
         {
           index: "20",
@@ -115,4 +160,4 @@ export const fW2: FormSpecification = {
       ],
     },
   ],
-};
+});

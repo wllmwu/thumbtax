@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f8995: FormSpecification = {
+export const f8995 = defineFormSpecification({
   class: "f8995",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8995",
   category: "taxes",
@@ -22,7 +22,7 @@ export const f8995: FormSpecification = {
             { identifier: "1i(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1i(c)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "1i(c)" },
               column: "(c)",
             },
           ],
@@ -34,7 +34,7 @@ export const f8995: FormSpecification = {
             { identifier: "1ii(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1ii(c)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "1ii(c)" },
               column: "(c)",
             },
           ],
@@ -46,7 +46,7 @@ export const f8995: FormSpecification = {
             { identifier: "1iii(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1iii(c)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "1iii(c)" },
               column: "(c)",
             },
           ],
@@ -58,7 +58,7 @@ export const f8995: FormSpecification = {
             { identifier: "1iv(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1iv(c)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "1iv(c)" },
               column: "(c)",
             },
           ],
@@ -70,7 +70,7 @@ export const f8995: FormSpecification = {
             { identifier: "1v(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1v(c)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "1v(c)" },
               column: "(c)",
             },
           ],
@@ -103,7 +103,11 @@ export const f8995: FormSpecification = {
             "Qualified business net (loss) carryforward from the prior year",
           box: {
             identifier: "3",
-            value: { type: "number_input", coerceSign: "negative" },
+            value: {
+              type: "number_input",
+              inputKey: "3",
+              coerceSign: "negative",
+            },
           },
         },
         {
@@ -143,7 +147,10 @@ export const f8995: FormSpecification = {
           index: "6",
           instructions:
             "Qualified REIT dividends and publicly traded partnership (PTP) income or (loss) (see instructions)",
-          box: { identifier: "6", value: { type: "number_input" } },
+          box: {
+            identifier: "6",
+            value: { type: "number_input", inputKey: "6" },
+          },
         },
         {
           index: "7",
@@ -151,7 +158,11 @@ export const f8995: FormSpecification = {
             "Qualified REIT dividends and qualified PTP (loss) carryforward from the prior year",
           box: {
             identifier: "7",
-            value: { type: "number_input", coerceSign: "negative" },
+            value: {
+              type: "number_input",
+              inputKey: "7",
+              coerceSign: "negative",
+            },
           },
         },
         {
@@ -358,4 +369,4 @@ export const f8995: FormSpecification = {
       ],
     },
   ],
-};
+});

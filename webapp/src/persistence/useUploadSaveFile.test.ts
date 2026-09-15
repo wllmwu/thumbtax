@@ -30,7 +30,7 @@ function makeTestRegistry() {
               index: "1",
               box: makeBoxFixture({
                 identifier: TEST_BOX,
-                value: { type: "number_input" },
+                value: { type: "number_input", inputKey: TEST_BOX },
               }),
             }),
           ],

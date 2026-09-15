@@ -28,6 +28,7 @@ function renderComponent(
       boxAddress={{ instance: "f1040-1", box: "12a" }}
       valueProvider={{
         type: "select_instance_boxes_input",
+        inputKey: "12a",
         options: [{ form: "fW2", box: "1" }],
       }}
       selectedAddresses={[]}
@@ -97,6 +98,7 @@ describe("SelectInstanceBoxesField", () => {
       },
       valueProvider: {
         type: "select_instance_boxes_input",
+        inputKey: "12a",
         options: [
           { form: "fW2", box: "1" },
           { form: "f1099INT", box: "1" },
@@ -126,6 +128,7 @@ describe("SelectInstanceBoxesField", () => {
       },
       valueProvider: {
         type: "select_instance_boxes_input",
+        inputKey: "12a",
         options: [
           { form: "fW2", box: "1" },
           { form: "fW2", box: "2" },
@@ -158,6 +161,7 @@ describe("SelectInstanceBoxesField", () => {
       },
       valueProvider: {
         type: "select_instance_boxes_input",
+        inputKey: "12a",
         options: [
           { form: "fW2", box: "1" },
           { form: "f1099INT", box: "1" },

@@ -97,7 +97,7 @@ function ValueDisplay({
 }
 
 type InputBoxProps = {
-  boxIdentifier: BoxIdentifier;
+  inputKey: string;
   errorMessage: React.ReactNode;
   ariaLabelledBy: string;
   ariaDescribedBy: string | undefined;
@@ -106,7 +106,7 @@ type InputBoxProps = {
 
 function CheckboxInputBox({
   boxFormat,
-  boxIdentifier,
+  inputKey,
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
@@ -116,16 +116,16 @@ function CheckboxInputBox({
 }) {
   const setBoxInput = useStore((state) => state.setBoxInput);
 
-  const input = instance.inputs[boxIdentifier];
+  const input = instance.inputs[inputKey];
   const value = input?.type === "number" && input.value !== 0;
 
   const onChange = React.useCallback(
     (newValue: boolean | "yes" | "no") =>
-      setBoxInput(instance.class, instance.id, boxIdentifier, {
+      setBoxInput(instance.class, instance.id, inputKey, {
         type: "number",
         value: newValue === true || newValue === "yes" ? 1 : 0,
       }),
-    [boxIdentifier, instance.class, instance.id, setBoxInput],
+    [inputKey, instance.class, instance.id, setBoxInput],
   );
 
   return boxFormat === "yes_no" ? (
@@ -150,7 +150,7 @@ function CheckboxInputBox({
 }
 
 function DateInputBox({
-  boxIdentifier,
+  inputKey,
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
@@ -158,7 +158,7 @@ function DateInputBox({
 }: InputBoxProps) {
   const setBoxInput = useStore((state) => state.setBoxInput);
 
-  const input = instance.inputs[boxIdentifier];
+  const input = instance.inputs[inputKey];
   const value = React.useMemo(
     () =>
       input?.type === "number" ? EPOCH_DATE.add({ days: input.value }) : null,
@@ -170,12 +170,12 @@ function DateInputBox({
       if (!newValue) {
         return;
       }
-      setBoxInput(instance.class, instance.id, boxIdentifier, {
+      setBoxInput(instance.class, instance.id, inputKey, {
         type: "number",
         value: newValue.since(EPOCH_DATE).days,
       });
     },
-    [boxIdentifier, instance.class, instance.id, setBoxInput],
+    [inputKey, instance.class, instance.id, setBoxInput],
   );
 
   return (
@@ -190,7 +190,7 @@ function DateInputBox({
 }
 
 function ListAmountsInputBox({
-  boxIdentifier,
+  inputKey,
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
@@ -198,16 +198,16 @@ function ListAmountsInputBox({
 }: InputBoxProps) {
   const setBoxInput = useStore((state) => state.setBoxInput);
 
-  const input = instance.inputs[boxIdentifier];
+  const input = instance.inputs[inputKey];
   const list = input?.type === "amount_list" ? input.value : [];
 
   const onChange = React.useCallback(
     (newList: Array<{ label: string; amount: number }>) =>
-      setBoxInput(instance.class, instance.id, boxIdentifier, {
+      setBoxInput(instance.class, instance.id, inputKey, {
         type: "amount_list",
         value: newList,
       }),
-    [boxIdentifier, instance.class, instance.id, setBoxInput],
+    [inputKey, instance.class, instance.id, setBoxInput],
   );
 
   return (
@@ -223,7 +223,7 @@ function ListAmountsInputBox({
 
 function NumberInputBox({
   boxFormat,
-  boxIdentifier,
+  inputKey,
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
@@ -235,16 +235,16 @@ function NumberInputBox({
 }) {
   const setBoxInput = useStore((state) => state.setBoxInput);
 
-  const input = instance.inputs[boxIdentifier];
+  const input = instance.inputs[inputKey];
   const value = input?.type === "number" ? input.value : 0;
 
   const onChange = React.useCallback(
     (newValue: number) =>
-      setBoxInput(instance.class, instance.id, boxIdentifier, {
+      setBoxInput(instance.class, instance.id, inputKey, {
         type: "number",
         value: newValue,
       }),
-    [boxIdentifier, instance.class, instance.id, setBoxInput],
+    [inputKey, instance.class, instance.id, setBoxInput],
   );
 
   return (
@@ -262,7 +262,7 @@ function NumberInputBox({
 
 function OverrideNumberInputBox({
   boxFormat,
-  boxIdentifier,
+  inputKey,
   errorMessage,
   ariaLabelledBy,
   ariaDescribedBy,
@@ -274,26 +274,26 @@ function OverrideNumberInputBox({
 }) {
   const setBoxInput = useStore((state) => state.setBoxInput);
 
-  const input = instance.inputs[boxIdentifier];
+  const input = instance.inputs[inputKey];
   const isOverridden =
     input?.type === "override" ? input.override !== null : false;
 
   const onChangeIsOverridden = React.useCallback(
     (newIsOverridden: boolean) =>
-      setBoxInput(instance.class, instance.id, boxIdentifier, {
+      setBoxInput(instance.class, instance.id, inputKey, {
         type: "override",
         override: newIsOverridden ? value : null,
       }),
-    [boxIdentifier, instance.class, instance.id, setBoxInput, value],
+    [inputKey, instance.class, instance.id, setBoxInput, value],
   );
 
   const onChangeOverrideValue = React.useCallback(
     (newValue: number) =>
-      setBoxInput(instance.class, instance.id, boxIdentifier, {
+      setBoxInput(instance.class, instance.id, inputKey, {
         type: "override",
         override: newValue,
       }),
-    [boxIdentifier, instance.class, instance.id, setBoxInput],
+    [inputKey, instance.class, instance.id, setBoxInput],
   );
 
   const overrideLabelId = React.useId();
@@ -331,6 +331,7 @@ function OverrideNumberInputBox({
 function SelectInstanceBoxesInputBox({
   boxFormat,
   boxIdentifier,
+  inputKey,
   boxValue,
   errorMessage,
   ariaLabelledBy,
@@ -339,6 +340,7 @@ function SelectInstanceBoxesInputBox({
   value,
 }: InputBoxProps & {
   boxFormat: BoxFormat;
+  boxIdentifier: BoxIdentifier;
   boxValue: Extract<ValueProvider, { type: "select_instance_boxes_input" }>;
   value: number;
 }) {
@@ -348,17 +350,17 @@ function SelectInstanceBoxesInputBox({
   );
   const setBoxInput = useStore((state) => state.setBoxInput);
 
-  const input = instance.inputs[boxIdentifier];
+  const input = instance.inputs[inputKey];
   const selectedAddresses =
     input?.type === "instance_box_selections" ? input.selected : [];
 
   const onChange = React.useCallback(
     (newSelectedAddresses: BoxAddress[]) =>
-      setBoxInput(instance.class, instance.id, boxIdentifier, {
+      setBoxInput(instance.class, instance.id, inputKey, {
         type: "instance_box_selections",
         selected: newSelectedAddresses,
       }),
-    [boxIdentifier, instance.class, instance.id, setBoxInput],
+    [inputKey, instance.class, instance.id, setBoxInput],
   );
 
   if (!specifications) {
@@ -390,7 +392,7 @@ function SelectInstanceBoxesInputBox({
 }
 
 function SelectValueInputBox({
-  boxIdentifier,
+  inputKey,
   boxValue,
   errorMessage,
   ariaLabelledBy,
@@ -401,18 +403,18 @@ function SelectValueInputBox({
 }) {
   const setBoxInput = useStore((state) => state.setBoxInput);
 
-  const input = instance.inputs[boxIdentifier];
+  const input = instance.inputs[inputKey];
   const options = boxValue.options;
   const selectedKey = input?.type === "selection" ? input.selectedKey : null;
 
   const onChange = React.useCallback(
     (newSelectedKey: string) => {
-      setBoxInput(instance.class, instance.id, boxIdentifier, {
+      setBoxInput(instance.class, instance.id, inputKey, {
         type: "selection",
         selectedKey: newSelectedKey,
       });
     },
-    [boxIdentifier, instance.class, instance.id, setBoxInput],
+    [inputKey, instance.class, instance.id, setBoxInput],
   );
 
   return (
@@ -476,7 +478,7 @@ export function FormBoxContent({
       return (
         <CheckboxInputBox
           boxFormat={boxFormat}
-          boxIdentifier={box.identifier}
+          inputKey={box.value.inputKey}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
           instance={instance}
@@ -486,7 +488,7 @@ export function FormBoxContent({
     case "date_input":
       return (
         <DateInputBox
-          boxIdentifier={box.identifier}
+          inputKey={box.value.inputKey}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
           instance={instance}
@@ -496,7 +498,7 @@ export function FormBoxContent({
     case "list_amounts_input":
       return (
         <ListAmountsInputBox
-          boxIdentifier={box.identifier}
+          inputKey={box.value.inputKey}
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
@@ -507,7 +509,7 @@ export function FormBoxContent({
       return (
         <NumberInputBox
           boxFormat={boxFormat}
-          boxIdentifier={box.identifier}
+          inputKey={box.value.inputKey}
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
@@ -519,7 +521,7 @@ export function FormBoxContent({
       return (
         <OverrideNumberInputBox
           boxFormat={boxFormat}
-          boxIdentifier={box.identifier}
+          inputKey={box.value.inputKey}
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
           ariaDescribedBy={ariaDescribedBy}
@@ -532,6 +534,7 @@ export function FormBoxContent({
         <SelectInstanceBoxesInputBox
           boxFormat={boxFormat}
           boxIdentifier={box.identifier}
+          inputKey={box.value.inputKey}
           boxValue={box.value}
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}
@@ -543,7 +546,7 @@ export function FormBoxContent({
     case "select_value_input":
       return (
         <SelectValueInputBox
-          boxIdentifier={box.identifier}
+          inputKey={box.value.inputKey}
           boxValue={box.value}
           errorMessage={errorMessage}
           ariaLabelledBy={ariaLabelledBy}

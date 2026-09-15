@@ -13,7 +13,7 @@
 {% lines %}
 - {% line index="1" %}
   - {% instructions %}Medical and dental expenses (see instructions){% /instructions %}
-  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1" %}{% value type="number_input" inputKey="1" /%}{% /box %}
   {% /line %}
 - {% line index="2" %}
   - {% instructions %}Enter amount from Form 1040 or 1040-SR, line 11b{% /instructions %}
@@ -52,15 +52,15 @@
   {% /line %}
 - {% line index="5a" %}
   - {% instructions %}State and local income taxes or general sales taxes. You may include either income taxes or general sales taxes on line 5a, but not both{% /instructions %}
-  - {% box identifier="5a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="5a" %}{% value type="number_input" inputKey="5a" /%}{% /box %}
   {% /line %}
 - {% line index="5b" %}
   - {% instructions %}State and local real estate taxes (see instructions){% /instructions %}
-  - {% box identifier="5b" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="5b" %}{% value type="number_input" inputKey="5b" /%}{% /box %}
   {% /line %}
 - {% line index="5c" %}
   - {% instructions %}State and local personal property taxes{% /instructions %}
-  - {% box identifier="5c" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="5c" %}{% value type="number_input" inputKey="5c" /%}{% /box %}
   {% /line %}
 - {% line index="5d" %}
   - {% instructions %}Add lines 5a through 5c{% /instructions %}
@@ -89,7 +89,7 @@
   {% /line %}
 - {% line index="6" %}
   - {% instructions %}Other taxes. List type and amount:{% /instructions %}
-  - {% box identifier="6" %}{% value type="list_amounts_input" /%}{% /box %}
+  - {% box identifier="6" %}{% value type="list_amounts_input" inputKey="6" /%}{% /box %}
   {% /line %}
 - {% line index="7" %}
   - {% instructions %}Add lines 5e and 6{% /instructions %}
@@ -113,15 +113,15 @@
   {% /line %}
 - {% line index="8a" %}
   - {% instructions %}Home mortgage interest and points reported to you on Form 1098. See instructions if limited{% /instructions %}
-  - {% box identifier="8a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8a" %}{% value type="number_input" inputKey="8a" /%}{% /box %}
   {% /line %}
 - {% line index="8b" %}
   - {% instructions %}Home mortgage interest not reported to you on Form 1098. See instructions if limited. If paid to the person from whom you bought the home, see instructions{% /instructions %}
-  - {% box identifier="8b" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8b" %}{% value type="number_input" inputKey="8b" /%}{% /box %}
   {% /line %}
 - {% line index="8c" %}
   - {% instructions %}Points not reported to you on Form 1098. See instructions for special rules{% /instructions %}
-  - {% box identifier="8c" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8c" %}{% value type="number_input" inputKey="8c" /%}{% /box %}
   {% /line %}
 - {% line index="8d" %}
   - {% instructions %}Reserved for future use{% /instructions %}
@@ -139,7 +139,7 @@
   {% /line %}
 - {% line index="9" %}
   - {% instructions %}Investment interest. Attach Form 4952 if required. See instructions{% /instructions %}
-  - {% box identifier="9" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="9" %}{% value type="number_input" inputKey="9" /%}{% /box %}
   {% /line %}
 - {% line index="10" %}
   - {% instructions %}Add lines 8e and 9{% /instructions %}
@@ -159,15 +159,15 @@
 {% lines %}
 - {% line index="11" %}
   - {% instructions %}Gifts by cash or check. If you made any gift of $250 or more, see instructions{% /instructions %}
-  - {% box identifier="11" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="11" %}{% value type="number_input" inputKey="11" /%}{% /box %}
   {% /line %}
 - {% line index="12" %}
   - {% instructions %}Other than by cash or check. If you made any gift of $250 or more, see instructions. You must attach Form 8283 if over $500{% /instructions %}
-  - {% box identifier="12" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="12" %}{% value type="number_input" inputKey="12" /%}{% /box %}
   {% /line %}
 - {% line index="13" %}
   - {% instructions %}Carryover from prior year{% /instructions %}
-  - {% box identifier="13" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="13" %}{% value type="number_input" inputKey="13" /%}{% /box %}
   {% /line %}
 - {% line index="14" %}
   - {% instructions %}Add lines 11 through 13{% /instructions %}
@@ -188,7 +188,7 @@
 {% lines %}
 - {% line index="15" %}
   - {% instructions %}Casualty and theft loss(es) from a federally declared disaster (other than net qualified disaster losses). Attach Form 4684 and enter the amount from line 18 of that form. See instructions{% /instructions %}
-  - {% box identifier="15" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="15" %}{% value type="number_input" inputKey="15" /%}{% /box %}
   {% /line %}
 {% /lines %}
 {% /section %}
@@ -199,7 +199,7 @@
 {% lines %}
 - {% line index="16" %}
   - {% instructions %}Other—from list in instructions. List type and amount:{% /instructions %}
-  - {% box identifier="16" %}{% value type="list_amounts_input" /%}{% /box %}
+  - {% box identifier="16" %}{% value type="list_amounts_input" inputKey="16" /%}{% /box %}
   {% /line %}
 {% /lines %}
 {% /section %}
@@ -223,7 +223,7 @@
   {% /line %}
 - {% line index="18" %}
   - {% instructions %}If you elect to itemize deductions even though they are less than your standard deduction, check this box{% /instructions %}
-  - {% box identifier="18" %}{% value type="checkbox_input" /%}{% /box %}
+  - {% box identifier="18" %}{% value type="checkbox_input" inputKey="18" /%}{% /box %}
   {% /line %}
 {% /lines %}
 {% /section %}

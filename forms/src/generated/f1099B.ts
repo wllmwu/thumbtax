@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1099B: FormSpecification = {
+export const f1099B = defineFormSpecification({
   class: "f1099B",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-b",
   category: "income",
@@ -39,18 +39,27 @@ export const f1099B: FormSpecification = {
           index: "1d",
           instructions: "Proceeds",
           commentary: "Usually the sale price",
-          box: { identifier: "1d", value: { type: "number_input" } },
+          box: {
+            identifier: "1d",
+            value: { type: "number_input", inputKey: "1d" },
+          },
         },
         {
           index: "1e",
           instructions: "Cost or other basis",
           commentary: "Usually the purchase price",
-          box: { identifier: "1e", value: { type: "number_input" } },
+          box: {
+            identifier: "1e",
+            value: { type: "number_input", inputKey: "1e" },
+          },
         },
         {
           index: "1f",
           instructions: "Accrued market discount",
-          box: { identifier: "1f", value: { type: "number_input" } },
+          box: {
+            identifier: "1f",
+            value: { type: "number_input", inputKey: "1f" },
+          },
         },
         {
           index: "1g",
@@ -63,7 +72,10 @@ export const f1099B: FormSpecification = {
             },
             " loss disallowed",
           ],
-          box: { identifier: "1g", value: { type: "number_input" } },
+          box: {
+            identifier: "1g",
+            value: { type: "number_input", inputKey: "1g" },
+          },
         },
         {
           index: "2",
@@ -107,7 +119,10 @@ export const f1099B: FormSpecification = {
               children: ["withheld"],
             },
           ],
-          box: { identifier: "4", value: { type: "number_input" } },
+          box: {
+            identifier: "4",
+            value: { type: "number_input", inputKey: "4" },
+          },
         },
         {
           index: "6",
@@ -122,4 +137,4 @@ export const f1099B: FormSpecification = {
       ],
     },
   ],
-};
+});

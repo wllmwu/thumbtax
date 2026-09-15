@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1040sA: FormSpecification = {
+export const f1040sA = defineFormSpecification({
   class: "f1040sA",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-schedule-a-form-1040",
   category: "taxes",
@@ -14,7 +14,10 @@ export const f1040sA: FormSpecification = {
         {
           index: "1",
           instructions: "Medical and dental expenses (see instructions)",
-          box: { identifier: "1", value: { type: "number_input" } },
+          box: {
+            identifier: "1",
+            value: { type: "number_input", inputKey: "1" },
+          },
         },
         {
           index: "2",
@@ -73,17 +76,26 @@ export const f1040sA: FormSpecification = {
           index: "5a",
           instructions:
             "State and local income taxes or general sales taxes. You may include either income taxes or general sales taxes on line 5a, but not both",
-          box: { identifier: "5a", value: { type: "number_input" } },
+          box: {
+            identifier: "5a",
+            value: { type: "number_input", inputKey: "5a" },
+          },
         },
         {
           index: "5b",
           instructions: "State and local real estate taxes (see instructions)",
-          box: { identifier: "5b", value: { type: "number_input" } },
+          box: {
+            identifier: "5b",
+            value: { type: "number_input", inputKey: "5b" },
+          },
         },
         {
           index: "5c",
           instructions: "State and local personal property taxes",
-          box: { identifier: "5c", value: { type: "number_input" } },
+          box: {
+            identifier: "5c",
+            value: { type: "number_input", inputKey: "5c" },
+          },
         },
         {
           index: "5d",
@@ -127,7 +139,10 @@ export const f1040sA: FormSpecification = {
         {
           index: "6",
           instructions: "Other taxes. List type and amount:",
-          box: { identifier: "6", value: { type: "list_amounts_input" } },
+          box: {
+            identifier: "6",
+            value: { type: "list_amounts_input", inputKey: "6" },
+          },
         },
         {
           index: "7",
@@ -158,19 +173,28 @@ export const f1040sA: FormSpecification = {
           index: "8a",
           instructions:
             "Home mortgage interest and points reported to you on Form 1098. See instructions if limited",
-          box: { identifier: "8a", value: { type: "number_input" } },
+          box: {
+            identifier: "8a",
+            value: { type: "number_input", inputKey: "8a" },
+          },
         },
         {
           index: "8b",
           instructions:
             "Home mortgage interest not reported to you on Form 1098. See instructions if limited. If paid to the person from whom you bought the home, see instructions",
-          box: { identifier: "8b", value: { type: "number_input" } },
+          box: {
+            identifier: "8b",
+            value: { type: "number_input", inputKey: "8b" },
+          },
         },
         {
           index: "8c",
           instructions:
             "Points not reported to you on Form 1098. See instructions for special rules",
-          box: { identifier: "8c", value: { type: "number_input" } },
+          box: {
+            identifier: "8c",
+            value: { type: "number_input", inputKey: "8c" },
+          },
         },
         {
           index: "8d",
@@ -196,7 +220,10 @@ export const f1040sA: FormSpecification = {
           index: "9",
           instructions:
             "Investment interest. Attach Form 4952 if required. See instructions",
-          box: { identifier: "9", value: { type: "number_input" } },
+          box: {
+            identifier: "9",
+            value: { type: "number_input", inputKey: "9" },
+          },
         },
         {
           index: "10",
@@ -221,18 +248,27 @@ export const f1040sA: FormSpecification = {
           index: "11",
           instructions:
             "Gifts by cash or check. If you made any gift of $250 or more, see instructions",
-          box: { identifier: "11", value: { type: "number_input" } },
+          box: {
+            identifier: "11",
+            value: { type: "number_input", inputKey: "11" },
+          },
         },
         {
           index: "12",
           instructions:
             "Other than by cash or check. If you made any gift of $250 or more, see instructions. You must attach Form 8283 if over $500",
-          box: { identifier: "12", value: { type: "number_input" } },
+          box: {
+            identifier: "12",
+            value: { type: "number_input", inputKey: "12" },
+          },
         },
         {
           index: "13",
           instructions: "Carryover from prior year",
-          box: { identifier: "13", value: { type: "number_input" } },
+          box: {
+            identifier: "13",
+            value: { type: "number_input", inputKey: "13" },
+          },
         },
         {
           index: "14",
@@ -258,7 +294,10 @@ export const f1040sA: FormSpecification = {
           index: "15",
           instructions:
             "Casualty and theft loss(es) from a federally declared disaster (other than net qualified disaster losses). Attach Form 4684 and enter the amount from line 18 of that form. See instructions",
-          box: { identifier: "15", value: { type: "number_input" } },
+          box: {
+            identifier: "15",
+            value: { type: "number_input", inputKey: "15" },
+          },
         },
       ],
     },
@@ -269,7 +308,10 @@ export const f1040sA: FormSpecification = {
           index: "16",
           instructions:
             "Other—from list in instructions. List type and amount:",
-          box: { identifier: "16", value: { type: "list_amounts_input" } },
+          box: {
+            identifier: "16",
+            value: { type: "list_amounts_input", inputKey: "16" },
+          },
         },
       ],
     },
@@ -299,9 +341,12 @@ export const f1040sA: FormSpecification = {
           index: "18",
           instructions:
             "If you elect to itemize deductions even though they are less than your standard deduction, check this box",
-          box: { identifier: "18", value: { type: "checkbox_input" } },
+          box: {
+            identifier: "18",
+            value: { type: "checkbox_input", inputKey: "18" },
+          },
         },
       ],
     },
   ],
-};
+});

@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1099DIV: FormSpecification = {
+export const f1099DIV = defineFormSpecification({
   class: "f1099DIV",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-div",
   category: "income",
@@ -36,7 +36,10 @@ export const f1099DIV: FormSpecification = {
               children: ["ordinary dividends"],
             },
           ],
-          box: { identifier: "1a", value: { type: "number_input" } },
+          box: {
+            identifier: "1a",
+            value: { type: "number_input", inputKey: "1a" },
+          },
         },
         {
           index: "1b",
@@ -46,7 +49,10 @@ export const f1099DIV: FormSpecification = {
             attributes: { term: "qualified-dividends" },
             children: ["Qualified dividends"],
           },
-          box: { identifier: "1b", value: { type: "number_input" } },
+          box: {
+            identifier: "1b",
+            value: { type: "number_input", inputKey: "1b" },
+          },
         },
         {
           index: "2a",
@@ -60,7 +66,10 @@ export const f1099DIV: FormSpecification = {
             },
             " distributions",
           ],
-          box: { identifier: "2a", value: { type: "number_input" } },
+          box: {
+            identifier: "2a",
+            value: { type: "number_input", inputKey: "2a" },
+          },
         },
         {
           index: "2b",
@@ -74,7 +83,10 @@ export const f1099DIV: FormSpecification = {
             },
             " gain",
           ],
-          box: { identifier: "2b", value: { type: "number_input" } },
+          box: {
+            identifier: "2b",
+            value: { type: "number_input", inputKey: "2b" },
+          },
         },
         {
           index: "2c",
@@ -87,7 +99,10 @@ export const f1099DIV: FormSpecification = {
             },
             " gain",
           ],
-          box: { identifier: "2c", value: { type: "number_input" } },
+          box: {
+            identifier: "2c",
+            value: { type: "number_input", inputKey: "2c" },
+          },
         },
         {
           index: "2d",
@@ -100,7 +115,10 @@ export const f1099DIV: FormSpecification = {
             },
             " (28%) gain",
           ],
-          box: { identifier: "2d", value: { type: "number_input" } },
+          box: {
+            identifier: "2d",
+            value: { type: "number_input", inputKey: "2d" },
+          },
         },
         {
           index: "2e",
@@ -113,7 +131,10 @@ export const f1099DIV: FormSpecification = {
             },
             " ordinary dividends",
           ],
-          box: { identifier: "2e", value: { type: "number_input" } },
+          box: {
+            identifier: "2e",
+            value: { type: "number_input", inputKey: "2e" },
+          },
         },
         {
           index: "2f",
@@ -126,12 +147,18 @@ export const f1099DIV: FormSpecification = {
             },
             " capital gain",
           ],
-          box: { identifier: "2f", value: { type: "number_input" } },
+          box: {
+            identifier: "2f",
+            value: { type: "number_input", inputKey: "2f" },
+          },
         },
         {
           index: "3",
           instructions: "Nondividend distributions",
-          box: { identifier: "3", value: { type: "number_input" } },
+          box: {
+            identifier: "3",
+            value: { type: "number_input", inputKey: "3" },
+          },
         },
         {
           index: "4",
@@ -150,7 +177,10 @@ export const f1099DIV: FormSpecification = {
               children: ["withheld"],
             },
           ],
-          box: { identifier: "4", value: { type: "number_input" } },
+          box: {
+            identifier: "4",
+            value: { type: "number_input", inputKey: "4" },
+          },
         },
         {
           index: "5",
@@ -163,17 +193,26 @@ export const f1099DIV: FormSpecification = {
             },
             " dividends",
           ],
-          box: { identifier: "5", value: { type: "number_input" } },
+          box: {
+            identifier: "5",
+            value: { type: "number_input", inputKey: "5" },
+          },
         },
         {
           index: "6",
           instructions: "Investment expenses",
-          box: { identifier: "6", value: { type: "number_input" } },
+          box: {
+            identifier: "6",
+            value: { type: "number_input", inputKey: "6" },
+          },
         },
         {
           index: "7",
           instructions: "Foreign tax paid",
-          box: { identifier: "7", value: { type: "number_input" } },
+          box: {
+            identifier: "7",
+            value: { type: "number_input", inputKey: "7" },
+          },
         },
         {
           index: "8",
@@ -183,12 +222,18 @@ export const f1099DIV: FormSpecification = {
         {
           index: "9",
           instructions: "Cash liquidation distributions",
-          box: { identifier: "9", value: { type: "number_input" } },
+          box: {
+            identifier: "9",
+            value: { type: "number_input", inputKey: "9" },
+          },
         },
         {
           index: "10",
           instructions: "Noncash liquidation distributions",
-          box: { identifier: "10", value: { type: "number_input" } },
+          box: {
+            identifier: "10",
+            value: { type: "number_input", inputKey: "10" },
+          },
         },
         {
           index: "11",
@@ -198,12 +243,18 @@ export const f1099DIV: FormSpecification = {
         {
           index: "12",
           instructions: "Exempt-interest dividends",
-          box: { identifier: "12", value: { type: "number_input" } },
+          box: {
+            identifier: "12",
+            value: { type: "number_input", inputKey: "12" },
+          },
         },
         {
           index: "13",
           instructions: "Specified private activity bond interest dividends",
-          box: { identifier: "13", value: { type: "number_input" } },
+          box: {
+            identifier: "13",
+            value: { type: "number_input", inputKey: "13" },
+          },
         },
         {
           index: "14",
@@ -218,9 +269,12 @@ export const f1099DIV: FormSpecification = {
         {
           index: "16",
           instructions: "State tax withheld",
-          box: { identifier: "16", value: { type: "number_input" } },
+          box: {
+            identifier: "16",
+            value: { type: "number_input", inputKey: "16" },
+          },
         },
       ],
     },
   ],
-};
+});

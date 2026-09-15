@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1040sC: FormSpecification = {
+export const f1040sC = defineFormSpecification({
   class: "f1040sC",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-schedule-c-form-1040",
   category: "taxes",
@@ -16,12 +16,18 @@ export const f1040sC: FormSpecification = {
           index: "1",
           instructions:
             'Gross receipts or sales. See instructions for line 1 if this income was reported to you on Form W-2 and the "Statutory employee" box on that form was checked',
-          box: { identifier: "1", value: { type: "number_input" } },
+          box: {
+            identifier: "1",
+            value: { type: "number_input", inputKey: "1" },
+          },
         },
         {
           index: "2",
           instructions: "Returns and allowances",
-          box: { identifier: "2", value: { type: "number_input" } },
+          box: {
+            identifier: "2",
+            value: { type: "number_input", inputKey: "2" },
+          },
         },
         {
           index: "3",
@@ -64,7 +70,10 @@ export const f1040sC: FormSpecification = {
           index: "6",
           instructions:
             "Other income, including federal and state gasoline or fuel tax credit or refund (see instructions)",
-          box: { identifier: "6", value: { type: "number_input" } },
+          box: {
+            identifier: "6",
+            value: { type: "number_input", inputKey: "6" },
+          },
         },
         {
           index: "7",
@@ -112,43 +121,67 @@ export const f1040sC: FormSpecification = {
         {
           index: "8",
           instructions: "Advertising",
-          box: { identifier: "8", value: { type: "number_input" } },
+          box: {
+            identifier: "8",
+            value: { type: "number_input", inputKey: "8" },
+          },
         },
         {
           index: "9",
           instructions: "Car and truck expenses (see instructions)",
-          box: { identifier: "9", value: { type: "number_input" } },
+          box: {
+            identifier: "9",
+            value: { type: "number_input", inputKey: "9" },
+          },
         },
         {
           index: "10",
           instructions: "Commissions and fees",
-          box: { identifier: "10", value: { type: "number_input" } },
+          box: {
+            identifier: "10",
+            value: { type: "number_input", inputKey: "10" },
+          },
         },
         {
           index: "11",
           instructions: "Contract labor (see instructions)",
-          box: { identifier: "11", value: { type: "number_input" } },
+          box: {
+            identifier: "11",
+            value: { type: "number_input", inputKey: "11" },
+          },
         },
         {
           index: "12",
           instructions: "Depletion",
-          box: { identifier: "12", value: { type: "number_input" } },
+          box: {
+            identifier: "12",
+            value: { type: "number_input", inputKey: "12" },
+          },
         },
         {
           index: "13",
           instructions:
             "Depreciation and section 179 expense deduction (not included in Part III) (see instructions)",
-          box: { identifier: "13", value: { type: "number_input" } },
+          box: {
+            identifier: "13",
+            value: { type: "number_input", inputKey: "13" },
+          },
         },
         {
           index: "14",
           instructions: "Employee benefit programs (other than on line 19)",
-          box: { identifier: "14", value: { type: "number_input" } },
+          box: {
+            identifier: "14",
+            value: { type: "number_input", inputKey: "14" },
+          },
         },
         {
           index: "15",
           instructions: "Insurance (other than health)",
-          box: { identifier: "15", value: { type: "number_input" } },
+          box: {
+            identifier: "15",
+            value: { type: "number_input", inputKey: "15" },
+          },
         },
         {
           index: "16",
@@ -158,27 +191,42 @@ export const f1040sC: FormSpecification = {
         {
           index: "16a",
           instructions: "Mortgage (paid to banks, etc.)",
-          box: { identifier: "16a", value: { type: "number_input" } },
+          box: {
+            identifier: "16a",
+            value: { type: "number_input", inputKey: "16a" },
+          },
         },
         {
           index: "16b",
           instructions: "Other",
-          box: { identifier: "16b", value: { type: "number_input" } },
+          box: {
+            identifier: "16b",
+            value: { type: "number_input", inputKey: "16b" },
+          },
         },
         {
           index: "17",
           instructions: "Legal and professional services",
-          box: { identifier: "17", value: { type: "number_input" } },
+          box: {
+            identifier: "17",
+            value: { type: "number_input", inputKey: "17" },
+          },
         },
         {
           index: "18",
           instructions: "Office expense (see instructions)",
-          box: { identifier: "18", value: { type: "number_input" } },
+          box: {
+            identifier: "18",
+            value: { type: "number_input", inputKey: "18" },
+          },
         },
         {
           index: "19",
           instructions: "Pension and profit-sharing plans",
-          box: { identifier: "19", value: { type: "number_input" } },
+          box: {
+            identifier: "19",
+            value: { type: "number_input", inputKey: "19" },
+          },
         },
         {
           index: "20",
@@ -188,27 +236,42 @@ export const f1040sC: FormSpecification = {
         {
           index: "20a",
           instructions: "Vehicles, machinery, and equipment",
-          box: { identifier: "20a", value: { type: "number_input" } },
+          box: {
+            identifier: "20a",
+            value: { type: "number_input", inputKey: "20a" },
+          },
         },
         {
           index: "20b",
           instructions: "Other business property",
-          box: { identifier: "20b", value: { type: "number_input" } },
+          box: {
+            identifier: "20b",
+            value: { type: "number_input", inputKey: "20b" },
+          },
         },
         {
           index: "21",
           instructions: "Repairs and maintenance",
-          box: { identifier: "21", value: { type: "number_input" } },
+          box: {
+            identifier: "21",
+            value: { type: "number_input", inputKey: "21" },
+          },
         },
         {
           index: "22",
           instructions: "Supplies (not included in Part III)",
-          box: { identifier: "22", value: { type: "number_input" } },
+          box: {
+            identifier: "22",
+            value: { type: "number_input", inputKey: "22" },
+          },
         },
         {
           index: "23",
           instructions: "Taxes and licenses",
-          box: { identifier: "23", value: { type: "number_input" } },
+          box: {
+            identifier: "23",
+            value: { type: "number_input", inputKey: "23" },
+          },
         },
         {
           index: "24",
@@ -218,28 +281,43 @@ export const f1040sC: FormSpecification = {
         {
           index: "24a",
           instructions: "Travel",
-          box: { identifier: "24a", value: { type: "number_input" } },
+          box: {
+            identifier: "24a",
+            value: { type: "number_input", inputKey: "24a" },
+          },
         },
         {
           index: "24b",
           instructions: "Deductible meals (see instructions)",
-          box: { identifier: "24b", value: { type: "number_input" } },
+          box: {
+            identifier: "24b",
+            value: { type: "number_input", inputKey: "24b" },
+          },
         },
         {
           index: "25",
           instructions: "Utilities",
-          box: { identifier: "25", value: { type: "number_input" } },
+          box: {
+            identifier: "25",
+            value: { type: "number_input", inputKey: "25" },
+          },
         },
         {
           index: "26",
           instructions: "Wages (less employment credits)",
-          box: { identifier: "26", value: { type: "number_input" } },
+          box: {
+            identifier: "26",
+            value: { type: "number_input", inputKey: "26" },
+          },
         },
         {
           index: "27a",
           instructions:
             "Energy efficient commercial buildings deduction (attach Form 7205)",
-          box: { identifier: "27a", value: { type: "number_input" } },
+          box: {
+            identifier: "27a",
+            value: { type: "number_input", inputKey: "27a" },
+          },
         },
         {
           index: "27b",
@@ -324,7 +402,10 @@ export const f1040sC: FormSpecification = {
               " Use the Simplified Method Worksheet in the instructions to figure the amount to enter on line 30",
             ],
           },
-          box: { identifier: "30", value: { type: "number_input" } },
+          box: {
+            identifier: "30",
+            value: { type: "number_input", inputKey: "30" },
+          },
         },
         {
           index: "31",
@@ -430,12 +511,18 @@ export const f1040sC: FormSpecification = {
         {
           index: "32a",
           instructions: "All investment is at risk.",
-          box: { identifier: "32a", value: { type: "checkbox_input" } },
+          box: {
+            identifier: "32a",
+            value: { type: "checkbox_input", inputKey: "32a" },
+          },
         },
         {
           index: "32b",
           instructions: "Some investment is not at risk.",
-          box: { identifier: "32b", value: { type: "checkbox_input" } },
+          box: {
+            identifier: "32b",
+            value: { type: "checkbox_input", inputKey: "32b" },
+          },
         },
       ],
     },
@@ -458,29 +545,44 @@ export const f1040sC: FormSpecification = {
           index: "35",
           instructions:
             "Inventory at beginning of year. If different from last year's closing inventory, attach explanation",
-          box: { identifier: "35", value: { type: "number_input" } },
+          box: {
+            identifier: "35",
+            value: { type: "number_input", inputKey: "35" },
+          },
         },
         {
           index: "36",
           instructions:
             "Purchases less cost of items withdrawn for personal use",
-          box: { identifier: "36", value: { type: "number_input" } },
+          box: {
+            identifier: "36",
+            value: { type: "number_input", inputKey: "36" },
+          },
         },
         {
           index: "37",
           instructions:
             "Cost of labor. Do not include any amounts paid to yourself",
-          box: { identifier: "37", value: { type: "number_input" } },
+          box: {
+            identifier: "37",
+            value: { type: "number_input", inputKey: "37" },
+          },
         },
         {
           index: "38",
           instructions: "Materials and supplies",
-          box: { identifier: "38", value: { type: "number_input" } },
+          box: {
+            identifier: "38",
+            value: { type: "number_input", inputKey: "38" },
+          },
         },
         {
           index: "39",
           instructions: "Other costs",
-          box: { identifier: "39", value: { type: "number_input" } },
+          box: {
+            identifier: "39",
+            value: { type: "number_input", inputKey: "39" },
+          },
         },
         {
           index: "40",
@@ -502,7 +604,10 @@ export const f1040sC: FormSpecification = {
         {
           index: "41",
           instructions: "Inventory at end of year",
-          box: { identifier: "41", value: { type: "number_input" } },
+          box: {
+            identifier: "41",
+            value: { type: "number_input", inputKey: "41" },
+          },
         },
         {
           index: "42",
@@ -552,9 +657,12 @@ export const f1040sC: FormSpecification = {
             },
             " Enter here and on line 27b",
           ],
-          box: { identifier: "48", value: { type: "list_amounts_input" } },
+          box: {
+            identifier: "48",
+            value: { type: "list_amounts_input", inputKey: "48" },
+          },
         },
       ],
     },
   ],
-};
+});

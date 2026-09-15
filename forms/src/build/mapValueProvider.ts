@@ -117,6 +117,11 @@ export function mapValueProvider(node: Tag): ValueProvider {
     case "checkbox_input":
     case "date_input":
     case "list_amounts_input":
+      return {
+        type: valueType,
+        inputKey: requireString(node.attributes.inputKey),
+      };
+
     case "unsupported":
     case "unused":
       return { type: valueType };
@@ -224,6 +229,7 @@ export function mapValueProvider(node: Tag): ValueProvider {
       );
       return {
         type: valueType,
+        inputKey: requireString(node.attributes.inputKey),
         coerceSign:
           node.attributes.coerceSign === undefined
             ? undefined
@@ -238,6 +244,7 @@ export function mapValueProvider(node: Tag): ValueProvider {
     case "override_number_input":
       return {
         type: valueType,
+        inputKey: requireString(node.attributes.inputKey),
         computedValue: mapComputedValueProvider(
           findBySlot(valueTagChildren(node), "computedValue"),
         ),
@@ -288,6 +295,7 @@ export function mapValueProvider(node: Tag): ValueProvider {
       );
       return {
         type: valueType,
+        inputKey: requireString(node.attributes.inputKey),
         options: optionNodes.map((optionNode) => ({
           form: requireOneOf(optionNode.attributes.form, FORM_CLASSES),
           box: requireString(optionNode.attributes.box),
@@ -298,6 +306,7 @@ export function mapValueProvider(node: Tag): ValueProvider {
     case "select_value_input":
       return {
         type: valueType,
+        inputKey: requireString(node.attributes.inputKey),
         options: valueTagChildren(node).map((child) => ({
           key: requireString(child.attributes.key),
           label: requireString(child.attributes.label),

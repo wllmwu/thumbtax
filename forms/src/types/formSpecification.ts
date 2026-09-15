@@ -6,7 +6,7 @@ import type { BoxFormat, BoxIdentifier, FormClass } from "@thumbtax/common";
 type LineIndex = string;
 type ColumnIndex = string;
 
-export type FormSpecification = {
+export type FormSpecification<InputKey extends string = string> = {
   class: FormClass;
   irsPageUrl: string;
   category: FormCategory;
@@ -15,15 +15,18 @@ export type FormSpecification = {
   subtitle?: string;
   instructions?: RenderableTreeNodes;
   commentary?: RenderableTreeNodes;
-  sections: Array<FormSection<false> | FormSection<true>>;
+  sections: Array<FormSection<false, InputKey> | FormSection<true, InputKey>>;
 };
 
-export type FormSection<MultiColumns extends boolean> = {
+export type FormSection<
+  MultiColumns extends boolean,
+  InputKey extends string = string,
+> = {
   heading?: string;
   subtitle?: string;
   instructions?: RenderableTreeNodes;
   commentary?: RenderableTreeNodes;
-  lines: Array<FormLine<MultiColumns>>;
+  lines: Array<FormLine<MultiColumns, InputKey>>;
 } & (MultiColumns extends true
   ? {
       columns: Array<{
@@ -35,22 +38,28 @@ export type FormSection<MultiColumns extends boolean> = {
       columns?: never;
     });
 
-export type FormLine<MultiColumns extends boolean> = {
+export type FormLine<
+  MultiColumns extends boolean,
+  InputKey extends string = string,
+> = {
   index: LineIndex;
   virtual?: boolean;
   instructions?: RenderableTreeNodes;
   commentary?: RenderableTreeNodes;
 } & (MultiColumns extends true
   ? {
-      boxes: Array<FormBox<MultiColumns>>;
+      boxes: Array<FormBox<MultiColumns, InputKey>>;
     }
   : {
-      box: FormBox<MultiColumns>;
+      box: FormBox<MultiColumns, InputKey>;
     });
 
-export type FormBox<MultiColumns extends boolean> = {
+export type FormBox<
+  MultiColumns extends boolean,
+  InputKey extends string = string,
+> = {
   identifier: BoxIdentifier;
-  value: ValueProvider;
+  value: ValueProvider<InputKey>;
   format?: BoxFormat;
 } & (MultiColumns extends true
   ? {

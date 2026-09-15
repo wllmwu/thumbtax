@@ -16,6 +16,8 @@ Follow these steps to write one:
    - Do your best to encode each box's instructions using the value provider DSL.
      If the instructions aren't present in the form or the DSL doesn't support it, fall back to a `number_input`.
    - Don't write any commentary or any virtual lines, but preserve them if they already exist.
+   - Give every input value tag (any type ending in `_input`) an `inputKey` attribute.
+     See "Input keys" below.
 4. Run `cd forms && npm run build:forms -- {formClass}.mdoc`.
    This script generates the corresponding TypeScript file at `forms/src/generated/{formClass}.ts`.
    - If the script shows any schema validation errors, fix the errors and repeat until it works.
@@ -45,7 +47,7 @@ Sample Markdoc specification:
 {% lines %}
 - {% line index="1" %}
   - {% instructions %}Instructions for line 1{% /instructions %}
-  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1" %}{% value type="number_input" inputKey="1" /%}{% /box %}
   {% /line %}
 - {% line index="2" %}
   - {% instructions %}This line "contains" two children{% /instructions %}
@@ -53,7 +55,7 @@ Sample Markdoc specification:
   {% /line %}
 - {% line index="2a" %}
   - {% instructions %}First child{% /instructions %}
-  - {% box identifier="2a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2a" %}{% value type="number_input" inputKey="2a" /%}{% /box %}
   {% /line %}
 - {% line index="2b" %}
   - {% instructions %}Add lines 1 and 2a{% /instructions %}
@@ -92,8 +94,8 @@ Sample Markdoc specification:
 {% lines %}
 - {% line index="4" %}
   - {% instructions %}Each line in a section with columns needs a box for each column.{% /instructions %}
-  - {% box identifier="4(i)" column="(i)" %}{% value type="number_input" /%}{% /box %}
-  - {% box identifier="4(ii)" column="(ii)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="4(i)" column="(i)" %}{% value type="number_input" inputKey="4(i)" /%}{% /box %}
+  - {% box identifier="4(ii)" column="(ii)" %}{% value type="number_input" inputKey="4(ii)" /%}{% /box %}
   {% /line %}
 {% /lines %}
 {% /section %}
@@ -101,3 +103,16 @@ Sample Markdoc specification:
 ```
 
 Due to how list items and tags are parsed, when a line has instructions that are more than one paragraph of text, you might need to write out its box(es) on multiple lines.
+
+## Input keys
+
+User inputs are saved under each input's `inputKey`, not under its box identifier.
+This keeps saved inputs attached to the right box when lines are renumbered.
+
+- Every input value tag must have an `inputKey`.
+  There is no default.
+- Input keys must be unique within a form.
+  `build:forms` reports an error if a key is used twice.
+- For a new box, use the box identifier as the key.
+- When a line is only renumbered, keep its existing key, even though it no longer matches the box identifier.
+- When a line's meaning changes, give it a new key so that inputs saved for the old meaning aren't applied to it.

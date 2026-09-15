@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1040_QDCGTWS: FormSpecification = {
+export const f1040_QDCGTWS = defineFormSpecification({
   class: "f1040_QDCGTWS",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
@@ -18,6 +18,7 @@ export const f1040_QDCGTWS: FormSpecification = {
             identifier: "1",
             value: {
               type: "override_number_input",
+              inputKey: "1",
               computedValue: {
                 type: "box_reference",
                 box: "15",
@@ -1160,4 +1161,4 @@ export const f1040_QDCGTWS: FormSpecification = {
       ],
     },
   ],
-};
+});

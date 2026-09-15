@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f8889: FormSpecification = {
+export const f8889 = defineFormSpecification({
   class: "f8889",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8889",
   category: "taxes",
@@ -22,7 +22,10 @@ export const f8889: FormSpecification = {
           index: "2",
           instructions:
             "HSA contributions you made for 2025 (or those made on your behalf), including those made by the unextended due date of your tax return that were for 2025. Do not include employer contributions, contributions through a cafeteria plan, or rollovers. See instructions",
-          box: { identifier: "2", value: { type: "number_input" } },
+          box: {
+            identifier: "2",
+            value: { type: "number_input", inputKey: "2" },
+          },
         },
         {
           index: "3",
@@ -32,6 +35,7 @@ export const f8889: FormSpecification = {
             identifier: "3",
             value: {
               type: "override_number_input",
+              inputKey: "3",
               computedValue: { type: "number_constant", value: 4300 },
             },
           },
@@ -40,7 +44,10 @@ export const f8889: FormSpecification = {
           index: "4",
           instructions:
             "Enter the amount you and your employer contributed to your Archer MSAs for 2025 from Form 8853, lines 1 and 2. If you or your spouse had family coverage under an HDHP at any time during 2025, also include any amount contributed to your spouse's Archer MSAs",
-          box: { identifier: "4", value: { type: "number_input" } },
+          box: {
+            identifier: "4",
+            value: { type: "number_input", inputKey: "4" },
+          },
         },
         {
           index: "5",
@@ -66,6 +73,7 @@ export const f8889: FormSpecification = {
             identifier: "6",
             value: {
               type: "override_number_input",
+              inputKey: "6",
               computedValue: { type: "box_reference", box: "5" },
             },
           },
@@ -74,7 +82,10 @@ export const f8889: FormSpecification = {
           index: "7",
           instructions:
             "If you were age 55 or older at the end of 2025, married, and you or your spouse had family coverage under an HDHP at any time during 2025, enter your additional contribution amount. See instructions",
-          box: { identifier: "7", value: { type: "number_input" } },
+          box: {
+            identifier: "7",
+            value: { type: "number_input", inputKey: "7" },
+          },
         },
         {
           index: "8",
@@ -93,12 +104,18 @@ export const f8889: FormSpecification = {
         {
           index: "9",
           instructions: "Employer contributions made to your HSAs for 2025",
-          box: { identifier: "9", value: { type: "number_input" } },
+          box: {
+            identifier: "9",
+            value: { type: "number_input", inputKey: "9" },
+          },
         },
         {
           index: "10",
           instructions: "Qualified HSA funding distributions",
-          box: { identifier: "10", value: { type: "number_input" } },
+          box: {
+            identifier: "10",
+            value: { type: "number_input", inputKey: "10" },
+          },
         },
         {
           index: "11",
@@ -178,13 +195,19 @@ export const f8889: FormSpecification = {
           index: "14a",
           instructions:
             "Total distributions you received in 2025 from all HSAs (see instructions)",
-          box: { identifier: "14a", value: { type: "number_input" } },
+          box: {
+            identifier: "14a",
+            value: { type: "number_input", inputKey: "14a" },
+          },
         },
         {
           index: "14b",
           instructions:
             "Distributions included on line 14a that you rolled over to another HSA. Also include any excess contributions (and the earnings on those excess contributions) included on line 14a that were withdrawn by the due date of your return. See instructions",
-          box: { identifier: "14b", value: { type: "number_input" } },
+          box: {
+            identifier: "14b",
+            value: { type: "number_input", inputKey: "14b" },
+          },
         },
         {
           index: "14c",
@@ -202,7 +225,10 @@ export const f8889: FormSpecification = {
           index: "15",
           instructions:
             "Qualified medical expenses paid using HSA distributions (see instructions)",
-          box: { identifier: "15", value: { type: "number_input" } },
+          box: {
+            identifier: "15",
+            value: { type: "number_input", inputKey: "15" },
+          },
         },
         {
           index: "16",
@@ -239,7 +265,10 @@ export const f8889: FormSpecification = {
             },
             " (see instructions), check here",
           ],
-          box: { identifier: "17a", value: { type: "checkbox_input" } },
+          box: {
+            identifier: "17a",
+            value: { type: "checkbox_input", inputKey: "17a" },
+          },
         },
         {
           index: "17b",
@@ -256,6 +285,7 @@ export const f8889: FormSpecification = {
             identifier: "17b",
             value: {
               type: "override_number_input",
+              inputKey: "17b",
               computedValue: {
                 type: "product",
                 values: [
@@ -276,12 +306,18 @@ export const f8889: FormSpecification = {
         {
           index: "18",
           instructions: "Last-month rule",
-          box: { identifier: "18", value: { type: "number_input" } },
+          box: {
+            identifier: "18",
+            value: { type: "number_input", inputKey: "18" },
+          },
         },
         {
           index: "19",
           instructions: "Qualified HSA funding distribution",
-          box: { identifier: "19", value: { type: "number_input" } },
+          box: {
+            identifier: "19",
+            value: { type: "number_input", inputKey: "19" },
+          },
         },
         {
           index: "20",
@@ -330,4 +366,4 @@ export const f8889: FormSpecification = {
       ],
     },
   ],
-};
+});

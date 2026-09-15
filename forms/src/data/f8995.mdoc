@@ -24,27 +24,27 @@
 - {% line index="1i" %}
   - {% box identifier="1i(a)" column="(a)" %}{% value type="unused" /%}{% /box %}
   - {% box identifier="1i(b)" column="(b)" %}{% value type="unused" /%}{% /box %}
-  - {% box identifier="1i(c)" column="(c)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1i(c)" column="(c)" %}{% value type="number_input" inputKey="1i(c)" /%}{% /box %}
   {% /line %}
 - {% line index="1ii" %}
   - {% box identifier="1ii(a)" column="(a)" %}{% value type="unused" /%}{% /box %}
   - {% box identifier="1ii(b)" column="(b)" %}{% value type="unused" /%}{% /box %}
-  - {% box identifier="1ii(c)" column="(c)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1ii(c)" column="(c)" %}{% value type="number_input" inputKey="1ii(c)" /%}{% /box %}
   {% /line %}
 - {% line index="1iii" %}
   - {% box identifier="1iii(a)" column="(a)" %}{% value type="unused" /%}{% /box %}
   - {% box identifier="1iii(b)" column="(b)" %}{% value type="unused" /%}{% /box %}
-  - {% box identifier="1iii(c)" column="(c)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1iii(c)" column="(c)" %}{% value type="number_input" inputKey="1iii(c)" /%}{% /box %}
   {% /line %}
 - {% line index="1iv" %}
   - {% box identifier="1iv(a)" column="(a)" %}{% value type="unused" /%}{% /box %}
   - {% box identifier="1iv(b)" column="(b)" %}{% value type="unused" /%}{% /box %}
-  - {% box identifier="1iv(c)" column="(c)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1iv(c)" column="(c)" %}{% value type="number_input" inputKey="1iv(c)" /%}{% /box %}
   {% /line %}
 - {% line index="1v" %}
   - {% box identifier="1v(a)" column="(a)" %}{% value type="unused" /%}{% /box %}
   - {% box identifier="1v(b)" column="(b)" %}{% value type="unused" /%}{% /box %}
-  - {% box identifier="1v(c)" column="(c)" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1v(c)" column="(c)" %}{% value type="number_input" inputKey="1v(c)" /%}{% /box %}
   {% /line %}
 {% /lines %}
 {% /section %}
@@ -65,7 +65,7 @@
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}Qualified business net (loss) carryforward from the prior year{% /instructions %}
-  - {% box identifier="3" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  - {% box identifier="3" %}{% value type="number_input" inputKey="3" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="4" %}
   - {% instructions %}Total qualified business income. Combine lines 2 and 3. If zero or less, enter -0-{% /instructions %}
@@ -89,11 +89,11 @@
   {% /line %}
 - {% line index="6" %}
   - {% instructions %}Qualified REIT dividends and publicly traded partnership (PTP) income or (loss) (see instructions){% /instructions %}
-  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="6" %}{% value type="number_input" inputKey="6" /%}{% /box %}
   {% /line %}
 - {% line index="7" %}
   - {% instructions %}Qualified REIT dividends and qualified PTP (loss) carryforward from the prior year{% /instructions %}
-  - {% box identifier="7" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  - {% box identifier="7" %}{% value type="number_input" inputKey="7" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="8" %}
   - {% instructions %}Total qualified REIT dividends and PTP income. Combine lines 6 and 7. If zero or less, enter -0-{% /instructions %}

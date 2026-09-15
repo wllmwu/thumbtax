@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1099R: FormSpecification = {
+export const f1099R = defineFormSpecification({
   class: "f1099R",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-r",
   category: "income",
@@ -14,12 +14,18 @@ export const f1099R: FormSpecification = {
         {
           index: "1",
           instructions: "Gross distribution",
-          box: { identifier: "1", value: { type: "number_input" } },
+          box: {
+            identifier: "1",
+            value: { type: "number_input", inputKey: "1" },
+          },
         },
         {
           index: "2a",
           instructions: "Taxable amount",
-          box: { identifier: "2a", value: { type: "number_input" } },
+          box: {
+            identifier: "2a",
+            value: { type: "number_input", inputKey: "2a" },
+          },
         },
         {
           index: "2b",
@@ -29,23 +35,35 @@ export const f1099R: FormSpecification = {
         {
           index: "3",
           instructions: "Capital gain (included in box 2a)",
-          box: { identifier: "3", value: { type: "number_input" } },
+          box: {
+            identifier: "3",
+            value: { type: "number_input", inputKey: "3" },
+          },
         },
         {
           index: "4",
           instructions: "Federal income tax withheld",
-          box: { identifier: "4", value: { type: "number_input" } },
+          box: {
+            identifier: "4",
+            value: { type: "number_input", inputKey: "4" },
+          },
         },
         {
           index: "5",
           instructions:
             "Employee contributions/Designated Roth contributions or insurance premiums",
-          box: { identifier: "5", value: { type: "number_input" } },
+          box: {
+            identifier: "5",
+            value: { type: "number_input", inputKey: "5" },
+          },
         },
         {
           index: "6",
           instructions: "Net unrealized appreciation in employer's securities",
-          box: { identifier: "6", value: { type: "number_input" } },
+          box: {
+            identifier: "6",
+            value: { type: "number_input", inputKey: "6" },
+          },
         },
         {
           index: "7",
@@ -62,19 +80,25 @@ export const f1099R: FormSpecification = {
           instructions: "Your percentage of total distribution",
           box: {
             identifier: "9a",
-            value: { type: "number_input" },
+            value: { type: "number_input", inputKey: "9a" },
             format: "percentage",
           },
         },
         {
           index: "9b",
           instructions: "Total employee contributions",
-          box: { identifier: "9b", value: { type: "number_input" } },
+          box: {
+            identifier: "9b",
+            value: { type: "number_input", inputKey: "9b" },
+          },
         },
         {
           index: "10",
           instructions: "Amount allocable to IRR within 5 years",
-          box: { identifier: "10", value: { type: "number_input" } },
+          box: {
+            identifier: "10",
+            value: { type: "number_input", inputKey: "10" },
+          },
         },
         {
           index: "11",
@@ -94,7 +118,10 @@ export const f1099R: FormSpecification = {
         {
           index: "14",
           instructions: "State tax withheld",
-          box: { identifier: "14", value: { type: "number_input" } },
+          box: {
+            identifier: "14",
+            value: { type: "number_input", inputKey: "14" },
+          },
         },
         {
           index: "15",
@@ -104,12 +131,18 @@ export const f1099R: FormSpecification = {
         {
           index: "16",
           instructions: "State distribution",
-          box: { identifier: "16", value: { type: "number_input" } },
+          box: {
+            identifier: "16",
+            value: { type: "number_input", inputKey: "16" },
+          },
         },
         {
           index: "17",
           instructions: "Local tax withheld",
-          box: { identifier: "17", value: { type: "number_input" } },
+          box: {
+            identifier: "17",
+            value: { type: "number_input", inputKey: "17" },
+          },
         },
         {
           index: "18",
@@ -119,9 +152,12 @@ export const f1099R: FormSpecification = {
         {
           index: "19",
           instructions: "Local distribution",
-          box: { identifier: "19", value: { type: "number_input" } },
+          box: {
+            identifier: "19",
+            value: { type: "number_input", inputKey: "19" },
+          },
         },
       ],
     },
   ],
-};
+});

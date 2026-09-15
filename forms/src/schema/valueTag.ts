@@ -252,7 +252,7 @@ const TYPE_SPECS: Record<
     validateChildren: noChildren,
   },
   checkbox_input: {
-    requiredAttributes: [],
+    requiredAttributes: ["inputKey"],
     optionalAttributes: [],
     validateChildren: noChildren,
   },
@@ -276,7 +276,7 @@ const TYPE_SPECS: Record<
     validateChildren: unslottedValues,
   },
   date_input: {
-    requiredAttributes: [],
+    requiredAttributes: ["inputKey"],
     optionalAttributes: [],
     validateChildren: noChildren,
   },
@@ -309,7 +309,7 @@ const TYPE_SPECS: Record<
     validateChildren: noChildren,
   },
   list_amounts_input: {
-    requiredAttributes: [],
+    requiredAttributes: ["inputKey"],
     optionalAttributes: [],
     validateChildren: noChildren,
   },
@@ -344,7 +344,7 @@ const TYPE_SPECS: Record<
     validateChildren: noChildren,
   },
   number_input: {
-    requiredAttributes: [],
+    requiredAttributes: ["inputKey"],
     optionalAttributes: ["coerceSign"],
     validateChildren: orderedSlots([{ slot: "skipCondition", optional: true }]),
   },
@@ -354,7 +354,7 @@ const TYPE_SPECS: Record<
     validateChildren: oneUnslottedValue,
   },
   override_number_input: {
-    requiredAttributes: [],
+    requiredAttributes: ["inputKey"],
     optionalAttributes: ["coerceSign"],
     validateChildren: orderedSlots([{ slot: "computedValue" }]),
   },
@@ -379,12 +379,12 @@ const TYPE_SPECS: Record<
     validateChildren: oneUnslottedValue,
   },
   select_instance_boxes_input: {
-    requiredAttributes: [],
+    requiredAttributes: ["inputKey"],
     optionalAttributes: [],
     validateChildren: selectInstanceBoxesInputChildren,
   },
   select_value_input: {
-    requiredAttributes: [],
+    requiredAttributes: ["inputKey"],
     optionalAttributes: [],
     validateChildren: selectValueInputChildren,
   },
@@ -446,6 +446,10 @@ export const valueTag: Schema = {
     form: {
       type: "String",
       matches: [...FORM_CLASSES],
+      errorLevel: "error",
+    },
+    inputKey: {
+      type: "String",
       errorLevel: "error",
     },
     key: {

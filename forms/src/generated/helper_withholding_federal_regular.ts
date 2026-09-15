@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const helper_withholding_federal_regular: FormSpecification = {
+export const helper_withholding_federal_regular = defineFormSpecification({
   class: "helper_withholding_federal_regular",
   irsPageUrl: "",
   category: "income",
@@ -29,6 +29,7 @@ export const helper_withholding_federal_regular: FormSpecification = {
             identifier: "1",
             value: {
               type: "select_instance_boxes_input",
+              inputKey: "1",
               options: [{ form: "helper_income", box: "4" }],
             },
           },
@@ -40,6 +41,7 @@ export const helper_withholding_federal_regular: FormSpecification = {
             identifier: "2",
             value: {
               type: "override_number_input",
+              inputKey: "2",
               computedValue: { type: "box_reference", box: "1" },
             },
           },
@@ -51,6 +53,7 @@ export const helper_withholding_federal_regular: FormSpecification = {
             identifier: "3",
             value: {
               type: "override_number_input",
+              inputKey: "3",
               computedValue: {
                 type: "quotient",
                 dividend: {
@@ -456,6 +459,7 @@ export const helper_withholding_federal_regular: FormSpecification = {
             identifier: "4",
             value: {
               type: "override_number_input",
+              inputKey: "4",
               computedValue: {
                 type: "product",
                 values: [
@@ -469,4 +473,4 @@ export const helper_withholding_federal_regular: FormSpecification = {
       ],
     },
   ],
-};
+});

@@ -1,5 +1,6 @@
 import {
   BOX_UNDER_TEST_ID,
+  INPUT_UNDER_TEST_KEY,
   makeInstanceFixture,
   TEST_CLASS,
   TEST_INSTANCE_ID,
@@ -11,6 +12,7 @@ export const override_number_input: ValueProviderFixture[] = [
     description: "resolves to override when not null",
     provider: {
       type: "override_number_input",
+      inputKey: INPUT_UNDER_TEST_KEY,
       computedValue: { type: "number_constant", value: 10 },
     },
     instanceRegistry: {
@@ -18,7 +20,7 @@ export const override_number_input: ValueProviderFixture[] = [
         makeInstanceFixture({
           id: TEST_INSTANCE_ID,
           inputs: {
-            [BOX_UNDER_TEST_ID]: {
+            [INPUT_UNDER_TEST_KEY]: {
               type: "override",
               override: 20,
             },
@@ -32,6 +34,7 @@ export const override_number_input: ValueProviderFixture[] = [
     description: "resolves to computed value when override is null",
     provider: {
       type: "override_number_input",
+      inputKey: INPUT_UNDER_TEST_KEY,
       computedValue: { type: "number_constant", value: 10 },
     },
     instanceRegistry: {
@@ -39,7 +42,7 @@ export const override_number_input: ValueProviderFixture[] = [
         makeInstanceFixture({
           id: TEST_INSTANCE_ID,
           inputs: {
-            [BOX_UNDER_TEST_ID]: {
+            [INPUT_UNDER_TEST_KEY]: {
               type: "override",
               override: null,
             },
@@ -53,7 +56,25 @@ export const override_number_input: ValueProviderFixture[] = [
     description: "resolves to computed value when input is not present",
     provider: {
       type: "override_number_input",
+      inputKey: INPUT_UNDER_TEST_KEY,
       computedValue: { type: "number_constant", value: 10 },
+    },
+    expected: { value: 10, errors: [] },
+  },
+  {
+    description: "ignores input stored under the box identifier",
+    provider: {
+      type: "override_number_input",
+      inputKey: INPUT_UNDER_TEST_KEY,
+      computedValue: { type: "number_constant", value: 10 },
+    },
+    instanceRegistry: {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          inputs: { [BOX_UNDER_TEST_ID]: { type: "override", override: 35 } },
+        }),
+      ],
     },
     expected: { value: 10, errors: [] },
   },

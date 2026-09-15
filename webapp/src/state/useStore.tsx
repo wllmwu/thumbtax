@@ -9,7 +9,7 @@ import {
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
 
-import type { BoxIdentifier, FilingStatus, FormClass } from "@thumbtax/common";
+import type { FilingStatus, FormClass } from "@thumbtax/common";
 import type { SpecificationRegistry } from "@thumbtax/forms";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
@@ -60,7 +60,7 @@ type StoreState = {
   setBoxInput: (
     formClass: FormClass,
     instanceId: FormInstanceId,
-    boxId: BoxIdentifier,
+    inputKey: string,
     value: UserInput,
   ) => void;
   updatePreferences: (preferences: Partial<UserPreferences>) => void;
@@ -311,14 +311,14 @@ const useStoreInner = create<StoreState>((set) => ({
     );
   },
 
-  setBoxInput: (formClass, instanceId, boxId, value) => {
+  setBoxInput: (formClass, instanceId, inputKey, value) => {
     set(
       applyApplicationStateChange((draft) => {
         const instance = draft.formInstances[formClass]?.find(
           ({ id }) => id === instanceId,
         );
         if (instance) {
-          instance.inputs[boxId] = value;
+          instance.inputs[inputKey] = value;
         }
       }),
       true,

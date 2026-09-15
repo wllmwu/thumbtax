@@ -14,11 +14,11 @@
 {% lines %}
 - {% line index="1" %}
   - {% instructions %}Gross receipts or sales. See instructions for line 1 if this income was reported to you on Form W-2 and the "Statutory employee" box on that form was checked{% /instructions %}
-  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1" %}{% value type="number_input" inputKey="1" /%}{% /box %}
   {% /line %}
 - {% line index="2" %}
   - {% instructions %}Returns and allowances{% /instructions %}
-  - {% box identifier="2" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2" %}{% value type="number_input" inputKey="2" /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}Subtract line 2 from line 1{% /instructions %}
@@ -44,7 +44,7 @@
   {% /line %}
 - {% line index="6" %}
   - {% instructions %}Other income, including federal and state gasoline or fuel tax credit or refund (see instructions){% /instructions %}
-  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="6" %}{% value type="number_input" inputKey="6" /%}{% /box %}
   {% /line %}
 - {% line index="7" %}
   - {% instructions %}**Gross income.** Add lines 5 and 6{% /instructions %}
@@ -70,35 +70,35 @@ Enter expenses for business use of your home **only** on line 30.
 {% lines %}
 - {% line index="8" %}
   - {% instructions %}Advertising{% /instructions %}
-  - {% box identifier="8" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8" %}{% value type="number_input" inputKey="8" /%}{% /box %}
   {% /line %}
 - {% line index="9" %}
   - {% instructions %}Car and truck expenses (see instructions){% /instructions %}
-  - {% box identifier="9" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="9" %}{% value type="number_input" inputKey="9" /%}{% /box %}
   {% /line %}
 - {% line index="10" %}
   - {% instructions %}Commissions and fees{% /instructions %}
-  - {% box identifier="10" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="10" %}{% value type="number_input" inputKey="10" /%}{% /box %}
   {% /line %}
 - {% line index="11" %}
   - {% instructions %}Contract labor (see instructions){% /instructions %}
-  - {% box identifier="11" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="11" %}{% value type="number_input" inputKey="11" /%}{% /box %}
   {% /line %}
 - {% line index="12" %}
   - {% instructions %}Depletion{% /instructions %}
-  - {% box identifier="12" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="12" %}{% value type="number_input" inputKey="12" /%}{% /box %}
   {% /line %}
 - {% line index="13" %}
   - {% instructions %}Depreciation and section 179 expense deduction (not included in Part III) (see instructions){% /instructions %}
-  - {% box identifier="13" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="13" %}{% value type="number_input" inputKey="13" /%}{% /box %}
   {% /line %}
 - {% line index="14" %}
   - {% instructions %}Employee benefit programs (other than on line 19){% /instructions %}
-  - {% box identifier="14" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="14" %}{% value type="number_input" inputKey="14" /%}{% /box %}
   {% /line %}
 - {% line index="15" %}
   - {% instructions %}Insurance (other than health){% /instructions %}
-  - {% box identifier="15" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="15" %}{% value type="number_input" inputKey="15" /%}{% /box %}
   {% /line %}
 - {% line index="16" %}
   - {% instructions %}Interest (see instructions):{% /instructions %}
@@ -106,23 +106,23 @@ Enter expenses for business use of your home **only** on line 30.
   {% /line %}
 - {% line index="16a" %}
   - {% instructions %}Mortgage (paid to banks, etc.){% /instructions %}
-  - {% box identifier="16a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="16a" %}{% value type="number_input" inputKey="16a" /%}{% /box %}
   {% /line %}
 - {% line index="16b" %}
   - {% instructions %}Other{% /instructions %}
-  - {% box identifier="16b" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="16b" %}{% value type="number_input" inputKey="16b" /%}{% /box %}
   {% /line %}
 - {% line index="17" %}
   - {% instructions %}Legal and professional services{% /instructions %}
-  - {% box identifier="17" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17" %}{% value type="number_input" inputKey="17" /%}{% /box %}
   {% /line %}
 - {% line index="18" %}
   - {% instructions %}Office expense (see instructions){% /instructions %}
-  - {% box identifier="18" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="18" %}{% value type="number_input" inputKey="18" /%}{% /box %}
   {% /line %}
 - {% line index="19" %}
   - {% instructions %}Pension and profit-sharing plans{% /instructions %}
-  - {% box identifier="19" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="19" %}{% value type="number_input" inputKey="19" /%}{% /box %}
   {% /line %}
 - {% line index="20" %}
   - {% instructions %}Rent or lease (see instructions):{% /instructions %}
@@ -130,23 +130,23 @@ Enter expenses for business use of your home **only** on line 30.
   {% /line %}
 - {% line index="20a" %}
   - {% instructions %}Vehicles, machinery, and equipment{% /instructions %}
-  - {% box identifier="20a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="20a" %}{% value type="number_input" inputKey="20a" /%}{% /box %}
   {% /line %}
 - {% line index="20b" %}
   - {% instructions %}Other business property{% /instructions %}
-  - {% box identifier="20b" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="20b" %}{% value type="number_input" inputKey="20b" /%}{% /box %}
   {% /line %}
 - {% line index="21" %}
   - {% instructions %}Repairs and maintenance{% /instructions %}
-  - {% box identifier="21" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="21" %}{% value type="number_input" inputKey="21" /%}{% /box %}
   {% /line %}
 - {% line index="22" %}
   - {% instructions %}Supplies (not included in Part III){% /instructions %}
-  - {% box identifier="22" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="22" %}{% value type="number_input" inputKey="22" /%}{% /box %}
   {% /line %}
 - {% line index="23" %}
   - {% instructions %}Taxes and licenses{% /instructions %}
-  - {% box identifier="23" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="23" %}{% value type="number_input" inputKey="23" /%}{% /box %}
   {% /line %}
 - {% line index="24" %}
   - {% instructions %}Travel and meals:{% /instructions %}
@@ -154,23 +154,23 @@ Enter expenses for business use of your home **only** on line 30.
   {% /line %}
 - {% line index="24a" %}
   - {% instructions %}Travel{% /instructions %}
-  - {% box identifier="24a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24a" %}{% value type="number_input" inputKey="24a" /%}{% /box %}
   {% /line %}
 - {% line index="24b" %}
   - {% instructions %}Deductible meals (see instructions){% /instructions %}
-  - {% box identifier="24b" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24b" %}{% value type="number_input" inputKey="24b" /%}{% /box %}
   {% /line %}
 - {% line index="25" %}
   - {% instructions %}Utilities{% /instructions %}
-  - {% box identifier="25" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="25" %}{% value type="number_input" inputKey="25" /%}{% /box %}
   {% /line %}
 - {% line index="26" %}
   - {% instructions %}Wages (less employment credits){% /instructions %}
-  - {% box identifier="26" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="26" %}{% value type="number_input" inputKey="26" /%}{% /box %}
   {% /line %}
 - {% line index="27a" %}
   - {% instructions %}Energy efficient commercial buildings deduction (attach Form 7205){% /instructions %}
-  - {% box identifier="27a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="27a" %}{% value type="number_input" inputKey="27a" /%}{% /box %}
   {% /line %}
 - {% line index="27b" %}
   - {% instructions %}Other expenses (from line 48){% /instructions %}
@@ -221,7 +221,7 @@ Enter expenses for business use of your home **only** on line 30.
     Expenses for business use of your home. Do not report these expenses elsewhere. Attach Form 8829 unless using the simplified method. See instructions.
     **Simplified method filers only:** Use the Simplified Method Worksheet in the instructions to figure the amount to enter on line 30
     {% /instructions %}
-  - {% box identifier="30" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="30" %}{% value type="number_input" inputKey="30" /%}{% /box %}
   {% /line %}
 - {% line index="31" %}
   - {% instructions %}
@@ -250,11 +250,11 @@ Enter expenses for business use of your home **only** on line 30.
   {% /line %}
 - {% line index="32a" %}
   - {% instructions %}All investment is at risk.{% /instructions %}
-  - {% box identifier="32a" %}{% value type="checkbox_input" /%}{% /box %}
+  - {% box identifier="32a" %}{% value type="checkbox_input" inputKey="32a" /%}{% /box %}
   {% /line %}
 - {% line index="32b" %}
   - {% instructions %}Some investment is not at risk.{% /instructions %}
-  - {% box identifier="32b" %}{% value type="checkbox_input" /%}{% /box %}
+  - {% box identifier="32b" %}{% value type="checkbox_input" inputKey="32b" /%}{% /box %}
   {% /line %}
 {% /lines %}
 {% /section %}
@@ -275,23 +275,23 @@ Enter expenses for business use of your home **only** on line 30.
   {% /line %}
 - {% line index="35" %}
   - {% instructions %}Inventory at beginning of year. If different from last year's closing inventory, attach explanation{% /instructions %}
-  - {% box identifier="35" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="35" %}{% value type="number_input" inputKey="35" /%}{% /box %}
   {% /line %}
 - {% line index="36" %}
   - {% instructions %}Purchases less cost of items withdrawn for personal use{% /instructions %}
-  - {% box identifier="36" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="36" %}{% value type="number_input" inputKey="36" /%}{% /box %}
   {% /line %}
 - {% line index="37" %}
   - {% instructions %}Cost of labor. Do not include any amounts paid to yourself{% /instructions %}
-  - {% box identifier="37" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="37" %}{% value type="number_input" inputKey="37" /%}{% /box %}
   {% /line %}
 - {% line index="38" %}
   - {% instructions %}Materials and supplies{% /instructions %}
-  - {% box identifier="38" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="38" %}{% value type="number_input" inputKey="38" /%}{% /box %}
   {% /line %}
 - {% line index="39" %}
   - {% instructions %}Other costs{% /instructions %}
-  - {% box identifier="39" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="39" %}{% value type="number_input" inputKey="39" /%}{% /box %}
   {% /line %}
 - {% line index="40" %}
   - {% instructions %}Add lines 35 through 39{% /instructions %}
@@ -307,7 +307,7 @@ Enter expenses for business use of your home **only** on line 30.
   {% /line %}
 - {% line index="41" %}
   - {% instructions %}Inventory at end of year{% /instructions %}
-  - {% box identifier="41" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="41" %}{% value type="number_input" inputKey="41" /%}{% /box %}
   {% /line %}
 - {% line index="42" %}
   - {% instructions %}**Cost of goods sold.** Subtract line 41 from line 40. Enter the result here and on line 4{% /instructions %}
@@ -342,7 +342,7 @@ Enter expenses for business use of your home **only** on line 30.
 {% lines %}
 - {% line index="48" %}
   - {% instructions %}**Total other expenses.** Enter here and on line 27b{% /instructions %}
-  - {% box identifier="48" %}{% value type="list_amounts_input" /%}{% /box %}
+  - {% box identifier="48" %}{% value type="list_amounts_input" inputKey="48" /%}{% /box %}
   {% /line %}
 {% /lines %}
 {% /section %}

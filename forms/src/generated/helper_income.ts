@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const helper_income: FormSpecification = {
+export const helper_income = defineFormSpecification({
   class: "helper_income",
   irsPageUrl: "",
   category: "income",
@@ -41,12 +41,18 @@ export const helper_income: FormSpecification = {
         {
           index: "1",
           instructions: "Amount",
-          box: { identifier: "1", value: { type: "number_input" } },
+          box: {
+            identifier: "1",
+            value: { type: "number_input", inputKey: "1" },
+          },
         },
         {
           index: "2a",
           instructions: "Hours per week",
-          box: { identifier: "2a", value: { type: "number_input" } },
+          box: {
+            identifier: "2a",
+            value: { type: "number_input", inputKey: "2a" },
+          },
         },
         {
           index: "2b",
@@ -55,6 +61,7 @@ export const helper_income: FormSpecification = {
             identifier: "2b",
             value: {
               type: "select_value_input",
+              inputKey: "2b",
               options: [
                 {
                   key: "year",
@@ -116,12 +123,18 @@ export const helper_income: FormSpecification = {
         {
           index: "3a",
           instructions: "Start date",
-          box: { identifier: "3a", value: { type: "date_input" } },
+          box: {
+            identifier: "3a",
+            value: { type: "date_input", inputKey: "3a" },
+          },
         },
         {
           index: "3b",
           instructions: "End date",
-          box: { identifier: "3b", value: { type: "date_input" } },
+          box: {
+            identifier: "3b",
+            value: { type: "date_input", inputKey: "3b" },
+          },
         },
         {
           index: "3c",
@@ -130,6 +143,7 @@ export const helper_income: FormSpecification = {
             identifier: "3c",
             value: {
               type: "select_value_input",
+              inputKey: "3c",
               options: [
                 {
                   key: "calendar_days",
@@ -210,4 +224,4 @@ export const helper_income: FormSpecification = {
       ],
     },
   ],
-};
+});

@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1040s1A: FormSpecification = {
+export const f1040s1A = defineFormSpecification({
   class: "f1040s1A",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
@@ -29,22 +29,34 @@ export const f1040s1A: FormSpecification = {
         {
           index: "2a",
           instructions: "Enter any income from Puerto Rico that you excluded",
-          box: { identifier: "2a", value: { type: "number_input" } },
+          box: {
+            identifier: "2a",
+            value: { type: "number_input", inputKey: "2a" },
+          },
         },
         {
           index: "2b",
           instructions: "Enter the amount from Form 2555, line 45",
-          box: { identifier: "2b", value: { type: "number_input" } },
+          box: {
+            identifier: "2b",
+            value: { type: "number_input", inputKey: "2b" },
+          },
         },
         {
           index: "2c",
           instructions: "Enter the amount from Form 2555, line 50",
-          box: { identifier: "2c", value: { type: "number_input" } },
+          box: {
+            identifier: "2c",
+            value: { type: "number_input", inputKey: "2c" },
+          },
         },
         {
           index: "2d",
           instructions: "Enter the amount from Form 4563, line 15",
-          box: { identifier: "2d", value: { type: "number_input" } },
+          box: {
+            identifier: "2d",
+            value: { type: "number_input", inputKey: "2d" },
+          },
         },
         {
           index: "2e",
@@ -96,6 +108,7 @@ export const f1040s1A: FormSpecification = {
             identifier: "4a",
             value: {
               type: "select_instance_boxes_input",
+              inputKey: "4a",
               options: [
                 { form: "fW2", box: "7" },
                 { form: "fW2", box: "14a" },
@@ -107,7 +120,10 @@ export const f1040s1A: FormSpecification = {
           index: "4b",
           instructions:
             "Qualified tips included on Form 4137, line 1, row A, column (c). If Form 4137 is not filed, enter -0-",
-          box: { identifier: "4b", value: { type: "number_input" } },
+          box: {
+            identifier: "4b",
+            value: { type: "number_input", inputKey: "4b" },
+          },
         },
         {
           index: "4c",
@@ -117,6 +133,7 @@ export const f1040s1A: FormSpecification = {
             identifier: "4c",
             value: {
               type: "override_number_input",
+              inputKey: "4c",
               computedValue: {
                 type: "maximum",
                 values: [
@@ -143,6 +160,7 @@ export const f1040s1A: FormSpecification = {
             identifier: "5",
             value: {
               type: "select_instance_boxes_input",
+              inputKey: "5",
               options: [{ form: "f1099NEC", box: "1" }],
             },
           },
@@ -296,6 +314,7 @@ export const f1040s1A: FormSpecification = {
             identifier: "14b",
             value: {
               type: "select_instance_boxes_input",
+              inputKey: "14b",
               options: [{ form: "f1099NEC", box: "1" }],
             },
           },
@@ -475,12 +494,12 @@ export const f1040s1A: FormSpecification = {
             { identifier: "22a(i)", value: { type: "unused" }, column: "(i)" },
             {
               identifier: "22a(ii)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "22a(ii)" },
               column: "(ii)",
             },
             {
               identifier: "22a(iii)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "22a(iii)" },
               column: "(iii)",
             },
           ],
@@ -492,12 +511,12 @@ export const f1040s1A: FormSpecification = {
             { identifier: "22b(i)", value: { type: "unused" }, column: "(i)" },
             {
               identifier: "22b(ii)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "22b(ii)" },
               column: "(ii)",
             },
             {
               identifier: "22b(iii)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "22b(iii)" },
               column: "(iii)",
             },
           ],
@@ -821,13 +840,19 @@ export const f1040s1A: FormSpecification = {
           index: "36a",
           instructions:
             "If you have a valid social security number (see instructions) and were born before January 2, 1961, enter the amount from line 35",
-          box: { identifier: "36a", value: { type: "number_input" } },
+          box: {
+            identifier: "36a",
+            value: { type: "number_input", inputKey: "36a" },
+          },
         },
         {
           index: "36b",
           instructions:
             "If you are married filing jointly, your spouse has a valid social security number (see instructions), and your spouse was born before January 2, 1961, enter the amount from line 35",
-          box: { identifier: "36b", value: { type: "number_input" } },
+          box: {
+            identifier: "36b",
+            value: { type: "number_input", inputKey: "36b" },
+          },
         },
         {
           index: "37",
@@ -877,4 +902,4 @@ export const f1040s1A: FormSpecification = {
       ],
     },
   ],
-};
+});

@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1099NEC: FormSpecification = {
+export const f1099NEC = defineFormSpecification({
   class: "f1099NEC",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-nec",
   category: "income",
@@ -13,7 +13,10 @@ export const f1099NEC: FormSpecification = {
         {
           index: "1",
           instructions: "Nonemployee compensation",
-          box: { identifier: "1", value: { type: "number_input" } },
+          box: {
+            identifier: "1",
+            value: { type: "number_input", inputKey: "1" },
+          },
         },
         {
           index: "2",
@@ -24,17 +27,26 @@ export const f1099NEC: FormSpecification = {
         {
           index: "3",
           instructions: "Excess golden parachute payments",
-          box: { identifier: "3", value: { type: "number_input" } },
+          box: {
+            identifier: "3",
+            value: { type: "number_input", inputKey: "3" },
+          },
         },
         {
           index: "4",
           instructions: "Federal income tax withheld",
-          box: { identifier: "4", value: { type: "number_input" } },
+          box: {
+            identifier: "4",
+            value: { type: "number_input", inputKey: "4" },
+          },
         },
         {
           index: "5",
           instructions: "State tax withheld",
-          box: { identifier: "5", value: { type: "number_input" } },
+          box: {
+            identifier: "5",
+            value: { type: "number_input", inputKey: "5" },
+          },
         },
         {
           index: "6",
@@ -44,9 +56,12 @@ export const f1099NEC: FormSpecification = {
         {
           index: "7",
           instructions: "State income",
-          box: { identifier: "7", value: { type: "number_input" } },
+          box: {
+            identifier: "7",
+            value: { type: "number_input", inputKey: "7" },
+          },
         },
       ],
     },
   ],
-};
+});

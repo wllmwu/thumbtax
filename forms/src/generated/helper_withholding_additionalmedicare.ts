@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const helper_withholding_additionalmedicare: FormSpecification = {
+export const helper_withholding_additionalmedicare = defineFormSpecification({
   class: "helper_withholding_additionalmedicare",
   irsPageUrl: "",
   category: "income",
@@ -29,6 +29,7 @@ export const helper_withholding_additionalmedicare: FormSpecification = {
             identifier: "1",
             value: {
               type: "select_instance_boxes_input",
+              inputKey: "1",
               options: [{ form: "helper_income", box: "4" }],
             },
           },
@@ -40,6 +41,7 @@ export const helper_withholding_additionalmedicare: FormSpecification = {
             identifier: "2",
             value: {
               type: "override_number_input",
+              inputKey: "2",
               computedValue: {
                 type: "non_negative_clamp",
                 value: {
@@ -58,6 +60,7 @@ export const helper_withholding_additionalmedicare: FormSpecification = {
             identifier: "3",
             value: {
               type: "override_number_input",
+              inputKey: "3",
               computedValue: { type: "number_constant", value: 0.009 },
             },
             format: "percentage",
@@ -70,6 +73,7 @@ export const helper_withholding_additionalmedicare: FormSpecification = {
             identifier: "4",
             value: {
               type: "override_number_input",
+              inputKey: "4",
               computedValue: {
                 type: "product",
                 values: [
@@ -83,4 +87,4 @@ export const helper_withholding_additionalmedicare: FormSpecification = {
       ],
     },
   ],
-};
+});

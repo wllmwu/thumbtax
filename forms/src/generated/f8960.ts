@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f8960: FormSpecification = {
+export const f8960 = defineFormSpecification({
   class: "f8960",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8960",
   category: "taxes",
@@ -41,7 +41,10 @@ export const f8960: FormSpecification = {
         {
           index: "3",
           instructions: "Annuities (see instructions)",
-          box: { identifier: "3", value: { type: "number_input" } },
+          box: {
+            identifier: "3",
+            value: { type: "number_input", inputKey: "3" },
+          },
         },
         {
           index: "4a",
@@ -63,7 +66,10 @@ export const f8960: FormSpecification = {
           index: "4b",
           instructions:
             "Adjustment for net income or loss derived in the ordinary course of a non-section 1411 trade or business (see instructions)",
-          box: { identifier: "4b", value: { type: "number_input" } },
+          box: {
+            identifier: "4b",
+            value: { type: "number_input", inputKey: "4b" },
+          },
         },
         {
           index: "4c",
@@ -98,13 +104,19 @@ export const f8960: FormSpecification = {
           index: "5b",
           instructions:
             "Net gain or loss from disposition of property that is not subject to net investment income tax (see instructions)",
-          box: { identifier: "5b", value: { type: "number_input" } },
+          box: {
+            identifier: "5b",
+            value: { type: "number_input", inputKey: "5b" },
+          },
         },
         {
           index: "5c",
           instructions:
             "Adjustment from disposition of partnership interest or S corporation stock (see instructions)",
-          box: { identifier: "5c", value: { type: "number_input" } },
+          box: {
+            identifier: "5c",
+            value: { type: "number_input", inputKey: "5c" },
+          },
         },
         {
           index: "5d",
@@ -125,13 +137,19 @@ export const f8960: FormSpecification = {
           index: "6",
           instructions:
             "Adjustments to investment income for certain CFCs and PFICs (see instructions)",
-          box: { identifier: "6", value: { type: "number_input" } },
+          box: {
+            identifier: "6",
+            value: { type: "number_input", inputKey: "6" },
+          },
         },
         {
           index: "7",
           instructions:
             "Other modifications to investment income (see instructions)",
-          box: { identifier: "7", value: { type: "number_input" } },
+          box: {
+            identifier: "7",
+            value: { type: "number_input", inputKey: "7" },
+          },
         },
         {
           index: "8",
@@ -163,18 +181,27 @@ export const f8960: FormSpecification = {
         {
           index: "9a",
           instructions: "Investment interest expenses (see instructions)",
-          box: { identifier: "9a", value: { type: "number_input" } },
+          box: {
+            identifier: "9a",
+            value: { type: "number_input", inputKey: "9a" },
+          },
         },
         {
           index: "9b",
           instructions:
             "State, local, and foreign income tax (see instructions)",
-          box: { identifier: "9b", value: { type: "number_input" } },
+          box: {
+            identifier: "9b",
+            value: { type: "number_input", inputKey: "9b" },
+          },
         },
         {
           index: "9c",
           instructions: "Miscellaneous investment expenses (see instructions)",
-          box: { identifier: "9c", value: { type: "number_input" } },
+          box: {
+            identifier: "9c",
+            value: { type: "number_input", inputKey: "9c" },
+          },
         },
         {
           index: "9d",
@@ -194,7 +221,10 @@ export const f8960: FormSpecification = {
         {
           index: "10",
           instructions: "Additional modifications (see instructions)",
-          box: { identifier: "10", value: { type: "number_input" } },
+          box: {
+            identifier: "10",
+            value: { type: "number_input", inputKey: "10" },
+          },
         },
         {
           index: "11",
@@ -365,4 +395,4 @@ export const f8960: FormSpecification = {
       ],
     },
   ],
-};
+});

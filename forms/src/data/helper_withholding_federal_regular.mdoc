@@ -19,7 +19,7 @@ You can modify these values directly or use the wizard again to replace them.
 - {% line index="1" %}
   - {% instructions %}Gross amount{% /instructions %}
   - {% box identifier="1" %}
-    {% value type="select_instance_boxes_input" %}
+    {% value type="select_instance_boxes_input" inputKey="1" %}
     - {% option form="helper_income" box="4" /%}
     {% /value %}
     {% /box %}
@@ -27,7 +27,7 @@ You can modify these values directly or use the wizard again to replace them.
 - {% line index="2" %}
   - {% instructions %}Amount subject to withholding{% /instructions %}
   - {% box identifier="2" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="2" %}
     - {% value slot="computedValue" type="box_reference" box="1" /%}
     {% /value %}
     {% /box %}
@@ -35,7 +35,7 @@ You can modify these values directly or use the wizard again to replace them.
 - {% line index="3" %}
   - {% instructions %}Withholding rate{% /instructions %}
   - {% box identifier="3" format="percentage" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="3" %}
     - {% value slot="computedValue" type="quotient" %}
       - {% value slot="dividend" type="_partial_passthrough" %}
         - {% partial file="taxComputation" variables={box: "2"} /%}
@@ -48,7 +48,7 @@ You can modify these values directly or use the wizard again to replace them.
 - {% line index="4" %}
   - {% instructions %}Federal income tax withheld{% /instructions %}
   - {% box identifier="4" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="4" %}
     - {% value slot="computedValue" type="product" %}
       - {% value type="box_reference" box="2" /%}
       - {% value type="box_reference" box="3" /%}

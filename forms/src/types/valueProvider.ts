@@ -91,26 +91,30 @@ export type ComputedValueProvider =
   | ReferenceValueProvider
   | UnusedValueProvider;
 
-type UserInputValueProvider =
-  | { type: "checkbox_input" }
-  | { type: "date_input" }
-  | { type: "list_amounts_input" }
+type UserInputValueProvider<InputKey extends string> =
+  | { type: "checkbox_input"; inputKey: InputKey }
+  | { type: "date_input"; inputKey: InputKey }
+  | { type: "list_amounts_input"; inputKey: InputKey }
   | {
       type: "number_input";
+      inputKey: InputKey;
       coerceSign?: NumberSign;
       skipCondition?: ComputedValueProvider;
     }
   | {
       type: "override_number_input";
+      inputKey: InputKey;
       computedValue: ComputedValueProvider;
       coerceSign?: NumberSign;
     }
   | {
       type: "select_instance_boxes_input";
+      inputKey: InputKey;
       options: Array<{ form: FormClass; box: BoxIdentifier }>;
     }
   | {
       type: "select_value_input";
+      inputKey: InputKey;
       options: Array<{
         key: string;
         label: string;
@@ -118,4 +122,6 @@ type UserInputValueProvider =
       }>;
     };
 
-export type ValueProvider = ComputedValueProvider | UserInputValueProvider;
+export type ValueProvider<InputKey extends string = string> =
+  | ComputedValueProvider
+  | UserInputValueProvider<InputKey>;

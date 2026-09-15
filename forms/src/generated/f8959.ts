@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f8959: FormSpecification = {
+export const f8959 = defineFormSpecification({
   class: "f8959",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8959",
   category: "taxes",
@@ -24,12 +24,18 @@ export const f8959: FormSpecification = {
         {
           index: "2",
           instructions: "Unreported tips from Form 4137, line 6",
-          box: { identifier: "2", value: { type: "number_input" } },
+          box: {
+            identifier: "2",
+            value: { type: "number_input", inputKey: "2" },
+          },
         },
         {
           index: "3",
           instructions: "Wages from Form 8919, line 6",
-          box: { identifier: "3", value: { type: "number_input" } },
+          box: {
+            identifier: "3",
+            value: { type: "number_input", inputKey: "3" },
+          },
         },
         {
           index: "4",
@@ -121,7 +127,10 @@ export const f8959: FormSpecification = {
           index: "8",
           instructions:
             "Self-employment income from Schedule SE (Form 1040), Part I, line 6. If you had a loss, enter -0-",
-          box: { identifier: "8", value: { type: "number_input" } },
+          box: {
+            identifier: "8",
+            value: { type: "number_input", inputKey: "8" },
+          },
         },
         {
           index: "9",
@@ -224,6 +233,7 @@ export const f8959: FormSpecification = {
             identifier: "14",
             value: {
               type: "select_instance_boxes_input",
+              inputKey: "14",
               options: [{ form: "fW2", box: "14a" }],
             },
           },
@@ -358,7 +368,10 @@ export const f8959: FormSpecification = {
           index: "23",
           instructions:
             "Additional Medicare Tax withholding on railroad retirement (RRTA) compensation from Form W-2, box 14 (see instructions)",
-          box: { identifier: "23", value: { type: "number_input" } },
+          box: {
+            identifier: "23",
+            value: { type: "number_input", inputKey: "23" },
+          },
         },
         {
           index: "24",
@@ -385,4 +398,4 @@ export const f8959: FormSpecification = {
       ],
     },
   ],
-};
+});

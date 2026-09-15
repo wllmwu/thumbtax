@@ -64,7 +64,7 @@
 - {% line index="2b" %}
   - {% instructions %}Tax refund from Schedule 1 (Form 1040), line 1 or line 8z{% /instructions %}
   - {% box identifier="2b" %}
-    {% value type="override_number_input" coerceSign="negative" %}
+    {% value type="override_number_input" inputKey="2b" coerceSign="negative" %}
     - {% value
          slot="computedValue"
          type="box_reference"
@@ -76,11 +76,11 @@
   {% /line %}
 - {% line index="2c" %}
   - {% instructions %}Investment interest expense (difference between regular tax and AMT){% /instructions %}
-  - {% box identifier="2c" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2c" %}{% value type="number_input" inputKey="2c" /%}{% /box %}
   {% /line %}
 - {% line index="2d" %}
   - {% instructions %}Depletion (difference between regular tax and AMT){% /instructions %}
-  - {% box identifier="2d" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2d" %}{% value type="number_input" inputKey="2d" /%}{% /box %}
   {% /line %}
 - {% line index="2e" %}
   - {% instructions %}Net operating loss deduction from Schedule 1 (Form 1040), line 8a. Enter as a positive amount{% /instructions %}
@@ -92,67 +92,67 @@
   {% /line %}
 - {% line index="2f" %}
   - {% instructions %}Alternative tax net operating loss deduction{% /instructions %}
-  - {% box identifier="2f" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  - {% box identifier="2f" %}{% value type="number_input" inputKey="2f" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="2g" %}
   - {% instructions %}Interest from specified private activity bonds exempt from the regular tax{% /instructions %}
-  - {% box identifier="2g" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2g" %}{% value type="number_input" inputKey="2g" /%}{% /box %}
   {% /line %}
 - {% line index="2h" %}
   - {% instructions %}Qualified small business stock, see instructions{% /instructions %}
-  - {% box identifier="2h" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2h" %}{% value type="number_input" inputKey="2h" /%}{% /box %}
   {% /line %}
 - {% line index="2i" %}
   - {% instructions %}Exercise of incentive stock options (excess of AMT income over regular tax income){% /instructions %}
-  - {% box identifier="2i" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2i" %}{% value type="number_input" inputKey="2i" /%}{% /box %}
   {% /line %}
 - {% line index="2j" %}
   - {% instructions %}Estates and trusts (amount from Schedule K-1 (Form 1041), box 12, code A){% /instructions %}
-  - {% box identifier="2j" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2j" %}{% value type="number_input" inputKey="2j" /%}{% /box %}
   {% /line %}
 - {% line index="2k" %}
   - {% instructions %}Disposition of property (difference between AMT and regular tax gain or loss){% /instructions %}
-  - {% box identifier="2k" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2k" %}{% value type="number_input" inputKey="2k" /%}{% /box %}
   {% /line %}
 - {% line index="2l" %}
   - {% instructions %}Depreciation on assets placed in service after 1986 (difference between regular tax and AMT){% /instructions %}
-  - {% box identifier="2l" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2l" %}{% value type="number_input" inputKey="2l" /%}{% /box %}
   {% /line %}
 - {% line index="2m" %}
   - {% instructions %}Passive activities (difference between AMT and regular tax income or loss){% /instructions %}
-  - {% box identifier="2m" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2m" %}{% value type="number_input" inputKey="2m" /%}{% /box %}
   {% /line %}
 - {% line index="2n" %}
   - {% instructions %}Loss limitations (difference between AMT and regular tax income or loss){% /instructions %}
-  - {% box identifier="2n" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2n" %}{% value type="number_input" inputKey="2n" /%}{% /box %}
   {% /line %}
 - {% line index="2o" %}
   - {% instructions %}Circulation costs (difference between regular tax and AMT){% /instructions %}
-  - {% box identifier="2o" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2o" %}{% value type="number_input" inputKey="2o" /%}{% /box %}
   {% /line %}
 - {% line index="2p" %}
   - {% instructions %}Long-term contracts (difference between AMT and regular tax income){% /instructions %}
-  - {% box identifier="2p" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2p" %}{% value type="number_input" inputKey="2p" /%}{% /box %}
   {% /line %}
 - {% line index="2q" %}
   - {% instructions %}Mining costs (difference between regular tax and AMT){% /instructions %}
-  - {% box identifier="2q" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2q" %}{% value type="number_input" inputKey="2q" /%}{% /box %}
   {% /line %}
 - {% line index="2r" %}
   - {% instructions %}Research and experimental costs (difference between regular tax and AMT){% /instructions %}
-  - {% box identifier="2r" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2r" %}{% value type="number_input" inputKey="2r" /%}{% /box %}
   {% /line %}
 - {% line index="2s" %}
   - {% instructions %}Income from certain installment sales before January 1, 1987{% /instructions %}
-  - {% box identifier="2s" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  - {% box identifier="2s" %}{% value type="number_input" inputKey="2s" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="2t" %}
   - {% instructions %}Intangible drilling costs preference{% /instructions %}
-  - {% box identifier="2t" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2t" %}{% value type="number_input" inputKey="2t" /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}Other adjustments, including income-based related adjustments{% /instructions %}
-  - {% box identifier="3" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="3" %}{% value type="number_input" inputKey="3" /%}{% /box %}
   {% /line %}
 - {% line index="virtual_4_before_additional" virtual=true %}
   - {% box identifier="virtual_4_before_additional" %}
@@ -369,7 +369,7 @@
     - All others: If line 6 is $239,100 or less ($119,550 or less if married filing separately), multiply line 6 by 26% (0.26). Otherwise, multiply line 6 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result.
     {% /instructions %}
   - {% box identifier="7" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="7" %}
     - {% value slot="computedValue" type="conditional" %}
       - {% value slot="condition" type="box_reference" box="flag_7_part_iii" /%}
       - {% value slot="trueValue" type="box_reference" box="40" /%}
@@ -382,7 +382,7 @@
   {% /line %}
 - {% line index="8" %}
   - {% instructions %}Alternative minimum tax foreign tax credit (see instructions){% /instructions %}
-  - {% box identifier="8" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8" %}{% value type="number_input" inputKey="8" /%}{% /box %}
   {% /line %}
 - {% line index="9" %}
   - {% instructions %}Tentative minimum tax. Subtract line 8 from line 7{% /instructions %}
@@ -396,7 +396,7 @@
 - {% line index="10" %}
   - {% instructions %}Add Form 1040 or 1040-SR, line 16 (minus any tax from Form 4972), and Schedule 2 (Form 1040), line 1z. Subtract from the result Schedule 3 (Form 1040), line 1 and any negative amount reported on Form 8978, line 14 (treated as a positive number). If zero or less, enter -0-. If you used Schedule J to figure your tax on Form 1040 or 1040-SR, line 16, refigure that tax without using Schedule J before completing this line. See instructions{% /instructions %}
   - {% box identifier="10" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="10" %}
     - {% value slot="computedValue" type="non_negative_clamp" %}
       - {% value type="difference" %}
         - {% value slot="minuend" type="sum" %}
@@ -432,7 +432,7 @@
 - {% line index="12" %}
   - {% instructions %}Enter the amount from Form 6251, line 6. If you are filing Form 2555, enter the amount from line 3 of the worksheet in the instructions for line 7{% /instructions %}
   - {% box identifier="12" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="12" %}
     - {% value slot="computedValue" type="box_reference" box="6" /%}
     {% /value %}
     {% /box %}
@@ -440,7 +440,7 @@
 - {% line index="13" %}
   - {% instructions %}Enter the amount from line 4 of the Qualified Dividends and Capital Gain Tax Worksheet in the Instructions for Form 1040 or the amount from line 13 of the Schedule D Tax Worksheet in the Instructions for Schedule D (Form 1040), whichever applies (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="13" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="13" %}
     - {% value slot="computedValue" type="conditional" %}
       - {% value
            slot="condition"
@@ -476,7 +476,7 @@
 - {% line index="14" %}
   - {% instructions %}Enter the amount from Schedule D (Form 1040), line 19 (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="14" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="14" %}
     - {% value
          slot="computedValue"
          type="box_reference"
@@ -489,7 +489,7 @@
 - {% line index="15" %}
   - {% instructions %}If you did not complete a Schedule D Tax Worksheet for the regular tax or the AMT, enter the amount from line 13. Otherwise, add lines 13 and 14, and enter the smaller of that result or the amount from line 10 of the Schedule D Tax Worksheet (as refigured for the AMT, if necessary). If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="15" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="15" %}
     - {% value slot="computedValue" type="conditional" %}
       - {% value slot="condition" type="form_instance_count" form="f1040sD_SDTWS" /%}
       - {% value slot="trueValue" type="minimum" %}
@@ -563,7 +563,7 @@
 - {% line index="20" %}
   - {% instructions %}Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 14 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="20" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="20" %}
     - {% value slot="computedValue" type="non_negative_clamp" %}
       - {% value type="conditional" %}
         - {% value
@@ -672,7 +672,7 @@
 - {% line index="27" %}
   - {% instructions %}Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 21 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="27" %}
-    {% value type="override_number_input" %}
+    {% value type="override_number_input" inputKey="27" %}
     - {% value slot="computedValue" type="non_negative_clamp" %}
       - {% value type="conditional" %}
         - {% value

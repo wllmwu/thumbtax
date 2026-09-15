@@ -1,5 +1,6 @@
 import {
   BOX_UNDER_TEST_ID,
+  INPUT_UNDER_TEST_KEY,
   makeInstanceFixture,
   TEST_CLASS,
   TEST_INSTANCE_ID,
@@ -9,12 +10,38 @@ import {
 export const checkbox_input: ValueProviderFixture[] = [
   {
     description: "resolves to 0 when input is not present",
-    provider: { type: "checkbox_input" },
+    provider: { type: "checkbox_input", inputKey: INPUT_UNDER_TEST_KEY },
     expected: { value: 0, errors: [] },
   },
   {
     description: "resolves to user's input",
-    provider: { type: "checkbox_input" },
+    provider: { type: "checkbox_input", inputKey: INPUT_UNDER_TEST_KEY },
+    instanceRegistry: {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          inputs: { [INPUT_UNDER_TEST_KEY]: { type: "number", value: 1 } },
+        }),
+      ],
+    },
+    expected: { value: 1, errors: [] },
+  },
+  {
+    description: "resolves to 1 for non-zero input",
+    provider: { type: "checkbox_input", inputKey: INPUT_UNDER_TEST_KEY },
+    instanceRegistry: {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          inputs: { [INPUT_UNDER_TEST_KEY]: { type: "number", value: 3 } },
+        }),
+      ],
+    },
+    expected: { value: 1, errors: [] },
+  },
+  {
+    description: "ignores input stored under the box identifier",
+    provider: { type: "checkbox_input", inputKey: INPUT_UNDER_TEST_KEY },
     instanceRegistry: {
       [TEST_CLASS]: [
         makeInstanceFixture({
@@ -23,19 +50,6 @@ export const checkbox_input: ValueProviderFixture[] = [
         }),
       ],
     },
-    expected: { value: 1, errors: [] },
-  },
-  {
-    description: "resolves to 1 for non-zero input",
-    provider: { type: "checkbox_input" },
-    instanceRegistry: {
-      [TEST_CLASS]: [
-        makeInstanceFixture({
-          id: TEST_INSTANCE_ID,
-          inputs: { [BOX_UNDER_TEST_ID]: { type: "number", value: 3 } },
-        }),
-      ],
-    },
-    expected: { value: 1, errors: [] },
+    expected: { value: 0, errors: [] },
   },
 ];

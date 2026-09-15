@@ -15,6 +15,7 @@ import { filing_status_map } from "#src/engine/test/filing_status_map.fixture";
 import {
   BOX_UNDER_TEST_ID,
   ERROR_PROVIDER,
+  INPUT_UNDER_TEST_KEY,
   makeInstanceFixture,
   TEST_CLASS,
   TEST_INSTANCE_ID,
@@ -246,7 +247,7 @@ describe("computeWorkbook", () => {
                   makeLineFixture({
                     box: makeBoxFixture({
                       identifier: "2", // 20, 30
-                      value: { type: "number_input" },
+                      value: { type: "number_input", inputKey: "wages" },
                     }),
                   }),
                   makeLineFixture({
@@ -300,7 +301,10 @@ describe("computeWorkbook", () => {
                   makeLineFixture({
                     box: makeBoxFixture({
                       identifier: "1", // 46
-                      value: { type: "list_amounts_input" },
+                      value: {
+                        type: "list_amounts_input",
+                        inputKey: "adjustments",
+                      },
                     }),
                   }),
                   makeLineFixture({
@@ -337,6 +341,7 @@ describe("computeWorkbook", () => {
                       identifier: BOX_UNDER_TEST_ID,
                       value: {
                         type: "select_value_input",
+                        inputKey: INPUT_UNDER_TEST_KEY,
                         options: [
                           {
                             key: "a",
@@ -366,12 +371,12 @@ describe("computeWorkbook", () => {
             makeInstanceFixture({
               class: "f1040",
               id: "1040-1",
-              inputs: { "2": { type: "number", value: 20 } },
+              inputs: { wages: { type: "number", value: 20 } },
             }),
             makeInstanceFixture({
               class: "f1040",
               id: "1040-2",
-              inputs: { "2": { type: "number", value: 30 } },
+              inputs: { wages: { type: "number", value: 30 } },
             }),
           ],
           [TEST_CLASS]: [
@@ -379,14 +384,14 @@ describe("computeWorkbook", () => {
               class: TEST_CLASS,
               id: TEST_INSTANCE_ID,
               inputs: {
-                "1": {
+                adjustments: {
                   type: "amount_list",
                   value: [
                     { label: "foo", amount: 12 },
                     { label: "bar", amount: 34 },
                   ],
                 },
-                [BOX_UNDER_TEST_ID]: {
+                [INPUT_UNDER_TEST_KEY]: {
                   type: "selection",
                   selectedKey: "a",
                 },
@@ -427,14 +432,14 @@ describe("computeWorkbook", () => {
         filingStatus,
         expected,
       } = makeTestData({
-        provider: { type: "number_input" },
+        provider: { type: "number_input", inputKey: INPUT_UNDER_TEST_KEY },
         instanceRegistry: {
           [TEST_CLASS]: [
             makeInstanceFixture({
               id: TEST_INSTANCE_ID,
               class: TEST_CLASS,
               inputs: {
-                [BOX_UNDER_TEST_ID]: { type: "number", value: 42 },
+                [INPUT_UNDER_TEST_KEY]: { type: "number", value: 42 },
               },
             }),
           ],
@@ -503,7 +508,7 @@ describe("computeWorkbook", () => {
                   makeLineFixture({
                     box: makeBoxFixture({
                       identifier: "1",
-                      value: { type: "number_input" },
+                      value: { type: "number_input", inputKey: "1" },
                     }),
                   }),
                   makeLineFixture({
@@ -591,14 +596,14 @@ describe("computeWorkbook", () => {
         filingStatus,
         expected,
       } = makeTestData({
-        provider: { type: "number_input" },
+        provider: { type: "number_input", inputKey: INPUT_UNDER_TEST_KEY },
         instanceRegistry: {
           [TEST_CLASS]: [
             makeInstanceFixture({
               id: TEST_INSTANCE_ID,
               class: TEST_CLASS,
               inputs: {
-                [BOX_UNDER_TEST_ID]: { type: "number", value: 43 },
+                [INPUT_UNDER_TEST_KEY]: { type: "number", value: 43 },
               },
             }),
           ],
@@ -668,7 +673,7 @@ describe("computeWorkbook", () => {
                 makeLineFixture({
                   box: makeBoxFixture({
                     identifier: "1",
-                    value: { type: "number_input" },
+                    value: { type: "number_input", inputKey: "1" },
                   }),
                 }),
               ],
@@ -762,7 +767,7 @@ describe("computeWorkbook", () => {
                 makeLineFixture({
                   box: makeBoxFixture({
                     identifier: "1",
-                    value: { type: "number_input" },
+                    value: { type: "number_input", inputKey: "1" },
                   }),
                 }),
                 makeLineFixture({
@@ -829,7 +834,7 @@ describe("computeWorkbook", () => {
                 makeLineFixture({
                   box: makeBoxFixture({
                     identifier: "1",
-                    value: { type: "number_input" },
+                    value: { type: "number_input", inputKey: "1" },
                   }),
                 }),
               ],
@@ -886,14 +891,14 @@ describe("computeWorkbook", () => {
         filingStatus,
         expected,
       } = makeTestData({
-        provider: { type: "number_input" },
+        provider: { type: "number_input", inputKey: INPUT_UNDER_TEST_KEY },
         instanceRegistry: {
           [TEST_CLASS]: [
             makeInstanceFixture({
               id: TEST_INSTANCE_ID,
               class: TEST_CLASS,
               inputs: {
-                [BOX_UNDER_TEST_ID]: { type: "number", value: 43 },
+                [INPUT_UNDER_TEST_KEY]: { type: "number", value: 43 },
               },
             }),
           ],

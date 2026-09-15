@@ -32,15 +32,17 @@ import { helper_withholding_socialsecurity } from "./generated/helper_withholdin
 
 import type { SpecificationRegistry } from "./types/specificationRegistry";
 
+export * from "./types/defineFormSpecification";
 export * from "./types/formSpecification";
 export * from "./types/glossaryTerm";
+export * from "./types/inputKeyOf";
 export * from "./types/specificationRegistry";
 export * from "./types/valueProvider";
 export * from "./types/valueProviderType";
 
 export { glossary } from "./generated/glossary";
 
-export const specifications: SpecificationRegistry = {
+export const specifications = {
   f1040,
   f1040_QDCGTWS,
   f1040s1,
@@ -72,4 +74,4 @@ export const specifications: SpecificationRegistry = {
   helper_withholding_federal_supplemental,
   helper_withholding_medicare,
   helper_withholding_socialsecurity,
-};
+} satisfies SpecificationRegistry;

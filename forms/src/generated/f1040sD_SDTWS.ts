@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1040sD_SDTWS: FormSpecification = {
+export const f1040sD_SDTWS = defineFormSpecification({
   class: "f1040sD_SDTWS",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-schedule-d-form-1040",
   category: "taxes",
@@ -17,6 +17,7 @@ export const f1040sD_SDTWS: FormSpecification = {
             identifier: "1",
             value: {
               type: "override_number_input",
+              inputKey: "1",
               computedValue: {
                 type: "box_reference",
                 box: "15",
@@ -44,12 +45,18 @@ export const f1040sD_SDTWS: FormSpecification = {
           index: "3",
           instructions:
             "Enter the amount from Form 4952 (used to figure investment interest expense deduction), line 4g",
-          box: { identifier: "3", value: { type: "number_input" } },
+          box: {
+            identifier: "3",
+            value: { type: "number_input", inputKey: "3" },
+          },
         },
         {
           index: "4",
           instructions: "Enter the amount from Form 4952, line 4e",
-          box: { identifier: "4", value: { type: "number_input" } },
+          box: {
+            identifier: "4",
+            value: { type: "number_input", inputKey: "4" },
+          },
         },
         {
           index: "5",
@@ -1535,4 +1542,4 @@ export const f1040sD_SDTWS: FormSpecification = {
       ],
     },
   ],
-};
+});

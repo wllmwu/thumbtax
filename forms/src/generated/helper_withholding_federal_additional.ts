@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const helper_withholding_federal_additional: FormSpecification = {
+export const helper_withholding_federal_additional = defineFormSpecification({
   class: "helper_withholding_federal_additional",
   irsPageUrl: "",
   category: "income",
@@ -25,9 +25,12 @@ export const helper_withholding_federal_additional: FormSpecification = {
         {
           index: "1",
           instructions: "Federal income tax additional withholding amount",
-          box: { identifier: "1", value: { type: "number_input" } },
+          box: {
+            identifier: "1",
+            value: { type: "number_input", inputKey: "1" },
+          },
         },
       ],
     },
   ],
-};
+});

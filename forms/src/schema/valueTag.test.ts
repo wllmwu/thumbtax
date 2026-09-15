@@ -13,7 +13,7 @@ function transformValueTags(document: string): RenderableTreeNode[] {
   const parsed = parse(document);
   const transformed = transform(parsed, {
     partials: {
-      testPartial: parse(`{% value type="checkbox_input" /%}`),
+      testPartial: parse(`{% value type="checkbox_input" inputKey="1" /%}`),
     },
     tags: { value: valueTag, option: optionTag, piece: pieceTag },
   });
@@ -40,7 +40,10 @@ describe("valueTag", () => {
       const node = transformValueTags(document)[0];
       expectTag(node);
       expect(node.name).toEqual("value");
-      expect(node.attributes).toEqual({ type: "checkbox_input" });
+      expect(node.attributes).toEqual({
+        type: "checkbox_input",
+        inputKey: "1",
+      });
     });
 
     it("copies attributes from _partial_passthrough value tag onto partial root", () => {
@@ -62,25 +65,85 @@ describe("valueTag", () => {
       expect(singleNode.attributes).toEqual({
         filingStatusKey: "single",
         type: "checkbox_input",
+        inputKey: "1",
       });
       expect(defaultNode.attributes).toEqual({
         slot: "default",
         type: "checkbox_input",
+        inputKey: "1",
       });
+    });
+  });
+
+  describe("validate: inputKey attribute", () => {
+    const inputDocuments = {
+      checkbox_input: (attributes: string) =>
+        `{% value type="checkbox_input" ${attributes} /%}`,
+      date_input: (attributes: string) =>
+        `{% value type="date_input" ${attributes} /%}`,
+      list_amounts_input: (attributes: string) =>
+        `{% value type="list_amounts_input" ${attributes} /%}`,
+      number_input: (attributes: string) =>
+        `{% value type="number_input" ${attributes} /%}`,
+      override_number_input: (attributes: string) => `
+{% value type="override_number_input" ${attributes} %}
+- {% value slot="computedValue" type="box_reference" box="12" /%}
+{% /value %}
+`,
+      select_instance_boxes_input: (attributes: string) => `
+{% value type="select_instance_boxes_input" ${attributes} %}
+- {% option form="f1099INT" box="4" /%}
+{% /value %}
+`,
+      select_value_input: (attributes: string) => `
+{% value type="select_value_input" ${attributes} %}
+- {% value type="number_constant" value=0.22 key="flat" label="Flat rate" /%}
+{% /value %}
+`,
+    };
+
+    for (const [type, makeDocument] of Object.entries(inputDocuments)) {
+      it(`accepts ${type} with inputKey`, () => {
+        const errors = validateValueTags(makeDocument(`inputKey="7a"`));
+        expect(errors).toEqual([]);
+      });
+
+      it(`rejects ${type} without inputKey`, () => {
+        const errors = validateValueTags(makeDocument(""));
+        expect(errors).toEqual([
+          {
+            id: "missing-required-attribute",
+            level: "error",
+            message: 'Should have attribute "inputKey"',
+          },
+        ]);
+      });
+    }
+
+    it("rejects inputKey on a computed value", () => {
+      const document = `{% value type="number_constant" value=3 inputKey="3" /%}`;
+      const errors = validateValueTags(document);
+      expect(errors).toEqual([
+        {
+          id: "unexpected-attribute",
+          level: "error",
+          message: 'Should not have attribute "inputKey"',
+        },
+      ]);
     });
   });
 
   describe("validate: no children", () => {
     it("accepts when tag has no children", () => {
-      const document = `{% value type="checkbox_input" /%}`;
+      const document = `{% value type="checkbox_input" inputKey="2a" /%}`;
       const errors = validateValueTags(document);
       expect(errors).toEqual([]);
     });
 
     it("rejects when tag has children", () => {
       const document = `
-{% value type="checkbox_input" %}
-- {% value type="number_input" /%}
+{% value type="checkbox_input" inputKey="3(b)" %}
+- {% value type="number_input" inputKey="4" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -92,7 +155,7 @@ describe("valueTag", () => {
     it("accepts when tag contains one value with no slot", () => {
       const document = `
 {% value type="absolute_value" %}
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="5c" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -102,7 +165,7 @@ describe("valueTag", () => {
     it("rejects when tag doesn't have correct child structure", () => {
       const document1 = `
 {% value type="absolute_value" %}
-{% value type="number_input" /%}
+{% value type="number_input" inputKey="6" /%}
 {% /value %}
 `;
       const errors1 = validateValueTags(document1);
@@ -113,9 +176,9 @@ describe("valueTag", () => {
 
       const document2 = `
 {% value type="absolute_value" %}
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="7a" /%}
 
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="8" /%}
 {% /value %}
 `;
       const errors2 = validateValueTags(document2);
@@ -125,8 +188,8 @@ describe("valueTag", () => {
     it("rejects when tag contains multiple values", () => {
       const document = `
 {% value type="absolute_value" %}
-- {% value type="number_input" /%}
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="9(a)" /%}
+- {% value type="number_input" inputKey="10" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -136,7 +199,7 @@ describe("valueTag", () => {
     it("rejects when child value has a slot", () => {
       const document = `
 {% value type="absolute_value" %}
-- {% value slot="maximum" type="number_input" /%}
+- {% value slot="maximum" type="number_input" inputKey="1" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -154,7 +217,7 @@ describe("valueTag", () => {
     it("accepts when tag contains one value with no slot", () => {
       const document = `
 {% value type="sum" %}
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="2a" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -164,7 +227,7 @@ describe("valueTag", () => {
     it("accepts when tag contains multiple values with no slots", () => {
       const document = `
 {% value type="product" %}
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="3(b)" /%}
 - {% value type="number_constant" value=5 /%}
 - {% value type="number_constant" value=10 /%}
 {% /value %}
@@ -187,7 +250,7 @@ describe("valueTag", () => {
     it("rejects when a child has a slot", () => {
       const document = `
 {% value type="sum" %}
-- {% value slot="minimum" type="number_input" /%}
+- {% value slot="minimum" type="number_input" inputKey="4" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -201,7 +264,7 @@ describe("valueTag", () => {
     it("accepts required slots in order", () => {
       const document = `
 {% value type="difference" %}
-- {% value slot="minuend" type="number_input" /%}
+- {% value slot="minuend" type="number_input" inputKey="5c" /%}
 - {% value slot="subtrahend" type="number_constant" value=5 /%}
 {% /value %}
 `;
@@ -213,7 +276,7 @@ describe("valueTag", () => {
       const document = `
 {% value type="difference" %}
 - {% value slot="minimum" type="number_constant" value=5 /%}
-- {% value slot="minuend" type="number_input" /%}
+- {% value slot="minuend" type="number_input" inputKey="6" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -226,7 +289,7 @@ describe("valueTag", () => {
       const document = `
 {% value type="difference" %}
 - {% value slot="subtrahend" type="number_constant" value=5 /%}
-- {% value slot="minuend" type="number_input" /%}
+- {% value slot="minuend" type="number_input" inputKey="7a" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -238,7 +301,7 @@ describe("valueTag", () => {
     it("rejects when required slot is missing", () => {
       const document = `
 {% value type="difference" %}
-- {% value slot="minuend" type="number_input" /%}
+- {% value slot="minuend" type="number_input" inputKey="8" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -249,7 +312,7 @@ describe("valueTag", () => {
 
     it("accepts when optional slot is omitted", () => {
       const document = `
-{% value type="number_input" %}
+{% value type="number_input" inputKey="9(a)" %}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -258,8 +321,8 @@ describe("valueTag", () => {
 
     it("accepts when optional slot is present", () => {
       const document = `
-{% value type="number_input" %}
-- {% value slot="skipCondition" type="checkbox_input" /%}
+{% value type="number_input" inputKey="10" %}
+- {% value slot="skipCondition" type="checkbox_input" inputKey="1" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -268,9 +331,9 @@ describe("valueTag", () => {
 
     it("rejects when slot is repeated", () => {
       const document = `
-{% value type="number_input" %}
-- {% value slot="skipCondition" type="checkbox_input" /%}
-- {% value slot="skipCondition" type="checkbox_input" /%}
+{% value type="number_input" inputKey="2a" %}
+- {% value slot="skipCondition" type="checkbox_input" inputKey="3(b)" /%}
+- {% value slot="skipCondition" type="checkbox_input" inputKey="4" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -283,24 +346,24 @@ describe("valueTag", () => {
       const documents = [
         `
 {% value type="comparison" %}
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="5c" /%}
 {% /value %}
 `,
         `
 {% value type="comparison" %}
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="6" /%}
 - {% value slot="minimum" type="number_constant" value=5 /%}
 {% /value %}
 `,
         `
 {% value type="comparison" %}
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="7a" /%}
 - {% value slot="maximum" type="number_constant" value=10 /%}
 {% /value %}
 `,
         `
 {% value type="comparison" %}
-- {% value type="number_input" /%}
+- {% value type="number_input" inputKey="8" /%}
 - {% value slot="minimum" type="number_constant" value=5 /%}
 - {% value slot="maximum" type="number_constant" value=10 /%}
 {% /value %}
@@ -317,8 +380,8 @@ describe("valueTag", () => {
     it("accepts required slots in order", () => {
       const document = `
 {% value type="date_range_length" unit="day" %}
-- {% value slot="rangeStart" type="date_input" /%}
-- {% value slot="rangeEnd" type="date_input" /%}
+- {% value slot="rangeStart" type="date_input" inputKey="9(a)" /%}
+- {% value slot="rangeEnd" type="date_input" inputKey="10" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -328,8 +391,8 @@ describe("valueTag", () => {
     it("rejects when child has incorrect slot", () => {
       const document = `
 {% value type="date_range_length" unit="day" %}
-- {% value slot="minuend" type="date_input" /%}
-- {% value slot="rangeEnd" type="date_input" /%}
+- {% value slot="minuend" type="date_input" inputKey="1" /%}
+- {% value slot="rangeEnd" type="date_input" inputKey="2a" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -341,8 +404,8 @@ describe("valueTag", () => {
     it("rejects when required slots are out of order", () => {
       const document = `
 {% value type="date_range_length" unit="day" %}
-- {% value slot="rangeEnd" type="date_input" /%}
-- {% value slot="rangeStart" type="date_input" /%}
+- {% value slot="rangeEnd" type="date_input" inputKey="3(b)" /%}
+- {% value slot="rangeStart" type="date_input" inputKey="4" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -354,7 +417,7 @@ describe("valueTag", () => {
     it("rejects when required slot is missing", () => {
       const document = `
 {% value type="date_range_length" unit="day" %}
-- {% value slot="rangeStart" type="date_input" /%}
+- {% value slot="rangeStart" type="date_input" inputKey="5c" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -366,9 +429,9 @@ describe("valueTag", () => {
     it("rejects extra children", () => {
       const document = `
 {% value type="date_range_length" unit="day" %}
-- {% value slot="rangeStart" type="date_input" /%}
-- {% value slot="rangeEnd" type="date_input" /%}
-- {% value slot="rangeEnd" type="date_input" /%}
+- {% value slot="rangeStart" type="date_input" inputKey="6" /%}
+- {% value slot="rangeEnd" type="date_input" inputKey="7a" /%}
+- {% value slot="rangeEnd" type="date_input" inputKey="8" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -526,7 +589,7 @@ describe("valueTag", () => {
   describe("validate: select_instance_boxes_input children", () => {
     it("accepts one option", () => {
       const document = `
-{% value type="select_instance_boxes_input" %}
+{% value type="select_instance_boxes_input" inputKey="9(a)" %}
 - {% option form="fW2" box="1" /%}
 {% /value %}
 `;
@@ -536,7 +599,7 @@ describe("valueTag", () => {
 
     it("accepts multiple options", () => {
       const document = `
-{% value type="select_instance_boxes_input" %}
+{% value type="select_instance_boxes_input" inputKey="10" %}
 - {% option form="fW2" box="1" /%}
 - {% option form="f1099NEC" box="1" /%}
 {% /value %}
@@ -547,7 +610,7 @@ describe("valueTag", () => {
 
     it("rejects when there are no options", () => {
       const document = `
-{% value type="select_instance_boxes_input" %}
+{% value type="select_instance_boxes_input" inputKey="1" %}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -558,8 +621,8 @@ describe("valueTag", () => {
 
     it("rejects when child isn't an option tag", () => {
       const document = `
-{% value type="select_instance_boxes_input" %}
-- {% value type="number_input" /%}
+{% value type="select_instance_boxes_input" inputKey="2a" %}
+- {% value type="number_input" inputKey="3(b)" /%}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -570,7 +633,7 @@ describe("valueTag", () => {
   describe("validate: select_value_input children", () => {
     it("accepts one option", () => {
       const document = `
-{% value type="select_value_input" %}
+{% value type="select_value_input" inputKey="4" %}
 - {% value type="number_constant" value=1 key="first" label="First" /%}
 {% /value %}
 `;
@@ -580,7 +643,7 @@ describe("valueTag", () => {
 
     it("accepts multiple options", () => {
       const document = `
-{% value type="select_value_input" %}
+{% value type="select_value_input" inputKey="5c" %}
 - {% value type="number_constant" value=1 key="first" label="First" /%}
 - {% value type="number_constant" value=2 key="second" label="Second" /%}
 - {% value type="number_constant" value=3 key="third" label="Third" /%}
@@ -592,7 +655,7 @@ describe("valueTag", () => {
 
     it("rejects when there are no options", () => {
       const document = `
-{% value type="select_value_input" %}
+{% value type="select_value_input" inputKey="6" %}
 {% /value %}
 `;
       const errors = validateValueTags(document);
@@ -603,7 +666,7 @@ describe("valueTag", () => {
 
     it("rejects when child is missing key", () => {
       const document = `
-{% value type="select_value_input" %}
+{% value type="select_value_input" inputKey="7a" %}
 - {% value type="number_constant" value=1 key="first" label="First" /%}
 - {% value type="number_constant" value=2 label="Second" /%}
 - {% value type="number_constant" value=3 key="third" label="Third" /%}
@@ -617,7 +680,7 @@ describe("valueTag", () => {
 
     it("rejects when child is missing label", () => {
       const document = `
-{% value type="select_value_input" %}
+{% value type="select_value_input" inputKey="8" %}
 - {% value type="number_constant" value=1 key="first" label="First" /%}
 - {% value type="number_constant" value=2 key="second" /%}
 - {% value type="number_constant" value=3 key="third" label="Third" /%}

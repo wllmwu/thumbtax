@@ -204,7 +204,7 @@ function resolveValue(
     }
     case "checkbox_input": {
       const formInstance = instances.get(address.instance);
-      const userInput = formInstance?.inputs[address.box];
+      const userInput = formInstance?.inputs[provider.inputKey];
       if (userInput && userInput.type === "number") {
         const value = userInput.value === 0 ? 0 : 1;
         return { value, errors: [] };
@@ -263,7 +263,7 @@ function resolveValue(
     }
     case "date_input": {
       const formInstance = instances.get(address.instance);
-      const userInput = formInstance?.inputs[address.box];
+      const userInput = formInstance?.inputs[provider.inputKey];
       if (userInput && userInput.type === "number") {
         return { value: userInput.value, errors: [] };
       }
@@ -337,7 +337,7 @@ function resolveValue(
     }
     case "list_amounts_input": {
       const formInstance = instances.get(address.instance);
-      const userInput = formInstance?.inputs[address.box];
+      const userInput = formInstance?.inputs[provider.inputKey];
       if (userInput && userInput.type === "amount_list") {
         const total = userInput.value.reduce(
           (sum, { amount }) => sum + amount,
@@ -392,7 +392,7 @@ function resolveValue(
         return { value: 0, errors: skipErrors, skipped: true };
       }
       const formInstance = instances.get(address.instance);
-      const userInput = formInstance?.inputs[address.box];
+      const userInput = formInstance?.inputs[provider.inputKey];
       if (userInput && userInput.type === "number") {
         return { value: userInput.value, errors: [] };
       }
@@ -404,7 +404,7 @@ function resolveValue(
     }
     case "override_number_input": {
       const formInstance = instances.get(address.instance);
-      const userInput = formInstance?.inputs[address.box];
+      const userInput = formInstance?.inputs[provider.inputKey];
       if (
         userInput &&
         userInput.type === "override" &&
@@ -459,7 +459,7 @@ function resolveValue(
     }
     case "select_instance_boxes_input": {
       const formInstance = instances.get(address.instance);
-      const userInput = formInstance?.inputs[address.box];
+      const userInput = formInstance?.inputs[provider.inputKey];
       if (userInput && userInput.type === "instance_box_selections") {
         return userInput.selected.reduce<ResolvedBox>(
           (acc, selectedAddress) => {
@@ -496,7 +496,7 @@ function resolveValue(
     }
     case "select_value_input": {
       const formInstance = instances.get(address.instance);
-      const userInput = formInstance?.inputs[address.box];
+      const userInput = formInstance?.inputs[provider.inputKey];
       if (userInput && userInput.type === "selection") {
         const option = provider.options.find(
           ({ key }) => key === userInput.selectedKey,

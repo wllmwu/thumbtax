@@ -15,11 +15,11 @@
 {% lines %}
 - {% line index="1" %}
   - {% instructions %}Taxable refunds, credits, or offsets of state and local income taxes{% /instructions %}
-  - {% box identifier="1" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1" %}{% value type="number_input" inputKey="1" /%}{% /box %}
   {% /line %}
 - {% line index="2a" %}
   - {% instructions %}Alimony received{% /instructions %}
-  - {% box identifier="2a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="2a" %}{% value type="number_input" inputKey="2a" /%}{% /box %}
   {% /line %}
 - {% line index="2b" %}
   - {% instructions %}Date of original divorce or separation agreement (see instructions){% /instructions %}
@@ -31,19 +31,19 @@
   {% /line %}
 - {% line index="4" %}
   - {% instructions %}Other gains or (losses){% /instructions %}
-  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="4" %}{% value type="number_input" inputKey="4" /%}{% /box %}
   {% /line %}
 - {% line index="5" %}
   - {% instructions %}Rental real estate, royalties, partnerships, S corporations, trusts, etc. Attach Schedule E{% /instructions %}
-  - {% box identifier="5" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="5" %}{% value type="number_input" inputKey="5" /%}{% /box %}
   {% /line %}
 - {% line index="6" %}
   - {% instructions %}Farm income or (loss). Attach Schedule F{% /instructions %}
-  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="6" %}{% value type="number_input" inputKey="6" /%}{% /box %}
   {% /line %}
 - {% line index="7" %}
   - {% instructions %}Unemployment compensation{% /instructions %}
-  - {% box identifier="7" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="7" %}{% value type="number_input" inputKey="7" /%}{% /box %}
   {% /line %}
 - {% line index="8" %}
   - {% instructions %}Other income:{% /instructions %}
@@ -51,23 +51,23 @@
   {% /line %}
 - {% line index="8a" %}
   - {% instructions %}Net operating loss{% /instructions %}
-  - {% box identifier="8a" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  - {% box identifier="8a" %}{% value type="number_input" inputKey="8a" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="8b" %}
   - {% instructions %}Gambling{% /instructions %}
-  - {% box identifier="8b" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8b" %}{% value type="number_input" inputKey="8b" /%}{% /box %}
   {% /line %}
 - {% line index="8c" %}
   - {% instructions %}Cancellation of debt{% /instructions %}
-  - {% box identifier="8c" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8c" %}{% value type="number_input" inputKey="8c" /%}{% /box %}
   {% /line %}
 - {% line index="8d" %}
   - {% instructions %}Foreign earned income exclusion from Form 2555{% /instructions %}
-  - {% box identifier="8d" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  - {% box identifier="8d" %}{% value type="number_input" inputKey="8d" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="8e" %}
   - {% instructions %}Income from Form 8853{% /instructions %}
-  - {% box identifier="8e" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8e" %}{% value type="number_input" inputKey="8e" /%}{% /box %}
   {% /line %}
 - {% line index="8f" %}
   - {% instructions %}Income from Form 8889{% /instructions %}
@@ -80,75 +80,75 @@
   {% /line %}
 - {% line index="8g" %}
   - {% instructions %}Alaska Permanent Fund dividends{% /instructions %}
-  - {% box identifier="8g" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8g" %}{% value type="number_input" inputKey="8g" /%}{% /box %}
   {% /line %}
 - {% line index="8h" %}
   - {% instructions %}Jury duty pay{% /instructions %}
-  - {% box identifier="8h" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8h" %}{% value type="number_input" inputKey="8h" /%}{% /box %}
   {% /line %}
 - {% line index="8i" %}
   - {% instructions %}Prizes and awards{% /instructions %}
-  - {% box identifier="8i" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8i" %}{% value type="number_input" inputKey="8i" /%}{% /box %}
   {% /line %}
 - {% line index="8j" %}
   - {% instructions %}Activity not engaged in for profit income{% /instructions %}
   - {% box identifier="8j" %}
-    {% value type="select_instance_boxes_input" %}
+    {% value type="select_instance_boxes_input" inputKey="8j" %}
     - {% option form="f1099NEC" box="1" /%}
     {% /value %}
     {% /box %}
   {% /line %}
 - {% line index="8k" %}
   - {% instructions %}Stock options{% /instructions %}
-  - {% box identifier="8k" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8k" %}{% value type="number_input" inputKey="8k" /%}{% /box %}
   {% /line %}
 - {% line index="8l" %}
   - {% instructions %}Income from the rental of personal property if you engaged in the rental for profit but were not in the business of renting such property{% /instructions %}
-  - {% box identifier="8l" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8l" %}{% value type="number_input" inputKey="8l" /%}{% /box %}
   {% /line %}
 - {% line index="8m" %}
   - {% instructions %}Olympic and Paralympic medals and USOC prize money (see instructions){% /instructions %}
-  - {% box identifier="8m" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8m" %}{% value type="number_input" inputKey="8m" /%}{% /box %}
   {% /line %}
 - {% line index="8n" %}
   - {% instructions %}Section 951(a) inclusion (see instructions){% /instructions %}
-  - {% box identifier="8n" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8n" %}{% value type="number_input" inputKey="8n" /%}{% /box %}
   {% /line %}
 - {% line index="8o" %}
   - {% instructions %}Section 951A(a) inclusion (see instructions){% /instructions %}
-  - {% box identifier="8o" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8o" %}{% value type="number_input" inputKey="8o" /%}{% /box %}
   {% /line %}
 - {% line index="8p" %}
   - {% instructions %}Section 461(l) excess business loss adjustment{% /instructions %}
-  - {% box identifier="8p" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8p" %}{% value type="number_input" inputKey="8p" /%}{% /box %}
   {% /line %}
 - {% line index="8q" %}
   - {% instructions %}Taxable distributions from an ABLE account (see instructions){% /instructions %}
-  - {% box identifier="8q" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8q" %}{% value type="number_input" inputKey="8q" /%}{% /box %}
   {% /line %}
 - {% line index="8r" %}
   - {% instructions %}Scholarship and fellowship grants not reported on Form W-2{% /instructions %}
-  - {% box identifier="8r" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8r" %}{% value type="number_input" inputKey="8r" /%}{% /box %}
   {% /line %}
 - {% line index="8s" %}
   - {% instructions %}Nontaxable amount of Medicaid waiver payments included on Form 1040, line 1a or 1d{% /instructions %}
-  - {% box identifier="8s" %}{% value type="number_input" coerceSign="negative" /%}{% /box %}
+  - {% box identifier="8s" %}{% value type="number_input" inputKey="8s" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="8t" %}
   - {% instructions %}Pension or annuity from a nonqualified deferred compensation plan or a nongovernmental section 457 plan{% /instructions %}
-  - {% box identifier="8t" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8t" %}{% value type="number_input" inputKey="8t" /%}{% /box %}
   {% /line %}
 - {% line index="8u" %}
   - {% instructions %}Wages earned while incarcerated{% /instructions %}
-  - {% box identifier="8u" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8u" %}{% value type="number_input" inputKey="8u" /%}{% /box %}
   {% /line %}
 - {% line index="8v" %}
   - {% instructions %}Digital assets received as ordinary income not reported elsewhere. See instructions{% /instructions %}
-  - {% box identifier="8v" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8v" %}{% value type="number_input" inputKey="8v" /%}{% /box %}
   {% /line %}
 - {% line index="8z" %}
   - {% instructions %}Other income. List type and amount{% /instructions %}
-  - {% box identifier="8z" %}{% value type="list_amounts_input" /%}{% /box %}
+  - {% box identifier="8z" %}{% value type="list_amounts_input" inputKey="8z" /%}{% /box %}
   {% /line %}
 - {% line index="9" %}
   - {% instructions %}Total other income. Add lines 8a through 8z{% /instructions %}
@@ -206,11 +206,11 @@
 {% lines %}
 - {% line index="11" %}
   - {% instructions %}Educator expenses{% /instructions %}
-  - {% box identifier="11" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="11" %}{% value type="number_input" inputKey="11" /%}{% /box %}
   {% /line %}
 - {% line index="12" %}
   - {% instructions %}Certain business expenses of reservists, performing artists, and fee-basis government officials. Attach Form 2106{% /instructions %}
-  - {% box identifier="12" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="12" %}{% value type="number_input" inputKey="12" /%}{% /box %}
   {% /line %}
 - {% line index="13" %}
   - {% instructions %}Health savings account deduction. Attach Form 8889{% /instructions %}
@@ -218,27 +218,27 @@
   {% /line %}
 - {% line index="14" %}
   - {% instructions %}Moving expenses for members of the Armed Forces. Attach Form 3903{% /instructions %}
-  - {% box identifier="14" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="14" %}{% value type="number_input" inputKey="14" /%}{% /box %}
   {% /line %}
 - {% line index="15" %}
   - {% instructions %}Deductible part of self-employment tax. Attach Schedule SE{% /instructions %}
-  - {% box identifier="15" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="15" %}{% value type="number_input" inputKey="15" /%}{% /box %}
   {% /line %}
 - {% line index="16" %}
   - {% instructions %}Self-employed SEP, SIMPLE, and qualified plans{% /instructions %}
-  - {% box identifier="16" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="16" %}{% value type="number_input" inputKey="16" /%}{% /box %}
   {% /line %}
 - {% line index="17" %}
   - {% instructions %}Self-employed health insurance deduction{% /instructions %}
-  - {% box identifier="17" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17" %}{% value type="number_input" inputKey="17" /%}{% /box %}
   {% /line %}
 - {% line index="18" %}
   - {% instructions %}Penalty on early withdrawal of savings{% /instructions %}
-  - {% box identifier="18" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="18" %}{% value type="number_input" inputKey="18" /%}{% /box %}
   {% /line %}
 - {% line index="19a" %}
   - {% instructions %}Alimony paid{% /instructions %}
-  - {% box identifier="19a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="19a" %}{% value type="number_input" inputKey="19a" /%}{% /box %}
   {% /line %}
 - {% line index="19b" %}
   - {% instructions %}Recipient's SSN{% /instructions %}
@@ -250,11 +250,11 @@
   {% /line %}
 - {% line index="20" %}
   - {% instructions %}IRA deduction{% /instructions %}
-  - {% box identifier="20" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="20" %}{% value type="number_input" inputKey="20" /%}{% /box %}
   {% /line %}
 - {% line index="21" %}
   - {% instructions %}Student loan interest deduction{% /instructions %}
-  - {% box identifier="21" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="21" %}{% value type="number_input" inputKey="21" /%}{% /box %}
   {% /line %}
 - {% line index="22" %}
   - {% instructions %}Reserved for future use{% /instructions %}
@@ -262,7 +262,7 @@
   {% /line %}
 - {% line index="23" %}
   - {% instructions %}Archer MSA deduction{% /instructions %}
-  - {% box identifier="23" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="23" %}{% value type="number_input" inputKey="23" /%}{% /box %}
   {% /line %}
 - {% line index="24" %}
   - {% instructions %}Other adjustments:{% /instructions %}
@@ -270,51 +270,51 @@
   {% /line %}
 - {% line index="24a" %}
   - {% instructions %}Jury duty pay (see instructions){% /instructions %}
-  - {% box identifier="24a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24a" %}{% value type="number_input" inputKey="24a" /%}{% /box %}
   {% /line %}
 - {% line index="24b" %}
   - {% instructions %}Deductible expenses related to income reported on line 8l from the rental of personal property engaged in for profit{% /instructions %}
-  - {% box identifier="24b" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24b" %}{% value type="number_input" inputKey="24b" /%}{% /box %}
   {% /line %}
 - {% line index="24c" %}
   - {% instructions %}Nontaxable amount of the value of Olympic and Paralympic medals and USOC prize money reported on line 8m{% /instructions %}
-  - {% box identifier="24c" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24c" %}{% value type="number_input" inputKey="24c" /%}{% /box %}
   {% /line %}
 - {% line index="24d" %}
   - {% instructions %}Reforestation amortization and expenses{% /instructions %}
-  - {% box identifier="24d" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24d" %}{% value type="number_input" inputKey="24d" /%}{% /box %}
   {% /line %}
 - {% line index="24e" %}
   - {% instructions %}Repayment of supplemental unemployment benefits under the Trade Act of 1974{% /instructions %}
-  - {% box identifier="24e" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24e" %}{% value type="number_input" inputKey="24e" /%}{% /box %}
   {% /line %}
 - {% line index="24f" %}
   - {% instructions %}Contributions to section 501(c)(18)(D) pension plans{% /instructions %}
-  - {% box identifier="24f" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24f" %}{% value type="number_input" inputKey="24f" /%}{% /box %}
   {% /line %}
 - {% line index="24g" %}
   - {% instructions %}Contributions by certain chaplains to section 403(b) plans{% /instructions %}
-  - {% box identifier="24g" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24g" %}{% value type="number_input" inputKey="24g" /%}{% /box %}
   {% /line %}
 - {% line index="24h" %}
   - {% instructions %}Attorney fees and court costs for actions involving certain unlawful discrimination claims (see instructions){% /instructions %}
-  - {% box identifier="24h" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24h" %}{% value type="number_input" inputKey="24h" /%}{% /box %}
   {% /line %}
 - {% line index="24i" %}
   - {% instructions %}Attorney fees and court costs you paid in connection with an award from the IRS for information you provided that helped the IRS detect tax law violations{% /instructions %}
-  - {% box identifier="24i" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24i" %}{% value type="number_input" inputKey="24i" /%}{% /box %}
   {% /line %}
 - {% line index="24j" %}
   - {% instructions %}Housing deduction from Form 2555{% /instructions %}
-  - {% box identifier="24j" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24j" %}{% value type="number_input" inputKey="24j" /%}{% /box %}
   {% /line %}
 - {% line index="24k" %}
   - {% instructions %}Excess deductions of section 67(e) expenses from Schedule K-1 (Form 1041){% /instructions %}
-  - {% box identifier="24k" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="24k" %}{% value type="number_input" inputKey="24k" /%}{% /box %}
   {% /line %}
 - {% line index="24z" %}
   - {% instructions %}Other adjustments. List type and amount{% /instructions %}
-  - {% box identifier="24z" %}{% value type="list_amounts_input" /%}{% /box %}
+  - {% box identifier="24z" %}{% value type="list_amounts_input" inputKey="24z" /%}{% /box %}
   {% /line %}
 - {% line index="25" %}
   - {% instructions %}Total other adjustments. Add lines 24a through 24z{% /instructions %}

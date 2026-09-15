@@ -1,6 +1,6 @@
-import type { FormSpecification } from "../types/formSpecification";
+import { defineFormSpecification } from "../types/defineFormSpecification";
 
-export const f1040sD: FormSpecification = {
+export const f1040sD = defineFormSpecification({
   class: "f1040sD",
   irsPageUrl: "https://www.irs.gov/forms-pubs/about-schedule-d-form-1040",
   category: "taxes",
@@ -36,6 +36,7 @@ export const f1040sD: FormSpecification = {
               identifier: "1a(d)",
               value: {
                 type: "select_instance_boxes_input",
+                inputKey: "1a(d)",
                 options: [{ form: "f1099B", box: "1d" }],
               },
               column: "(d)",
@@ -44,6 +45,7 @@ export const f1040sD: FormSpecification = {
               identifier: "1a(e)",
               value: {
                 type: "select_instance_boxes_input",
+                inputKey: "1a(e)",
                 options: [{ form: "f1099B", box: "1e" }],
               },
               column: "(e)",
@@ -73,17 +75,17 @@ export const f1040sD: FormSpecification = {
           boxes: [
             {
               identifier: "1b(d)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "1b(d)" },
               column: "(d)",
             },
             {
               identifier: "1b(e)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "1b(e)" },
               column: "(e)",
             },
             {
               identifier: "1b(g)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "1b(g)" },
               column: "(g)",
             },
             {
@@ -110,17 +112,17 @@ export const f1040sD: FormSpecification = {
           boxes: [
             {
               identifier: "2(d)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "2(d)" },
               column: "(d)",
             },
             {
               identifier: "2(e)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "2(e)" },
               column: "(e)",
             },
             {
               identifier: "2(g)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "2(g)" },
               column: "(g)",
             },
             {
@@ -147,17 +149,17 @@ export const f1040sD: FormSpecification = {
           boxes: [
             {
               identifier: "3(d)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "3(d)" },
               column: "(d)",
             },
             {
               identifier: "3(e)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "3(e)" },
               column: "(e)",
             },
             {
               identifier: "3(g)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "3(g)" },
               column: "(g)",
             },
             {
@@ -186,13 +188,19 @@ export const f1040sD: FormSpecification = {
           index: "4",
           instructions:
             "Short-term gain from Form 6252 and short-term gain or (loss) from Forms 4684, 6781, and 8824",
-          box: { identifier: "4", value: { type: "number_input" } },
+          box: {
+            identifier: "4",
+            value: { type: "number_input", inputKey: "4" },
+          },
         },
         {
           index: "5",
           instructions:
             "Net short-term gain or (loss) from partnerships, S corporations, estates, and trusts from Schedule(s) K-1",
-          box: { identifier: "5", value: { type: "number_input" } },
+          box: {
+            identifier: "5",
+            value: { type: "number_input", inputKey: "5" },
+          },
         },
         {
           index: "6",
@@ -200,7 +208,11 @@ export const f1040sD: FormSpecification = {
             "Short-term capital loss carryover. Enter the amount, if any, from line 8 of your Capital Loss Carryover Worksheet in the instructions",
           box: {
             identifier: "6",
-            value: { type: "number_input", coerceSign: "negative" },
+            value: {
+              type: "number_input",
+              inputKey: "6",
+              coerceSign: "negative",
+            },
           },
         },
         {
@@ -260,6 +272,7 @@ export const f1040sD: FormSpecification = {
               identifier: "8a(d)",
               value: {
                 type: "select_instance_boxes_input",
+                inputKey: "8a(d)",
                 options: [{ form: "f1099B", box: "1d" }],
               },
               column: "(d)",
@@ -268,6 +281,7 @@ export const f1040sD: FormSpecification = {
               identifier: "8a(e)",
               value: {
                 type: "select_instance_boxes_input",
+                inputKey: "8a(e)",
                 options: [{ form: "f1099B", box: "1e" }],
               },
               column: "(e)",
@@ -297,17 +311,17 @@ export const f1040sD: FormSpecification = {
           boxes: [
             {
               identifier: "8b(d)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "8b(d)" },
               column: "(d)",
             },
             {
               identifier: "8b(e)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "8b(e)" },
               column: "(e)",
             },
             {
               identifier: "8b(g)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "8b(g)" },
               column: "(g)",
             },
             {
@@ -334,17 +348,17 @@ export const f1040sD: FormSpecification = {
           boxes: [
             {
               identifier: "9(d)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "9(d)" },
               column: "(d)",
             },
             {
               identifier: "9(e)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "9(e)" },
               column: "(e)",
             },
             {
               identifier: "9(g)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "9(g)" },
               column: "(g)",
             },
             {
@@ -371,17 +385,17 @@ export const f1040sD: FormSpecification = {
           boxes: [
             {
               identifier: "10(d)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "10(d)" },
               column: "(d)",
             },
             {
               identifier: "10(e)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "10(e)" },
               column: "(e)",
             },
             {
               identifier: "10(g)",
-              value: { type: "number_input" },
+              value: { type: "number_input", inputKey: "10(g)" },
               column: "(g)",
             },
             {
@@ -410,13 +424,19 @@ export const f1040sD: FormSpecification = {
           index: "11",
           instructions:
             "Gain from Form 4797, Part I; long-term gain from Forms 2439 and 6252; and long-term gain or (loss) from Forms 4684, 6781, and 8824",
-          box: { identifier: "11", value: { type: "number_input" } },
+          box: {
+            identifier: "11",
+            value: { type: "number_input", inputKey: "11" },
+          },
         },
         {
           index: "12",
           instructions:
             "Net long-term gain or (loss) from partnerships, S corporations, estates, and trusts from Schedule(s) K-1",
-          box: { identifier: "12", value: { type: "number_input" } },
+          box: {
+            identifier: "12",
+            value: { type: "number_input", inputKey: "12" },
+          },
         },
         {
           index: "13",
@@ -432,7 +452,11 @@ export const f1040sD: FormSpecification = {
             "Long-term capital loss carryover. Enter the amount, if any, from line 13 of your Capital Loss Carryover Worksheet in the instructions",
           box: {
             identifier: "14",
-            value: { type: "number_input", coerceSign: "negative" },
+            value: {
+              type: "number_input",
+              inputKey: "14",
+              coerceSign: "negative",
+            },
           },
         },
         {
@@ -581,6 +605,7 @@ export const f1040sD: FormSpecification = {
             identifier: "18",
             value: {
               type: "number_input",
+              inputKey: "18",
               skipCondition: {
                 type: "disjunction",
                 values: [
@@ -606,6 +631,7 @@ export const f1040sD: FormSpecification = {
             identifier: "19",
             value: {
               type: "number_input",
+              inputKey: "19",
               skipCondition: {
                 type: "disjunction",
                 values: [
@@ -806,4 +832,4 @@ export const f1040sD: FormSpecification = {
       ],
     },
   ],
-};
+});

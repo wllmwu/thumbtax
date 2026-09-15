@@ -34,6 +34,7 @@ export type ValueProviderFixture = {
 export const TEST_CLASS: FormClass = "fW2";
 export const TEST_INSTANCE_ID = "instance-1";
 export const BOX_UNDER_TEST_ID = "box-under-test";
+export const INPUT_UNDER_TEST_KEY = "input-under-test";
 
 export const ERROR_PROVIDER: ComputedValueProvider = {
   type: "quotient",

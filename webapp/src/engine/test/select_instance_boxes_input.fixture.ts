@@ -1,6 +1,7 @@
 import {
   BOX_UNDER_TEST_ID,
   ERROR_PROVIDER,
+  INPUT_UNDER_TEST_KEY,
   makeInstanceFixture,
   TEST_CLASS,
   TEST_INSTANCE_ID,
@@ -34,6 +35,7 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
                   identifier: BOX_UNDER_TEST_ID,
                   value: {
                     type: "select_instance_boxes_input",
+                    inputKey: INPUT_UNDER_TEST_KEY,
                     options: [{ form: TEST_CLASS, box: "box-1" }],
                   },
                 }),
@@ -100,6 +102,7 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
                   identifier: BOX_UNDER_TEST_ID,
                   value: {
                     type: "select_instance_boxes_input",
+                    inputKey: INPUT_UNDER_TEST_KEY,
                     options: [
                       { form: "f1040", box: "box-1" },
                       { form: "f1040", box: "box-2" },
@@ -126,7 +129,7 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
           id: TEST_INSTANCE_ID,
           class: TEST_CLASS,
           inputs: {
-            [BOX_UNDER_TEST_ID]: {
+            [INPUT_UNDER_TEST_KEY]: {
               type: "instance_box_selections",
               selected: [
                 // 2 of 3 instances selected for box 1
@@ -166,6 +169,7 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
                   identifier: BOX_UNDER_TEST_ID,
                   value: {
                     type: "select_instance_boxes_input",
+                    inputKey: INPUT_UNDER_TEST_KEY,
                     options: [{ form: TEST_CLASS, box: "box-1" }],
                   },
                 }),
@@ -181,7 +185,7 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
           id: TEST_INSTANCE_ID,
           class: TEST_CLASS,
           inputs: {
-            [BOX_UNDER_TEST_ID]: {
+            [INPUT_UNDER_TEST_KEY]: {
               type: "instance_box_selections",
               selected: [],
             },
@@ -216,6 +220,7 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
                   identifier: BOX_UNDER_TEST_ID,
                   value: {
                     type: "select_instance_boxes_input",
+                    inputKey: INPUT_UNDER_TEST_KEY,
                     options: [
                       { form: TEST_CLASS, box: "box-error" },
                       { form: TEST_CLASS, box: "box-ok" },
@@ -234,7 +239,7 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
           id: TEST_INSTANCE_ID,
           class: TEST_CLASS,
           inputs: {
-            [BOX_UNDER_TEST_ID]: {
+            [INPUT_UNDER_TEST_KEY]: {
               type: "instance_box_selections",
               selected: [
                 { instance: TEST_INSTANCE_ID, box: "box-error" },
@@ -266,6 +271,55 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
                   identifier: BOX_UNDER_TEST_ID,
                   value: {
                     type: "select_instance_boxes_input",
+                    inputKey: INPUT_UNDER_TEST_KEY,
+                    options: [{ form: TEST_CLASS, box: "box-1" }],
+                  },
+                }),
+              }),
+            ],
+          }),
+        ],
+      }),
+    }),
+    instanceRegistry: {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          class: TEST_CLASS,
+          inputs: {
+            [INPUT_UNDER_TEST_KEY]: {
+              type: "instance_box_selections",
+              selected: [
+                { instance: "does-not-exist", box: "box-1" },
+                { instance: TEST_INSTANCE_ID, box: "box-1" },
+              ],
+            },
+          },
+        }),
+      ],
+    },
+    expected: { value: 10, errors: [] },
+  },
+  {
+    description: "ignores input stored under the box identifier",
+    specificationRegistry: makeRegistryFixture({
+      [TEST_CLASS]: makeSpecificationFixture({
+        class: TEST_CLASS,
+        sections: [
+          makeSectionFixture({
+            lines: [
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: "box-1",
+                  value: { type: "number_constant", value: 10 },
+                }),
+              }),
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: BOX_UNDER_TEST_ID,
+                  value: {
+                    type: "select_instance_boxes_input",
+                    inputKey: INPUT_UNDER_TEST_KEY,
                     options: [{ form: TEST_CLASS, box: "box-1" }],
                   },
                 }),
@@ -283,15 +337,12 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
           inputs: {
             [BOX_UNDER_TEST_ID]: {
               type: "instance_box_selections",
-              selected: [
-                { instance: "does-not-exist", box: "box-1" },
-                { instance: TEST_INSTANCE_ID, box: "box-1" },
-              ],
+              selected: [{ instance: TEST_INSTANCE_ID, box: "box-1" }],
             },
           },
         }),
       ],
     },
-    expected: { value: 10, errors: [] },
+    expected: { value: 0, errors: [] },
   },
 ];

@@ -4,6 +4,7 @@ This module contains code used by the `buildForms` script.
 It was mostly written by Claude Code.
 
 - `forms/src/build/`
+  - `assertUniqueInputKeys.ts`: Throws if a form specification uses the same input key more than once
   - `attributeRequires.ts`: Helpers for coercing Markdoc attribute types
   - `extractPlainText.ts`: Helper that coerces a Markdoc node into its plain text content
   - `extractProse.ts`: Helper that coerces a Markdoc node into its prose content

@@ -19,31 +19,31 @@
   {% /line %}
 - {% line index="1a" %}
   - {% instructions %}Excess advance premium tax credit repayment. Attach Form 8962{% /instructions %}
-  - {% box identifier="1a" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1a" %}{% value type="number_input" inputKey="1a" /%}{% /box %}
   {% /line %}
 - {% line index="1b" %}
   - {% instructions %}Repayment of new clean vehicle credit(s) transferred to a registered dealer from Schedule A (Form 8936), Part II. Attach Form 8936 and Schedule A (Form 8936){% /instructions %}
-  - {% box identifier="1b" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1b" %}{% value type="number_input" inputKey="1b" /%}{% /box %}
   {% /line %}
 - {% line index="1c" %}
   - {% instructions %}Repayment of previously owned clean vehicle credit(s) transferred to a registered dealer from Schedule A (Form 8936), Part IV. Attach Form 8936 and Schedule A (Form 8936){% /instructions %}
-  - {% box identifier="1c" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1c" %}{% value type="number_input" inputKey="1c" /%}{% /box %}
   {% /line %}
 - {% line index="1d" %}
   - {% instructions %}Recapture of net EPE from Form 4255, line 2a, column (l){% /instructions %}
-  - {% box identifier="1d" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1d" %}{% value type="number_input" inputKey="1d" /%}{% /box %}
   {% /line %}
 - {% line index="1e" %}
   - {% instructions %}Excessive payments (EPs) on gross EPE from Form 4255. See instructions{% /instructions %}
-  - {% box identifier="1e" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1e" %}{% value type="number_input" inputKey="1e" /%}{% /box %}
   {% /line %}
 - {% line index="1f" %}
   - {% instructions %}20% EP from Form 4255. See instructions{% /instructions %}
-  - {% box identifier="1f" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1f" %}{% value type="number_input" inputKey="1f" /%}{% /box %}
   {% /line %}
 - {% line index="1y" %}
   - {% instructions %}Other additions to tax (see instructions){% /instructions %}
-  - {% box identifier="1y" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="1y" %}{% value type="number_input" inputKey="1y" /%}{% /box %}
   {% /line %}
 - {% line index="1z" %}
   - {% instructions %}Add lines 1a through 1y{% /instructions %}
@@ -83,15 +83,15 @@
 {% lines %}
 - {% line index="4" %}
   - {% instructions %}Self-employment tax. Attach Schedule SE{% /instructions %}
-  - {% box identifier="4" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="4" %}{% value type="number_input" inputKey="4" /%}{% /box %}
   {% /line %}
 - {% line index="5" %}
   - {% instructions %}Social security and Medicare tax on unreported tip income. Attach Form 4137{% /instructions %}
-  - {% box identifier="5" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="5" %}{% value type="number_input" inputKey="5" /%}{% /box %}
   {% /line %}
 - {% line index="6" %}
   - {% instructions %}Uncollected social security and Medicare tax on wages. Attach Form 8919{% /instructions %}
-  - {% box identifier="6" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="6" %}{% value type="number_input" inputKey="6" /%}{% /box %}
   {% /line %}
 - {% line index="7" %}
   - {% instructions %}Total additional social security and Medicare tax. Add lines 5 and 6{% /instructions %}
@@ -104,11 +104,11 @@
   {% /line %}
 - {% line index="8" %}
   - {% instructions %}Additional tax on IRAs or other tax-favored accounts. Attach Form 5329 if required{% /instructions %}
-  - {% box identifier="8" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="8" %}{% value type="number_input" inputKey="8" /%}{% /box %}
   {% /line %}
 - {% line index="9" %}
   - {% instructions %}Household employment taxes. Attach Schedule H{% /instructions %}
-  - {% box identifier="9" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="9" %}{% value type="number_input" inputKey="9" /%}{% /box %}
   {% /line %}
 - {% line index="10" %}
   - {% instructions %}Reserved for future use{% /instructions %}
@@ -135,15 +135,15 @@
   {% /line %}
 - {% line index="14" %}
   - {% instructions %}Interest on tax due on installment income from the sale of certain residential lots and timeshares{% /instructions %}
-  - {% box identifier="14" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="14" %}{% value type="number_input" inputKey="14" /%}{% /box %}
   {% /line %}
 - {% line index="15" %}
   - {% instructions %}Interest on the deferred tax on gain from certain installment sales with a sales price over $150,000{% /instructions %}
-  - {% box identifier="15" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="15" %}{% value type="number_input" inputKey="15" /%}{% /box %}
   {% /line %}
 - {% line index="16" %}
   - {% instructions %}Recapture of low-income housing credit. Attach Form 8611{% /instructions %}
-  - {% box identifier="16" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="16" %}{% value type="number_input" inputKey="16" /%}{% /box %}
   {% /line %}
 - {% line index="17" %}
   - {% instructions %}Other additional taxes:{% /instructions %}
@@ -151,11 +151,11 @@
   {% /line %}
 - {% line index="17a" %}
   - {% instructions %}Recapture of other credits. List type, form number, and amount{% /instructions %}
-  - {% box identifier="17a" %}{% value type="list_amounts_input" /%}{% /box %}
+  - {% box identifier="17a" %}{% value type="list_amounts_input" inputKey="17a" /%}{% /box %}
   {% /line %}
 - {% line index="17b" %}
   - {% instructions %}Recapture of federal mortgage subsidy. If you sold your home, see instructions{% /instructions %}
-  - {% box identifier="17b" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17b" %}{% value type="number_input" inputKey="17b" /%}{% /box %}
   {% /line %}
 - {% line index="17c" %}
   - {% instructions %}Additional tax on HSA distributions. Attach Form 8889{% /instructions %}
@@ -167,59 +167,59 @@
   {% /line %}
 - {% line index="17e" %}
   - {% instructions %}Additional tax on Archer MSA distributions. Attach Form 8853{% /instructions %}
-  - {% box identifier="17e" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17e" %}{% value type="number_input" inputKey="17e" /%}{% /box %}
   {% /line %}
 - {% line index="17f" %}
   - {% instructions %}Additional tax on Medicare Advantage MSA distributions. Attach Form 8853{% /instructions %}
-  - {% box identifier="17f" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17f" %}{% value type="number_input" inputKey="17f" /%}{% /box %}
   {% /line %}
 - {% line index="17g" %}
   - {% instructions %}Recapture of a charitable contribution deduction related to a fractional interest in tangible personal property{% /instructions %}
-  - {% box identifier="17g" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17g" %}{% value type="number_input" inputKey="17g" /%}{% /box %}
   {% /line %}
 - {% line index="17h" %}
   - {% instructions %}Income you received from a nonqualified deferred compensation plan that fails to meet the requirements of section 409A{% /instructions %}
-  - {% box identifier="17h" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17h" %}{% value type="number_input" inputKey="17h" /%}{% /box %}
   {% /line %}
 - {% line index="17i" %}
   - {% instructions %}Compensation you received from a nonqualified deferred compensation plan described in section 457A{% /instructions %}
-  - {% box identifier="17i" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17i" %}{% value type="number_input" inputKey="17i" /%}{% /box %}
   {% /line %}
 - {% line index="17j" %}
   - {% instructions %}Section 72(m)(5) excess benefits tax{% /instructions %}
-  - {% box identifier="17j" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17j" %}{% value type="number_input" inputKey="17j" /%}{% /box %}
   {% /line %}
 - {% line index="17k" %}
   - {% instructions %}Golden parachute payments{% /instructions %}
-  - {% box identifier="17k" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17k" %}{% value type="number_input" inputKey="17k" /%}{% /box %}
   {% /line %}
 - {% line index="17l" %}
   - {% instructions %}Tax on accumulation distribution of trusts{% /instructions %}
-  - {% box identifier="17l" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17l" %}{% value type="number_input" inputKey="17l" /%}{% /box %}
   {% /line %}
 - {% line index="17m" %}
   - {% instructions %}Excise tax on insider stock compensation from an expatriated corporation{% /instructions %}
-  - {% box identifier="17m" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17m" %}{% value type="number_input" inputKey="17m" /%}{% /box %}
   {% /line %}
 - {% line index="17n" %}
   - {% instructions %}Look-back interest under section 167(g) or 460(b) from Form 8697 or 8866{% /instructions %}
-  - {% box identifier="17n" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17n" %}{% value type="number_input" inputKey="17n" /%}{% /box %}
   {% /line %}
 - {% line index="17o" %}
   - {% instructions %}Tax on non-effectively connected income for any part of the year you were a nonresident alien from Form 1040-NR{% /instructions %}
-  - {% box identifier="17o" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17o" %}{% value type="number_input" inputKey="17o" /%}{% /box %}
   {% /line %}
 - {% line index="17p" %}
   - {% instructions %}Any interest from Form 8621, line 16f, relating to distributions from, and dispositions of, stock of a section 1291 fund{% /instructions %}
-  - {% box identifier="17p" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17p" %}{% value type="number_input" inputKey="17p" /%}{% /box %}
   {% /line %}
 - {% line index="17q" %}
   - {% instructions %}Any interest from Form 8621, line 24{% /instructions %}
-  - {% box identifier="17q" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="17q" %}{% value type="number_input" inputKey="17q" /%}{% /box %}
   {% /line %}
 - {% line index="17z" %}
   - {% instructions %}Any other taxes. List type and amount{% /instructions %}
-  - {% box identifier="17z" %}{% value type="list_amounts_input" /%}{% /box %}
+  - {% box identifier="17z" %}{% value type="list_amounts_input" inputKey="17z" /%}{% /box %}
   {% /line %}
 - {% line index="18" %}
   - {% instructions %}Total additional taxes. Add lines 17a through 17z{% /instructions %}
@@ -248,11 +248,11 @@
   {% /line %}
 - {% line index="19" %}
   - {% instructions %}Recapture of net EPE from Form 4255, line 1d, column (l){% /instructions %}
-  - {% box identifier="19" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="19" %}{% value type="number_input" inputKey="19" /%}{% /box %}
   {% /line %}
 - {% line index="20" %}
   - {% instructions %}Section 965 net tax liability installment from Form 965-A{% /instructions %}
-  - {% box identifier="20" %}{% value type="number_input" /%}{% /box %}
+  - {% box identifier="20" %}{% value type="number_input" inputKey="20" /%}{% /box %}
   {% /line %}
 - {% line index="21" %}
   - {% instructions %}Add lines 4, 7 through 16, 18, and 19. These are your **total other taxes.** Enter here and on Form 1040 or 1040-SR, line 23; or Form 1040-NR, line 23b{% /instructions %}
