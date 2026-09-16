@@ -247,7 +247,7 @@ describe("computeWorkbook", () => {
                   makeLineFixture({
                     box: makeBoxFixture({
                       identifier: "2", // 20, 30
-                      value: { type: "number_input", inputKey: "wages" },
+                      value: { type: "number_input", inputKey: "key_2" },
                     }),
                   }),
                   makeLineFixture({
@@ -303,7 +303,7 @@ describe("computeWorkbook", () => {
                       identifier: "1", // 46
                       value: {
                         type: "list_amounts_input",
-                        inputKey: "adjustments",
+                        inputKey: "key_1",
                       },
                     }),
                   }),
@@ -371,12 +371,12 @@ describe("computeWorkbook", () => {
             makeInstanceFixture({
               class: "f1040",
               id: "1040-1",
-              inputs: { wages: { type: "number", value: 20 } },
+              inputs: { key_2: { type: "number", value: 20 } },
             }),
             makeInstanceFixture({
               class: "f1040",
               id: "1040-2",
-              inputs: { wages: { type: "number", value: 30 } },
+              inputs: { key_2: { type: "number", value: 30 } },
             }),
           ],
           [TEST_CLASS]: [
@@ -384,7 +384,7 @@ describe("computeWorkbook", () => {
               class: TEST_CLASS,
               id: TEST_INSTANCE_ID,
               inputs: {
-                adjustments: {
+                key_1: {
                   type: "amount_list",
                   value: [
                     { label: "foo", amount: 12 },

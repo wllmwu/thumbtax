@@ -16,8 +16,7 @@ Follow these steps to write one:
    - Do your best to encode each box's instructions using the value provider DSL.
      If the instructions aren't present in the form or the DSL doesn't support it, fall back to a `number_input`.
    - Don't write any commentary or any virtual lines, but preserve them if they already exist.
-   - Give every input value tag (any type ending in `_input`) an `inputKey` attribute.
-     See "Input keys" below.
+   - Preserve existing `inputKey` values where applicable (see below).
 4. Run `cd forms && npm run build:forms -- {formClass}.mdoc`.
    This script generates the corresponding TypeScript file at `forms/src/generated/{formClass}.ts`.
    - If the script shows any schema validation errors, fix the errors and repeat until it works.
@@ -106,13 +105,10 @@ Due to how list items and tags are parsed, when a line has instructions that are
 
 ## Input keys
 
-User inputs are saved under each input's `inputKey`, not under its box identifier.
-This keeps saved inputs attached to the right box when lines are renumbered.
+Every input value tag must have an `inputKey` which is unique within the form.
+The key represents the input's semantic meaning, so it should persist through line numbering changes.
 
-- Every input value tag must have an `inputKey`.
-  There is no default.
-- Input keys must be unique within a form.
-  `build:forms` reports an error if a key is used twice.
-- For a new box, use the box identifier as the key.
-- When a line is only renumbered, keep its existing key, even though it no longer matches the box identifier.
-- When a line's meaning changes, give it a new key so that inputs saved for the old meaning aren't applied to it.
+For new boxes, just use the box identifier as the key.
+A human reviewer will decide whether to change it afterward.
+For existing boxes, ensure that each key is set on the migrated box with the same meaning as the original box, even if the number/identifier changed.
+If the original box no longer exists, then drop its key.

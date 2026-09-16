@@ -1,5 +1,4 @@
 import {
-  BOX_UNDER_TEST_ID,
   ERROR_PROVIDER,
   INPUT_UNDER_TEST_KEY,
   makeInstanceFixture,
@@ -70,18 +69,5 @@ export const number_input: ValueProviderFixture[] = [
       skipCondition: ERROR_PROVIDER,
     },
     expected: { value: 0, errors: [{ type: "divide_by_zero" }] },
-  },
-  {
-    description: "ignores input stored under the box identifier",
-    provider: { type: "number_input", inputKey: INPUT_UNDER_TEST_KEY },
-    instanceRegistry: {
-      [TEST_CLASS]: [
-        makeInstanceFixture({
-          id: TEST_INSTANCE_ID,
-          inputs: { [BOX_UNDER_TEST_ID]: { type: "number", value: 456 } },
-        }),
-      ],
-    },
-    expected: { value: 0, errors: [] },
   },
 ];

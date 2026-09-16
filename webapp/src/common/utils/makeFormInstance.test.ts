@@ -1,29 +1,28 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 
-import {
-  type FormInputs,
-  makeFormInstance,
-} from "#src/common/utils/makeFormInstance";
+import { makeFormInstance } from "#src/common/utils/makeFormInstance";
+
+import type { FormInputs } from "#src/common/utils/makeFormInstance";
 
 describe("makeFormInstance", () => {
   it("returns a form instance with the given fields", () => {
-    const instance = makeFormInstance("fW2", "w2-1", "Acme Corp", {
+    const instance = makeFormInstance("fW2", "test-id", "Test Label", {
       "1": { type: "number", value: 50000 },
       "14a": {
         type: "amount_list",
-        value: [{ label: "State disability insurance", amount: 312.5 }],
+        value: [{ label: "Test amount", amount: 312.5 }],
       },
     });
 
     expect(instance).toEqual({
-      id: "w2-1",
+      id: "test-id",
       class: "fW2",
-      label: "Acme Corp",
+      label: "Test Label",
       inputs: {
         "1": { type: "number", value: 50000 },
         "14a": {
           type: "amount_list",
-          value: [{ label: "State disability insurance", amount: 312.5 }],
+          value: [{ label: "Test amount", amount: 312.5 }],
         },
       },
     });

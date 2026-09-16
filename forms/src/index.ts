@@ -32,7 +32,6 @@ import { helper_withholding_socialsecurity } from "./generated/helper_withholdin
 
 import type { SpecificationRegistry } from "./types/specificationRegistry";
 
-export * from "./types/defineFormSpecification";
 export * from "./types/formSpecification";
 export * from "./types/glossaryTerm";
 export * from "./types/inputKeyOf";

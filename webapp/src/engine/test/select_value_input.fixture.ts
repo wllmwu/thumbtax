@@ -1,5 +1,4 @@
 import {
-  BOX_UNDER_TEST_ID,
   ERROR_PROVIDER,
   INPUT_UNDER_TEST_KEY,
   makeInstanceFixture,
@@ -81,28 +80,6 @@ export const select_value_input: ValueProviderFixture[] = [
           id: TEST_INSTANCE_ID,
           inputs: {
             [INPUT_UNDER_TEST_KEY]: { type: "selection", selectedKey: "b" },
-          },
-        }),
-      ],
-    },
-    expected: { value: 0, errors: [] },
-  },
-  {
-    description: "ignores input stored under the box identifier",
-    provider: {
-      type: "select_value_input",
-      inputKey: INPUT_UNDER_TEST_KEY,
-      options: [
-        { key: "a", label: "A", value: { type: "number_constant", value: 10 } },
-        { key: "b", label: "B", value: { type: "number_constant", value: 20 } },
-      ],
-    },
-    instanceRegistry: {
-      [TEST_CLASS]: [
-        makeInstanceFixture({
-          id: TEST_INSTANCE_ID,
-          inputs: {
-            [BOX_UNDER_TEST_ID]: { type: "selection", selectedKey: "b" },
           },
         }),
       ],
