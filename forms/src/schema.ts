@@ -11,6 +11,7 @@ import { unwrapParagraphChild } from "./schema/unwrapParagraphChild";
 import { validateChildren } from "./schema/validateChildren";
 import { validatePlainTextContent } from "./schema/validatePlainTextContent";
 import { validateProseContent } from "./schema/validateProseContent";
+import { validateUniqueInputKeys } from "./schema/validateUniqueInputKeys";
 import { optionTag, pieceTag, valueTag } from "./schema/valueTag";
 import { GLOSSARY_TERMS } from "./types/glossaryTerm";
 
@@ -50,7 +51,7 @@ export const config: Config = {
       },
       transform: makeTransformer("form", unwrapInlineTags),
       validate(node) {
-        return validateChildren(unwrapInlineTags(node.children), [
+        const childErrors = validateChildren(unwrapInlineTags(node.children), [
           { options: [{ nodeType: "heading", attributes: { level: 1 } }] },
           { optional: true, options: [{ nodeType: "tag", tag: "subtitle" }] },
           {
@@ -60,6 +61,11 @@ export const config: Config = {
           { optional: true, options: [{ nodeType: "tag", tag: "commentary" }] },
           { greedy: true, options: [{ nodeType: "tag", tag: "section" }] },
         ]);
+        if (childErrors.length > 0) {
+          return childErrors;
+        }
+
+        return validateUniqueInputKeys(node);
       },
     },
     section: {

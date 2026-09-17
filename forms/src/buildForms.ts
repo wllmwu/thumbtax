@@ -4,7 +4,6 @@ import * as path from "node:path";
 import * as process from "node:process";
 import * as prettier from "prettier";
 
-import { assertUniqueInputKeys } from "./build/assertUniqueInputKeys";
 import { mapFormSpecification } from "./build/mapFormSpecification";
 import { mapGlossary } from "./build/mapGlossary";
 import { config } from "./schema";
@@ -35,7 +34,6 @@ async function buildForm(fileName: string): Promise<void> {
   const formSpecification = mapFormSpecification(
     transform(documentNode, config),
   );
-  assertUniqueInputKeys(formSpecification);
   const outputPath = path.join(
     OUTPUT_DIRECTORY,
     `${formSpecification.class}.ts`,
