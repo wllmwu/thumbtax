@@ -1,12 +1,12 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 
-import { makeFormInstance } from "#src/common/utils/makeFormInstance";
+import { makeFormInstance } from "#src/state/makeFormInstance";
 
-import type { FormInputs } from "#src/common/utils/makeFormInstance";
+import type { FormInputs } from "#src/state/makeFormInstance";
 
 describe("makeFormInstance", () => {
   it("returns a form instance with the given fields", () => {
-    const instance = makeFormInstance("fW2", "test-id", "Test Label", {
+    const instance = makeFormInstance("fW2", "Test Label", {
       "1": { type: "number", value: 50000 },
       "14a": {
         type: "amount_list",
@@ -15,7 +15,7 @@ describe("makeFormInstance", () => {
     });
 
     expect(instance).toEqual({
-      id: "test-id",
+      id: expect.any(String),
       class: "fW2",
       label: "Test Label",
       inputs: {
@@ -29,17 +29,23 @@ describe("makeFormInstance", () => {
   });
 
   it("returns a form instance without inputs", () => {
-    expect(makeFormInstance("f1040", "f-1", "", {})).toEqual({
-      id: "f-1",
+    expect(makeFormInstance("f1040", "", {})).toEqual({
+      id: expect.any(String),
       class: "f1040",
       label: "",
       inputs: {},
     });
   });
 
+  it("returns a form instance with a unique id each time", () => {
+    const first = makeFormInstance("f1040", "", {});
+    const second = makeFormInstance("f1040", "", {});
+    expect(first.id).not.toEqual(second.id);
+  });
+
   it("takes inputs typed for the chosen form class", () => {
     expectTypeOf(makeFormInstance<"f1099INT">)
-      .parameter(3)
+      .parameter(2)
       .toEqualTypeOf<FormInputs<"f1099INT">>();
   });
 });

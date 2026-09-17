@@ -1,7 +1,8 @@
+import { v4 as uuidv4 } from "uuid";
+
 import type { FormClass } from "@thumbtax/common";
 import type { InputKeyOf, specifications } from "@thumbtax/forms";
 import type { FormInstance } from "#src/common/types/formInstance";
-import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { UserInput } from "#src/common/types/userInput";
 
 export type FormInputs<Class extends FormClass> = Partial<
@@ -10,9 +11,8 @@ export type FormInputs<Class extends FormClass> = Partial<
 
 export function makeFormInstance<Class extends FormClass>(
   formClass: Class,
-  id: FormInstanceId,
   label: string,
   inputs: FormInputs<Class>,
 ): FormInstance {
-  return { id, class: formClass, label, inputs };
+  return { id: uuidv4(), class: formClass, label, inputs };
 }

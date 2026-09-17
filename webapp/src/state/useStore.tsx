@@ -1,5 +1,4 @@
 import { type Draft, produce } from "immer";
-import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 
 import { computeWorkbook } from "#src/engine/computeWorkbook";
@@ -8,10 +7,10 @@ import {
   DEFAULT_UI_STATE,
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
+import { makeFormInstance } from "#src/state/makeFormInstance";
 
 import type { FilingStatus, FormClass } from "@thumbtax/common";
 import type { SpecificationRegistry } from "@thumbtax/forms";
-import type { FormInstance } from "#src/common/types/formInstance";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { UserInput } from "#src/common/types/userInput";
 import type { Workbook } from "#src/common/types/workbook";
@@ -192,15 +191,9 @@ const useStoreInner = create<StoreState>((set) => ({
   },
 
   addFormInstance: (formClass) => {
-    const newId = uuidv4();
+    const newInstance = makeFormInstance(formClass, "Untitled form", {});
     set(
       applyApplicationStateChange((draft) => {
-        const newInstance: FormInstance = {
-          id: newId,
-          class: formClass,
-          label: "Untitled form",
-          inputs: {},
-        };
         const existing = draft.formInstances[formClass];
         if (existing) {
           existing.push(newInstance);
@@ -211,7 +204,7 @@ const useStoreInner = create<StoreState>((set) => ({
       }),
       true,
     );
-    return newId;
+    return newInstance.id;
   },
 
   removeFormInstance: (formClass, instanceId) => {

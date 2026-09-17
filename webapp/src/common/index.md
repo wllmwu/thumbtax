@@ -10,5 +10,3 @@ These types and helpers don't belong in the `common` package because they're sco
     - `formInstanceId.ts`: Unique ID for a form instance (currently aliases string)
     - `userInput.ts`: Tagged union of user input types
     - `workbook.ts`: Core artifact produced by the engine and consumed by the UI
-  - `utils/`
-    - `makeFormInstance.ts`: Creates a form instance with type-checked input keys

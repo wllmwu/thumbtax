@@ -8,4 +8,5 @@ This module contains the central state manager, which uses the Zustand library.
     - `uiState.ts`: Visual states that don't affect the real outputs but can be remembered by the browser for quality of life
     - `userPreferences.ts`: Preferences/settings that likewise don't affect the real outputs but do affect other application behavior
   - `defaults.ts`: Constant default/initial state
+  - `makeFormInstance.ts`: Creates a form instance with type-checked input keys and a generated id
   - `useStore.tsx`: React hook that exposes the Zustand store to the rest of the application
