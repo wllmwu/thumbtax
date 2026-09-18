@@ -31,11 +31,7 @@ You can modify these values directly or use the wizard again to replace them.
   - {% instructions %}Interval{% /instructions %}
   - {% box identifier="2b" %}
     {% value type="select_value_input" inputKey="2b" %}
-    - {% value
-         key="year"
-         label="One time or whole year"
-         type="number_constant"
-         value=1 /%}
+    - {% value key="one_time" label="One time" type="number_constant" value=1 /%}
     - {% value key="hour" label="Per hour" type="product" %}
       - {% value type="box_reference" box="2a" /%}
       - {% value type="number_constant" value=52 /%}
@@ -47,6 +43,7 @@ You can modify these values directly or use the wizard again to replace them.
          type="number_constant"
          value=26 /%}
     - {% value key="month" label="Per month" type="number_constant" value=12 /%}
+    - {% value key="year" label="Whole year" type="number_constant" value=1 /%}
     {% /value %}
     {% /box %}
   {% /line %}
