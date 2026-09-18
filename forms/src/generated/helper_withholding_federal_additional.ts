@@ -27,7 +27,7 @@ export const helper_withholding_federal_additional = defineFormSpecification({
           instructions: "Federal income tax additional withholding amount",
           box: {
             identifier: "1",
-            value: { type: "number_input", inputKey: "1" },
+            value: { type: "number_input", inputKey: "withheld_amount" },
           },
         },
       ],

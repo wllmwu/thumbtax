@@ -29,7 +29,7 @@ export const helper_withholding_federal_custom = defineFormSpecification({
             identifier: "1",
             value: {
               type: "select_instance_boxes_input",
-              inputKey: "1",
+              inputKey: "gross_amount",
               options: [{ form: "helper_income", box: "4" }],
             },
           },
@@ -41,7 +41,7 @@ export const helper_withholding_federal_custom = defineFormSpecification({
             identifier: "2",
             value: {
               type: "override_number_input",
-              inputKey: "2",
+              inputKey: "subject_amount",
               computedValue: { type: "box_reference", box: "1" },
             },
           },
@@ -51,7 +51,7 @@ export const helper_withholding_federal_custom = defineFormSpecification({
           instructions: "Withholding rate",
           box: {
             identifier: "3",
-            value: { type: "number_input", inputKey: "3" },
+            value: { type: "number_input", inputKey: "withholding_rate" },
             format: "percentage",
           },
         },
@@ -62,7 +62,7 @@ export const helper_withholding_federal_custom = defineFormSpecification({
             identifier: "4",
             value: {
               type: "override_number_input",
-              inputKey: "4",
+              inputKey: "withheld_amount",
               computedValue: {
                 type: "product",
                 values: [

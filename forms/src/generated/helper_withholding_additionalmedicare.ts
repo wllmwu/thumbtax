@@ -29,7 +29,7 @@ export const helper_withholding_additionalmedicare = defineFormSpecification({
             identifier: "1",
             value: {
               type: "select_instance_boxes_input",
-              inputKey: "1",
+              inputKey: "gross_amount",
               options: [{ form: "helper_income", box: "4" }],
             },
           },
@@ -41,7 +41,7 @@ export const helper_withholding_additionalmedicare = defineFormSpecification({
             identifier: "2",
             value: {
               type: "override_number_input",
-              inputKey: "2",
+              inputKey: "subject_amount",
               computedValue: {
                 type: "non_negative_clamp",
                 value: {
@@ -60,7 +60,7 @@ export const helper_withholding_additionalmedicare = defineFormSpecification({
             identifier: "3",
             value: {
               type: "override_number_input",
-              inputKey: "3",
+              inputKey: "withholding_rate",
               computedValue: { type: "number_constant", value: 0.009 },
             },
             format: "percentage",
@@ -73,7 +73,7 @@ export const helper_withholding_additionalmedicare = defineFormSpecification({
             identifier: "4",
             value: {
               type: "override_number_input",
-              inputKey: "4",
+              inputKey: "withheld_amount",
               computedValue: {
                 type: "product",
                 values: [
