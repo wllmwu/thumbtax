@@ -7,7 +7,7 @@ import {
   DEFAULT_UI_STATE,
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
-import { makeFormInstance } from "#src/state/makeFormInstance";
+import { FormInstanceBuilder } from "#src/state/formInstanceBuilder";
 
 import type { FilingStatus, FormClass } from "@thumbtax/common";
 import type { SpecificationRegistry } from "@thumbtax/forms";
@@ -191,7 +191,10 @@ const useStoreInner = create<StoreState>((set) => ({
   },
 
   addFormInstance: (formClass) => {
-    const newInstance = makeFormInstance(formClass, "Untitled form", {});
+    const newInstance = new FormInstanceBuilder(
+      formClass,
+      "Untitled form",
+    ).build();
     set(
       applyApplicationStateChange((draft) => {
         const existing = draft.formInstances[formClass];
