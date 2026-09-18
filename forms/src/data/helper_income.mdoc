@@ -21,16 +21,16 @@ You can modify these values directly or use the wizard again to replace them.
   {% /line %}
 - {% line index="1" %}
   - {% instructions %}Amount{% /instructions %}
-  - {% box identifier="1" %}{% value type="number_input" inputKey="1" /%}{% /box %}
+  - {% box identifier="1" %}{% value type="number_input" inputKey="amount" /%}{% /box %}
   {% /line %}
 - {% line index="2a" %}
   - {% instructions %}Hours per week{% /instructions %}
-  - {% box identifier="2a" %}{% value type="number_input" inputKey="2a" /%}{% /box %}
+  - {% box identifier="2a" %}{% value type="number_input" inputKey="hours_per_week" /%}{% /box %}
   {% /line %}
 - {% line index="2b" %}
   - {% instructions %}Interval{% /instructions %}
   - {% box identifier="2b" %}
-    {% value type="select_value_input" inputKey="2b" %}
+    {% value type="select_value_input" inputKey="interval" %}
     - {% value key="one_time" label="One time" type="number_constant" value=1 /%}
     - {% value key="hour" label="Per hour" type="product" %}
       - {% value type="box_reference" box="2a" /%}
@@ -62,16 +62,16 @@ You can modify these values directly or use the wizard again to replace them.
   {% /line %}
 - {% line index="3a" %}
   - {% instructions %}Start date{% /instructions %}
-  - {% box identifier="3a" %}{% value type="date_input" inputKey="3a" /%}{% /box %}
+  - {% box identifier="3a" %}{% value type="date_input" inputKey="start_date" /%}{% /box %}
   {% /line %}
 - {% line index="3b" %}
   - {% instructions %}End date{% /instructions %}
-  - {% box identifier="3b" %}{% value type="date_input" inputKey="3b" /%}{% /box %}
+  - {% box identifier="3b" %}{% value type="date_input" inputKey="end_date" /%}{% /box %}
   {% /line %}
 - {% line index="3c" %}
   - {% instructions %}Proration basis{% /instructions %}
   - {% box identifier="3c" %}
-    {% value type="select_value_input" inputKey="3c" %}
+    {% value type="select_value_input" inputKey="proration_basis" %}
     - {% value key="calendar_days" label="Calendar days" type="quotient" %}
       - {% value slot="dividend" type="date_range_length" unit="day" %}
         - {% value slot="rangeStart" type="box_reference" box="3a" /%}

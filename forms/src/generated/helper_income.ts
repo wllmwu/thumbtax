@@ -43,7 +43,7 @@ export const helper_income = defineFormSpecification({
           instructions: "Amount",
           box: {
             identifier: "1",
-            value: { type: "number_input", inputKey: "1" },
+            value: { type: "number_input", inputKey: "amount" },
           },
         },
         {
@@ -51,7 +51,7 @@ export const helper_income = defineFormSpecification({
           instructions: "Hours per week",
           box: {
             identifier: "2a",
-            value: { type: "number_input", inputKey: "2a" },
+            value: { type: "number_input", inputKey: "hours_per_week" },
           },
         },
         {
@@ -61,11 +61,11 @@ export const helper_income = defineFormSpecification({
             identifier: "2b",
             value: {
               type: "select_value_input",
-              inputKey: "2b",
+              inputKey: "interval",
               options: [
                 {
-                  key: "year",
-                  label: "One time or whole year",
+                  key: "one_time",
+                  label: "One time",
                   value: { type: "number_constant", value: 1 },
                 },
                 {
@@ -93,6 +93,11 @@ export const helper_income = defineFormSpecification({
                   key: "month",
                   label: "Per month",
                   value: { type: "number_constant", value: 12 },
+                },
+                {
+                  key: "year",
+                  label: "Whole year",
+                  value: { type: "number_constant", value: 1 },
                 },
               ],
             },
@@ -125,7 +130,7 @@ export const helper_income = defineFormSpecification({
           instructions: "Start date",
           box: {
             identifier: "3a",
-            value: { type: "date_input", inputKey: "3a" },
+            value: { type: "date_input", inputKey: "start_date" },
           },
         },
         {
@@ -133,7 +138,7 @@ export const helper_income = defineFormSpecification({
           instructions: "End date",
           box: {
             identifier: "3b",
-            value: { type: "date_input", inputKey: "3b" },
+            value: { type: "date_input", inputKey: "end_date" },
           },
         },
         {
@@ -143,7 +148,7 @@ export const helper_income = defineFormSpecification({
             identifier: "3c",
             value: {
               type: "select_value_input",
-              inputKey: "3c",
+              inputKey: "proration_basis",
               options: [
                 {
                   key: "calendar_days",
