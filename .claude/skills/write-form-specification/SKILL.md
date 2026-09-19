@@ -15,7 +15,7 @@ Follow these steps to write one:
    - Write all lines/boxes from the form, including those that don't take a value and just group other lines as children.
    - Do your best to encode each box's instructions using the value provider DSL.
      If the instructions aren't present in the form or the DSL doesn't support it, fall back to a `number_input`.
-   - Don't write any commentary or any virtual lines, but preserve them if they already exist.
+   - Don't write any commentary, virtual lines, or value providers that diverge from the instructions, but preserve them if they already exist and are still accurate.
    - Preserve existing `inputKey` values where applicable (see below).
 4. Run `cd forms && npm run build:forms -- {formClass}.mdoc`.
    This script generates the corresponding TypeScript file at `forms/src/generated/{formClass}.ts`.
@@ -106,9 +106,11 @@ Due to how list items and tags are parsed, when a line has instructions that are
 ## Input keys
 
 Every input value tag must have an `inputKey` which is unique within the form.
-The key represents the input's semantic meaning, so it should persist through line numbering changes.
+The key represents the input's semantic meaning, so it should persist through line numbering changes and minor rewording.
 
-For new boxes, just use the box identifier as the key.
-A human reviewer will decide whether to change it afterward.
+For new boxes, write a key indicating what the box is supposed to store using key words from its instructions.
+Use lower_snake_case and aim for 2-6 words.
+Sometimes the instructions just say "Income from Form XYZ" or similar; in these cases, use the more specific meaning from the referenced form if you know it.
+
 For existing boxes, ensure that each key is set on the migrated box with the same meaning as the original box, even if the number/identifier changed.
-If the original box no longer exists, then drop its key.
+If the original box no longer exists in this tax form, then drop its key.
