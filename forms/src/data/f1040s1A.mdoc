@@ -19,19 +19,19 @@
   {% /line %}
 - {% line index="2a" %}
   - {% instructions %}Enter any income from Puerto Rico that you excluded{% /instructions %}
-  - {% box identifier="2a" %}{% value type="number_input" inputKey="2a" /%}{% /box %}
+  - {% box identifier="2a" %}{% value type="number_input" inputKey="excluded_puerto_rico_income" /%}{% /box %}
   {% /line %}
 - {% line index="2b" %}
   - {% instructions %}Enter the amount from Form 2555, line 45{% /instructions %}
-  - {% box identifier="2b" %}{% value type="number_input" inputKey="2b" /%}{% /box %}
+  - {% box identifier="2b" %}{% value type="number_input" inputKey="housing_and_foreign_earned_income_exclusions" /%}{% /box %}
   {% /line %}
 - {% line index="2c" %}
   - {% instructions %}Enter the amount from Form 2555, line 50{% /instructions %}
-  - {% box identifier="2c" %}{% value type="number_input" inputKey="2c" /%}{% /box %}
+  - {% box identifier="2c" %}{% value type="number_input" inputKey="foreign_earned_income_housing_deduction" /%}{% /box %}
   {% /line %}
 - {% line index="2d" %}
   - {% instructions %}Enter the amount from Form 4563, line 15{% /instructions %}
-  - {% box identifier="2d" %}{% value type="number_input" inputKey="2d" /%}{% /box %}
+  - {% box identifier="2d" %}{% value type="number_input" inputKey="american_samoa_exclusion" /%}{% /box %}
   {% /line %}
 - {% line index="2e" %}
   - {% instructions %}Add lines 2a, 2b, 2c, and 2d{% /instructions %}
@@ -69,7 +69,7 @@
 - {% line index="4a" %}
   - {% instructions %}Enter qualified tips included on Form W-2, box 7, but see the instructions if Form W-2, box 5 is more than $176,100 or you received tips that are not subject to social security and Medicare taxes{% /instructions %}
   - {% box identifier="4a" %}
-    {% value type="select_instance_boxes_input" inputKey="4a" %}
+    {% value type="select_instance_boxes_input" inputKey="fW2_qualified_tips" %}
     - {% option form="fW2" box="7" /%}
     - {% option form="fW2" box="14a" /%}
     {% /value %}
@@ -77,12 +77,14 @@
   {% /line %}
 - {% line index="4b" %}
   - {% instructions %}Qualified tips included on Form 4137, line 1, row A, column (c). If Form 4137 is not filed, enter -0-{% /instructions %}
-  - {% box identifier="4b" %}{% value type="number_input" inputKey="4b" /%}{% /box %}
+  - {% box identifier="4b" %}{% value type="number_input" inputKey="f4137_qualified_tips" /%}{% /box %}
   {% /line %}
 - {% line index="4c" %}
   - {% instructions %}If you only received qualified tips as an employee with respect to employment with one employer, enter the larger of line 4a or line 4b. Otherwise, see the instructions to determine the amount to enter on line 4c. If you received tips as an employee in more than one occupation, see the instructions{% /instructions %}
   - {% box identifier="4c" %}
-    {% value type="override_number_input" inputKey="4c" %}
+    {% value
+       type="override_number_input"
+       inputKey="qualified_tips_as_employee" %}
     - {% value slot="computedValue" type="maximum" %}
       - {% value type="box_reference" box="4a" /%}
       - {% value type="box_reference" box="4b" /%}
@@ -96,7 +98,9 @@
     Qualified tip amount included in Form 1099-NEC, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions
     {% /instructions %}
   - {% box identifier="5" %}
-    {% value type="select_instance_boxes_input" inputKey="5" %}
+    {% value
+       type="select_instance_boxes_input"
+       inputKey="qualified_tips_from_trade_or_business" %}
     - {% option form="f1099NEC" box="1" /%}
     {% /value %}
     {% /box %}
@@ -198,7 +202,9 @@
 - {% line index="14b" %}
   - {% instructions %}Qualified overtime compensation included in Form 1099-NEC, box 1, or Form 1099-MISC, box 3 (see instructions){% /instructions %}
   - {% box identifier="14b" %}
-    {% value type="select_instance_boxes_input" inputKey="14b" %}
+    {% value
+       type="select_instance_boxes_input"
+       inputKey="f1099MISC_f1099NEC_qualified_overtime_compensation" %}
     - {% option form="f1099NEC" box="1" /%}
     {% /value %}
     {% /box %}
@@ -320,14 +326,14 @@
 - {% line index="22a" %}
   - {% instructions %}Applicable passenger vehicle{% /instructions %}
   - {% box identifier="22a(i)" column="(i)" %}{% value type="unused" /%}{% /box %}
-  - {% box identifier="22a(ii)" column="(ii)" %}{% value type="number_input" inputKey="22a(ii)" /%}{% /box %}
-  - {% box identifier="22a(iii)" column="(iii)" %}{% value type="number_input" inputKey="22a(iii)" /%}{% /box %}
+  - {% box identifier="22a(ii)" column="(ii)" %}{% value type="number_input" inputKey="car_loan_interest_deducted_1" /%}{% /box %}
+  - {% box identifier="22a(iii)" column="(iii)" %}{% value type="number_input" inputKey="car_loan_interest_paid_1" /%}{% /box %}
   {% /line %}
 - {% line index="22b" %}
   - {% instructions %}Applicable passenger vehicle{% /instructions %}
   - {% box identifier="22b(i)" column="(i)" %}{% value type="unused" /%}{% /box %}
-  - {% box identifier="22b(ii)" column="(ii)" %}{% value type="number_input" inputKey="22b(ii)" /%}{% /box %}
-  - {% box identifier="22b(iii)" column="(iii)" %}{% value type="number_input" inputKey="22b(iii)" /%}{% /box %}
+  - {% box identifier="22b(ii)" column="(ii)" %}{% value type="number_input" inputKey="car_loan_interest_deducted_2" /%}{% /box %}
+  - {% box identifier="22b(iii)" column="(iii)" %}{% value type="number_input" inputKey="car_loan_interest_paid_2" /%}{% /box %}
   {% /line %}
 - {% line index="23" %}
   - {% instructions %}Add lines 22a and 22b, column (iii){% /instructions %}
@@ -489,11 +495,11 @@
   {% /line %}
 - {% line index="36a" %}
   - {% instructions %}If you have a valid social security number (see instructions) and were born before January 2, 1961, enter the amount from line 35{% /instructions %}
-  - {% box identifier="36a" %}{% value type="number_input" inputKey="36a" /%}{% /box %}
+  - {% box identifier="36a" %}{% value type="number_input" inputKey="senior_deduction_for_self" /%}{% /box %}
   {% /line %}
 - {% line index="36b" %}
   - {% instructions %}If you are married filing jointly, your spouse has a valid social security number (see instructions), and your spouse was born before January 2, 1961, enter the amount from line 35{% /instructions %}
-  - {% box identifier="36b" %}{% value type="number_input" inputKey="36b" /%}{% /box %}
+  - {% box identifier="36b" %}{% value type="number_input" inputKey="senior_deduction_for_spouse" /%}{% /box %}
   {% /line %}
 - {% line index="37" %}
   - {% instructions %}**Enhanced deduction for seniors.** Add lines 36a and 36b{% /instructions %}

@@ -17,35 +17,35 @@
   {% /line %}
 - {% line index="1b" %}
   - {% instructions %}Household employee wages not reported on Form(s) W-2{% /instructions %}
-  - {% box identifier="1b" %}{% value type="number_input" inputKey="1b" /%}{% /box %}
+  - {% box identifier="1b" %}{% value type="number_input" inputKey="household_employee_wages" /%}{% /box %}
   {% /line %}
 - {% line index="1c" %}
   - {% instructions %}Tip income not reported on line 1a (see instructions){% /instructions %}
-  - {% box identifier="1c" %}{% value type="number_input" inputKey="1c" /%}{% /box %}
+  - {% box identifier="1c" %}{% value type="number_input" inputKey="tip_income" /%}{% /box %}
   {% /line %}
 - {% line index="1d" %}
   - {% instructions %}Medicaid waiver payments not reported on Form(s) W-2 (see instructions){% /instructions %}
-  - {% box identifier="1d" %}{% value type="number_input" inputKey="1d" /%}{% /box %}
+  - {% box identifier="1d" %}{% value type="number_input" inputKey="medicaid_waiver_payments" /%}{% /box %}
   {% /line %}
 - {% line index="1e" %}
   - {% instructions %}Taxable dependent care benefits from Form 2441, line 26{% /instructions %}
-  - {% box identifier="1e" %}{% value type="number_input" inputKey="1e" /%}{% /box %}
+  - {% box identifier="1e" %}{% value type="number_input" inputKey="taxable_dependent_care_benefits" /%}{% /box %}
   {% /line %}
 - {% line index="1f" %}
   - {% instructions %}Employer-provided adoption benefits from Form 8839, line 31{% /instructions %}
-  - {% box identifier="1f" %}{% value type="number_input" inputKey="1f" /%}{% /box %}
+  - {% box identifier="1f" %}{% value type="number_input" inputKey="employer_provided_adoption_benefits" /%}{% /box %}
   {% /line %}
 - {% line index="1g" %}
   - {% instructions %}Wages from Form 8919, line 6{% /instructions %}
-  - {% box identifier="1g" %}{% value type="number_input" inputKey="1g" /%}{% /box %}
+  - {% box identifier="1g" %}{% value type="number_input" inputKey="wages_with_tax_not_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="1h" %}
   - {% instructions %}Other earned income (see instructions){% /instructions %}
-  - {% box identifier="1h" %}{% value type="list_amounts_input" inputKey="1h" /%}{% /box %}
+  - {% box identifier="1h" %}{% value type="list_amounts_input" inputKey="other_earned_income" /%}{% /box %}
   {% /line %}
 - {% line index="1i" %}
   - {% instructions %}Nontaxable combat pay election (see instructions){% /instructions %}
-  - {% box identifier="1i" %}{% value type="number_input" inputKey="1i" /%}{% /box %}
+  - {% box identifier="1i" %}{% value type="number_input" inputKey="nontaxable_combat_pay_election" /%}{% /box %}
   {% /line %}
 - {% line index="1z" %}
   - {% instructions %}Add lines 1a through 1h{% /instructions %}
@@ -89,7 +89,7 @@
 - {% line index="4a" %}
   - {% instructions %}IRA distributions{% /instructions %}
   - {% box identifier="4a" %}
-    {% value type="select_instance_boxes_input" inputKey="4a" %}
+    {% value type="select_instance_boxes_input" inputKey="ira_distributions" %}
     - {% option form="f1099R" box="1" /%}
     {% /value %}
     {% /box %}
@@ -97,7 +97,9 @@
 - {% line index="4b" %}
   - {% instructions %}Taxable amount{% /instructions %}
   - {% box identifier="4b" %}
-    {% value type="select_instance_boxes_input" inputKey="4b" %}
+    {% value
+       type="select_instance_boxes_input"
+       inputKey="ira_distributions_taxable_amount" %}
     - {% option form="f1099R" box="2a" /%}
     {% /value %}
     {% /box %}
@@ -108,7 +110,9 @@
 - {% line index="5a" %}
   - {% instructions %}Pensions and annuities{% /instructions %}
   - {% box identifier="5a" %}
-    {% value type="select_instance_boxes_input" inputKey="5a" %}
+    {% value
+       type="select_instance_boxes_input"
+       inputKey="pensions_and_annuities" %}
     - {% option form="f1099R" box="1" /%}
     {% /value %}
     {% /box %}
@@ -116,7 +120,9 @@
 - {% line index="5b" %}
   - {% instructions %}Taxable amount{% /instructions %}
   - {% box identifier="5b" %}
-    {% value type="select_instance_boxes_input" inputKey="5b" %}
+    {% value
+       type="select_instance_boxes_input"
+       inputKey="pensions_and_annuities_taxable_amount" %}
     - {% option form="f1099R" box="2a" /%}
     {% /value %}
     {% /box %}
@@ -126,11 +132,11 @@
   {% /line %}
 - {% line index="6a" %}
   - {% instructions %}Social security benefits{% /instructions %}
-  - {% box identifier="6a" %}{% value type="number_input" inputKey="6a" /%}{% /box %}
+  - {% box identifier="6a" %}{% value type="number_input" inputKey="social_security_benefits" /%}{% /box %}
   {% /line %}
 - {% line index="6b" %}
   - {% instructions %}Taxable amount{% /instructions %}
-  - {% box identifier="6b" %}{% value type="number_input" inputKey="6b" /%}{% /box %}
+  - {% box identifier="6b" %}{% value type="number_input" inputKey="social_security_benefits_taxable_amount" /%}{% /box %}
   {% /line %}
 - {% line index="6c" %}
   - {% box identifier="6c" %}{% value type="unused" /%}{% /box %}
@@ -357,7 +363,7 @@
 - {% line index="16" %}
   - {% instructions %}**Tax** (see instructions){% /instructions %}
   - {% box identifier="16" %}
-    {% value type="override_number_input" inputKey="16" %}
+    {% value type="override_number_input" inputKey="tax_amount" %}
     - {% value slot="computedValue" type="conditional" %}
       - {% value slot="condition" type="box_reference" box="flag_16_SDTWS" /%}
       - {% value
@@ -399,7 +405,7 @@
   {% /line %}
 - {% line index="19" %}
   - {% instructions %}Child tax credit or credit for other dependents from Schedule 8812{% /instructions %}
-  - {% box identifier="19" %}{% value type="number_input" inputKey="19" /%}{% /box %}
+  - {% box identifier="19" %}{% value type="number_input" inputKey="child_tax_credit" /%}{% /box %}
   {% /line %}
 - {% line index="20" %}
   - {% instructions %}Amount from Schedule 3, line 8{% /instructions %}
@@ -471,7 +477,9 @@
 - {% line index="25c" %}
   - {% instructions %}Other forms (see instructions){% /instructions %}
   - {% box identifier="25c" %}
-    {% value type="override_number_input" inputKey="25c" %}
+    {% value
+       type="override_number_input"
+       inputKey="federal_income_tax_withheld_from_other_forms" %}
     - {% value
          slot="computedValue"
          type="box_reference"
@@ -493,30 +501,30 @@
   {% /line %}
 - {% line index="26" %}
   - {% instructions %}2025 estimated tax payments and amount applied from 2024 return{% /instructions %}
-  - {% box identifier="26" %}{% value type="number_input" inputKey="26" /%}{% /box %}
+  - {% box identifier="26" %}{% value type="number_input" inputKey="estimated_tax_payments" /%}{% /box %}
   {% /line %}
 - {% line index="27a" %}
   - {% instructions %}Earned income credit (EIC){% /instructions %}
-  - {% box identifier="27a" %}{% value type="number_input" inputKey="27a" /%}{% /box %}
+  - {% box identifier="27a" %}{% value type="number_input" inputKey="earned_income_credit" /%}{% /box %}
   {% /line %}
 - {% line index="27b" %}
   - {% instructions %}Clergy filing Schedule SE (see instructions){% /instructions %}
-  - {% box identifier="27b" %}{% value type="number_input" inputKey="27b" /%}{% /box %}
+  - {% box identifier="27b" %}{% value type="number_input" inputKey="clergy_filing_f1040sSE" /%}{% /box %}
   {% /line %}
 - {% line index="27c" %}
   - {% box identifier="27c" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="28" %}
   - {% instructions %}Additional child tax credit (ACTC) from Schedule 8812{% /instructions %}
-  - {% box identifier="28" %}{% value type="number_input" inputKey="28" /%}{% /box %}
+  - {% box identifier="28" %}{% value type="number_input" inputKey="additional_child_tax_credit" /%}{% /box %}
   {% /line %}
 - {% line index="29" %}
   - {% instructions %}American opportunity credit from Form 8863, line 8{% /instructions %}
-  - {% box identifier="29" %}{% value type="number_input" inputKey="29" /%}{% /box %}
+  - {% box identifier="29" %}{% value type="number_input" inputKey="american_opportunity_credit" /%}{% /box %}
   {% /line %}
 - {% line index="30" %}
   - {% instructions %}Refundable adoption credit from Form 8839, line 13{% /instructions %}
-  - {% box identifier="30" %}{% value type="number_input" inputKey="30" /%}{% /box %}
+  - {% box identifier="30" %}{% value type="number_input" inputKey="refundable_adoption_credit" /%}{% /box %}
   {% /line %}
 - {% line index="31" %}
   - {% instructions %}Amount from Schedule 3, line 15{% /instructions %}
@@ -592,7 +600,7 @@
   {% /line %}
 - {% line index="38" %}
   - {% instructions %}Estimated tax penalty (see instructions){% /instructions %}
-  - {% box identifier="38" %}{% value type="number_input" inputKey="38" /%}{% /box %}
+  - {% box identifier="38" %}{% value type="unsupported" /%}{% /box %}
   {% /line %}
 {% /lines %}
 {% /section %}

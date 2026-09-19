@@ -12,7 +12,7 @@
 - {% line index="1" %}
   - {% instructions %}Enter the amount from Form 1040 or 1040-SR, line 15. However, if you are filing Form 2555 (relating to foreign earned income), enter the amount from line 3 of the Foreign Earned Income Tax Worksheet{% /instructions %}
   - {% box identifier="1" %}
-    {% value type="override_number_input" inputKey="1" %}
+    {% value type="override_number_input" inputKey="taxable_income" %}
     - {% value slot="computedValue" type="box_reference" form="f1040" box="15" /%}
     {% /value %}
     {% /box %}

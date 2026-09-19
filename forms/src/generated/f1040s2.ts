@@ -23,7 +23,10 @@ export const f1040s2 = defineFormSpecification({
             "Excess advance premium tax credit repayment. Attach Form 8962",
           box: {
             identifier: "1a",
-            value: { type: "number_input", inputKey: "1a" },
+            value: {
+              type: "number_input",
+              inputKey: "excess_advance_premium_tax_credit_repayment",
+            },
           },
         },
         {
@@ -32,7 +35,10 @@ export const f1040s2 = defineFormSpecification({
             "Repayment of new clean vehicle credit(s) transferred to a registered dealer from Schedule A (Form 8936), Part II. Attach Form 8936 and Schedule A (Form 8936)",
           box: {
             identifier: "1b",
-            value: { type: "number_input", inputKey: "1b" },
+            value: {
+              type: "number_input",
+              inputKey: "new_clean_vehicle_credits_repayment",
+            },
           },
         },
         {
@@ -41,7 +47,10 @@ export const f1040s2 = defineFormSpecification({
             "Repayment of previously owned clean vehicle credit(s) transferred to a registered dealer from Schedule A (Form 8936), Part IV. Attach Form 8936 and Schedule A (Form 8936)",
           box: {
             identifier: "1c",
-            value: { type: "number_input", inputKey: "1c" },
+            value: {
+              type: "number_input",
+              inputKey: "used_clean_vehicle_credits_repayment",
+            },
           },
         },
         {
@@ -50,7 +59,10 @@ export const f1040s2 = defineFormSpecification({
             "Recapture of net EPE from Form 4255, line 2a, column (l)",
           box: {
             identifier: "1d",
-            value: { type: "number_input", inputKey: "1d" },
+            value: {
+              type: "number_input",
+              inputKey: "carbon_oxide_sequestration_credit_net_epe_recapture",
+            },
           },
         },
         {
@@ -59,7 +71,10 @@ export const f1040s2 = defineFormSpecification({
             "Excessive payments (EPs) on gross EPE from Form 4255. See instructions",
           box: {
             identifier: "1e",
-            value: { type: "number_input", inputKey: "1e" },
+            value: {
+              type: "number_input",
+              inputKey: "gross_epe_excessive_payments",
+            },
           },
         },
         {
@@ -67,7 +82,10 @@ export const f1040s2 = defineFormSpecification({
           instructions: "20% EP from Form 4255. See instructions",
           box: {
             identifier: "1f",
-            value: { type: "number_input", inputKey: "1f" },
+            value: {
+              type: "number_input",
+              inputKey: "20_percent_excessive_payments",
+            },
           },
         },
         {
@@ -75,7 +93,7 @@ export const f1040s2 = defineFormSpecification({
           instructions: "Other additions to tax (see instructions)",
           box: {
             identifier: "1y",
-            value: { type: "number_input", inputKey: "1y" },
+            value: { type: "number_input", inputKey: "other_additions_to_tax" },
           },
         },
         {
@@ -136,7 +154,7 @@ export const f1040s2 = defineFormSpecification({
           instructions: "Self-employment tax. Attach Schedule SE",
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: { type: "number_input", inputKey: "self_employment_tax" },
           },
         },
         {
@@ -145,7 +163,10 @@ export const f1040s2 = defineFormSpecification({
             "Social security and Medicare tax on unreported tip income. Attach Form 4137",
           box: {
             identifier: "5",
-            value: { type: "number_input", inputKey: "5" },
+            value: {
+              type: "number_input",
+              inputKey: "unreported_tip_income_tax",
+            },
           },
         },
         {
@@ -154,7 +175,10 @@ export const f1040s2 = defineFormSpecification({
             "Uncollected social security and Medicare tax on wages. Attach Form 8919",
           box: {
             identifier: "6",
-            value: { type: "number_input", inputKey: "6" },
+            value: {
+              type: "number_input",
+              inputKey: "uncollected_tax_on_wages",
+            },
           },
         },
         {
@@ -178,7 +202,10 @@ export const f1040s2 = defineFormSpecification({
             "Additional tax on IRAs or other tax-favored accounts. Attach Form 5329 if required",
           box: {
             identifier: "8",
-            value: { type: "number_input", inputKey: "8" },
+            value: {
+              type: "number_input",
+              inputKey: "tax_favored_accounts_additional_tax",
+            },
           },
         },
         {
@@ -186,7 +213,10 @@ export const f1040s2 = defineFormSpecification({
           instructions: "Household employment taxes. Attach Schedule H",
           box: {
             identifier: "9",
-            value: { type: "number_input", inputKey: "9" },
+            value: {
+              type: "number_input",
+              inputKey: "household_employment_taxes",
+            },
           },
         },
         {
@@ -243,7 +273,10 @@ export const f1040s2 = defineFormSpecification({
             "Interest on tax due on installment income from the sale of certain residential lots and timeshares",
           box: {
             identifier: "14",
-            value: { type: "number_input", inputKey: "14" },
+            value: {
+              type: "number_input",
+              inputKey: "timeshare_sale_installment_tax_interest",
+            },
           },
         },
         {
@@ -252,7 +285,10 @@ export const f1040s2 = defineFormSpecification({
             "Interest on the deferred tax on gain from certain installment sales with a sales price over $150,000",
           box: {
             identifier: "15",
-            value: { type: "number_input", inputKey: "15" },
+            value: {
+              type: "number_input",
+              inputKey: "certain_installment_sales_deferred_tax_interest",
+            },
           },
         },
         {
@@ -261,7 +297,10 @@ export const f1040s2 = defineFormSpecification({
             "Recapture of low-income housing credit. Attach Form 8611",
           box: {
             identifier: "16",
-            value: { type: "number_input", inputKey: "16" },
+            value: {
+              type: "number_input",
+              inputKey: "low_income_housing_credit_recapture",
+            },
           },
         },
         {
@@ -275,7 +314,10 @@ export const f1040s2 = defineFormSpecification({
             "Recapture of other credits. List type, form number, and amount",
           box: {
             identifier: "17a",
-            value: { type: "list_amounts_input", inputKey: "17a" },
+            value: {
+              type: "list_amounts_input",
+              inputKey: "other_credits_recapture",
+            },
           },
         },
         {
@@ -284,7 +326,10 @@ export const f1040s2 = defineFormSpecification({
             "Recapture of federal mortgage subsidy. If you sold your home, see instructions",
           box: {
             identifier: "17b",
-            value: { type: "number_input", inputKey: "17b" },
+            value: {
+              type: "number_input",
+              inputKey: "federal_mortgage_subsidy_recapture",
+            },
           },
         },
         {
@@ -310,7 +355,10 @@ export const f1040s2 = defineFormSpecification({
             "Additional tax on Archer MSA distributions. Attach Form 8853",
           box: {
             identifier: "17e",
-            value: { type: "number_input", inputKey: "17e" },
+            value: {
+              type: "number_input",
+              inputKey: "archer_msa_distributions_additional_tax",
+            },
           },
         },
         {
@@ -319,7 +367,10 @@ export const f1040s2 = defineFormSpecification({
             "Additional tax on Medicare Advantage MSA distributions. Attach Form 8853",
           box: {
             identifier: "17f",
-            value: { type: "number_input", inputKey: "17f" },
+            value: {
+              type: "number_input",
+              inputKey: "medicare_advantage_msa_distributions_additional_tax",
+            },
           },
         },
         {
@@ -328,7 +379,10 @@ export const f1040s2 = defineFormSpecification({
             "Recapture of a charitable contribution deduction related to a fractional interest in tangible personal property",
           box: {
             identifier: "17g",
-            value: { type: "number_input", inputKey: "17g" },
+            value: {
+              type: "number_input",
+              inputKey: "charitable_contribution_deduction_recapture",
+            },
           },
         },
         {
@@ -337,7 +391,10 @@ export const f1040s2 = defineFormSpecification({
             "Income you received from a nonqualified deferred compensation plan that fails to meet the requirements of section 409A",
           box: {
             identifier: "17h",
-            value: { type: "number_input", inputKey: "17h" },
+            value: {
+              type: "number_input",
+              inputKey: "section_409A_failing_plan",
+            },
           },
         },
         {
@@ -346,7 +403,7 @@ export const f1040s2 = defineFormSpecification({
             "Compensation you received from a nonqualified deferred compensation plan described in section 457A",
           box: {
             identifier: "17i",
-            value: { type: "number_input", inputKey: "17i" },
+            value: { type: "number_input", inputKey: "section_457A_plan" },
           },
         },
         {
@@ -354,7 +411,10 @@ export const f1040s2 = defineFormSpecification({
           instructions: "Section 72(m)(5) excess benefits tax",
           box: {
             identifier: "17j",
-            value: { type: "number_input", inputKey: "17j" },
+            value: {
+              type: "number_input",
+              inputKey: "section_72(m)(5)_excess_benefits_tax",
+            },
           },
         },
         {
@@ -362,7 +422,10 @@ export const f1040s2 = defineFormSpecification({
           instructions: "Golden parachute payments",
           box: {
             identifier: "17k",
-            value: { type: "number_input", inputKey: "17k" },
+            value: {
+              type: "number_input",
+              inputKey: "golden_parachute_payments",
+            },
           },
         },
         {
@@ -370,7 +433,10 @@ export const f1040s2 = defineFormSpecification({
           instructions: "Tax on accumulation distribution of trusts",
           box: {
             identifier: "17l",
-            value: { type: "number_input", inputKey: "17l" },
+            value: {
+              type: "number_input",
+              inputKey: "trust_accumulation_distribution_tax",
+            },
           },
         },
         {
@@ -379,7 +445,10 @@ export const f1040s2 = defineFormSpecification({
             "Excise tax on insider stock compensation from an expatriated corporation",
           box: {
             identifier: "17m",
-            value: { type: "number_input", inputKey: "17m" },
+            value: {
+              type: "number_input",
+              inputKey: "expatriated_insider_stock_excise_tax",
+            },
           },
         },
         {
@@ -388,7 +457,10 @@ export const f1040s2 = defineFormSpecification({
             "Look-back interest under section 167(g) or 460(b) from Form 8697 or 8866",
           box: {
             identifier: "17n",
-            value: { type: "number_input", inputKey: "17n" },
+            value: {
+              type: "number_input",
+              inputKey: "section_167(g)_look_back_interest",
+            },
           },
         },
         {
@@ -397,7 +469,11 @@ export const f1040s2 = defineFormSpecification({
             "Tax on non-effectively connected income for any part of the year you were a nonresident alien from Form 1040-NR",
           box: {
             identifier: "17o",
-            value: { type: "number_input", inputKey: "17o" },
+            value: {
+              type: "number_input",
+              inputKey:
+                "nonresident_alien_non_effectively_connected_income_tax",
+            },
           },
         },
         {
@@ -406,7 +482,10 @@ export const f1040s2 = defineFormSpecification({
             "Any interest from Form 8621, line 16f, relating to distributions from, and dispositions of, stock of a section 1291 fund",
           box: {
             identifier: "17p",
-            value: { type: "number_input", inputKey: "17p" },
+            value: {
+              type: "number_input",
+              inputKey: "section_1291_fund_interest",
+            },
           },
         },
         {
@@ -414,7 +493,10 @@ export const f1040s2 = defineFormSpecification({
           instructions: "Any interest from Form 8621, line 24",
           box: {
             identifier: "17q",
-            value: { type: "number_input", inputKey: "17q" },
+            value: {
+              type: "number_input",
+              inputKey: "section_1294_accrued_interest",
+            },
           },
         },
         {
@@ -422,7 +504,7 @@ export const f1040s2 = defineFormSpecification({
           instructions: "Any other taxes. List type and amount",
           box: {
             identifier: "17z",
-            value: { type: "list_amounts_input", inputKey: "17z" },
+            value: { type: "list_amounts_input", inputKey: "other_taxes" },
           },
         },
         {
@@ -461,7 +543,11 @@ export const f1040s2 = defineFormSpecification({
             "Recapture of net EPE from Form 4255, line 1d, column (l)",
           box: {
             identifier: "19",
-            value: { type: "number_input", inputKey: "19" },
+            value: {
+              type: "number_input",
+              inputKey:
+                "advanced_manufacturing_investment_credit_net_epe_recapture",
+            },
           },
         },
         {
@@ -470,7 +556,10 @@ export const f1040s2 = defineFormSpecification({
             "Section 965 net tax liability installment from Form 965-A",
           box: {
             identifier: "20",
-            value: { type: "number_input", inputKey: "20" },
+            value: {
+              type: "number_input",
+              inputKey: "section_965_net_tax_liability_installment",
+            },
           },
         },
         {

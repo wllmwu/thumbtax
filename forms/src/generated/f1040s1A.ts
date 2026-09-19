@@ -31,7 +31,10 @@ export const f1040s1A = defineFormSpecification({
           instructions: "Enter any income from Puerto Rico that you excluded",
           box: {
             identifier: "2a",
-            value: { type: "number_input", inputKey: "2a" },
+            value: {
+              type: "number_input",
+              inputKey: "excluded_puerto_rico_income",
+            },
           },
         },
         {
@@ -39,7 +42,10 @@ export const f1040s1A = defineFormSpecification({
           instructions: "Enter the amount from Form 2555, line 45",
           box: {
             identifier: "2b",
-            value: { type: "number_input", inputKey: "2b" },
+            value: {
+              type: "number_input",
+              inputKey: "housing_and_foreign_earned_income_exclusions",
+            },
           },
         },
         {
@@ -47,7 +53,10 @@ export const f1040s1A = defineFormSpecification({
           instructions: "Enter the amount from Form 2555, line 50",
           box: {
             identifier: "2c",
-            value: { type: "number_input", inputKey: "2c" },
+            value: {
+              type: "number_input",
+              inputKey: "foreign_earned_income_housing_deduction",
+            },
           },
         },
         {
@@ -55,7 +64,10 @@ export const f1040s1A = defineFormSpecification({
           instructions: "Enter the amount from Form 4563, line 15",
           box: {
             identifier: "2d",
-            value: { type: "number_input", inputKey: "2d" },
+            value: {
+              type: "number_input",
+              inputKey: "american_samoa_exclusion",
+            },
           },
         },
         {
@@ -108,7 +120,7 @@ export const f1040s1A = defineFormSpecification({
             identifier: "4a",
             value: {
               type: "select_instance_boxes_input",
-              inputKey: "4a",
+              inputKey: "fW2_qualified_tips",
               options: [
                 { form: "fW2", box: "7" },
                 { form: "fW2", box: "14a" },
@@ -122,7 +134,7 @@ export const f1040s1A = defineFormSpecification({
             "Qualified tips included on Form 4137, line 1, row A, column (c). If Form 4137 is not filed, enter -0-",
           box: {
             identifier: "4b",
-            value: { type: "number_input", inputKey: "4b" },
+            value: { type: "number_input", inputKey: "f4137_qualified_tips" },
           },
         },
         {
@@ -133,7 +145,7 @@ export const f1040s1A = defineFormSpecification({
             identifier: "4c",
             value: {
               type: "override_number_input",
-              inputKey: "4c",
+              inputKey: "qualified_tips_as_employee",
               computedValue: {
                 type: "maximum",
                 values: [
@@ -160,7 +172,7 @@ export const f1040s1A = defineFormSpecification({
             identifier: "5",
             value: {
               type: "select_instance_boxes_input",
-              inputKey: "5",
+              inputKey: "qualified_tips_from_trade_or_business",
               options: [{ form: "f1099NEC", box: "1" }],
             },
           },
@@ -314,7 +326,7 @@ export const f1040s1A = defineFormSpecification({
             identifier: "14b",
             value: {
               type: "select_instance_boxes_input",
-              inputKey: "14b",
+              inputKey: "f1099MISC_f1099NEC_qualified_overtime_compensation",
               options: [{ form: "f1099NEC", box: "1" }],
             },
           },
@@ -494,12 +506,18 @@ export const f1040s1A = defineFormSpecification({
             { identifier: "22a(i)", value: { type: "unused" }, column: "(i)" },
             {
               identifier: "22a(ii)",
-              value: { type: "number_input", inputKey: "22a(ii)" },
+              value: {
+                type: "number_input",
+                inputKey: "car_loan_interest_deducted_1",
+              },
               column: "(ii)",
             },
             {
               identifier: "22a(iii)",
-              value: { type: "number_input", inputKey: "22a(iii)" },
+              value: {
+                type: "number_input",
+                inputKey: "car_loan_interest_paid_1",
+              },
               column: "(iii)",
             },
           ],
@@ -511,12 +529,18 @@ export const f1040s1A = defineFormSpecification({
             { identifier: "22b(i)", value: { type: "unused" }, column: "(i)" },
             {
               identifier: "22b(ii)",
-              value: { type: "number_input", inputKey: "22b(ii)" },
+              value: {
+                type: "number_input",
+                inputKey: "car_loan_interest_deducted_2",
+              },
               column: "(ii)",
             },
             {
               identifier: "22b(iii)",
-              value: { type: "number_input", inputKey: "22b(iii)" },
+              value: {
+                type: "number_input",
+                inputKey: "car_loan_interest_paid_2",
+              },
               column: "(iii)",
             },
           ],
@@ -842,7 +866,10 @@ export const f1040s1A = defineFormSpecification({
             "If you have a valid social security number (see instructions) and were born before January 2, 1961, enter the amount from line 35",
           box: {
             identifier: "36a",
-            value: { type: "number_input", inputKey: "36a" },
+            value: {
+              type: "number_input",
+              inputKey: "senior_deduction_for_self",
+            },
           },
         },
         {
@@ -851,7 +878,10 @@ export const f1040s1A = defineFormSpecification({
             "If you are married filing jointly, your spouse has a valid social security number (see instructions), and your spouse was born before January 2, 1961, enter the amount from line 35",
           box: {
             identifier: "36b",
-            value: { type: "number_input", inputKey: "36b" },
+            value: {
+              type: "number_input",
+              inputKey: "senior_deduction_for_spouse",
+            },
           },
         },
         {

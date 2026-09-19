@@ -18,7 +18,7 @@ export const f1040_QDCGTWS = defineFormSpecification({
             identifier: "1",
             value: {
               type: "override_number_input",
-              inputKey: "1",
+              inputKey: "taxable_income",
               computedValue: {
                 type: "box_reference",
                 box: "15",

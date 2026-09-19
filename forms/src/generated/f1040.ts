@@ -25,7 +25,10 @@ export const f1040 = defineFormSpecification({
           instructions: "Household employee wages not reported on Form(s) W-2",
           box: {
             identifier: "1b",
-            value: { type: "number_input", inputKey: "1b" },
+            value: {
+              type: "number_input",
+              inputKey: "household_employee_wages",
+            },
           },
         },
         {
@@ -33,7 +36,7 @@ export const f1040 = defineFormSpecification({
           instructions: "Tip income not reported on line 1a (see instructions)",
           box: {
             identifier: "1c",
-            value: { type: "number_input", inputKey: "1c" },
+            value: { type: "number_input", inputKey: "tip_income" },
           },
         },
         {
@@ -42,7 +45,10 @@ export const f1040 = defineFormSpecification({
             "Medicaid waiver payments not reported on Form(s) W-2 (see instructions)",
           box: {
             identifier: "1d",
-            value: { type: "number_input", inputKey: "1d" },
+            value: {
+              type: "number_input",
+              inputKey: "medicaid_waiver_payments",
+            },
           },
         },
         {
@@ -51,7 +57,10 @@ export const f1040 = defineFormSpecification({
             "Taxable dependent care benefits from Form 2441, line 26",
           box: {
             identifier: "1e",
-            value: { type: "number_input", inputKey: "1e" },
+            value: {
+              type: "number_input",
+              inputKey: "taxable_dependent_care_benefits",
+            },
           },
         },
         {
@@ -60,7 +69,10 @@ export const f1040 = defineFormSpecification({
             "Employer-provided adoption benefits from Form 8839, line 31",
           box: {
             identifier: "1f",
-            value: { type: "number_input", inputKey: "1f" },
+            value: {
+              type: "number_input",
+              inputKey: "employer_provided_adoption_benefits",
+            },
           },
         },
         {
@@ -68,7 +80,10 @@ export const f1040 = defineFormSpecification({
           instructions: "Wages from Form 8919, line 6",
           box: {
             identifier: "1g",
-            value: { type: "number_input", inputKey: "1g" },
+            value: {
+              type: "number_input",
+              inputKey: "wages_with_tax_not_withheld",
+            },
           },
         },
         {
@@ -76,7 +91,10 @@ export const f1040 = defineFormSpecification({
           instructions: "Other earned income (see instructions)",
           box: {
             identifier: "1h",
-            value: { type: "list_amounts_input", inputKey: "1h" },
+            value: {
+              type: "list_amounts_input",
+              inputKey: "other_earned_income",
+            },
           },
         },
         {
@@ -84,7 +102,10 @@ export const f1040 = defineFormSpecification({
           instructions: "Nontaxable combat pay election (see instructions)",
           box: {
             identifier: "1i",
-            value: { type: "number_input", inputKey: "1i" },
+            value: {
+              type: "number_input",
+              inputKey: "nontaxable_combat_pay_election",
+            },
           },
         },
         {
@@ -153,7 +174,7 @@ export const f1040 = defineFormSpecification({
             identifier: "4a",
             value: {
               type: "select_instance_boxes_input",
-              inputKey: "4a",
+              inputKey: "ira_distributions",
               options: [{ form: "f1099R", box: "1" }],
             },
           },
@@ -165,7 +186,7 @@ export const f1040 = defineFormSpecification({
             identifier: "4b",
             value: {
               type: "select_instance_boxes_input",
-              inputKey: "4b",
+              inputKey: "ira_distributions_taxable_amount",
               options: [{ form: "f1099R", box: "2a" }],
             },
           },
@@ -178,7 +199,7 @@ export const f1040 = defineFormSpecification({
             identifier: "5a",
             value: {
               type: "select_instance_boxes_input",
-              inputKey: "5a",
+              inputKey: "pensions_and_annuities",
               options: [{ form: "f1099R", box: "1" }],
             },
           },
@@ -190,7 +211,7 @@ export const f1040 = defineFormSpecification({
             identifier: "5b",
             value: {
               type: "select_instance_boxes_input",
-              inputKey: "5b",
+              inputKey: "pensions_and_annuities_taxable_amount",
               options: [{ form: "f1099R", box: "2a" }],
             },
           },
@@ -201,7 +222,10 @@ export const f1040 = defineFormSpecification({
           instructions: "Social security benefits",
           box: {
             identifier: "6a",
-            value: { type: "number_input", inputKey: "6a" },
+            value: {
+              type: "number_input",
+              inputKey: "social_security_benefits",
+            },
           },
         },
         {
@@ -209,7 +233,10 @@ export const f1040 = defineFormSpecification({
           instructions: "Taxable amount",
           box: {
             identifier: "6b",
-            value: { type: "number_input", inputKey: "6b" },
+            value: {
+              type: "number_input",
+              inputKey: "social_security_benefits_taxable_amount",
+            },
           },
         },
         { index: "6c", box: { identifier: "6c", value: { type: "unused" } } },
@@ -597,7 +624,7 @@ export const f1040 = defineFormSpecification({
             identifier: "16",
             value: {
               type: "override_number_input",
-              inputKey: "16",
+              inputKey: "tax_amount",
               computedValue: {
                 type: "conditional",
                 condition: { type: "box_reference", box: "flag_16_SDTWS" },
@@ -1053,7 +1080,7 @@ export const f1040 = defineFormSpecification({
             "Child tax credit or credit for other dependents from Schedule 8812",
           box: {
             identifier: "19",
-            value: { type: "number_input", inputKey: "19" },
+            value: { type: "number_input", inputKey: "child_tax_credit" },
           },
         },
         {
@@ -1176,7 +1203,7 @@ export const f1040 = defineFormSpecification({
             identifier: "25c",
             value: {
               type: "override_number_input",
-              inputKey: "25c",
+              inputKey: "federal_income_tax_withheld_from_other_forms",
               computedValue: {
                 type: "box_reference",
                 box: "24",
@@ -1207,7 +1234,7 @@ export const f1040 = defineFormSpecification({
             "2025 estimated tax payments and amount applied from 2024 return",
           box: {
             identifier: "26",
-            value: { type: "number_input", inputKey: "26" },
+            value: { type: "number_input", inputKey: "estimated_tax_payments" },
           },
         },
         {
@@ -1215,7 +1242,7 @@ export const f1040 = defineFormSpecification({
           instructions: "Earned income credit (EIC)",
           box: {
             identifier: "27a",
-            value: { type: "number_input", inputKey: "27a" },
+            value: { type: "number_input", inputKey: "earned_income_credit" },
           },
         },
         {
@@ -1223,7 +1250,7 @@ export const f1040 = defineFormSpecification({
           instructions: "Clergy filing Schedule SE (see instructions)",
           box: {
             identifier: "27b",
-            value: { type: "number_input", inputKey: "27b" },
+            value: { type: "number_input", inputKey: "clergy_filing_f1040sSE" },
           },
         },
         { index: "27c", box: { identifier: "27c", value: { type: "unused" } } },
@@ -1232,7 +1259,10 @@ export const f1040 = defineFormSpecification({
           instructions: "Additional child tax credit (ACTC) from Schedule 8812",
           box: {
             identifier: "28",
-            value: { type: "number_input", inputKey: "28" },
+            value: {
+              type: "number_input",
+              inputKey: "additional_child_tax_credit",
+            },
           },
         },
         {
@@ -1240,7 +1270,10 @@ export const f1040 = defineFormSpecification({
           instructions: "American opportunity credit from Form 8863, line 8",
           box: {
             identifier: "29",
-            value: { type: "number_input", inputKey: "29" },
+            value: {
+              type: "number_input",
+              inputKey: "american_opportunity_credit",
+            },
           },
         },
         {
@@ -1248,7 +1281,10 @@ export const f1040 = defineFormSpecification({
           instructions: "Refundable adoption credit from Form 8839, line 13",
           box: {
             identifier: "30",
-            value: { type: "number_input", inputKey: "30" },
+            value: {
+              type: "number_input",
+              inputKey: "refundable_adoption_credit",
+            },
           },
         },
         {
@@ -1382,10 +1418,7 @@ export const f1040 = defineFormSpecification({
         {
           index: "38",
           instructions: "Estimated tax penalty (see instructions)",
-          box: {
-            identifier: "38",
-            value: { type: "number_input", inputKey: "38" },
-          },
+          box: { identifier: "38", value: { type: "unsupported" } },
         },
       ],
     },
