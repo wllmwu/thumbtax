@@ -49,6 +49,8 @@ You can target specific files by passing them through npm, such as: `cd common &
 
 If asked to write docs, place them in the `agent-docs` directory at the repo top level.
 
+Thumbtax is not live yet, so we can make breaking changes freely.
+
 ## Technical debt
 
 - Some code files don't have unit test coverage yet.
