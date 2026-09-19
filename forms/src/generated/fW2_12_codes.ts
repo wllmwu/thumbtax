@@ -14,7 +14,10 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "Uncollected social security or RRTA tax on tips",
           box: {
             identifier: "A",
-            value: { type: "number_input", inputKey: "A" },
+            value: {
+              type: "number_input",
+              inputKey: "uncollected_social_security_tax_tips",
+            },
           },
         },
         {
@@ -22,7 +25,10 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "Uncollected Medicare tax on tips",
           box: {
             identifier: "B",
-            value: { type: "number_input", inputKey: "B" },
+            value: {
+              type: "number_input",
+              inputKey: "uncollected_medicare_tax_tips",
+            },
           },
         },
         {
@@ -31,7 +37,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Taxable cost of group-term life insurance over $50,000",
           box: {
             identifier: "C",
-            value: { type: "number_input", inputKey: "C" },
+            value: {
+              type: "number_input",
+              inputKey: "group_term_life_insurance_taxable_cost",
+            },
           },
         },
         {
@@ -40,7 +49,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Elective deferrals under a section 401(k) cash or deferred arrangement (plan)",
           box: {
             identifier: "D",
-            value: { type: "number_input", inputKey: "D" },
+            value: {
+              type: "number_input",
+              inputKey: "section_401(k)_elective_deferrals",
+            },
           },
         },
         {
@@ -49,7 +61,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Elective deferrals under a section 403(b) salary reduction agreement",
           box: {
             identifier: "E",
-            value: { type: "number_input", inputKey: "E" },
+            value: {
+              type: "number_input",
+              inputKey: "section_403(b)_elective_deferrals",
+            },
           },
         },
         {
@@ -58,7 +73,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Elective deferrals under a section 408(k)(6) salary reduction SEP",
           box: {
             identifier: "F",
-            value: { type: "number_input", inputKey: "F" },
+            value: {
+              type: "number_input",
+              inputKey: "section_408(k)(6)_elective_deferrals",
+            },
           },
         },
         {
@@ -67,7 +85,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Elective deferrals and employer contributions (including nonelective deferrals) to any governmental or nongovernmental section 457(b) deferred compensation plan",
           box: {
             identifier: "G",
-            value: { type: "number_input", inputKey: "G" },
+            value: {
+              type: "number_input",
+              inputKey: "section_457(b)_elective_deferrals",
+            },
           },
         },
         {
@@ -76,7 +97,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Elective deferrals under section 501(c)(18)(D) tax-exempt organization plan",
           box: {
             identifier: "H",
-            value: { type: "number_input", inputKey: "H" },
+            value: {
+              type: "number_input",
+              inputKey: "section_501(c)(18)(D)_elective_deferrals",
+            },
           },
         },
         {
@@ -84,7 +108,7 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "Nontaxable sick pay",
           box: {
             identifier: "J",
-            value: { type: "number_input", inputKey: "J" },
+            value: { type: "number_input", inputKey: "nontaxable_sick_pay" },
           },
         },
         {
@@ -92,7 +116,10 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "20% excise tax on excess golden parachute payments",
           box: {
             identifier: "K",
-            value: { type: "number_input", inputKey: "K" },
+            value: {
+              type: "number_input",
+              inputKey: "excess_golden_parachute_payments_excise_tax",
+            },
           },
         },
         {
@@ -101,7 +128,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Substantiated employee business expense reimbursements",
           box: {
             identifier: "L",
-            value: { type: "number_input", inputKey: "L" },
+            value: {
+              type: "number_input",
+              inputKey: "business_expense_reimbursements",
+            },
           },
         },
         {
@@ -110,7 +140,11 @@ export const fW2_12_codes = defineFormSpecification({
             "Uncollected social security or RRTA tax on taxable cost of group-term life insurance over $50,000 (for former employees)",
           box: {
             identifier: "M",
-            value: { type: "number_input", inputKey: "M" },
+            value: {
+              type: "number_input",
+              inputKey:
+                "uncollected_social_security_tax_group_term_life_insurance_former_employees",
+            },
           },
         },
         {
@@ -119,7 +153,11 @@ export const fW2_12_codes = defineFormSpecification({
             "Uncollected Medicare tax on taxable cost of group-term life insurance over $50,000 (for former employees)",
           box: {
             identifier: "N",
-            value: { type: "number_input", inputKey: "N" },
+            value: {
+              type: "number_input",
+              inputKey:
+                "uncollected_medicare_tax_group_term_life_insurance_former_employees",
+            },
           },
         },
         {
@@ -128,7 +166,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Excludable moving expense reimbursements paid directly to a member of the U.S. Armed Forces or intelligence community",
           box: {
             identifier: "P",
-            value: { type: "number_input", inputKey: "P" },
+            value: {
+              type: "number_input",
+              inputKey: "armed_forces_moving_expense_reimbursements",
+            },
           },
         },
         {
@@ -136,7 +177,7 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "Nontaxable combat pay",
           box: {
             identifier: "Q",
-            value: { type: "number_input", inputKey: "Q" },
+            value: { type: "number_input", inputKey: "nontaxable_combat_pay" },
           },
         },
         {
@@ -144,7 +185,10 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "Employer contributions to an Archer MSA",
           box: {
             identifier: "R",
-            value: { type: "number_input", inputKey: "R" },
+            value: {
+              type: "number_input",
+              inputKey: "archer_msa_employer_contributions",
+            },
           },
         },
         {
@@ -153,7 +197,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Employee salary reduction contributions under a section 408(p) SIMPLE plan",
           box: {
             identifier: "S",
-            value: { type: "number_input", inputKey: "S" },
+            value: {
+              type: "number_input",
+              inputKey: "simple_plan_salary_reduction_contributions",
+            },
           },
         },
         {
@@ -161,7 +208,7 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "Adoption benefits",
           box: {
             identifier: "T",
-            value: { type: "number_input", inputKey: "T" },
+            value: { type: "number_input", inputKey: "adoption_benefits" },
           },
         },
         {
@@ -170,7 +217,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Income from the exercise of nonstatutory stock option(s)",
           box: {
             identifier: "V",
-            value: { type: "number_input", inputKey: "V" },
+            value: {
+              type: "number_input",
+              inputKey: "nonstatutory_stock_option_exercise_income",
+            },
           },
         },
         {
@@ -179,7 +229,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Employer contributions to a health savings account (HSA)",
           box: {
             identifier: "W",
-            value: { type: "number_input", inputKey: "W" },
+            value: {
+              type: "number_input",
+              inputKey: "hsa_employer_contributions",
+            },
           },
         },
         {
@@ -188,7 +241,7 @@ export const fW2_12_codes = defineFormSpecification({
             "Deferrals under a section 409A nonqualified deferred compensation plan",
           box: {
             identifier: "Y",
-            value: { type: "number_input", inputKey: "Y" },
+            value: { type: "number_input", inputKey: "section_409A_deferrals" },
           },
         },
         {
@@ -197,7 +250,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Income under a nonqualified deferred compensation plan that fails to satisfy section 409A",
           box: {
             identifier: "Z",
-            value: { type: "number_input", inputKey: "Z" },
+            value: {
+              type: "number_input",
+              inputKey: "non_section_409A_plan_income",
+            },
           },
         },
         {
@@ -206,7 +262,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Designated Roth contributions under a section 401(k) plan",
           box: {
             identifier: "AA",
-            value: { type: "number_input", inputKey: "AA" },
+            value: {
+              type: "number_input",
+              inputKey: "section_401(k)_roth_contributions",
+            },
           },
         },
         {
@@ -215,7 +274,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Designated Roth contributions under a section 403(b) plan",
           box: {
             identifier: "BB",
-            value: { type: "number_input", inputKey: "BB" },
+            value: {
+              type: "number_input",
+              inputKey: "section_403(b)_roth_contributions",
+            },
           },
         },
         {
@@ -223,7 +285,10 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "Cost of employer-sponsored health coverage",
           box: {
             identifier: "DD",
-            value: { type: "number_input", inputKey: "DD" },
+            value: {
+              type: "number_input",
+              inputKey: "employer_health_coverage_cost",
+            },
           },
         },
         {
@@ -232,7 +297,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Designated Roth contributions under a governmental section 457(b) plan",
           box: {
             identifier: "EE",
-            value: { type: "number_input", inputKey: "EE" },
+            value: {
+              type: "number_input",
+              inputKey: "section_457(b)_roth_contributions",
+            },
           },
         },
         {
@@ -241,7 +309,11 @@ export const fW2_12_codes = defineFormSpecification({
             "Permitted benefits under a qualified small employer health reimbursement arrangement",
           box: {
             identifier: "FF",
-            value: { type: "number_input", inputKey: "FF" },
+            value: {
+              type: "number_input",
+              inputKey:
+                "small_employer_health_reimbursement_arrangement_benefits",
+            },
           },
         },
         {
@@ -250,7 +322,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Income from qualified equity grants under section 83(i)",
           box: {
             identifier: "GG",
-            value: { type: "number_input", inputKey: "GG" },
+            value: {
+              type: "number_input",
+              inputKey: "section_83(i)_equity_grant_income",
+            },
           },
         },
         {
@@ -259,7 +334,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Aggregate deferrals under section 83(i) elections as of the close of the calendar year",
           box: {
             identifier: "HH",
-            value: { type: "number_input", inputKey: "HH" },
+            value: {
+              type: "number_input",
+              inputKey: "section_83(i)_aggregate_deferrals",
+            },
           },
         },
         {
@@ -268,7 +346,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Medicaid waiver payments excluded from gross income under Notice 2014-7",
           box: {
             identifier: "II",
-            value: { type: "number_input", inputKey: "II" },
+            value: {
+              type: "number_input",
+              inputKey: "excluded_medicaid_waiver_payments",
+            },
           },
         },
         {
@@ -277,7 +358,10 @@ export const fW2_12_codes = defineFormSpecification({
             "Employer contributions under a section 128 Trump account contribution program paid to a Trump account of an employee or a dependent of an employee",
           box: {
             identifier: "TA",
-            value: { type: "number_input", inputKey: "TA" },
+            value: {
+              type: "number_input",
+              inputKey: "section_128_trump_account_employer_contributions",
+            },
           },
         },
         {
@@ -285,7 +369,10 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "Total amount of cash tips reported to the employer",
           box: {
             identifier: "TP",
-            value: { type: "number_input", inputKey: "TP" },
+            value: {
+              type: "number_input",
+              inputKey: "total_cash_tips_reported",
+            },
           },
         },
         {
@@ -293,7 +380,10 @@ export const fW2_12_codes = defineFormSpecification({
           instructions: "Total amount of qualified overtime compensation",
           box: {
             identifier: "TT",
-            value: { type: "number_input", inputKey: "TT" },
+            value: {
+              type: "number_input",
+              inputKey: "total_qualified_overtime_compensation",
+            },
           },
         },
       ],

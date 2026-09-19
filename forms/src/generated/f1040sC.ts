@@ -18,7 +18,7 @@ export const f1040sC = defineFormSpecification({
             'Gross receipts or sales. See instructions for line 1 if this income was reported to you on Form W-2 and the "Statutory employee" box on that form was checked',
           box: {
             identifier: "1",
-            value: { type: "number_input", inputKey: "1" },
+            value: { type: "number_input", inputKey: "gross_receipts" },
           },
         },
         {
@@ -26,7 +26,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Returns and allowances",
           box: {
             identifier: "2",
-            value: { type: "number_input", inputKey: "2" },
+            value: { type: "number_input", inputKey: "returns_and_allowances" },
           },
         },
         {
@@ -72,7 +72,7 @@ export const f1040sC = defineFormSpecification({
             "Other income, including federal and state gasoline or fuel tax credit or refund (see instructions)",
           box: {
             identifier: "6",
-            value: { type: "number_input", inputKey: "6" },
+            value: { type: "number_input", inputKey: "other_business_income" },
           },
         },
         {
@@ -123,7 +123,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Advertising",
           box: {
             identifier: "8",
-            value: { type: "number_input", inputKey: "8" },
+            value: { type: "number_input", inputKey: "advertising_expense" },
           },
         },
         {
@@ -131,7 +131,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Car and truck expenses (see instructions)",
           box: {
             identifier: "9",
-            value: { type: "number_input", inputKey: "9" },
+            value: { type: "number_input", inputKey: "car_truck_expenses" },
           },
         },
         {
@@ -139,7 +139,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Commissions and fees",
           box: {
             identifier: "10",
-            value: { type: "number_input", inputKey: "10" },
+            value: { type: "number_input", inputKey: "commissions_and_fees" },
           },
         },
         {
@@ -147,7 +147,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Contract labor (see instructions)",
           box: {
             identifier: "11",
-            value: { type: "number_input", inputKey: "11" },
+            value: { type: "number_input", inputKey: "contract_labor" },
           },
         },
         {
@@ -155,7 +155,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Depletion",
           box: {
             identifier: "12",
-            value: { type: "number_input", inputKey: "12" },
+            value: { type: "number_input", inputKey: "depletion_expense" },
           },
         },
         {
@@ -164,7 +164,10 @@ export const f1040sC = defineFormSpecification({
             "Depreciation and section 179 expense deduction (not included in Part III) (see instructions)",
           box: {
             identifier: "13",
-            value: { type: "number_input", inputKey: "13" },
+            value: {
+              type: "number_input",
+              inputKey: "depreciation_section_179",
+            },
           },
         },
         {
@@ -172,7 +175,10 @@ export const f1040sC = defineFormSpecification({
           instructions: "Employee benefit programs (other than on line 19)",
           box: {
             identifier: "14",
-            value: { type: "number_input", inputKey: "14" },
+            value: {
+              type: "number_input",
+              inputKey: "employee_benefit_programs",
+            },
           },
         },
         {
@@ -180,7 +186,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Insurance (other than health)",
           box: {
             identifier: "15",
-            value: { type: "number_input", inputKey: "15" },
+            value: { type: "number_input", inputKey: "insurance_expense" },
           },
         },
         {
@@ -193,7 +199,10 @@ export const f1040sC = defineFormSpecification({
           instructions: "Mortgage (paid to banks, etc.)",
           box: {
             identifier: "16a",
-            value: { type: "number_input", inputKey: "16a" },
+            value: {
+              type: "number_input",
+              inputKey: "mortgage_interest_expense",
+            },
           },
         },
         {
@@ -201,7 +210,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Other",
           box: {
             identifier: "16b",
-            value: { type: "number_input", inputKey: "16b" },
+            value: { type: "number_input", inputKey: "other_interest_expense" },
           },
         },
         {
@@ -209,7 +218,10 @@ export const f1040sC = defineFormSpecification({
           instructions: "Legal and professional services",
           box: {
             identifier: "17",
-            value: { type: "number_input", inputKey: "17" },
+            value: {
+              type: "number_input",
+              inputKey: "legal_professional_services",
+            },
           },
         },
         {
@@ -217,7 +229,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Office expense (see instructions)",
           box: {
             identifier: "18",
-            value: { type: "number_input", inputKey: "18" },
+            value: { type: "number_input", inputKey: "office_expense" },
           },
         },
         {
@@ -225,7 +237,10 @@ export const f1040sC = defineFormSpecification({
           instructions: "Pension and profit-sharing plans",
           box: {
             identifier: "19",
-            value: { type: "number_input", inputKey: "19" },
+            value: {
+              type: "number_input",
+              inputKey: "pension_profit_sharing_plans",
+            },
           },
         },
         {
@@ -238,7 +253,10 @@ export const f1040sC = defineFormSpecification({
           instructions: "Vehicles, machinery, and equipment",
           box: {
             identifier: "20a",
-            value: { type: "number_input", inputKey: "20a" },
+            value: {
+              type: "number_input",
+              inputKey: "vehicles_machinery_equipment_rent",
+            },
           },
         },
         {
@@ -246,7 +264,10 @@ export const f1040sC = defineFormSpecification({
           instructions: "Other business property",
           box: {
             identifier: "20b",
-            value: { type: "number_input", inputKey: "20b" },
+            value: {
+              type: "number_input",
+              inputKey: "other_business_property_rent",
+            },
           },
         },
         {
@@ -254,7 +275,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Repairs and maintenance",
           box: {
             identifier: "21",
-            value: { type: "number_input", inputKey: "21" },
+            value: { type: "number_input", inputKey: "repairs_maintenance" },
           },
         },
         {
@@ -262,7 +283,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Supplies (not included in Part III)",
           box: {
             identifier: "22",
-            value: { type: "number_input", inputKey: "22" },
+            value: { type: "number_input", inputKey: "supplies_expense" },
           },
         },
         {
@@ -270,7 +291,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Taxes and licenses",
           box: {
             identifier: "23",
-            value: { type: "number_input", inputKey: "23" },
+            value: { type: "number_input", inputKey: "taxes_licenses" },
           },
         },
         {
@@ -283,7 +304,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Travel",
           box: {
             identifier: "24a",
-            value: { type: "number_input", inputKey: "24a" },
+            value: { type: "number_input", inputKey: "travel_expense" },
           },
         },
         {
@@ -291,7 +312,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Deductible meals (see instructions)",
           box: {
             identifier: "24b",
-            value: { type: "number_input", inputKey: "24b" },
+            value: { type: "number_input", inputKey: "deductible_meals" },
           },
         },
         {
@@ -299,7 +320,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Utilities",
           box: {
             identifier: "25",
-            value: { type: "number_input", inputKey: "25" },
+            value: { type: "number_input", inputKey: "utilities_expense" },
           },
         },
         {
@@ -307,7 +328,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Wages (less employment credits)",
           box: {
             identifier: "26",
-            value: { type: "number_input", inputKey: "26" },
+            value: { type: "number_input", inputKey: "wages_paid" },
           },
         },
         {
@@ -316,7 +337,10 @@ export const f1040sC = defineFormSpecification({
             "Energy efficient commercial buildings deduction (attach Form 7205)",
           box: {
             identifier: "27a",
-            value: { type: "number_input", inputKey: "27a" },
+            value: {
+              type: "number_input",
+              inputKey: "energy_efficient_commercial_buildings_deduction",
+            },
           },
         },
         {
@@ -404,7 +428,10 @@ export const f1040sC = defineFormSpecification({
           },
           box: {
             identifier: "30",
-            value: { type: "number_input", inputKey: "30" },
+            value: {
+              type: "number_input",
+              inputKey: "business_use_of_home_expense",
+            },
           },
         },
         {
@@ -513,7 +540,10 @@ export const f1040sC = defineFormSpecification({
           instructions: "All investment is at risk.",
           box: {
             identifier: "32a",
-            value: { type: "checkbox_input", inputKey: "32a" },
+            value: {
+              type: "checkbox_input",
+              inputKey: "all_investment_at_risk",
+            },
           },
         },
         {
@@ -521,7 +551,10 @@ export const f1040sC = defineFormSpecification({
           instructions: "Some investment is not at risk.",
           box: {
             identifier: "32b",
-            value: { type: "checkbox_input", inputKey: "32b" },
+            value: {
+              type: "checkbox_input",
+              inputKey: "some_investment_not_at_risk",
+            },
           },
         },
       ],
@@ -547,7 +580,7 @@ export const f1040sC = defineFormSpecification({
             "Inventory at beginning of year. If different from last year's closing inventory, attach explanation",
           box: {
             identifier: "35",
-            value: { type: "number_input", inputKey: "35" },
+            value: { type: "number_input", inputKey: "beginning_inventory" },
           },
         },
         {
@@ -556,7 +589,10 @@ export const f1040sC = defineFormSpecification({
             "Purchases less cost of items withdrawn for personal use",
           box: {
             identifier: "36",
-            value: { type: "number_input", inputKey: "36" },
+            value: {
+              type: "number_input",
+              inputKey: "purchases_less_personal_use",
+            },
           },
         },
         {
@@ -565,7 +601,7 @@ export const f1040sC = defineFormSpecification({
             "Cost of labor. Do not include any amounts paid to yourself",
           box: {
             identifier: "37",
-            value: { type: "number_input", inputKey: "37" },
+            value: { type: "number_input", inputKey: "cost_of_labor" },
           },
         },
         {
@@ -573,7 +609,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Materials and supplies",
           box: {
             identifier: "38",
-            value: { type: "number_input", inputKey: "38" },
+            value: { type: "number_input", inputKey: "materials_supplies" },
           },
         },
         {
@@ -581,7 +617,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Other costs",
           box: {
             identifier: "39",
-            value: { type: "number_input", inputKey: "39" },
+            value: { type: "number_input", inputKey: "other_costs" },
           },
         },
         {
@@ -606,7 +642,7 @@ export const f1040sC = defineFormSpecification({
           instructions: "Inventory at end of year",
           box: {
             identifier: "41",
-            value: { type: "number_input", inputKey: "41" },
+            value: { type: "number_input", inputKey: "ending_inventory" },
           },
         },
         {
@@ -659,7 +695,7 @@ export const f1040sC = defineFormSpecification({
           ],
           box: {
             identifier: "48",
-            value: { type: "list_amounts_input", inputKey: "48" },
+            value: { type: "list_amounts_input", inputKey: "other_expenses" },
           },
         },
       ],

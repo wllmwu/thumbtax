@@ -80,7 +80,7 @@ export const f6251 = defineFormSpecification({
             identifier: "2b",
             value: {
               type: "override_number_input",
-              inputKey: "2b",
+              inputKey: "tax_refund",
               computedValue: {
                 type: "box_reference",
                 box: "1",
@@ -97,7 +97,10 @@ export const f6251 = defineFormSpecification({
             "Investment interest expense (difference between regular tax and AMT)",
           box: {
             identifier: "2c",
-            value: { type: "number_input", inputKey: "2c" },
+            value: {
+              type: "number_input",
+              inputKey: "investment_interest_expense_amt_adjustment",
+            },
           },
         },
         {
@@ -105,7 +108,10 @@ export const f6251 = defineFormSpecification({
           instructions: "Depletion (difference between regular tax and AMT)",
           box: {
             identifier: "2d",
-            value: { type: "number_input", inputKey: "2d" },
+            value: {
+              type: "number_input",
+              inputKey: "depletion_amt_adjustment",
+            },
           },
         },
         {
@@ -132,7 +138,7 @@ export const f6251 = defineFormSpecification({
             identifier: "2f",
             value: {
               type: "number_input",
-              inputKey: "2f",
+              inputKey: "alternative_tax_net_operating_loss_deduction",
               coerceSign: "negative",
             },
           },
@@ -143,7 +149,10 @@ export const f6251 = defineFormSpecification({
             "Interest from specified private activity bonds exempt from the regular tax",
           box: {
             identifier: "2g",
-            value: { type: "number_input", inputKey: "2g" },
+            value: {
+              type: "number_input",
+              inputKey: "specified_private_activity_bond_exempt_interest",
+            },
           },
         },
         {
@@ -151,7 +160,10 @@ export const f6251 = defineFormSpecification({
           instructions: "Qualified small business stock, see instructions",
           box: {
             identifier: "2h",
-            value: { type: "number_input", inputKey: "2h" },
+            value: {
+              type: "number_input",
+              inputKey: "qualified_small_business_stock",
+            },
           },
         },
         {
@@ -160,7 +172,10 @@ export const f6251 = defineFormSpecification({
             "Exercise of incentive stock options (excess of AMT income over regular tax income)",
           box: {
             identifier: "2i",
-            value: { type: "number_input", inputKey: "2i" },
+            value: {
+              type: "number_input",
+              inputKey: "incentive_stock_option_exercise_amt_adjustment",
+            },
           },
         },
         {
@@ -169,7 +184,10 @@ export const f6251 = defineFormSpecification({
             "Estates and trusts (amount from Schedule K-1 (Form 1041), box 12, code A)",
           box: {
             identifier: "2j",
-            value: { type: "number_input", inputKey: "2j" },
+            value: {
+              type: "number_input",
+              inputKey: "estates_trusts_amt_adjustment",
+            },
           },
         },
         {
@@ -178,7 +196,10 @@ export const f6251 = defineFormSpecification({
             "Disposition of property (difference between AMT and regular tax gain or loss)",
           box: {
             identifier: "2k",
-            value: { type: "number_input", inputKey: "2k" },
+            value: {
+              type: "number_input",
+              inputKey: "property_disposition_amt_adjustment",
+            },
           },
         },
         {
@@ -187,7 +208,10 @@ export const f6251 = defineFormSpecification({
             "Depreciation on assets placed in service after 1986 (difference between regular tax and AMT)",
           box: {
             identifier: "2l",
-            value: { type: "number_input", inputKey: "2l" },
+            value: {
+              type: "number_input",
+              inputKey: "depreciation_amt_adjustment",
+            },
           },
         },
         {
@@ -196,7 +220,10 @@ export const f6251 = defineFormSpecification({
             "Passive activities (difference between AMT and regular tax income or loss)",
           box: {
             identifier: "2m",
-            value: { type: "number_input", inputKey: "2m" },
+            value: {
+              type: "number_input",
+              inputKey: "passive_activities_amt_adjustment",
+            },
           },
         },
         {
@@ -205,7 +232,10 @@ export const f6251 = defineFormSpecification({
             "Loss limitations (difference between AMT and regular tax income or loss)",
           box: {
             identifier: "2n",
-            value: { type: "number_input", inputKey: "2n" },
+            value: {
+              type: "number_input",
+              inputKey: "loss_limitations_amt_adjustment",
+            },
           },
         },
         {
@@ -214,7 +244,10 @@ export const f6251 = defineFormSpecification({
             "Circulation costs (difference between regular tax and AMT)",
           box: {
             identifier: "2o",
-            value: { type: "number_input", inputKey: "2o" },
+            value: {
+              type: "number_input",
+              inputKey: "circulation_costs_amt_adjustment",
+            },
           },
         },
         {
@@ -223,7 +256,10 @@ export const f6251 = defineFormSpecification({
             "Long-term contracts (difference between AMT and regular tax income)",
           box: {
             identifier: "2p",
-            value: { type: "number_input", inputKey: "2p" },
+            value: {
+              type: "number_input",
+              inputKey: "long_term_contracts_amt_adjustment",
+            },
           },
         },
         {
@@ -231,7 +267,10 @@ export const f6251 = defineFormSpecification({
           instructions: "Mining costs (difference between regular tax and AMT)",
           box: {
             identifier: "2q",
-            value: { type: "number_input", inputKey: "2q" },
+            value: {
+              type: "number_input",
+              inputKey: "mining_costs_amt_adjustment",
+            },
           },
         },
         {
@@ -240,7 +279,10 @@ export const f6251 = defineFormSpecification({
             "Research and experimental costs (difference between regular tax and AMT)",
           box: {
             identifier: "2r",
-            value: { type: "number_input", inputKey: "2r" },
+            value: {
+              type: "number_input",
+              inputKey: "research_experimental_costs_amt_adjustment",
+            },
           },
         },
         {
@@ -251,7 +293,7 @@ export const f6251 = defineFormSpecification({
             identifier: "2s",
             value: {
               type: "number_input",
-              inputKey: "2s",
+              inputKey: "certain_installment_sales_income",
               coerceSign: "negative",
             },
           },
@@ -261,7 +303,10 @@ export const f6251 = defineFormSpecification({
           instructions: "Intangible drilling costs preference",
           box: {
             identifier: "2t",
-            value: { type: "number_input", inputKey: "2t" },
+            value: {
+              type: "number_input",
+              inputKey: "intangible_drilling_costs_preference",
+            },
           },
         },
         {
@@ -270,7 +315,7 @@ export const f6251 = defineFormSpecification({
             "Other adjustments, including income-based related adjustments",
           box: {
             identifier: "3",
-            value: { type: "number_input", inputKey: "3" },
+            value: { type: "number_input", inputKey: "other_amt_adjustments" },
           },
         },
         {
@@ -644,7 +689,7 @@ export const f6251 = defineFormSpecification({
             identifier: "7",
             value: {
               type: "override_number_input",
-              inputKey: "7",
+              inputKey: "tentative_minimum_tax_before_foreign_tax_credit",
               computedValue: {
                 type: "conditional",
                 condition: { type: "box_reference", box: "flag_7_part_iii" },
@@ -703,7 +748,7 @@ export const f6251 = defineFormSpecification({
             "Alternative minimum tax foreign tax credit (see instructions)",
           box: {
             identifier: "8",
-            value: { type: "number_input", inputKey: "8" },
+            value: { type: "number_input", inputKey: "amt_foreign_tax_credit" },
           },
         },
         {
@@ -726,7 +771,7 @@ export const f6251 = defineFormSpecification({
             identifier: "10",
             value: {
               type: "override_number_input",
-              inputKey: "10",
+              inputKey: "regular_tax_for_amt",
               computedValue: {
                 type: "non_negative_clamp",
                 value: {
@@ -795,7 +840,7 @@ export const f6251 = defineFormSpecification({
             identifier: "12",
             value: {
               type: "override_number_input",
-              inputKey: "12",
+              inputKey: "capital_gains_computation_base_amount",
               computedValue: { type: "box_reference", box: "6" },
             },
           },
@@ -808,7 +853,7 @@ export const f6251 = defineFormSpecification({
             identifier: "13",
             value: {
               type: "override_number_input",
-              inputKey: "13",
+              inputKey: "capital_gain_worksheet_amount",
               computedValue: {
                 type: "conditional",
                 condition: {
@@ -851,7 +896,7 @@ export const f6251 = defineFormSpecification({
             identifier: "14",
             value: {
               type: "override_number_input",
-              inputKey: "14",
+              inputKey: "unrecaptured_1250_gain_amt",
               computedValue: {
                 type: "box_reference",
                 box: "19",
@@ -869,7 +914,7 @@ export const f6251 = defineFormSpecification({
             identifier: "15",
             value: {
               type: "override_number_input",
-              inputKey: "15",
+              inputKey: "capital_gain_section_1250_gain_total",
               computedValue: {
                 type: "conditional",
                 condition: {
@@ -1042,7 +1087,7 @@ export const f6251 = defineFormSpecification({
             identifier: "20",
             value: {
               type: "override_number_input",
-              inputKey: "20",
+              inputKey: "zero_rate_bracket_basis",
               computedValue: {
                 type: "non_negative_clamp",
                 value: {
@@ -1217,7 +1262,7 @@ export const f6251 = defineFormSpecification({
             identifier: "27",
             value: {
               type: "override_number_input",
-              inputKey: "27",
+              inputKey: "15_percent_rate_bracket_basis",
               computedValue: {
                 type: "non_negative_clamp",
                 value: {

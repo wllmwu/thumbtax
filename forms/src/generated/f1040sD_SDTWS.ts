@@ -17,7 +17,7 @@ export const f1040sD_SDTWS = defineFormSpecification({
             identifier: "1",
             value: {
               type: "override_number_input",
-              inputKey: "1",
+              inputKey: "taxable_income",
               computedValue: {
                 type: "box_reference",
                 box: "15",
@@ -47,7 +47,10 @@ export const f1040sD_SDTWS = defineFormSpecification({
             "Enter the amount from Form 4952 (used to figure investment interest expense deduction), line 4g",
           box: {
             identifier: "3",
-            value: { type: "number_input", inputKey: "3" },
+            value: {
+              type: "number_input",
+              inputKey: "elected_investment_income_inclusion",
+            },
           },
         },
         {
@@ -55,7 +58,10 @@ export const f1040sD_SDTWS = defineFormSpecification({
           instructions: "Enter the amount from Form 4952, line 4e",
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: {
+              type: "number_input",
+              inputKey: "investment_property_disposition_net_gain",
+            },
           },
         },
         {

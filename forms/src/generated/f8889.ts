@@ -24,7 +24,7 @@ export const f8889 = defineFormSpecification({
             "HSA contributions you made for 2025 (or those made on your behalf), including those made by the unextended due date of your tax return that were for 2025. Do not include employer contributions, contributions through a cafeteria plan, or rollovers. See instructions",
           box: {
             identifier: "2",
-            value: { type: "number_input", inputKey: "2" },
+            value: { type: "number_input", inputKey: "hsa_contributions" },
           },
         },
         {
@@ -35,7 +35,7 @@ export const f8889 = defineFormSpecification({
             identifier: "3",
             value: {
               type: "override_number_input",
-              inputKey: "3",
+              inputKey: "contribution_limit",
               computedValue: { type: "number_constant", value: 4300 },
             },
           },
@@ -46,7 +46,10 @@ export const f8889 = defineFormSpecification({
             "Enter the amount you and your employer contributed to your Archer MSAs for 2025 from Form 8853, lines 1 and 2. If you or your spouse had family coverage under an HDHP at any time during 2025, also include any amount contributed to your spouse's Archer MSAs",
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: {
+              type: "number_input",
+              inputKey: "archer_msa_contributions",
+            },
           },
         },
         {
@@ -73,7 +76,7 @@ export const f8889 = defineFormSpecification({
             identifier: "6",
             value: {
               type: "override_number_input",
-              inputKey: "6",
+              inputKey: "allocated_contribution_limit",
               computedValue: { type: "box_reference", box: "5" },
             },
           },
@@ -84,7 +87,10 @@ export const f8889 = defineFormSpecification({
             "If you were age 55 or older at the end of 2025, married, and you or your spouse had family coverage under an HDHP at any time during 2025, enter your additional contribution amount. See instructions",
           box: {
             identifier: "7",
-            value: { type: "number_input", inputKey: "7" },
+            value: {
+              type: "number_input",
+              inputKey: "additional_contribution_amount",
+            },
           },
         },
         {
@@ -106,7 +112,10 @@ export const f8889 = defineFormSpecification({
           instructions: "Employer contributions made to your HSAs for 2025",
           box: {
             identifier: "9",
-            value: { type: "number_input", inputKey: "9" },
+            value: {
+              type: "number_input",
+              inputKey: "employer_hsa_contributions",
+            },
           },
         },
         {
@@ -114,7 +123,10 @@ export const f8889 = defineFormSpecification({
           instructions: "Qualified HSA funding distributions",
           box: {
             identifier: "10",
-            value: { type: "number_input", inputKey: "10" },
+            value: {
+              type: "number_input",
+              inputKey: "qualified_hsa_funding_distributions",
+            },
           },
         },
         {
@@ -197,7 +209,10 @@ export const f8889 = defineFormSpecification({
             "Total distributions you received in 2025 from all HSAs (see instructions)",
           box: {
             identifier: "14a",
-            value: { type: "number_input", inputKey: "14a" },
+            value: {
+              type: "number_input",
+              inputKey: "total_hsa_distributions",
+            },
           },
         },
         {
@@ -206,7 +221,10 @@ export const f8889 = defineFormSpecification({
             "Distributions included on line 14a that you rolled over to another HSA. Also include any excess contributions (and the earnings on those excess contributions) included on line 14a that were withdrawn by the due date of your return. See instructions",
           box: {
             identifier: "14b",
-            value: { type: "number_input", inputKey: "14b" },
+            value: {
+              type: "number_input",
+              inputKey: "hsa_distributions_rolled_over",
+            },
           },
         },
         {
@@ -227,7 +245,10 @@ export const f8889 = defineFormSpecification({
             "Qualified medical expenses paid using HSA distributions (see instructions)",
           box: {
             identifier: "15",
-            value: { type: "number_input", inputKey: "15" },
+            value: {
+              type: "number_input",
+              inputKey: "qualified_medical_expenses_paid",
+            },
           },
         },
         {
@@ -267,7 +288,11 @@ export const f8889 = defineFormSpecification({
           ],
           box: {
             identifier: "17a",
-            value: { type: "checkbox_input", inputKey: "17a" },
+            value: {
+              type: "checkbox_input",
+              inputKey:
+                "distribution_additional_20_percent_tax_exception_checkbox",
+            },
           },
         },
         {
@@ -285,7 +310,7 @@ export const f8889 = defineFormSpecification({
             identifier: "17b",
             value: {
               type: "override_number_input",
-              inputKey: "17b",
+              inputKey: "additional_20_percent_tax",
               computedValue: {
                 type: "product",
                 values: [
@@ -308,7 +333,10 @@ export const f8889 = defineFormSpecification({
           instructions: "Last-month rule",
           box: {
             identifier: "18",
-            value: { type: "number_input", inputKey: "18" },
+            value: {
+              type: "number_input",
+              inputKey: "last_month_rule_excess_contribution",
+            },
           },
         },
         {
@@ -316,7 +344,10 @@ export const f8889 = defineFormSpecification({
           instructions: "Qualified HSA funding distribution",
           box: {
             identifier: "19",
-            value: { type: "number_input", inputKey: "19" },
+            value: {
+              type: "number_input",
+              inputKey: "ineligible_qualified_hsa_funding_distribution",
+            },
           },
         },
         {

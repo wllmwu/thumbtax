@@ -10,7 +10,7 @@
 - {% line index="1" %}
   - {% instructions %}Enter your taxable income from Form 1040, 1040-SR, or 1040-NR, line 15. (However, if you are filing Form 2555 (relating to foreign earned income), enter instead the amount from line 3 of the Foreign Earned Income Tax Worksheet in the instructions for Form 1040, line 16.){% /instructions %}
   - {% box identifier="1" %}
-    {% value type="override_number_input" inputKey="1" %}
+    {% value type="override_number_input" inputKey="taxable_income" %}
     - {% value
          slot="computedValue"
          type="box_reference"
@@ -26,11 +26,11 @@
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}Enter the amount from Form 4952 (used to figure investment interest expense deduction), line 4g{% /instructions %}
-  - {% box identifier="3" %}{% value type="number_input" inputKey="3" /%}{% /box %}
+  - {% box identifier="3" %}{% value type="number_input" inputKey="elected_investment_income_inclusion" /%}{% /box %}
   {% /line %}
 - {% line index="4" %}
   - {% instructions %}Enter the amount from Form 4952, line 4e{% /instructions %}
-  - {% box identifier="4" %}{% value type="number_input" inputKey="4" /%}{% /box %}
+  - {% box identifier="4" %}{% value type="number_input" inputKey="investment_property_disposition_net_gain" /%}{% /box %}
   {% /line %}
 - {% line index="5" %}
   - {% instructions %}Subtract line 4 from line 3. If zero or less, enter -0-{% /instructions %}

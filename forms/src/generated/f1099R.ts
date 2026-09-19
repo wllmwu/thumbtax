@@ -16,7 +16,7 @@ export const f1099R = defineFormSpecification({
           instructions: "Gross distribution",
           box: {
             identifier: "1",
-            value: { type: "number_input", inputKey: "1" },
+            value: { type: "number_input", inputKey: "gross_distribution" },
           },
         },
         {
@@ -24,7 +24,7 @@ export const f1099R = defineFormSpecification({
           instructions: "Taxable amount",
           box: {
             identifier: "2a",
-            value: { type: "number_input", inputKey: "2a" },
+            value: { type: "number_input", inputKey: "taxable_amount" },
           },
         },
         {
@@ -37,7 +37,7 @@ export const f1099R = defineFormSpecification({
           instructions: "Capital gain (included in box 2a)",
           box: {
             identifier: "3",
-            value: { type: "number_input", inputKey: "3" },
+            value: { type: "number_input", inputKey: "capital_gain" },
           },
         },
         {
@@ -45,7 +45,10 @@ export const f1099R = defineFormSpecification({
           instructions: "Federal income tax withheld",
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: {
+              type: "number_input",
+              inputKey: "federal_income_tax_withheld",
+            },
           },
         },
         {
@@ -54,7 +57,10 @@ export const f1099R = defineFormSpecification({
             "Employee contributions/Designated Roth contributions or insurance premiums",
           box: {
             identifier: "5",
-            value: { type: "number_input", inputKey: "5" },
+            value: {
+              type: "number_input",
+              inputKey: "employee_contributions_insurance_premiums",
+            },
           },
         },
         {
@@ -62,7 +68,10 @@ export const f1099R = defineFormSpecification({
           instructions: "Net unrealized appreciation in employer's securities",
           box: {
             identifier: "6",
-            value: { type: "number_input", inputKey: "6" },
+            value: {
+              type: "number_input",
+              inputKey: "net_unrealized_appreciation",
+            },
           },
         },
         {
@@ -80,7 +89,10 @@ export const f1099R = defineFormSpecification({
           instructions: "Your percentage of total distribution",
           box: {
             identifier: "9a",
-            value: { type: "number_input", inputKey: "9a" },
+            value: {
+              type: "number_input",
+              inputKey: "percentage_total_distribution",
+            },
             format: "percentage",
           },
         },
@@ -89,7 +101,10 @@ export const f1099R = defineFormSpecification({
           instructions: "Total employee contributions",
           box: {
             identifier: "9b",
-            value: { type: "number_input", inputKey: "9b" },
+            value: {
+              type: "number_input",
+              inputKey: "total_employee_contributions",
+            },
           },
         },
         {
@@ -97,7 +112,10 @@ export const f1099R = defineFormSpecification({
           instructions: "Amount allocable to IRR within 5 years",
           box: {
             identifier: "10",
-            value: { type: "number_input", inputKey: "10" },
+            value: {
+              type: "number_input",
+              inputKey: "amount_allocable_to_irr_within_5_years",
+            },
           },
         },
         {
@@ -120,7 +138,7 @@ export const f1099R = defineFormSpecification({
           instructions: "State tax withheld",
           box: {
             identifier: "14",
-            value: { type: "number_input", inputKey: "14" },
+            value: { type: "number_input", inputKey: "state_tax_withheld" },
           },
         },
         {
@@ -133,7 +151,7 @@ export const f1099R = defineFormSpecification({
           instructions: "State distribution",
           box: {
             identifier: "16",
-            value: { type: "number_input", inputKey: "16" },
+            value: { type: "number_input", inputKey: "state_distribution" },
           },
         },
         {
@@ -141,7 +159,7 @@ export const f1099R = defineFormSpecification({
           instructions: "Local tax withheld",
           box: {
             identifier: "17",
-            value: { type: "number_input", inputKey: "17" },
+            value: { type: "number_input", inputKey: "local_tax_withheld" },
           },
         },
         {
@@ -154,7 +172,7 @@ export const f1099R = defineFormSpecification({
           instructions: "Local distribution",
           box: {
             identifier: "19",
-            value: { type: "number_input", inputKey: "19" },
+            value: { type: "number_input", inputKey: "local_distribution" },
           },
         },
       ],

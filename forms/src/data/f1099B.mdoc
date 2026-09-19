@@ -28,20 +28,20 @@ Generally, they report each transaction on a separate Form 1099-B.
 - {% line index="1d" %}
   - {% instructions %}Proceeds{% /instructions %}
   - {% commentary %}Usually the sale price{% /commentary %}
-  - {% box identifier="1d" %}{% value type="number_input" inputKey="1d" /%}{% /box %}
+  - {% box identifier="1d" %}{% value type="number_input" inputKey="proceeds" /%}{% /box %}
   {% /line %}
 - {% line index="1e" %}
   - {% instructions %}Cost or other basis{% /instructions %}
   - {% commentary %}Usually the purchase price{% /commentary %}
-  - {% box identifier="1e" %}{% value type="number_input" inputKey="1e" /%}{% /box %}
+  - {% box identifier="1e" %}{% value type="number_input" inputKey="cost" /%}{% /box %}
   {% /line %}
 - {% line index="1f" %}
   - {% instructions %}Accrued market discount{% /instructions %}
-  - {% box identifier="1f" %}{% value type="number_input" inputKey="1f" /%}{% /box %}
+  - {% box identifier="1f" %}{% value type="number_input" inputKey="accrued_market_discount" /%}{% /box %}
   {% /line %}
 - {% line index="1g" %}
   - {% instructions %}{% glossaryLink term="wash-sale" %}Wash sale{% /glossaryLink %} loss disallowed{% /instructions %}
-  - {% box identifier="1g" %}{% value type="number_input" inputKey="1g" /%}{% /box %}
+  - {% box identifier="1g" %}{% value type="number_input" inputKey="wash_sale_loss_disallowed" /%}{% /box %}
   {% /line %}
 - {% line index="2" %}
   - {% instructions %}Type of gain or loss{% /instructions %}
@@ -53,7 +53,7 @@ Generally, they report each transaction on a separate Form 1099-B.
   {% /line %}
 - {% line index="4" %}
   - {% instructions %}{% glossaryLink term="federal-income-tax" %}Federal income tax{% /glossaryLink %} {% glossaryLink term="withholding" %}withheld{% /glossaryLink %}{% /instructions %}
-  - {% box identifier="4" %}{% value type="number_input" inputKey="4" /%}{% /box %}
+  - {% box identifier="4" %}{% value type="number_input" inputKey="federal_income_tax_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="6" %}
   - {% instructions %}Reported to IRS{% /instructions %}

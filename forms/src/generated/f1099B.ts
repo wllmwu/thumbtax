@@ -41,7 +41,7 @@ export const f1099B = defineFormSpecification({
           commentary: "Usually the sale price",
           box: {
             identifier: "1d",
-            value: { type: "number_input", inputKey: "1d" },
+            value: { type: "number_input", inputKey: "proceeds" },
           },
         },
         {
@@ -50,7 +50,7 @@ export const f1099B = defineFormSpecification({
           commentary: "Usually the purchase price",
           box: {
             identifier: "1e",
-            value: { type: "number_input", inputKey: "1e" },
+            value: { type: "number_input", inputKey: "cost" },
           },
         },
         {
@@ -58,7 +58,10 @@ export const f1099B = defineFormSpecification({
           instructions: "Accrued market discount",
           box: {
             identifier: "1f",
-            value: { type: "number_input", inputKey: "1f" },
+            value: {
+              type: "number_input",
+              inputKey: "accrued_market_discount",
+            },
           },
         },
         {
@@ -74,7 +77,10 @@ export const f1099B = defineFormSpecification({
           ],
           box: {
             identifier: "1g",
-            value: { type: "number_input", inputKey: "1g" },
+            value: {
+              type: "number_input",
+              inputKey: "wash_sale_loss_disallowed",
+            },
           },
         },
         {
@@ -121,7 +127,10 @@ export const f1099B = defineFormSpecification({
           ],
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: {
+              type: "number_input",
+              inputKey: "federal_income_tax_withheld",
+            },
           },
         },
         {

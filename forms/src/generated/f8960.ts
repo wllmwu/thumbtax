@@ -43,7 +43,7 @@ export const f8960 = defineFormSpecification({
           instructions: "Annuities (see instructions)",
           box: {
             identifier: "3",
-            value: { type: "number_input", inputKey: "3" },
+            value: { type: "number_input", inputKey: "annuities" },
           },
         },
         {
@@ -68,7 +68,10 @@ export const f8960 = defineFormSpecification({
             "Adjustment for net income or loss derived in the ordinary course of a non-section 1411 trade or business (see instructions)",
           box: {
             identifier: "4b",
-            value: { type: "number_input", inputKey: "4b" },
+            value: {
+              type: "number_input",
+              inputKey: "non_section_1411_business_adjustment",
+            },
           },
         },
         {
@@ -106,7 +109,11 @@ export const f8960 = defineFormSpecification({
             "Net gain or loss from disposition of property that is not subject to net investment income tax (see instructions)",
           box: {
             identifier: "5b",
-            value: { type: "number_input", inputKey: "5b" },
+            value: {
+              type: "number_input",
+              inputKey:
+                "disposition_gain_not_subject_to_net_investment_income_tax",
+            },
           },
         },
         {
@@ -115,7 +122,10 @@ export const f8960 = defineFormSpecification({
             "Adjustment from disposition of partnership interest or S corporation stock (see instructions)",
           box: {
             identifier: "5c",
-            value: { type: "number_input", inputKey: "5c" },
+            value: {
+              type: "number_input",
+              inputKey: "partnership_s_corporation_disposition_adjustment",
+            },
           },
         },
         {
@@ -139,7 +149,7 @@ export const f8960 = defineFormSpecification({
             "Adjustments to investment income for certain CFCs and PFICs (see instructions)",
           box: {
             identifier: "6",
-            value: { type: "number_input", inputKey: "6" },
+            value: { type: "number_input", inputKey: "cfc_pfic_adjustments" },
           },
         },
         {
@@ -148,7 +158,10 @@ export const f8960 = defineFormSpecification({
             "Other modifications to investment income (see instructions)",
           box: {
             identifier: "7",
-            value: { type: "number_input", inputKey: "7" },
+            value: {
+              type: "number_input",
+              inputKey: "other_investment_income_modifications",
+            },
           },
         },
         {
@@ -183,7 +196,10 @@ export const f8960 = defineFormSpecification({
           instructions: "Investment interest expenses (see instructions)",
           box: {
             identifier: "9a",
-            value: { type: "number_input", inputKey: "9a" },
+            value: {
+              type: "number_input",
+              inputKey: "investment_interest_expenses",
+            },
           },
         },
         {
@@ -192,7 +208,10 @@ export const f8960 = defineFormSpecification({
             "State, local, and foreign income tax (see instructions)",
           box: {
             identifier: "9b",
-            value: { type: "number_input", inputKey: "9b" },
+            value: {
+              type: "number_input",
+              inputKey: "state_local_foreign_income_tax",
+            },
           },
         },
         {
@@ -200,7 +219,10 @@ export const f8960 = defineFormSpecification({
           instructions: "Miscellaneous investment expenses (see instructions)",
           box: {
             identifier: "9c",
-            value: { type: "number_input", inputKey: "9c" },
+            value: {
+              type: "number_input",
+              inputKey: "miscellaneous_investment_expenses",
+            },
           },
         },
         {
@@ -223,7 +245,10 @@ export const f8960 = defineFormSpecification({
           instructions: "Additional modifications (see instructions)",
           box: {
             identifier: "10",
-            value: { type: "number_input", inputKey: "10" },
+            value: {
+              type: "number_input",
+              inputKey: "additional_modifications",
+            },
           },
         },
         {

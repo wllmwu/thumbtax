@@ -36,7 +36,7 @@ export const f1040sD = defineFormSpecification({
               identifier: "1a(d)",
               value: {
                 type: "select_instance_boxes_input",
-                inputKey: "1a(d)",
+                inputKey: "short_term_no_adjustments_proceeds",
                 options: [{ form: "f1099B", box: "1d" }],
               },
               column: "(d)",
@@ -45,7 +45,7 @@ export const f1040sD = defineFormSpecification({
               identifier: "1a(e)",
               value: {
                 type: "select_instance_boxes_input",
-                inputKey: "1a(e)",
+                inputKey: "short_term_no_adjustments_cost",
                 options: [{ form: "f1099B", box: "1e" }],
               },
               column: "(e)",
@@ -75,17 +75,26 @@ export const f1040sD = defineFormSpecification({
           boxes: [
             {
               identifier: "1b(d)",
-              value: { type: "number_input", inputKey: "1b(d)" },
+              value: {
+                type: "number_input",
+                inputKey: "short_term_basis_reported_proceeds",
+              },
               column: "(d)",
             },
             {
               identifier: "1b(e)",
-              value: { type: "number_input", inputKey: "1b(e)" },
+              value: {
+                type: "number_input",
+                inputKey: "short_term_basis_reported_cost",
+              },
               column: "(e)",
             },
             {
               identifier: "1b(g)",
-              value: { type: "number_input", inputKey: "1b(g)" },
+              value: {
+                type: "number_input",
+                inputKey: "short_term_basis_reported_adjustments",
+              },
               column: "(g)",
             },
             {
@@ -112,17 +121,26 @@ export const f1040sD = defineFormSpecification({
           boxes: [
             {
               identifier: "2(d)",
-              value: { type: "number_input", inputKey: "2(d)" },
+              value: {
+                type: "number_input",
+                inputKey: "short_term_basis_not_reported_proceeds",
+              },
               column: "(d)",
             },
             {
               identifier: "2(e)",
-              value: { type: "number_input", inputKey: "2(e)" },
+              value: {
+                type: "number_input",
+                inputKey: "short_term_basis_not_reported_cost",
+              },
               column: "(e)",
             },
             {
               identifier: "2(g)",
-              value: { type: "number_input", inputKey: "2(g)" },
+              value: {
+                type: "number_input",
+                inputKey: "short_term_basis_not_reported_adjustments",
+              },
               column: "(g)",
             },
             {
@@ -149,17 +167,26 @@ export const f1040sD = defineFormSpecification({
           boxes: [
             {
               identifier: "3(d)",
-              value: { type: "number_input", inputKey: "3(d)" },
+              value: {
+                type: "number_input",
+                inputKey: "short_term_not_reported_proceeds",
+              },
               column: "(d)",
             },
             {
               identifier: "3(e)",
-              value: { type: "number_input", inputKey: "3(e)" },
+              value: {
+                type: "number_input",
+                inputKey: "short_term_not_reported_cost",
+              },
               column: "(e)",
             },
             {
               identifier: "3(g)",
-              value: { type: "number_input", inputKey: "3(g)" },
+              value: {
+                type: "number_input",
+                inputKey: "short_term_not_reported_adjustments",
+              },
               column: "(g)",
             },
             {
@@ -190,7 +217,10 @@ export const f1040sD = defineFormSpecification({
             "Short-term gain from Form 6252 and short-term gain or (loss) from Forms 4684, 6781, and 8824",
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: {
+              type: "number_input",
+              inputKey: "short_term_gain_other_forms",
+            },
           },
         },
         {
@@ -199,7 +229,10 @@ export const f1040sD = defineFormSpecification({
             "Net short-term gain or (loss) from partnerships, S corporations, estates, and trusts from Schedule(s) K-1",
           box: {
             identifier: "5",
-            value: { type: "number_input", inputKey: "5" },
+            value: {
+              type: "number_input",
+              inputKey: "net_partnerships_short_term_gain",
+            },
           },
         },
         {
@@ -210,7 +243,7 @@ export const f1040sD = defineFormSpecification({
             identifier: "6",
             value: {
               type: "number_input",
-              inputKey: "6",
+              inputKey: "short_term_capital_loss_carryover",
               coerceSign: "negative",
             },
           },
@@ -272,7 +305,7 @@ export const f1040sD = defineFormSpecification({
               identifier: "8a(d)",
               value: {
                 type: "select_instance_boxes_input",
-                inputKey: "8a(d)",
+                inputKey: "long_term_no_adjustments_proceeds",
                 options: [{ form: "f1099B", box: "1d" }],
               },
               column: "(d)",
@@ -281,7 +314,7 @@ export const f1040sD = defineFormSpecification({
               identifier: "8a(e)",
               value: {
                 type: "select_instance_boxes_input",
-                inputKey: "8a(e)",
+                inputKey: "long_term_no_adjustments_cost",
                 options: [{ form: "f1099B", box: "1e" }],
               },
               column: "(e)",
@@ -311,17 +344,26 @@ export const f1040sD = defineFormSpecification({
           boxes: [
             {
               identifier: "8b(d)",
-              value: { type: "number_input", inputKey: "8b(d)" },
+              value: {
+                type: "number_input",
+                inputKey: "long_term_basis_reported_proceeds",
+              },
               column: "(d)",
             },
             {
               identifier: "8b(e)",
-              value: { type: "number_input", inputKey: "8b(e)" },
+              value: {
+                type: "number_input",
+                inputKey: "long_term_basis_reported_cost",
+              },
               column: "(e)",
             },
             {
               identifier: "8b(g)",
-              value: { type: "number_input", inputKey: "8b(g)" },
+              value: {
+                type: "number_input",
+                inputKey: "long_term_basis_reported_adjustments",
+              },
               column: "(g)",
             },
             {
@@ -348,17 +390,26 @@ export const f1040sD = defineFormSpecification({
           boxes: [
             {
               identifier: "9(d)",
-              value: { type: "number_input", inputKey: "9(d)" },
+              value: {
+                type: "number_input",
+                inputKey: "long_term_basis_not_reported_proceeds",
+              },
               column: "(d)",
             },
             {
               identifier: "9(e)",
-              value: { type: "number_input", inputKey: "9(e)" },
+              value: {
+                type: "number_input",
+                inputKey: "long_term_basis_not_reported_cost_basis",
+              },
               column: "(e)",
             },
             {
               identifier: "9(g)",
-              value: { type: "number_input", inputKey: "9(g)" },
+              value: {
+                type: "number_input",
+                inputKey: "long_term_basis_not_reported_adjustments",
+              },
               column: "(g)",
             },
             {
@@ -385,17 +436,26 @@ export const f1040sD = defineFormSpecification({
           boxes: [
             {
               identifier: "10(d)",
-              value: { type: "number_input", inputKey: "10(d)" },
+              value: {
+                type: "number_input",
+                inputKey: "long_term_not_reported_proceeds",
+              },
               column: "(d)",
             },
             {
               identifier: "10(e)",
-              value: { type: "number_input", inputKey: "10(e)" },
+              value: {
+                type: "number_input",
+                inputKey: "long_term_not_reported_cost_basis",
+              },
               column: "(e)",
             },
             {
               identifier: "10(g)",
-              value: { type: "number_input", inputKey: "10(g)" },
+              value: {
+                type: "number_input",
+                inputKey: "long_term_not_reported_adjustments",
+              },
               column: "(g)",
             },
             {
@@ -426,7 +486,10 @@ export const f1040sD = defineFormSpecification({
             "Gain from Form 4797, Part I; long-term gain from Forms 2439 and 6252; and long-term gain or (loss) from Forms 4684, 6781, and 8824",
           box: {
             identifier: "11",
-            value: { type: "number_input", inputKey: "11" },
+            value: {
+              type: "number_input",
+              inputKey: "long_term_gain_other_forms",
+            },
           },
         },
         {
@@ -435,7 +498,10 @@ export const f1040sD = defineFormSpecification({
             "Net long-term gain or (loss) from partnerships, S corporations, estates, and trusts from Schedule(s) K-1",
           box: {
             identifier: "12",
-            value: { type: "number_input", inputKey: "12" },
+            value: {
+              type: "number_input",
+              inputKey: "net_partnerships_long_term_gain",
+            },
           },
         },
         {
@@ -454,7 +520,7 @@ export const f1040sD = defineFormSpecification({
             identifier: "14",
             value: {
               type: "number_input",
-              inputKey: "14",
+              inputKey: "long_term_capital_loss_carryover",
               coerceSign: "negative",
             },
           },
@@ -605,7 +671,7 @@ export const f1040sD = defineFormSpecification({
             identifier: "18",
             value: {
               type: "number_input",
-              inputKey: "18",
+              inputKey: "28_percent_rate_gain",
               skipCondition: {
                 type: "disjunction",
                 values: [
@@ -631,7 +697,7 @@ export const f1040sD = defineFormSpecification({
             identifier: "19",
             value: {
               type: "number_input",
-              inputKey: "19",
+              inputKey: "unrecaptured_section_1250_gain",
               skipCondition: {
                 type: "disjunction",
                 values: [

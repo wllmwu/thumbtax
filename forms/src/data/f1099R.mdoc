@@ -10,11 +10,11 @@
 {% lines %}
 - {% line index="1" %}
   - {% instructions %}Gross distribution{% /instructions %}
-  - {% box identifier="1" %}{% value type="number_input" inputKey="1" /%}{% /box %}
+  - {% box identifier="1" %}{% value type="number_input" inputKey="gross_distribution" /%}{% /box %}
   {% /line %}
 - {% line index="2a" %}
   - {% instructions %}Taxable amount{% /instructions %}
-  - {% box identifier="2a" %}{% value type="number_input" inputKey="2a" /%}{% /box %}
+  - {% box identifier="2a" %}{% value type="number_input" inputKey="taxable_amount" /%}{% /box %}
   {% /line %}
 - {% line index="2b" %}
   - {% instructions %}Taxable amount not determined / Total distribution{% /instructions %}
@@ -22,19 +22,19 @@
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}Capital gain (included in box 2a){% /instructions %}
-  - {% box identifier="3" %}{% value type="number_input" inputKey="3" /%}{% /box %}
+  - {% box identifier="3" %}{% value type="number_input" inputKey="capital_gain" /%}{% /box %}
   {% /line %}
 - {% line index="4" %}
   - {% instructions %}Federal income tax withheld{% /instructions %}
-  - {% box identifier="4" %}{% value type="number_input" inputKey="4" /%}{% /box %}
+  - {% box identifier="4" %}{% value type="number_input" inputKey="federal_income_tax_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="5" %}
   - {% instructions %}Employee contributions/Designated Roth contributions or insurance premiums{% /instructions %}
-  - {% box identifier="5" %}{% value type="number_input" inputKey="5" /%}{% /box %}
+  - {% box identifier="5" %}{% value type="number_input" inputKey="employee_contributions_insurance_premiums" /%}{% /box %}
   {% /line %}
 - {% line index="6" %}
   - {% instructions %}Net unrealized appreciation in employer's securities{% /instructions %}
-  - {% box identifier="6" %}{% value type="number_input" inputKey="6" /%}{% /box %}
+  - {% box identifier="6" %}{% value type="number_input" inputKey="net_unrealized_appreciation" /%}{% /box %}
   {% /line %}
 - {% line index="7" %}
   - {% instructions %}Distribution code(s){% /instructions %}
@@ -46,15 +46,15 @@
   {% /line %}
 - {% line index="9a" %}
   - {% instructions %}Your percentage of total distribution{% /instructions %}
-  - {% box identifier="9a" format="percentage" %}{% value type="number_input" inputKey="9a" /%}{% /box %}
+  - {% box identifier="9a" format="percentage" %}{% value type="number_input" inputKey="percentage_total_distribution" /%}{% /box %}
   {% /line %}
 - {% line index="9b" %}
   - {% instructions %}Total employee contributions{% /instructions %}
-  - {% box identifier="9b" %}{% value type="number_input" inputKey="9b" /%}{% /box %}
+  - {% box identifier="9b" %}{% value type="number_input" inputKey="total_employee_contributions" /%}{% /box %}
   {% /line %}
 - {% line index="10" %}
   - {% instructions %}Amount allocable to IRR within 5 years{% /instructions %}
-  - {% box identifier="10" %}{% value type="number_input" inputKey="10" /%}{% /box %}
+  - {% box identifier="10" %}{% value type="number_input" inputKey="amount_allocable_to_irr_within_5_years" /%}{% /box %}
   {% /line %}
 - {% line index="11" %}
   - {% instructions %}1st year of designated Roth contributions{% /instructions %}
@@ -70,7 +70,7 @@
   {% /line %}
 - {% line index="14" %}
   - {% instructions %}State tax withheld{% /instructions %}
-  - {% box identifier="14" %}{% value type="number_input" inputKey="14" /%}{% /box %}
+  - {% box identifier="14" %}{% value type="number_input" inputKey="state_tax_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="15" %}
   - {% instructions %}State/Payer's state number{% /instructions %}
@@ -78,11 +78,11 @@
   {% /line %}
 - {% line index="16" %}
   - {% instructions %}State distribution{% /instructions %}
-  - {% box identifier="16" %}{% value type="number_input" inputKey="16" /%}{% /box %}
+  - {% box identifier="16" %}{% value type="number_input" inputKey="state_distribution" /%}{% /box %}
   {% /line %}
 - {% line index="17" %}
   - {% instructions %}Local tax withheld{% /instructions %}
-  - {% box identifier="17" %}{% value type="number_input" inputKey="17" /%}{% /box %}
+  - {% box identifier="17" %}{% value type="number_input" inputKey="local_tax_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="18" %}
   - {% instructions %}Name of locality{% /instructions %}
@@ -90,7 +90,7 @@
   {% /line %}
 - {% line index="19" %}
   - {% instructions %}Local distribution{% /instructions %}
-  - {% box identifier="19" %}{% value type="number_input" inputKey="19" /%}{% /box %}
+  - {% box identifier="19" %}{% value type="number_input" inputKey="local_distribution" /%}{% /box %}
   {% /line %}
 {% /lines %}
 {% /section %}

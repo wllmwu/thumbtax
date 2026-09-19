@@ -15,7 +15,10 @@ export const f1099NEC = defineFormSpecification({
           instructions: "Nonemployee compensation",
           box: {
             identifier: "1",
-            value: { type: "number_input", inputKey: "1" },
+            value: {
+              type: "number_input",
+              inputKey: "nonemployee_compensation",
+            },
           },
         },
         {
@@ -29,7 +32,10 @@ export const f1099NEC = defineFormSpecification({
           instructions: "Excess golden parachute payments",
           box: {
             identifier: "3",
-            value: { type: "number_input", inputKey: "3" },
+            value: {
+              type: "number_input",
+              inputKey: "excess_golden_parachute_payments",
+            },
           },
         },
         {
@@ -37,7 +43,10 @@ export const f1099NEC = defineFormSpecification({
           instructions: "Federal income tax withheld",
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: {
+              type: "number_input",
+              inputKey: "federal_income_tax_withheld",
+            },
           },
         },
         {
@@ -45,7 +54,7 @@ export const f1099NEC = defineFormSpecification({
           instructions: "State tax withheld",
           box: {
             identifier: "5",
-            value: { type: "number_input", inputKey: "5" },
+            value: { type: "number_input", inputKey: "state_tax_withheld" },
           },
         },
         {
@@ -58,7 +67,7 @@ export const f1099NEC = defineFormSpecification({
           instructions: "State income",
           box: {
             identifier: "7",
-            value: { type: "number_input", inputKey: "7" },
+            value: { type: "number_input", inputKey: "state_income" },
           },
         },
       ],

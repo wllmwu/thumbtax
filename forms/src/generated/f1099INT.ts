@@ -15,7 +15,7 @@ export const f1099INT = defineFormSpecification({
           instructions: "Interest income",
           box: {
             identifier: "1",
-            value: { type: "number_input", inputKey: "1" },
+            value: { type: "number_input", inputKey: "interest_income" },
           },
         },
         {
@@ -23,7 +23,10 @@ export const f1099INT = defineFormSpecification({
           instructions: "Early withdrawal penalty",
           box: {
             identifier: "2",
-            value: { type: "number_input", inputKey: "2" },
+            value: {
+              type: "number_input",
+              inputKey: "early_withdrawal_penalty",
+            },
           },
         },
         {
@@ -32,7 +35,10 @@ export const f1099INT = defineFormSpecification({
             "Interest on U.S. Savings Bonds and Treasury obligations",
           box: {
             identifier: "3",
-            value: { type: "number_input", inputKey: "3" },
+            value: {
+              type: "number_input",
+              inputKey: "us_savings_bonds_treasury_interest",
+            },
           },
         },
         {
@@ -40,7 +46,10 @@ export const f1099INT = defineFormSpecification({
           instructions: "Federal income tax withheld",
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: {
+              type: "number_input",
+              inputKey: "federal_income_tax_withheld",
+            },
           },
         },
         {
@@ -48,7 +57,7 @@ export const f1099INT = defineFormSpecification({
           instructions: "Investment expenses",
           box: {
             identifier: "5",
-            value: { type: "number_input", inputKey: "5" },
+            value: { type: "number_input", inputKey: "investment_expenses" },
           },
         },
         {
@@ -56,7 +65,7 @@ export const f1099INT = defineFormSpecification({
           instructions: "Foreign tax paid",
           box: {
             identifier: "6",
-            value: { type: "number_input", inputKey: "6" },
+            value: { type: "number_input", inputKey: "foreign_tax_paid" },
           },
         },
         {
@@ -69,7 +78,7 @@ export const f1099INT = defineFormSpecification({
           instructions: "Tax-exempt interest",
           box: {
             identifier: "8",
-            value: { type: "number_input", inputKey: "8" },
+            value: { type: "number_input", inputKey: "tax_exempt_interest" },
           },
         },
         {
@@ -77,7 +86,10 @@ export const f1099INT = defineFormSpecification({
           instructions: "Specified private activity bond interest",
           box: {
             identifier: "9",
-            value: { type: "number_input", inputKey: "9" },
+            value: {
+              type: "number_input",
+              inputKey: "specified_private_activity_bond_interest",
+            },
           },
         },
         {
@@ -85,7 +97,7 @@ export const f1099INT = defineFormSpecification({
           instructions: "Market discount",
           box: {
             identifier: "10",
-            value: { type: "number_input", inputKey: "10" },
+            value: { type: "number_input", inputKey: "market_discount" },
           },
         },
         {
@@ -93,7 +105,7 @@ export const f1099INT = defineFormSpecification({
           instructions: "Bond premium",
           box: {
             identifier: "11",
-            value: { type: "number_input", inputKey: "11" },
+            value: { type: "number_input", inputKey: "bond_premium" },
           },
         },
         {
@@ -101,7 +113,10 @@ export const f1099INT = defineFormSpecification({
           instructions: "Bond premium on Treasury obligations",
           box: {
             identifier: "12",
-            value: { type: "number_input", inputKey: "12" },
+            value: {
+              type: "number_input",
+              inputKey: "treasury_obligations_bond_premium",
+            },
           },
         },
         {
@@ -109,7 +124,10 @@ export const f1099INT = defineFormSpecification({
           instructions: "Bond premium on tax-exempt bond",
           box: {
             identifier: "13",
-            value: { type: "number_input", inputKey: "13" },
+            value: {
+              type: "number_input",
+              inputKey: "tax_exempt_bond_premium",
+            },
           },
         },
         {
@@ -132,7 +150,7 @@ export const f1099INT = defineFormSpecification({
           instructions: "State tax withheld",
           box: {
             identifier: "17",
-            value: { type: "number_input", inputKey: "17" },
+            value: { type: "number_input", inputKey: "state_tax_withheld" },
           },
         },
       ],

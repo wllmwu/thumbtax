@@ -38,7 +38,10 @@ export const f1099DIV = defineFormSpecification({
           ],
           box: {
             identifier: "1a",
-            value: { type: "number_input", inputKey: "1a" },
+            value: {
+              type: "number_input",
+              inputKey: "total_ordinary_dividends",
+            },
           },
         },
         {
@@ -51,7 +54,7 @@ export const f1099DIV = defineFormSpecification({
           },
           box: {
             identifier: "1b",
-            value: { type: "number_input", inputKey: "1b" },
+            value: { type: "number_input", inputKey: "qualified_dividends" },
           },
         },
         {
@@ -68,7 +71,10 @@ export const f1099DIV = defineFormSpecification({
           ],
           box: {
             identifier: "2a",
-            value: { type: "number_input", inputKey: "2a" },
+            value: {
+              type: "number_input",
+              inputKey: "total_capital_gain_distributions",
+            },
           },
         },
         {
@@ -85,7 +91,10 @@ export const f1099DIV = defineFormSpecification({
           ],
           box: {
             identifier: "2b",
-            value: { type: "number_input", inputKey: "2b" },
+            value: {
+              type: "number_input",
+              inputKey: "unrecaptured_section_1250_gain",
+            },
           },
         },
         {
@@ -101,7 +110,7 @@ export const f1099DIV = defineFormSpecification({
           ],
           box: {
             identifier: "2c",
-            value: { type: "number_input", inputKey: "2c" },
+            value: { type: "number_input", inputKey: "section_1202_gain" },
           },
         },
         {
@@ -117,7 +126,7 @@ export const f1099DIV = defineFormSpecification({
           ],
           box: {
             identifier: "2d",
-            value: { type: "number_input", inputKey: "2d" },
+            value: { type: "number_input", inputKey: "collectibles_gain" },
           },
         },
         {
@@ -133,7 +142,10 @@ export const f1099DIV = defineFormSpecification({
           ],
           box: {
             identifier: "2e",
-            value: { type: "number_input", inputKey: "2e" },
+            value: {
+              type: "number_input",
+              inputKey: "section_897_ordinary_dividends",
+            },
           },
         },
         {
@@ -149,7 +161,10 @@ export const f1099DIV = defineFormSpecification({
           ],
           box: {
             identifier: "2f",
-            value: { type: "number_input", inputKey: "2f" },
+            value: {
+              type: "number_input",
+              inputKey: "section_897_capital_gain",
+            },
           },
         },
         {
@@ -157,7 +172,10 @@ export const f1099DIV = defineFormSpecification({
           instructions: "Nondividend distributions",
           box: {
             identifier: "3",
-            value: { type: "number_input", inputKey: "3" },
+            value: {
+              type: "number_input",
+              inputKey: "nondividend_distributions",
+            },
           },
         },
         {
@@ -179,7 +197,10 @@ export const f1099DIV = defineFormSpecification({
           ],
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: {
+              type: "number_input",
+              inputKey: "federal_income_tax_withheld",
+            },
           },
         },
         {
@@ -195,7 +216,7 @@ export const f1099DIV = defineFormSpecification({
           ],
           box: {
             identifier: "5",
-            value: { type: "number_input", inputKey: "5" },
+            value: { type: "number_input", inputKey: "section_199A_dividends" },
           },
         },
         {
@@ -203,7 +224,7 @@ export const f1099DIV = defineFormSpecification({
           instructions: "Investment expenses",
           box: {
             identifier: "6",
-            value: { type: "number_input", inputKey: "6" },
+            value: { type: "number_input", inputKey: "investment_expenses" },
           },
         },
         {
@@ -211,7 +232,7 @@ export const f1099DIV = defineFormSpecification({
           instructions: "Foreign tax paid",
           box: {
             identifier: "7",
-            value: { type: "number_input", inputKey: "7" },
+            value: { type: "number_input", inputKey: "foreign_tax_paid" },
           },
         },
         {
@@ -224,7 +245,10 @@ export const f1099DIV = defineFormSpecification({
           instructions: "Cash liquidation distributions",
           box: {
             identifier: "9",
-            value: { type: "number_input", inputKey: "9" },
+            value: {
+              type: "number_input",
+              inputKey: "cash_liquidation_distributions",
+            },
           },
         },
         {
@@ -232,7 +256,10 @@ export const f1099DIV = defineFormSpecification({
           instructions: "Noncash liquidation distributions",
           box: {
             identifier: "10",
-            value: { type: "number_input", inputKey: "10" },
+            value: {
+              type: "number_input",
+              inputKey: "noncash_liquidation_distributions",
+            },
           },
         },
         {
@@ -245,7 +272,10 @@ export const f1099DIV = defineFormSpecification({
           instructions: "Exempt-interest dividends",
           box: {
             identifier: "12",
-            value: { type: "number_input", inputKey: "12" },
+            value: {
+              type: "number_input",
+              inputKey: "exempt_interest_dividends",
+            },
           },
         },
         {
@@ -253,7 +283,10 @@ export const f1099DIV = defineFormSpecification({
           instructions: "Specified private activity bond interest dividends",
           box: {
             identifier: "13",
-            value: { type: "number_input", inputKey: "13" },
+            value: {
+              type: "number_input",
+              inputKey: "specified_private_activity_bond_interest_dividends",
+            },
           },
         },
         {
@@ -271,7 +304,7 @@ export const f1099DIV = defineFormSpecification({
           instructions: "State tax withheld",
           box: {
             identifier: "16",
-            value: { type: "number_input", inputKey: "16" },
+            value: { type: "number_input", inputKey: "state_tax_withheld" },
           },
         },
       ],

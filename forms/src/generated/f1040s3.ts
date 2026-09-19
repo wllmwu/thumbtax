@@ -17,7 +17,7 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Foreign tax credit. Attach Form 1116 if required",
           box: {
             identifier: "1",
-            value: { type: "number_input", inputKey: "1" },
+            value: { type: "number_input", inputKey: "foreign_tax_credit" },
           },
         },
         {
@@ -26,7 +26,10 @@ export const f1040s3 = defineFormSpecification({
             "Credit for child and dependent care expenses from Form 2441, line 11. Attach Form 2441",
           box: {
             identifier: "2",
-            value: { type: "number_input", inputKey: "2" },
+            value: {
+              type: "number_input",
+              inputKey: "child_dependent_care_credit",
+            },
           },
         },
         {
@@ -34,7 +37,7 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Education credits from Form 8863, line 19",
           box: {
             identifier: "3",
-            value: { type: "number_input", inputKey: "3" },
+            value: { type: "number_input", inputKey: "education_credits" },
           },
         },
         {
@@ -43,7 +46,10 @@ export const f1040s3 = defineFormSpecification({
             "Retirement savings contributions credit. Attach Form 8880",
           box: {
             identifier: "4",
-            value: { type: "number_input", inputKey: "4" },
+            value: {
+              type: "number_input",
+              inputKey: "retirement_savings_contributions_credit",
+            },
           },
         },
         {
@@ -52,7 +58,10 @@ export const f1040s3 = defineFormSpecification({
             "Residential clean energy credit from Form 5695, line 15",
           box: {
             identifier: "5a",
-            value: { type: "number_input", inputKey: "5a" },
+            value: {
+              type: "number_input",
+              inputKey: "residential_clean_energy_credit",
+            },
           },
         },
         {
@@ -61,7 +70,10 @@ export const f1040s3 = defineFormSpecification({
             "Energy efficient home improvement credit from Form 5695, line 32",
           box: {
             identifier: "5b",
-            value: { type: "number_input", inputKey: "5b" },
+            value: {
+              type: "number_input",
+              inputKey: "energy_efficient_home_improvement_credit",
+            },
           },
         },
         {
@@ -74,7 +86,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "General business credit. Attach Form 3800",
           box: {
             identifier: "6a",
-            value: { type: "number_input", inputKey: "6a" },
+            value: {
+              type: "number_input",
+              inputKey: "general_business_credit",
+            },
           },
         },
         {
@@ -82,7 +97,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Credit for prior year minimum tax. Attach Form 8801",
           box: {
             identifier: "6b",
-            value: { type: "number_input", inputKey: "6b" },
+            value: {
+              type: "number_input",
+              inputKey: "prior_year_minimum_tax_credit",
+            },
           },
         },
         {
@@ -90,7 +108,7 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Adoption credit. Attach Form 8839",
           box: {
             identifier: "6c",
-            value: { type: "number_input", inputKey: "6c" },
+            value: { type: "number_input", inputKey: "adoption_credit" },
           },
         },
         {
@@ -98,7 +116,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Credit for the elderly or disabled. Attach Schedule R",
           box: {
             identifier: "6d",
-            value: { type: "number_input", inputKey: "6d" },
+            value: {
+              type: "number_input",
+              inputKey: "elderly_or_disabled_credit",
+            },
           },
         },
         {
@@ -111,7 +132,7 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Clean vehicle credit. Attach Form 8936",
           box: {
             identifier: "6f",
-            value: { type: "number_input", inputKey: "6f" },
+            value: { type: "number_input", inputKey: "clean_vehicle_credit" },
           },
         },
         {
@@ -119,7 +140,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Mortgage interest credit. Attach Form 8396",
           box: {
             identifier: "6g",
-            value: { type: "number_input", inputKey: "6g" },
+            value: {
+              type: "number_input",
+              inputKey: "mortgage_interest_credit",
+            },
           },
         },
         {
@@ -128,7 +152,10 @@ export const f1040s3 = defineFormSpecification({
             "District of Columbia first-time homebuyer credit. Attach Form 8859",
           box: {
             identifier: "6h",
-            value: { type: "number_input", inputKey: "6h" },
+            value: {
+              type: "number_input",
+              inputKey: "dc_first_time_homebuyer_credit",
+            },
           },
         },
         {
@@ -136,7 +163,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Qualified electric vehicle credit. Attach Form 8834",
           box: {
             identifier: "6i",
-            value: { type: "number_input", inputKey: "6i" },
+            value: {
+              type: "number_input",
+              inputKey: "qualified_electric_vehicle_credit",
+            },
           },
         },
         {
@@ -145,7 +175,10 @@ export const f1040s3 = defineFormSpecification({
             "Alternative fuel vehicle refueling property credit. Attach Form 8911",
           box: {
             identifier: "6j",
-            value: { type: "number_input", inputKey: "6j" },
+            value: {
+              type: "number_input",
+              inputKey: "alternative_fuel_vehicle_refueling_credit",
+            },
           },
         },
         {
@@ -154,7 +187,7 @@ export const f1040s3 = defineFormSpecification({
             "Credit to holders of tax credit bonds. Attach Form 8912",
           box: {
             identifier: "6k",
-            value: { type: "number_input", inputKey: "6k" },
+            value: { type: "number_input", inputKey: "tax_credit_bond_credit" },
           },
         },
         {
@@ -162,7 +195,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Amount on Form 8978, line 14. See instructions",
           box: {
             identifier: "6l",
-            value: { type: "number_input", inputKey: "6l" },
+            value: {
+              type: "number_input",
+              inputKey: "partner_additional_reporting_year_tax",
+            },
           },
         },
         {
@@ -171,7 +207,10 @@ export const f1040s3 = defineFormSpecification({
             "Credit for previously owned clean vehicles. Attach Form 8936",
           box: {
             identifier: "6m",
-            value: { type: "number_input", inputKey: "6m" },
+            value: {
+              type: "number_input",
+              inputKey: "previously_owned_clean_vehicle_credit",
+            },
           },
         },
         {
@@ -179,7 +218,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Other nonrefundable credits. List type and amount",
           box: {
             identifier: "6z",
-            value: { type: "list_amounts_input", inputKey: "6z" },
+            value: {
+              type: "list_amounts_input",
+              inputKey: "other_nonrefundable_credits",
+            },
           },
         },
         {
@@ -240,7 +282,7 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Net premium tax credit. Attach Form 8962",
           box: {
             identifier: "9",
-            value: { type: "number_input", inputKey: "9" },
+            value: { type: "number_input", inputKey: "net_premium_tax_credit" },
           },
         },
         {
@@ -249,7 +291,10 @@ export const f1040s3 = defineFormSpecification({
             "Amount paid with request for extension to file (see instructions)",
           box: {
             identifier: "10",
-            value: { type: "number_input", inputKey: "10" },
+            value: {
+              type: "number_input",
+              inputKey: "extension_payment_amount",
+            },
           },
         },
         {
@@ -257,7 +302,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Excess social security and tier 1 RRTA tax withheld",
           box: {
             identifier: "11",
-            value: { type: "number_input", inputKey: "11" },
+            value: {
+              type: "number_input",
+              inputKey: "excess_social_security_tax_withheld",
+            },
           },
         },
         {
@@ -265,7 +313,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Credit for federal tax on fuels. Attach Form 4136",
           box: {
             identifier: "12",
-            value: { type: "number_input", inputKey: "12" },
+            value: {
+              type: "number_input",
+              inputKey: "federal_fuel_tax_credit",
+            },
           },
         },
         {
@@ -278,7 +329,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Form 2439",
           box: {
             identifier: "13a",
-            value: { type: "number_input", inputKey: "13a" },
+            value: {
+              type: "number_input",
+              inputKey: "undistributed_long_term_capital_gains_tax_credit",
+            },
           },
         },
         {
@@ -287,7 +341,7 @@ export const f1040s3 = defineFormSpecification({
             "Section 1341 credit for repayment of amounts included in income from earlier years",
           box: {
             identifier: "13b",
-            value: { type: "number_input", inputKey: "13b" },
+            value: { type: "number_input", inputKey: "section_1341_credit" },
           },
         },
         {
@@ -296,7 +350,10 @@ export const f1040s3 = defineFormSpecification({
             "Net elective payment election amount from Form 3800, Part III, line 6, column (j)",
           box: {
             identifier: "13c",
-            value: { type: "number_input", inputKey: "13c" },
+            value: {
+              type: "number_input",
+              inputKey: "net_elective_payment_election_amount",
+            },
           },
         },
         {
@@ -305,7 +362,10 @@ export const f1040s3 = defineFormSpecification({
             "Deferred amount of net 965 tax liability (see instructions)",
           box: {
             identifier: "13d",
-            value: { type: "number_input", inputKey: "13d" },
+            value: {
+              type: "number_input",
+              inputKey: "deferred_net_965_tax_liability",
+            },
           },
         },
         {
@@ -313,7 +373,10 @@ export const f1040s3 = defineFormSpecification({
           instructions: "Other refundable credits (see instructions)",
           box: {
             identifier: "13z",
-            value: { type: "list_amounts_input", inputKey: "13z" },
+            value: {
+              type: "list_amounts_input",
+              inputKey: "other_refundable_credits",
+            },
           },
         },
         {

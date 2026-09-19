@@ -19,11 +19,11 @@
   {% /line %}
 - {% line index="2" %}
   - {% instructions %}Unreported tips from Form 4137, line 6{% /instructions %}
-  - {% box identifier="2" %}{% value type="number_input" inputKey="2" /%}{% /box %}
+  - {% box identifier="2" %}{% value type="number_input" inputKey="unreported_tips" /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}Wages from Form 8919, line 6{% /instructions %}
-  - {% box identifier="3" %}{% value type="number_input" inputKey="3" /%}{% /box %}
+  - {% box identifier="3" %}{% value type="number_input" inputKey="wages_with_tax_not_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="4" %}
   - {% instructions %}Add lines 1 through 3{% /instructions %}
@@ -87,7 +87,7 @@
 {% lines %}
 - {% line index="8" %}
   - {% instructions %}Self-employment income from Schedule SE (Form 1040), Part I, line 6. If you had a loss, enter -0-{% /instructions %}
-  - {% box identifier="8" %}{% value type="number_input" inputKey="8" /%}{% /box %}
+  - {% box identifier="8" %}{% value type="number_input" inputKey="self_employment_income" /%}{% /box %}
   {% /line %}
 - {% line index="9" %}
   - {% instructions %}
@@ -157,7 +157,9 @@
 - {% line index="14" %}
   - {% instructions %}Railroad retirement (RRTA) compensation and tips from Form(s) W-2, box 14 (see instructions){% /instructions %}
   - {% box identifier="14" %}
-    {% value type="select_instance_boxes_input" inputKey="14" %}
+    {% value
+       type="select_instance_boxes_input"
+       inputKey="rrta_compensation_and_tips" %}
     - {% option form="fW2" box="14a" /%}
     {% /value %}
     {% /box %}
@@ -256,7 +258,7 @@
   {% /line %}
 - {% line index="23" %}
   - {% instructions %}Additional Medicare Tax withholding on railroad retirement (RRTA) compensation from Form W-2, box 14 (see instructions){% /instructions %}
-  - {% box identifier="23" %}{% value type="number_input" inputKey="23" /%}{% /box %}
+  - {% box identifier="23" %}{% value type="number_input" inputKey="rrta_additional_medicare_tax_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="24" %}
   - {% instructions %}**Total Additional Medicare Tax withholding.** Add lines 22 and 23. Also include this amount with federal income tax withholding on Form 1040, 1040-SR, or 1040-NR, line 25c (Form 1040-SS filers, see instructions){% /instructions %}

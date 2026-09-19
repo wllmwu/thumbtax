@@ -22,7 +22,10 @@ export const f8995 = defineFormSpecification({
             { identifier: "1i(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1i(c)",
-              value: { type: "number_input", inputKey: "1i(c)" },
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_1",
+              },
               column: "(c)",
             },
           ],
@@ -34,7 +37,10 @@ export const f8995 = defineFormSpecification({
             { identifier: "1ii(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1ii(c)",
-              value: { type: "number_input", inputKey: "1ii(c)" },
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_2",
+              },
               column: "(c)",
             },
           ],
@@ -46,7 +52,10 @@ export const f8995 = defineFormSpecification({
             { identifier: "1iii(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1iii(c)",
-              value: { type: "number_input", inputKey: "1iii(c)" },
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_3",
+              },
               column: "(c)",
             },
           ],
@@ -58,7 +67,10 @@ export const f8995 = defineFormSpecification({
             { identifier: "1iv(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1iv(c)",
-              value: { type: "number_input", inputKey: "1iv(c)" },
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_4",
+              },
               column: "(c)",
             },
           ],
@@ -70,7 +82,10 @@ export const f8995 = defineFormSpecification({
             { identifier: "1v(b)", value: { type: "unused" }, column: "(b)" },
             {
               identifier: "1v(c)",
-              value: { type: "number_input", inputKey: "1v(c)" },
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_5",
+              },
               column: "(c)",
             },
           ],
@@ -105,7 +120,7 @@ export const f8995 = defineFormSpecification({
             identifier: "3",
             value: {
               type: "number_input",
-              inputKey: "3",
+              inputKey: "qualified_business_net_loss_carryforward",
               coerceSign: "negative",
             },
           },
@@ -149,7 +164,7 @@ export const f8995 = defineFormSpecification({
             "Qualified REIT dividends and publicly traded partnership (PTP) income or (loss) (see instructions)",
           box: {
             identifier: "6",
-            value: { type: "number_input", inputKey: "6" },
+            value: { type: "number_input", inputKey: "reit_ptp_income" },
           },
         },
         {
@@ -160,7 +175,7 @@ export const f8995 = defineFormSpecification({
             identifier: "7",
             value: {
               type: "number_input",
-              inputKey: "7",
+              inputKey: "reit_ptp_loss_carryforward",
               coerceSign: "negative",
             },
           },

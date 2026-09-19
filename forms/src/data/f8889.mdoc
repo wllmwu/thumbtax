@@ -19,19 +19,19 @@
   {% /line %}
 - {% line index="2" %}
   - {% instructions %}HSA contributions you made for 2025 (or those made on your behalf), including those made by the unextended due date of your tax return that were for 2025. Do not include employer contributions, contributions through a cafeteria plan, or rollovers. See instructions{% /instructions %}
-  - {% box identifier="2" %}{% value type="number_input" inputKey="2" /%}{% /box %}
+  - {% box identifier="2" %}{% value type="number_input" inputKey="hsa_contributions" /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}If you were under age 55 at the end of 2025 and, on the first day of every month during 2025, you were, or were considered, an eligible individual with the same coverage, enter $4,300 ($8,550 for family coverage). All others, see the instructions for the amount to enter{% /instructions %}
   - {% box identifier="3" %}
-    {% value type="override_number_input" inputKey="3" %}
+    {% value type="override_number_input" inputKey="contribution_limit" %}
     - {% value slot="computedValue" type="number_constant" value=4300 /%}
     {% /value %}
     {% /box %}
   {% /line %}
 - {% line index="4" %}
   - {% instructions %}Enter the amount you and your employer contributed to your Archer MSAs for 2025 from Form 8853, lines 1 and 2. If you or your spouse had family coverage under an HDHP at any time during 2025, also include any amount contributed to your spouse's Archer MSAs{% /instructions %}
-  - {% box identifier="4" %}{% value type="number_input" inputKey="4" /%}{% /box %}
+  - {% box identifier="4" %}{% value type="number_input" inputKey="archer_msa_contributions" /%}{% /box %}
   {% /line %}
 - {% line index="5" %}
   - {% instructions %}Subtract line 4 from line 3. If zero or less, enter -0-{% /instructions %}
@@ -47,14 +47,16 @@
 - {% line index="6" %}
   - {% instructions %}Enter the amount from line 5. But if you and your spouse each have separate HSAs and had family coverage under an HDHP at any time during 2025, see the instructions for the amount to enter{% /instructions %}
   - {% box identifier="6" %}
-    {% value type="override_number_input" inputKey="6" %}
+    {% value
+       type="override_number_input"
+       inputKey="allocated_contribution_limit" %}
     - {% value slot="computedValue" type="box_reference" box="5" /%}
     {% /value %}
     {% /box %}
   {% /line %}
 - {% line index="7" %}
   - {% instructions %}If you were age 55 or older at the end of 2025, married, and you or your spouse had family coverage under an HDHP at any time during 2025, enter your additional contribution amount. See instructions{% /instructions %}
-  - {% box identifier="7" %}{% value type="number_input" inputKey="7" /%}{% /box %}
+  - {% box identifier="7" %}{% value type="number_input" inputKey="additional_contribution_amount" /%}{% /box %}
   {% /line %}
 - {% line index="8" %}
   - {% instructions %}Add lines 6 and 7{% /instructions %}
@@ -67,11 +69,11 @@
   {% /line %}
 - {% line index="9" %}
   - {% instructions %}Employer contributions made to your HSAs for 2025{% /instructions %}
-  - {% box identifier="9" %}{% value type="number_input" inputKey="9" /%}{% /box %}
+  - {% box identifier="9" %}{% value type="number_input" inputKey="employer_hsa_contributions" /%}{% /box %}
   {% /line %}
 - {% line index="10" %}
   - {% instructions %}Qualified HSA funding distributions{% /instructions %}
-  - {% box identifier="10" %}{% value type="number_input" inputKey="10" /%}{% /box %}
+  - {% box identifier="10" %}{% value type="number_input" inputKey="qualified_hsa_funding_distributions" /%}{% /box %}
   {% /line %}
 - {% line index="11" %}
   - {% instructions %}Add lines 9 and 10{% /instructions %}
@@ -122,11 +124,11 @@
 {% lines %}
 - {% line index="14a" %}
   - {% instructions %}Total distributions you received in 2025 from all HSAs (see instructions){% /instructions %}
-  - {% box identifier="14a" %}{% value type="number_input" inputKey="14a" /%}{% /box %}
+  - {% box identifier="14a" %}{% value type="number_input" inputKey="total_hsa_distributions" /%}{% /box %}
   {% /line %}
 - {% line index="14b" %}
   - {% instructions %}Distributions included on line 14a that you rolled over to another HSA. Also include any excess contributions (and the earnings on those excess contributions) included on line 14a that were withdrawn by the due date of your return. See instructions{% /instructions %}
-  - {% box identifier="14b" %}{% value type="number_input" inputKey="14b" /%}{% /box %}
+  - {% box identifier="14b" %}{% value type="number_input" inputKey="hsa_distributions_rolled_over" /%}{% /box %}
   {% /line %}
 - {% line index="14c" %}
   - {% instructions %}Subtract line 14b from line 14a{% /instructions %}
@@ -139,7 +141,7 @@
   {% /line %}
 - {% line index="15" %}
   - {% instructions %}Qualified medical expenses paid using HSA distributions (see instructions){% /instructions %}
-  - {% box identifier="15" %}{% value type="number_input" inputKey="15" /%}{% /box %}
+  - {% box identifier="15" %}{% value type="number_input" inputKey="qualified_medical_expenses_paid" /%}{% /box %}
   {% /line %}
 - {% line index="16" %}
   - {% instructions %}**Taxable HSA distributions.** Subtract line 15 from line 14c. If zero or less, enter -0-. Also, include this amount in the total on Schedule 1 (Form 1040), Part I, line 8f{% /instructions %}
@@ -154,12 +156,12 @@
   {% /line %}
 - {% line index="17a" %}
   - {% instructions %}If any of the distributions included on line 16 meet any of the **Exceptions to the Additional 20% Tax** (see instructions), check here{% /instructions %}
-  - {% box identifier="17a" %}{% value type="checkbox_input" inputKey="17a" /%}{% /box %}
+  - {% box identifier="17a" %}{% value type="checkbox_input" inputKey="distribution_additional_20_percent_tax_exception_checkbox" /%}{% /box %}
   {% /line %}
 - {% line index="17b" %}
   - {% instructions %}**Additional 20% tax** (see instructions). Enter 20% (0.20) of the distributions included on line 16 that are subject to the additional 20% tax. Also, include this amount in the total on Schedule 2 (Form 1040), Part II, line 17c{% /instructions %}
   - {% box identifier="17b" %}
-    {% value type="override_number_input" inputKey="17b" %}
+    {% value type="override_number_input" inputKey="additional_20_percent_tax" %}
     - {% value slot="computedValue" type="product" %}
       - {% value type="box_reference" box="16" /%}
       - {% value type="number_constant" value=0.2 /%}
@@ -178,11 +180,11 @@
 {% lines %}
 - {% line index="18" %}
   - {% instructions %}Last-month rule{% /instructions %}
-  - {% box identifier="18" %}{% value type="number_input" inputKey="18" /%}{% /box %}
+  - {% box identifier="18" %}{% value type="number_input" inputKey="last_month_rule_excess_contribution" /%}{% /box %}
   {% /line %}
 - {% line index="19" %}
   - {% instructions %}Qualified HSA funding distribution{% /instructions %}
-  - {% box identifier="19" %}{% value type="number_input" inputKey="19" /%}{% /box %}
+  - {% box identifier="19" %}{% value type="number_input" inputKey="ineligible_qualified_hsa_funding_distribution" /%}{% /box %}
   {% /line %}
 - {% line index="20" %}
   - {% instructions %}**Total income.** Add lines 18 and 19. Include this amount on Schedule 1 (Form 1040), Part I, line 8f{% /instructions %}

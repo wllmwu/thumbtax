@@ -23,7 +23,7 @@
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}Annuities (see instructions){% /instructions %}
-  - {% box identifier="3" %}{% value type="number_input" inputKey="3" /%}{% /box %}
+  - {% box identifier="3" %}{% value type="number_input" inputKey="annuities" /%}{% /box %}
   {% /line %}
 - {% line index="4a" %}
   - {% instructions %}Rental real estate, royalties, partnerships, S corporations, trusts, trades or businesses, etc. (see instructions){% /instructions %}
@@ -37,7 +37,7 @@
   {% /line %}
 - {% line index="4b" %}
   - {% instructions %}Adjustment for net income or loss derived in the ordinary course of a non-section 1411 trade or business (see instructions){% /instructions %}
-  - {% box identifier="4b" %}{% value type="number_input" inputKey="4b" /%}{% /box %}
+  - {% box identifier="4b" %}{% value type="number_input" inputKey="non_section_1411_business_adjustment" /%}{% /box %}
   {% /line %}
 - {% line index="4c" %}
   - {% instructions %}Combine lines 4a and 4b{% /instructions %}
@@ -59,11 +59,11 @@
   {% /line %}
 - {% line index="5b" %}
   - {% instructions %}Net gain or loss from disposition of property that is not subject to net investment income tax (see instructions){% /instructions %}
-  - {% box identifier="5b" %}{% value type="number_input" inputKey="5b" /%}{% /box %}
+  - {% box identifier="5b" %}{% value type="number_input" inputKey="disposition_gain_not_subject_to_net_investment_income_tax" /%}{% /box %}
   {% /line %}
 - {% line index="5c" %}
   - {% instructions %}Adjustment from disposition of partnership interest or S corporation stock (see instructions){% /instructions %}
-  - {% box identifier="5c" %}{% value type="number_input" inputKey="5c" /%}{% /box %}
+  - {% box identifier="5c" %}{% value type="number_input" inputKey="partnership_s_corporation_disposition_adjustment" /%}{% /box %}
   {% /line %}
 - {% line index="5d" %}
   - {% instructions %}Combine lines 5a through 5c{% /instructions %}
@@ -77,11 +77,11 @@
   {% /line %}
 - {% line index="6" %}
   - {% instructions %}Adjustments to investment income for certain CFCs and PFICs (see instructions){% /instructions %}
-  - {% box identifier="6" %}{% value type="number_input" inputKey="6" /%}{% /box %}
+  - {% box identifier="6" %}{% value type="number_input" inputKey="cfc_pfic_adjustments" /%}{% /box %}
   {% /line %}
 - {% line index="7" %}
   - {% instructions %}Other modifications to investment income (see instructions){% /instructions %}
-  - {% box identifier="7" %}{% value type="number_input" inputKey="7" /%}{% /box %}
+  - {% box identifier="7" %}{% value type="number_input" inputKey="other_investment_income_modifications" /%}{% /box %}
   {% /line %}
 - {% line index="8" %}
   - {% instructions %}Total investment income. Combine lines 1, 2, 3, 4c, 5d, 6, and 7{% /instructions %}
@@ -108,15 +108,15 @@
 {% lines %}
 - {% line index="9a" %}
   - {% instructions %}Investment interest expenses (see instructions){% /instructions %}
-  - {% box identifier="9a" %}{% value type="number_input" inputKey="9a" /%}{% /box %}
+  - {% box identifier="9a" %}{% value type="number_input" inputKey="investment_interest_expenses" /%}{% /box %}
   {% /line %}
 - {% line index="9b" %}
   - {% instructions %}State, local, and foreign income tax (see instructions){% /instructions %}
-  - {% box identifier="9b" %}{% value type="number_input" inputKey="9b" /%}{% /box %}
+  - {% box identifier="9b" %}{% value type="number_input" inputKey="state_local_foreign_income_tax" /%}{% /box %}
   {% /line %}
 - {% line index="9c" %}
   - {% instructions %}Miscellaneous investment expenses (see instructions){% /instructions %}
-  - {% box identifier="9c" %}{% value type="number_input" inputKey="9c" /%}{% /box %}
+  - {% box identifier="9c" %}{% value type="number_input" inputKey="miscellaneous_investment_expenses" /%}{% /box %}
   {% /line %}
 - {% line index="9d" %}
   - {% instructions %}Add lines 9a, 9b, and 9c{% /instructions %}
@@ -130,7 +130,7 @@
   {% /line %}
 - {% line index="10" %}
   - {% instructions %}Additional modifications (see instructions){% /instructions %}
-  - {% box identifier="10" %}{% value type="number_input" inputKey="10" /%}{% /box %}
+  - {% box identifier="10" %}{% value type="number_input" inputKey="additional_modifications" /%}{% /box %}
   {% /line %}
 - {% line index="11" %}
   - {% instructions %}Total deductions and modifications. Add lines 9d and 10{% /instructions %}

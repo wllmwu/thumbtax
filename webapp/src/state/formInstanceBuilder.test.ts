@@ -23,11 +23,13 @@ describe("FormInstanceBuilder", () => {
 
   it("sets an amount list input", () => {
     const instance = new FormInstanceBuilder("fW2", "Test Label")
-      .setAmountListInput("14a", [{ label: "Test amount", amount: 312.5 }])
+      .setAmountListInput("other_amount", [
+        { label: "Test amount", amount: 312.5 },
+      ])
       .build();
 
     expect(instance.inputs).toEqual({
-      "14a": {
+      other_amount: {
         type: "amount_list",
         value: [{ label: "Test amount", amount: 312.5 }],
       },
@@ -36,13 +38,13 @@ describe("FormInstanceBuilder", () => {
 
   it("sets an instance box selections input", () => {
     const instance = new FormInstanceBuilder("f1040", "Test Label")
-      .setInstanceBoxSelectionsInput("4a", [
+      .setInstanceBoxSelectionsInput("ira_distributions", [
         { instance: "form-instance-1", box: "1" },
       ])
       .build();
 
     expect(instance.inputs).toEqual({
-      "4a": {
+      ira_distributions: {
         type: "instance_box_selections",
         selected: [{ instance: "form-instance-1", box: "1" }],
       },
@@ -51,53 +53,55 @@ describe("FormInstanceBuilder", () => {
 
   it("sets a number input", () => {
     const instance = new FormInstanceBuilder("fW2", "Test Label")
-      .setNumberInput("1", 50000)
+      .setNumberInput("wages_tips_other_compensation", 50000)
       .build();
 
     expect(instance.inputs).toEqual({
-      "1": { type: "number", value: 50000 },
+      wages_tips_other_compensation: { type: "number", value: 50000 },
     });
   });
 
   it("sets an override input", () => {
     const instance = new FormInstanceBuilder("f1099INT", "Test Label")
-      .setOverrideInput("1", 125.75)
+      .setOverrideInput("interest_income", 125.75)
       .build();
 
     expect(instance.inputs).toEqual({
-      "1": { type: "override", override: 125.75 },
+      interest_income: { type: "override", override: 125.75 },
     });
   });
 
   it("clears an override input with null", () => {
     const instance = new FormInstanceBuilder("f1099INT", "Test Label")
-      .setOverrideInput("1", null)
+      .setOverrideInput("interest_income", null)
       .build();
 
     expect(instance.inputs).toEqual({
-      "1": { type: "override", override: null },
+      interest_income: { type: "override", override: null },
     });
   });
 
   it("sets a selection input", () => {
     const instance = new FormInstanceBuilder("f1099INT", "Test Label")
-      .setSelectionInput("3", "treasury_bonds")
+      .setSelectionInput("interest_income", "treasury_bonds")
       .build();
 
     expect(instance.inputs).toEqual({
-      "3": { type: "selection", selectedKey: "treasury_bonds" },
+      interest_income: { type: "selection", selectedKey: "treasury_bonds" },
     });
   });
 
   it("chains multiple input setters together", () => {
     const instance = new FormInstanceBuilder("fW2", "Test Label")
-      .setNumberInput("1", 50000)
-      .setAmountListInput("14a", [{ label: "Test amount", amount: 312.5 }])
+      .setNumberInput("wages_tips_other_compensation", 50000)
+      .setAmountListInput("other_amount", [
+        { label: "Test amount", amount: 312.5 },
+      ])
       .build();
 
     expect(instance.inputs).toEqual({
-      "1": { type: "number", value: 50000 },
-      "14a": {
+      wages_tips_other_compensation: { type: "number", value: 50000 },
+      other_amount: {
         type: "amount_list",
         value: [{ label: "Test amount", amount: 312.5 }],
       },
@@ -106,12 +110,12 @@ describe("FormInstanceBuilder", () => {
 
   it("overwrites a previously set input for the same key", () => {
     const instance = new FormInstanceBuilder("fW2", "Test Label")
-      .setNumberInput("1", 50000)
-      .setNumberInput("1", 60000)
+      .setNumberInput("wages_tips_other_compensation", 50000)
+      .setNumberInput("wages_tips_other_compensation", 60000)
       .build();
 
     expect(instance.inputs).toEqual({
-      "1": { type: "number", value: 60000 },
+      wages_tips_other_compensation: { type: "number", value: 60000 },
     });
   });
 });
