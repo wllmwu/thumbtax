@@ -6,6 +6,10 @@
 
 {% subtitle %}Distributions From Pensions, Annuities, Retirement or Profit-Sharing Plans, IRAs, Insurance Contracts, etc.{% /subtitle %}
 
+{% commentary %}
+If you receive distributions from a retirement plan during the year, the payer files this form with the IRS and sends a copy to you.
+{% /commentary %}
+
 {% section %}
 {% lines %}
 - {% line index="1" %}
@@ -21,11 +25,12 @@
   - {% box identifier="2b" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
-  - {% instructions %}Capital gain (included in box 2a){% /instructions %}
+  - {% instructions %}{% glossaryLink term="capital-gain" %}Capital gain{% /glossaryLink %} (included in box 2a){% /instructions %}
   - {% box identifier="3" %}{% value type="number_input" inputKey="capital_gain" /%}{% /box %}
   {% /line %}
 - {% line index="4" %}
-  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% instructions %}{% glossaryLink term="federal-income-tax" %}Federal income tax{% /glossaryLink %} {% glossaryLink term="withholding" %}withheld{% /glossaryLink %}{% /instructions %}
+  - {% commentary %}{% glossaryLink term="backup-withholding" %}Backup withholding{% /glossaryLink %}{% /commentary %}
   - {% box identifier="4" %}{% value type="number_input" inputKey="federal_income_tax_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="5" %}

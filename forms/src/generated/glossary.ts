@@ -571,6 +571,65 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       },
     ],
   },
+  "golden-parachute": {
+    name: "Golden parachute",
+    definition: [
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Benefits that a company agrees to give its executives if they lose their jobs after a merger with or takeover by another company.",
+          " ",
+          "These can include various forms of payment (such as cash, stock options, or immediate vesting) and other benefits (such as staying enrolled in pensions or insurance plans).",
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["Excess"],
+          },
+          " golden parachute payments are the amount that golden parachute payments exceed one's average annual compensation in a recent time range.",
+        ],
+      },
+    ],
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.investopedia.com/terms/g/goldenparachute.asp",
+        },
+        children: [
+          "Understanding Golden Parachutes: Definition, Benefits & Controversy (Investopedia)",
+        ],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.law.cornell.edu/wex/golden_parachute",
+        },
+        children: ["golden parachute (Cornell LII)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.ecfr.gov/current/title-26/chapter-I/subchapter-A/part-1/subject-group-ECFR210006225231fb0/section-1.280G-1",
+        },
+        children: ["§ 1.280G-1 Golden parachute payments (eCFR.gov)"],
+      },
+    ],
+  },
   "gross-income": {
     name: "Gross income",
     definition: [

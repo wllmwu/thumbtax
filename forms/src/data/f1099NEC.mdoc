@@ -6,6 +6,11 @@
 
 {% subtitle %}Nonemployee Compensation{% /subtitle %}
 
+{% commentary %}
+If you receive payments during the year from a business that you're not considered an employee of, the business files this form with the IRS and sends a copy to you.
+To require this form, the payments must either exceed a certain amount or be subject to {% glossaryLink term="backup-withholding" %}backup withholding{% /glossaryLink %}.
+{% /commentary %}
+
 {% section %}
 {% lines %}
 - {% line index="1" %}
@@ -17,11 +22,12 @@
   - {% box identifier="2" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
-  - {% instructions %}Excess golden parachute payments{% /instructions %}
+  - {% instructions %}Excess {% glossaryLink term="golden-parachute" %}golden parachute{% /glossaryLink %} payments{% /instructions %}
   - {% box identifier="3" %}{% value type="number_input" inputKey="excess_golden_parachute_payments" /%}{% /box %}
   {% /line %}
 - {% line index="4" %}
-  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% instructions %}{% glossaryLink term="federal-income-tax" %}Federal income tax{% /glossaryLink %} {% glossaryLink term="withholding" %}withheld{% /glossaryLink %}{% /instructions %}
+  - {% commentary %}{% glossaryLink term="backup-withholding" %}Backup withholding{% /glossaryLink %}{% /commentary %}
   - {% box identifier="4" %}{% value type="number_input" inputKey="federal_income_tax_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="5" %}

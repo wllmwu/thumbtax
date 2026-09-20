@@ -7,6 +7,23 @@ export const f1099NEC = defineFormSpecification({
   maxInstances: null,
   title: "Form 1099-NEC",
   subtitle: "Nonemployee Compensation",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "If you receive payments during the year from a business that you're not considered an employee of, the business files this form with the IRS and sends a copy to you.",
+      " ",
+      "To require this form, the payments must either exceed a certain amount or be subject to ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "backup-withholding" },
+        children: ["backup withholding"],
+      },
+      ".",
+    ],
+  },
   sections: [
     {
       lines: [
@@ -29,7 +46,16 @@ export const f1099NEC = defineFormSpecification({
         },
         {
           index: "3",
-          instructions: "Excess golden parachute payments",
+          instructions: [
+            "Excess ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "golden-parachute" },
+              children: ["golden parachute"],
+            },
+            " payments",
+          ],
           box: {
             identifier: "3",
             value: {
@@ -40,7 +66,27 @@ export const f1099NEC = defineFormSpecification({
         },
         {
           index: "4",
-          instructions: "Federal income tax withheld",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "federal-income-tax" },
+              children: ["Federal income tax"],
+            },
+            " ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "withholding" },
+              children: ["withheld"],
+            },
+          ],
+          commentary: {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "backup-withholding" },
+            children: ["Backup withholding"],
+          },
           box: {
             identifier: "4",
             value: {

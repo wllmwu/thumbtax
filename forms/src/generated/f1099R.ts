@@ -8,6 +8,14 @@ export const f1099R = defineFormSpecification({
   title: "Form 1099-R",
   subtitle:
     "Distributions From Pensions, Annuities, Retirement or Profit-Sharing Plans, IRAs, Insurance Contracts, etc.",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "If you receive distributions from a retirement plan during the year, the payer files this form with the IRS and sends a copy to you.",
+    ],
+  },
   sections: [
     {
       lines: [
@@ -34,7 +42,15 @@ export const f1099R = defineFormSpecification({
         },
         {
           index: "3",
-          instructions: "Capital gain (included in box 2a)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "capital-gain" },
+              children: ["Capital gain"],
+            },
+            " (included in box 2a)",
+          ],
           box: {
             identifier: "3",
             value: { type: "number_input", inputKey: "capital_gain" },
@@ -42,7 +58,27 @@ export const f1099R = defineFormSpecification({
         },
         {
           index: "4",
-          instructions: "Federal income tax withheld",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "federal-income-tax" },
+              children: ["Federal income tax"],
+            },
+            " ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "withholding" },
+              children: ["withheld"],
+            },
+          ],
+          commentary: {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "backup-withholding" },
+            children: ["Backup withholding"],
+          },
           box: {
             identifier: "4",
             value: {

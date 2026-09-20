@@ -8,6 +8,7 @@ export const GLOSSARY_TERMS = [
   "deduction",
   "dividend",
   "federal-income-tax",
+  "golden-parachute",
   "gross-income",
   "income",
   "income-tax",
