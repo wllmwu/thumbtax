@@ -96,6 +96,46 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       ],
     },
   },
+  "backup-withholding": {
+    name: "Backup withholding",
+    definition: {
+      $$mdtype: "Tag",
+      name: "p",
+      attributes: {},
+      children: [
+        "Type of ",
+        {
+          $$mdtype: "Tag",
+          name: "GlossaryLink",
+          attributes: { term: "withholding" },
+          children: ["withholding"],
+        },
+        " required when you didn't give a payer the correct taxpayer identification number or when you underreported interest or dividends to the IRS.",
+        " ",
+        "It can apply to most types of payments reported on Form 1099 (",
+        {
+          $$mdtype: "Tag",
+          name: "FormLink",
+          attributes: { formClass: "f1099B" },
+          children: ["Form 1099-B"],
+        },
+        ", ",
+        {
+          $$mdtype: "Tag",
+          name: "FormLink",
+          attributes: { formClass: "f1099DIV" },
+          children: ["Form 1099-DIV"],
+        },
+        ", etc.).",
+      ],
+    },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.irs.gov/taxtopics/tc307" },
+      children: ["Backup withholding (IRS topic 307)"],
+    },
+  },
   "capital-gain": {
     name: "Capital gain",
     definition: [
@@ -720,7 +760,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
-          "If you receive dividends, the payor reports what amount is ordinary vs. qualified on ",
+          "If you receive dividends, the payer reports what amount is ordinary vs. qualified on ",
           {
             $$mdtype: "Tag",
             name: "FormLink",
@@ -800,7 +840,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
           },
           ").",
           " ",
-          "If you receive dividends, the payor reports what amount is ordinary vs. qualified on ",
+          "If you receive dividends, the payer reports what amount is ordinary vs. qualified on ",
           {
             $$mdtype: "Tag",
             name: "FormLink",

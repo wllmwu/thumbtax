@@ -7,6 +7,14 @@ export const f1099INT = defineFormSpecification({
   maxInstances: null,
   title: "Form 1099-INT",
   subtitle: "Interest Income",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "If you earn interest during the year, the payer files this form with the IRS and sends a copy to you.",
+    ],
+  },
   sections: [
     {
       lines: [
@@ -43,7 +51,27 @@ export const f1099INT = defineFormSpecification({
         },
         {
           index: "4",
-          instructions: "Federal income tax withheld",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "federal-income-tax" },
+              children: ["Federal income tax"],
+            },
+            " ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "withholding" },
+              children: ["withheld"],
+            },
+          ],
+          commentary: {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "backup-withholding" },
+            children: ["Backup withholding"],
+          },
           box: {
             identifier: "4",
             value: {
@@ -83,7 +111,15 @@ export const f1099INT = defineFormSpecification({
         },
         {
           index: "9",
-          instructions: "Specified private activity bond interest",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "specified-private-activity-bond" },
+              children: ["Specified private activity bond"],
+            },
+            " interest",
+          ],
           box: {
             identifier: "9",
             value: {

@@ -125,6 +125,12 @@ export const f1099B = defineFormSpecification({
               children: ["withheld"],
             },
           ],
+          commentary: {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "backup-withholding" },
+            children: ["Backup withholding"],
+          },
           box: {
             identifier: "4",
             value: {

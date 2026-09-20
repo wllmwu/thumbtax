@@ -6,6 +6,10 @@
 
 {% subtitle %}Interest Income{% /subtitle %}
 
+{% commentary %}
+If you earn interest during the year, the payer files this form with the IRS and sends a copy to you.
+{% /commentary %}
+
 {% section %}
 {% lines %}
 - {% line index="1" %}
@@ -21,7 +25,8 @@
   - {% box identifier="3" %}{% value type="number_input" inputKey="us_savings_bonds_treasury_interest" /%}{% /box %}
   {% /line %}
 - {% line index="4" %}
-  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% instructions %}{% glossaryLink term="federal-income-tax" %}Federal income tax{% /glossaryLink %} {% glossaryLink term="withholding" %}withheld{% /glossaryLink %}{% /instructions %}
+  - {% commentary %}{% glossaryLink term="backup-withholding" %}Backup withholding{% /glossaryLink %}{% /commentary %}
   - {% box identifier="4" %}{% value type="number_input" inputKey="federal_income_tax_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="5" %}
@@ -41,7 +46,7 @@
   - {% box identifier="8" %}{% value type="number_input" inputKey="tax_exempt_interest" /%}{% /box %}
   {% /line %}
 - {% line index="9" %}
-  - {% instructions %}Specified private activity bond interest{% /instructions %}
+  - {% instructions %}{% glossaryLink term="specified-private-activity-bond" %}Specified private activity bond{% /glossaryLink %} interest{% /instructions %}
   - {% box identifier="9" %}{% value type="number_input" inputKey="specified_private_activity_bond_interest" /%}{% /box %}
   {% /line %}
 - {% line index="10" %}
