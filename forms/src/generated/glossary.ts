@@ -220,62 +220,201 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       children: ["How Collectibles Are Taxed (Investopedia)"],
     },
   },
+  credit: {
+    name: "Credit",
+    definition: [
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Amount subtracted from ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "tax-liability" },
+            children: ["tax liability"],
+          },
+          " to compute ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "tax-due" },
+            children: ["tax due"],
+          },
+          ".",
+          " ",
+          "Examples of tax credits include the ",
+          {
+            $$mdtype: "Tag",
+            name: "a",
+            attributes: {
+              href: "https://www.irs.gov/credits-deductions/individuals/child-tax-credit",
+            },
+            children: ["child tax credit"],
+          },
+          " and ",
+          {
+            $$mdtype: "Tag",
+            name: "a",
+            attributes: {
+              href: "https://www.irs.gov/clean-vehicle-tax-credits",
+            },
+            children: ["clean vehicle credits"],
+          },
+          ".",
+          " ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["Deductions"],
+          },
+          " reduce your ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "taxable-income" },
+            children: ["taxable income"],
+          },
+          ", while ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["credits"],
+          },
+          " reduce how much you ultimately owe the IRS.",
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["Refundable credits"],
+          },
+          " can increase your ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "tax-refund" },
+            children: ["tax refund"],
+          },
+          " if your credits are more than your tax liability.",
+          " ",
+          "They can essentially give you negative total tax liability (a refund).",
+          " ",
+          "On the other hand, ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["nonrefundable credits"],
+          },
+          " can only reduce your tax liability to zero.",
+        ],
+      },
+    ],
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.irs.gov/credits-and-deductions" },
+        children: ["Credits and deductions (IRS.gov)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/tax_credit" },
+        children: ["tax credit (Cornell LII)"],
+      },
+    ],
+  },
   deduction: {
     name: "Deduction",
-    definition: {
-      $$mdtype: "Tag",
-      name: "p",
-      attributes: {},
-      children: [
-        "Amount subtracted from ",
-        {
-          $$mdtype: "Tag",
-          name: "GlossaryLink",
-          attributes: { term: "adjusted-gross-income" },
-          children: ["adjusted gross income"],
-        },
-        " to compute ",
-        {
-          $$mdtype: "Tag",
-          name: "GlossaryLink",
-          attributes: { term: "taxable-income" },
-          children: ["taxable income"],
-        },
-        ".",
-        " ",
-        "You can typically deduct things like capital losses, business expenses, healthcare costs, other taxes you paid, and donations to charity, up to a limit.",
-        " ",
-        "For ",
-        {
-          $$mdtype: "Tag",
-          name: "GlossaryLink",
-          attributes: { term: "federal-income-tax" },
-          children: ["federal income tax"],
-        },
-        ", you choose between the ",
-        {
-          $$mdtype: "Tag",
-          name: "strong",
-          attributes: {},
-          children: ["standard deduction"],
-        },
-        " (a fixed amount) and ",
-        {
-          $$mdtype: "Tag",
-          name: "strong",
-          attributes: {},
-          children: ["itemized deductions"],
-        },
-        " (precise amounts computed in ",
-        {
-          $$mdtype: "Tag",
-          name: "FormLink",
-          attributes: { formClass: "f1040sA" },
-          children: ["Schedule A (Form 1040)"],
-        },
-        ") depending on which is larger.",
-      ],
-    },
+    definition: [
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Amount subtracted from ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "adjusted-gross-income" },
+            children: ["adjusted gross income"],
+          },
+          " to compute ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "taxable-income" },
+            children: ["taxable income"],
+          },
+          ".",
+          " ",
+          "You can typically deduct things like capital losses, business expenses, healthcare costs, other taxes you paid, and donations to charity, up to a limit.",
+          " ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["Deductions"],
+          },
+          " reduce your taxable income, while ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["credits"],
+          },
+          " reduce how much you ultimately owe the IRS.",
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "For ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "federal-income-tax" },
+            children: ["federal income tax"],
+          },
+          ", you choose between the ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["standard deduction"],
+          },
+          " (a fixed amount) and ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["itemized deductions"],
+          },
+          " (precise amounts computed in ",
+          {
+            $$mdtype: "Tag",
+            name: "FormLink",
+            attributes: { formClass: "f1040sA" },
+            children: ["Schedule A (Form 1040)"],
+          },
+          ") depending on which is larger.",
+        ],
+      },
+    ],
     learnMore: [
       {
         $$mdtype: "Tag",
@@ -761,6 +900,52 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       ],
     },
   },
+  recapture: {
+    name: "Recapture",
+    definition: {
+      $$mdtype: "Tag",
+      name: "p",
+      attributes: {},
+      children: [
+        "Decrease in a tax benefit, such as a ",
+        {
+          $$mdtype: "Tag",
+          name: "GlossaryLink",
+          attributes: { term: "deduction" },
+          children: ["deduction"],
+        },
+        " or ",
+        {
+          $$mdtype: "Tag",
+          name: "GlossaryLink",
+          attributes: { term: "credit" },
+          children: ["credit"],
+        },
+        ", because you stopped meeting the required conditions.",
+        " ",
+        "For example, you can get a tax credit from selling certain assets, but if you sell it too soon, then the credit is reduced.",
+        " ",
+        "To be precise, the tax benefit lowers your tax, while the recapture raises your tax again to offset part of the benefit.",
+      ],
+    },
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/wex/recapture" },
+        children: ["recapture (Cornell LII)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://tax.thomsonreuters.com/en/glossary/depreciation-recapture-tax",
+        },
+        children: ["Depreciation recapture tax (Thomson Reuters)"],
+      },
+    ],
+  },
   "section-1202": {
     name: "Section 1202",
     definition: {
@@ -892,6 +1077,159 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         children: ["What Are Financial Securities? (Investopedia)"],
       },
     ],
+  },
+  "specified-private-activity-bond": {
+    name: "Specified private activity bond",
+    definition: [
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "A ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["private activity bond"],
+          },
+          " is a bond issued to fund private business activity.",
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "A ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["specified"],
+          },
+          " private activity bond is one whose interest isn't included in ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "gross-income" },
+            children: ["gross income"],
+          },
+          " under certain conditions.",
+        ],
+      },
+    ],
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.law.cornell.edu/uscode/text/26/57#a_5_C",
+        },
+        children: [
+          "26 U.S. Code § 57(a)(5)(C) - Specified private activity bonds (Cornell LII)",
+        ],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.law.cornell.edu/uscode/text/26/141" },
+        children: [
+          "26 U.S. Code § 141 - Private activity bond; qualified bond (Cornell LII)",
+        ],
+      },
+    ],
+  },
+  "tax-due": {
+    name: "Tax due",
+    definition: {
+      $$mdtype: "Tag",
+      name: "p",
+      attributes: {},
+      children: [
+        "Amount you must pay to the IRS for the tax year.",
+        " ",
+        "If you already paid more than this amount, for example through ",
+        {
+          $$mdtype: "Tag",
+          name: "GlossaryLink",
+          attributes: { term: "withholding" },
+          children: ["withholding"],
+        },
+        " on your wages, then you'll receive a ",
+        {
+          $$mdtype: "Tag",
+          name: "GlossaryLink",
+          attributes: { term: "tax-refund" },
+          children: ["tax refund"],
+        },
+        " instead.",
+      ],
+    },
+  },
+  "tax-liability": {
+    name: "Tax liability",
+    definition: [
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Also called ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["tax obligation."],
+          },
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Sum of taxes you owe for the tax year.",
+          " ",
+          "This can be reduced by ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "credit" },
+            children: ["tax credits"],
+          },
+          " to get your actual ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "tax-due" },
+            children: ["tax due"],
+          },
+          ".",
+        ],
+      },
+    ],
+  },
+  "tax-refund": {
+    name: "Tax refund",
+    definition: {
+      $$mdtype: "Tag",
+      name: "p",
+      attributes: {},
+      children: [
+        "Amount the IRS pays back to you for the tax year.",
+        " ",
+        "This is how much you paid them in excess of your ",
+        {
+          $$mdtype: "Tag",
+          name: "GlossaryLink",
+          attributes: { term: "tax-due" },
+          children: ["tax due"],
+        },
+        ".",
+      ],
+    },
   },
   "taxable-income": {
     name: "Taxable income",

@@ -89,6 +89,16 @@ export const f1099DIV = defineFormSpecification({
             },
             " gain",
           ],
+          commentary: [
+            '"Unrecaptured" refers to the amount not subject to ',
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "recapture" },
+              children: ["recapture"],
+            },
+            ".",
+          ],
           box: {
             identifier: "2b",
             value: {
@@ -280,7 +290,15 @@ export const f1099DIV = defineFormSpecification({
         },
         {
           index: "13",
-          instructions: "Specified private activity bond interest dividends",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "specified-private-activity-bond" },
+              children: ["Specified private activity bond"],
+            },
+            " interest dividends",
+          ],
           box: {
             identifier: "13",
             value: {
