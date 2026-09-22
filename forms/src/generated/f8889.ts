@@ -181,22 +181,6 @@ export const f8889 = defineFormSpecification({
             },
           },
         },
-        {
-          index: "flag_f5329",
-          virtual: true,
-          instructions:
-            "Flag for whether to file Form 5329 due to excess HSA contributions",
-          box: {
-            identifier: "flag_f5329",
-            value: {
-              type: "comparison",
-              value: { type: "box_reference", box: "2" },
-              minimum: { type: "box_reference", box: "13" },
-              strict: true,
-            },
-            format: "yes_no",
-          },
-        },
       ],
     },
     {
@@ -260,7 +244,14 @@ export const f8889 = defineFormSpecification({
               attributes: {},
               children: ["Taxable HSA distributions."],
             },
-            " Subtract line 15 from line 14c. If zero or less, enter -0-. Also, include this amount in the total on Schedule 1 (Form 1040), Part I, line 8f",
+            " Subtract line 15 from line 14c. If zero or less, enter -0-. Also, include this amount in the total on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s1" },
+              children: ["Schedule 1 (Form 1040)"],
+            },
+            ", Part I, line 8f",
           ],
           box: {
             identifier: "16",
@@ -304,7 +295,14 @@ export const f8889 = defineFormSpecification({
               attributes: {},
               children: ["Additional 20% tax"],
             },
-            " (see instructions). Enter 20% (0.20) of the distributions included on line 16 that are subject to the additional 20% tax. Also, include this amount in the total on Schedule 2 (Form 1040), Part II, line 17c",
+            " (see instructions). Enter 20% (0.20) of the distributions included on line 16 that are subject to the additional 20% tax. Also, include this amount in the total on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s2" },
+              children: ["Schedule 2 (Form 1040)"],
+            },
+            ", Part II, line 17c",
           ],
           box: {
             identifier: "17b",
@@ -327,6 +325,14 @@ export const f8889 = defineFormSpecification({
       heading: "Part III",
       subtitle:
         "Income and Additional Tax for Failure To Maintain HDHP Coverage",
+      commentary: {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "If you contribute to an HSA while you don't meet the eligibility requirements, then those contributions count as income and are subject to an extra tax.",
+        ],
+      },
       lines: [
         {
           index: "18",
@@ -359,7 +365,14 @@ export const f8889 = defineFormSpecification({
               attributes: {},
               children: ["Total income."],
             },
-            " Add lines 18 and 19. Include this amount on Schedule 1 (Form 1040), Part I, line 8f",
+            " Add lines 18 and 19. Include this amount on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s1" },
+              children: ["Schedule 1 (Form 1040)"],
+            },
+            ", Part I, line 8f",
           ],
           box: {
             identifier: "20",
@@ -381,7 +394,14 @@ export const f8889 = defineFormSpecification({
               attributes: {},
               children: ["Additional tax."],
             },
-            " Multiply line 20 by 10% (0.10). Include this amount in the total on Schedule 2 (Form 1040), Part II, line 17d",
+            " Multiply line 20 by 10% (0.10). Include this amount in the total on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s2" },
+              children: ["Schedule 2 (Form 1040)"],
+            },
+            ", Part II, line 17d",
           ],
           box: {
             identifier: "21",

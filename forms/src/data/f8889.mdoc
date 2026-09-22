@@ -104,15 +104,6 @@
     {% /value %}
     {% /box %}
   {% /line %}
-- {% line index="flag_f5329" virtual=true %}
-  - {% instructions %}Flag for whether to file Form 5329 due to excess HSA contributions{% /instructions %}
-  - {% box identifier="flag_f5329" format="yes_no" %}
-    {% value type="comparison" strict=true %}
-    - {% value type="box_reference" box="2" /%}
-    - {% value slot="minimum" type="box_reference" box="13" /%}
-    {% /value %}
-    {% /box %}
-  {% /line %}
 {% /lines %}
 {% /section %}
 
@@ -144,7 +135,7 @@
   - {% box identifier="15" %}{% value type="number_input" inputKey="qualified_medical_expenses_paid" /%}{% /box %}
   {% /line %}
 - {% line index="16" %}
-  - {% instructions %}**Taxable HSA distributions.** Subtract line 15 from line 14c. If zero or less, enter -0-. Also, include this amount in the total on Schedule 1 (Form 1040), Part I, line 8f{% /instructions %}
+  - {% instructions %}**Taxable HSA distributions.** Subtract line 15 from line 14c. If zero or less, enter -0-. Also, include this amount in the total on {% formLink formClass="f1040s1" %}Schedule 1 (Form 1040){% /formLink %}, Part I, line 8f{% /instructions %}
   - {% box identifier="16" %}
     {% value type="non_negative_clamp" %}
     - {% value type="difference" %}
@@ -159,7 +150,7 @@
   - {% box identifier="17a" %}{% value type="checkbox_input" inputKey="distribution_additional_20_percent_tax_exception_checkbox" /%}{% /box %}
   {% /line %}
 - {% line index="17b" %}
-  - {% instructions %}**Additional 20% tax** (see instructions). Enter 20% (0.20) of the distributions included on line 16 that are subject to the additional 20% tax. Also, include this amount in the total on Schedule 2 (Form 1040), Part II, line 17c{% /instructions %}
+  - {% instructions %}**Additional 20% tax** (see instructions). Enter 20% (0.20) of the distributions included on line 16 that are subject to the additional 20% tax. Also, include this amount in the total on {% formLink formClass="f1040s2" %}Schedule 2 (Form 1040){% /formLink %}, Part II, line 17c{% /instructions %}
   - {% box identifier="17b" %}
     {% value type="override_number_input" inputKey="additional_20_percent_tax" %}
     - {% value slot="computedValue" type="product" %}
@@ -177,6 +168,10 @@
 
 {% subtitle %}Income and Additional Tax for Failure To Maintain HDHP Coverage{% /subtitle %}
 
+{% commentary %}
+If you contribute to an HSA while you don't meet the eligibility requirements, then those contributions count as income and are subject to an extra tax.
+{% /commentary %}
+
 {% lines %}
 - {% line index="18" %}
   - {% instructions %}Last-month rule{% /instructions %}
@@ -187,7 +182,7 @@
   - {% box identifier="19" %}{% value type="number_input" inputKey="ineligible_qualified_hsa_funding_distribution" /%}{% /box %}
   {% /line %}
 - {% line index="20" %}
-  - {% instructions %}**Total income.** Add lines 18 and 19. Include this amount on Schedule 1 (Form 1040), Part I, line 8f{% /instructions %}
+  - {% instructions %}**Total income.** Add lines 18 and 19. Include this amount on {% formLink formClass="f1040s1" %}Schedule 1 (Form 1040){% /formLink %}, Part I, line 8f{% /instructions %}
   - {% box identifier="20" %}
     {% value type="sum" %}
     - {% value type="box_reference" box="18" /%}
@@ -196,7 +191,7 @@
     {% /box %}
   {% /line %}
 - {% line index="21" %}
-  - {% instructions %}**Additional tax.** Multiply line 20 by 10% (0.10). Include this amount in the total on Schedule 2 (Form 1040), Part II, line 17d{% /instructions %}
+  - {% instructions %}**Additional tax.** Multiply line 20 by 10% (0.10). Include this amount in the total on {% formLink formClass="f1040s2" %}Schedule 2 (Form 1040){% /formLink %}, Part II, line 17d{% /instructions %}
   - {% box identifier="21" %}
     {% value type="product" %}
     - {% value type="box_reference" box="20" /%}
