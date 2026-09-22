@@ -96,6 +96,86 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       ],
     },
   },
+  "alternative-minimum-tax": {
+    name: "Alternative minimum tax (AMT)",
+    definition: [
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "income-tax" },
+            children: ["Income tax"],
+          },
+          " that applies to higher-income taxpayers in addition to regular ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "federal-income-tax" },
+            children: ["federal income tax"],
+          },
+          ".",
+          " ",
+          "The AMT is designed to ensure that taxpayers who receive a lot of tax benefits still pay some amount of tax.",
+          " ",
+          "It only applies when your income is over a certain threshold.",
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Specifically, the AMT is the excess of the ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["tentative minimum tax"],
+          },
+          " over the regular tax.",
+          " ",
+          "The tentative minimum tax is calculated similarly to the regular tax, but you add back certain deductions and exemptions to your ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "taxable-income" },
+            children: ["taxable income"],
+          },
+          " first.",
+          " ",
+          "The full calculation is done on ",
+          {
+            $$mdtype: "Tag",
+            name: "FormLink",
+            attributes: { formClass: "f6251" },
+            children: ["Form 6251"],
+          },
+          ".",
+        ],
+      },
+    ],
+    learnMore: [
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: {
+          href: "https://www.law.cornell.edu/wex/alternative_minimum_tax_%28amt%29",
+        },
+        children: ["alternative minimum tax (AMT) (Cornell LII)"],
+      },
+      " • ",
+      {
+        $$mdtype: "Tag",
+        name: "a",
+        attributes: { href: "https://www.irs.gov/taxtopics/tc556" },
+        children: ["Alternative Minimum Tax (IRS topic 556)"],
+      },
+    ],
+  },
   "backup-withholding": {
     name: "Backup withholding",
     definition: {
@@ -759,7 +839,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Tax on ",
+        "Tax you pay when you earn ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -768,7 +848,9 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         },
         ".",
         " ",
-        "There are many types of income tax that apply to different sources of income.",
+        "The annual tax return process in the U.S. centers on figuring out how much income tax you still owe (or how much you overpaid) for the past tax year.",
+        " ",
+        "Other types of taxes include sales tax, which you pay when you buy something, and property tax, which you pay when you own property.",
       ],
     },
   },

@@ -7,6 +7,28 @@ export const f6251 = defineFormSpecification({
   maxInstances: 1,
   title: "Form 6251",
   subtitle: "Alternative Minimum Tax—Individuals",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "This form computes your ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "alternative-minimum-tax" },
+        children: ["alternative minimum tax"],
+      },
+      ", which is included in ",
+      {
+        $$mdtype: "Tag",
+        name: "FormLink",
+        attributes: { formClass: "f1040s2" },
+        children: ["Schedule 2 (Form 1040)"],
+      },
+      ".",
+    ],
+  },
   sections: [
     {
       heading: "Part I",
@@ -14,8 +36,23 @@ export const f6251 = defineFormSpecification({
       lines: [
         {
           index: "1a",
-          instructions:
-            "Subtract Schedule 1-A (Form 1040), line 37, from Form 1040, 1040-SR, or 1040-NR, line 14",
+          instructions: [
+            "Subtract ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s1A" },
+              children: ["Schedule 1-A (Form 1040)"],
+            },
+            ", line 37, from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            ", 1040-SR, or 1040-NR, line 14",
+          ],
           box: {
             identifier: "1a",
             value: {
@@ -37,8 +74,16 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "1b",
-          instructions:
-            "Subtract line 1a from Form 1040, 1040-SR, or 1040-NR, line 11b (if less than zero, enter as a negative amount)",
+          instructions: [
+            "Subtract line 1a from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            ", 1040-SR, or 1040-NR, line 11b (if less than zero, enter as a negative amount)",
+          ],
           box: {
             identifier: "1b",
             value: {
@@ -55,8 +100,23 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "2a",
-          instructions:
-            "If filing Schedule A (Form 1040), enter the taxes from Schedule A, line 7; otherwise, enter the amount from Form 1040 or 1040-SR, line 12e",
+          instructions: [
+            "If filing ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sA" },
+              children: ["Schedule A (Form 1040)"],
+            },
+            ", enter the taxes from Schedule A, line 7; otherwise, enter the amount from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            " or 1040-SR, line 12e",
+          ],
           box: {
             identifier: "2a",
             value: {
@@ -74,8 +134,16 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "2b",
-          instructions:
-            "Tax refund from Schedule 1 (Form 1040), line 1 or line 8z",
+          instructions: [
+            "Tax refund from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s1" },
+              children: ["Schedule 1 (Form 1040)"],
+            },
+            ", line 1 or line 8z",
+          ],
           box: {
             identifier: "2b",
             value: {
@@ -116,8 +184,16 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "2e",
-          instructions:
-            "Net operating loss deduction from Schedule 1 (Form 1040), line 8a. Enter as a positive amount",
+          instructions: [
+            "Net operating loss deduction from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s1" },
+              children: ["Schedule 1 (Form 1040)"],
+            },
+            ", line 8a. Enter as a positive amount",
+          ],
           box: {
             identifier: "2e",
             value: {
@@ -145,8 +221,16 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "2g",
-          instructions:
-            "Interest from specified private activity bonds exempt from the regular tax",
+          instructions: [
+            "Interest from ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "specified-private-activity-bond" },
+              children: ["specified private activity bonds"],
+            },
+            " exempt from the regular tax",
+          ],
           box: {
             identifier: "2g",
             value: {
@@ -157,7 +241,15 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "2h",
-          instructions: "Qualified small business stock, see instructions",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "qualified-small-business-stock" },
+              children: ["Qualified small business stock"],
+            },
+            ", see instructions",
+          ],
           box: {
             identifier: "2h",
             value: {
@@ -672,7 +764,21 @@ export const f6251 = defineFormSpecification({
                 name: "li",
                 attributes: {},
                 children: [
-                  "If you reported capital gain distributions directly on Form 1040 or 1040-SR, line 7; you reported qualified dividends on Form 1040 or 1040-SR, line 3a; or you had a gain on both lines 15 and 16 of Schedule D (Form 1040) (as refigured for the AMT, if necessary), complete Part III on the back and enter the amount from line 40 here.",
+                  "If you reported capital gain distributions directly on ",
+                  {
+                    $$mdtype: "Tag",
+                    name: "FormLink",
+                    attributes: { formClass: "f1040" },
+                    children: ["Form 1040"],
+                  },
+                  " or 1040-SR, line 7; you reported qualified dividends on Form 1040 or 1040-SR, line 3a; or you had a gain on both lines 15 and 16 of ",
+                  {
+                    $$mdtype: "Tag",
+                    name: "FormLink",
+                    attributes: { formClass: "f1040sD" },
+                    children: ["Schedule D (Form 1040)"],
+                  },
+                  " (as refigured for the AMT, if necessary), complete Part III on the back and enter the amount from line 40 here.",
                 ],
               },
               {
@@ -753,7 +859,15 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "9",
-          instructions: "Tentative minimum tax. Subtract line 8 from line 7",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "strong",
+              attributes: {},
+              children: ["Tentative minimum tax."],
+            },
+            " Subtract line 8 from line 7",
+          ],
           box: {
             identifier: "9",
             value: {
@@ -765,8 +879,30 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "10",
-          instructions:
-            "Add Form 1040 or 1040-SR, line 16 (minus any tax from Form 4972), and Schedule 2 (Form 1040), line 1z. Subtract from the result Schedule 3 (Form 1040), line 1 and any negative amount reported on Form 8978, line 14 (treated as a positive number). If zero or less, enter -0-. If you used Schedule J to figure your tax on Form 1040 or 1040-SR, line 16, refigure that tax without using Schedule J before completing this line. See instructions",
+          instructions: [
+            "Add ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            " or 1040-SR, line 16 (minus any tax from Form 4972), and ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s2" },
+              children: ["Schedule 2 (Form 1040)"],
+            },
+            ", line 1z. Subtract from the result ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s3" },
+              children: ["Schedule 3 (Form 1040)"],
+            },
+            ", line 1 and any negative amount reported on Form 8978, line 14 (treated as a positive number). If zero or less, enter -0-. If you used Schedule J to figure your tax on Form 1040 or 1040-SR, line 16, refigure that tax without using Schedule J before completing this line. See instructions",
+          ],
           box: {
             identifier: "10",
             value: {
@@ -812,7 +948,14 @@ export const f6251 = defineFormSpecification({
               attributes: {},
               children: ["AMT."],
             },
-            " Subtract line 10 from line 9. If zero or less, enter -0-. Enter here and on Schedule 2 (Form 1040), line 2",
+            " Subtract line 10 from line 9. If zero or less, enter -0-. Enter here and on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s2" },
+              children: ["Schedule 2 (Form 1040)"],
+            },
+            ", line 2",
           ],
           box: {
             identifier: "11",
@@ -847,8 +990,23 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "13",
-          instructions:
-            "Enter the amount from line 4 of the Qualified Dividends and Capital Gain Tax Worksheet in the Instructions for Form 1040 or the amount from line 13 of the Schedule D Tax Worksheet in the Instructions for Schedule D (Form 1040), whichever applies (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter",
+          instructions: [
+            "Enter the amount from line 4 of the ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040_QDCGTWS" },
+              children: ["Qualified Dividends and Capital Gain Tax Worksheet"],
+            },
+            " in the Instructions for Form 1040 or the amount from line 13 of the ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sD_SDTWS" },
+              children: ["Schedule D Tax Worksheet"],
+            },
+            " in the Instructions for Schedule D (Form 1040), whichever applies (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter",
+          ],
           box: {
             identifier: "13",
             value: {
@@ -890,8 +1048,16 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "14",
-          instructions:
-            "Enter the amount from Schedule D (Form 1040), line 19 (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter",
+          instructions: [
+            "Enter the amount from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sD" },
+              children: ["Schedule D (Form 1040)"],
+            },
+            ", line 19 (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter",
+          ],
           box: {
             identifier: "14",
             value: {
@@ -908,8 +1074,16 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "15",
-          instructions:
-            "If you did not complete a Schedule D Tax Worksheet for the regular tax or the AMT, enter the amount from line 13. Otherwise, add lines 13 and 14, and enter the smaller of that result or the amount from line 10 of the Schedule D Tax Worksheet (as refigured for the AMT, if necessary). If you are filing Form 2555, see instructions for the amount to enter",
+          instructions: [
+            "If you did not complete a ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sD_SDTWS" },
+              children: ["Schedule D Tax Worksheet"],
+            },
+            " for the regular tax or the AMT, enter the amount from line 13. Otherwise, add lines 13 and 14, and enter the smaller of that result or the amount from line 10 of the Schedule D Tax Worksheet (as refigured for the AMT, if necessary). If you are filing Form 2555, see instructions for the amount to enter",
+          ],
           box: {
             identifier: "15",
             value: {
@@ -1081,8 +1255,30 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "20",
-          instructions:
-            "Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 14 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter",
+          instructions: [
+            "Enter the amount from line 5 of the ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040_QDCGTWS" },
+              children: ["Qualified Dividends and Capital Gain Tax Worksheet"],
+            },
+            " or the amount from line 14 of the ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sD_SDTWS" },
+              children: ["Schedule D Tax Worksheet"],
+            },
+            ", whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            " or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter",
+          ],
           box: {
             identifier: "20",
             value: {
@@ -1256,8 +1452,30 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "27",
-          instructions:
-            "Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 21 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter",
+          instructions: [
+            "Enter the amount from line 5 of the ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040_QDCGTWS" },
+              children: ["Qualified Dividends and Capital Gain Tax Worksheet"],
+            },
+            " or the amount from line 21 of the ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sD_SDTWS" },
+              children: ["Schedule D Tax Worksheet"],
+            },
+            ", whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            " or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter",
+          ],
           box: {
             identifier: "27",
             value: {
@@ -1365,16 +1583,22 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "32",
-          instructions: {
-            $$mdtype: "Tag",
-            name: "p",
-            attributes: {},
-            children: [
-              "Add lines 23 and 30",
-              " ",
-              "If lines 32 and 12 are the same, skip lines 33 through 37 and go to line 38. Otherwise, go to line 33.",
-            ],
-          },
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: ["Add lines 23 and 30"],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: [
+                "If lines 32 and 12 are the same, skip lines 33 through 37 and go to line 38. Otherwise, go to line 33.",
+              ],
+            },
+          ],
           box: {
             identifier: "32",
             value: {
@@ -1400,16 +1624,22 @@ export const f6251 = defineFormSpecification({
         },
         {
           index: "34",
-          instructions: {
-            $$mdtype: "Tag",
-            name: "p",
-            attributes: {},
-            children: [
-              "Multiply line 33 by 20% (0.20)",
-              " ",
-              "If line 14 is zero or blank, skip lines 35 through 37 and go to line 38. Otherwise, go to line 35.",
-            ],
-          },
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: ["Multiply line 33 by 20% (0.20)"],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: [
+                "If line 14 is zero or blank, skip lines 35 through 37 and go to line 38. Otherwise, go to line 35.",
+              ],
+            },
+          ],
           box: {
             identifier: "34",
             value: {

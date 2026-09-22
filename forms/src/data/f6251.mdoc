@@ -7,6 +7,10 @@
 
 {% subtitle %}Alternative Minimum Tax—Individuals{% /subtitle %}
 
+{% commentary %}
+This form computes your {% glossaryLink term="alternative-minimum-tax" %}alternative minimum tax{% /glossaryLink %}, which is included in {% formLink formClass="f1040s2" %}Schedule 2 (Form 1040){% /formLink %}.
+{% /commentary %}
+
 {% section %}
 ## Part I
 
@@ -14,7 +18,7 @@
 
 {% lines %}
 - {% line index="1a" %}
-  - {% instructions %}Subtract Schedule 1-A (Form 1040), line 37, from Form 1040, 1040-SR, or 1040-NR, line 14{% /instructions %}
+  - {% instructions %}Subtract {% formLink formClass="f1040s1A" %}Schedule 1-A (Form 1040){% /formLink %}, line 37, from {% formLink formClass="f1040" %}Form 1040{% /formLink %}, 1040-SR, or 1040-NR, line 14{% /instructions %}
   - {% box identifier="1a" %}
     {% value type="difference" %}
     - {% value
@@ -33,7 +37,7 @@
     {% /box %}
   {% /line %}
 - {% line index="1b" %}
-  - {% instructions %}Subtract line 1a from Form 1040, 1040-SR, or 1040-NR, line 11b (if less than zero, enter as a negative amount){% /instructions %}
+  - {% instructions %}Subtract line 1a from {% formLink formClass="f1040" %}Form 1040{% /formLink %}, 1040-SR, or 1040-NR, line 11b (if less than zero, enter as a negative amount){% /instructions %}
   - {% box identifier="1b" %}
     {% value type="difference" %}
     - {% value
@@ -47,7 +51,7 @@
     {% /box %}
   {% /line %}
 - {% line index="2a" %}
-  - {% instructions %}If filing Schedule A (Form 1040), enter the taxes from Schedule A, line 7; otherwise, enter the amount from Form 1040 or 1040-SR, line 12e{% /instructions %}
+  - {% instructions %}If filing {% formLink formClass="f1040sA" %}Schedule A (Form 1040){% /formLink %}, enter the taxes from Schedule A, line 7; otherwise, enter the amount from {% formLink formClass="f1040" %}Form 1040{% /formLink %} or 1040-SR, line 12e{% /instructions %}
   - {% box identifier="2a" %}
     {% value type="conditional" %}
     - {% value slot="condition" type="form_instance_count" form="f1040sA" /%}
@@ -62,7 +66,7 @@
     {% /box %}
   {% /line %}
 - {% line index="2b" %}
-  - {% instructions %}Tax refund from Schedule 1 (Form 1040), line 1 or line 8z{% /instructions %}
+  - {% instructions %}Tax refund from {% formLink formClass="f1040s1" %}Schedule 1 (Form 1040){% /formLink %}, line 1 or line 8z{% /instructions %}
   - {% box identifier="2b" %}
     {% value
        type="override_number_input"
@@ -86,7 +90,7 @@
   - {% box identifier="2d" %}{% value type="number_input" inputKey="depletion_amt_adjustment" /%}{% /box %}
   {% /line %}
 - {% line index="2e" %}
-  - {% instructions %}Net operating loss deduction from Schedule 1 (Form 1040), line 8a. Enter as a positive amount{% /instructions %}
+  - {% instructions %}Net operating loss deduction from {% formLink formClass="f1040s1" %}Schedule 1 (Form 1040){% /formLink %}, line 8a. Enter as a positive amount{% /instructions %}
   - {% box identifier="2e" %}
     {% value type="absolute_value" %}
     - {% value type="box_reference" form="f1040s1" box="8a" required=true /%}
@@ -98,11 +102,11 @@
   - {% box identifier="2f" %}{% value type="number_input" inputKey="alternative_tax_net_operating_loss_deduction" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="2g" %}
-  - {% instructions %}Interest from specified private activity bonds exempt from the regular tax{% /instructions %}
+  - {% instructions %}Interest from {% glossaryLink term="specified-private-activity-bond" %}specified private activity bonds{% /glossaryLink %} exempt from the regular tax{% /instructions %}
   - {% box identifier="2g" %}{% value type="number_input" inputKey="specified_private_activity_bond_exempt_interest" /%}{% /box %}
   {% /line %}
 - {% line index="2h" %}
-  - {% instructions %}Qualified small business stock, see instructions{% /instructions %}
+  - {% instructions %}{% glossaryLink term="qualified-small-business-stock" %}Qualified small business stock{% /glossaryLink %}, see instructions{% /instructions %}
   - {% box identifier="2h" %}{% value type="number_input" inputKey="qualified_small_business_stock" /%}{% /box %}
   {% /line %}
 - {% line index="2i" %}
@@ -368,7 +372,7 @@
 - {% line index="7" %}
   - {% instructions %}
     - If you are filing Form 2555, see instructions for the amount to enter.
-    - If you reported capital gain distributions directly on Form 1040 or 1040-SR, line 7; you reported qualified dividends on Form 1040 or 1040-SR, line 3a; or you had a gain on both lines 15 and 16 of Schedule D (Form 1040) (as refigured for the AMT, if necessary), complete Part III on the back and enter the amount from line 40 here.
+    - If you reported capital gain distributions directly on {% formLink formClass="f1040" %}Form 1040{% /formLink %} or 1040-SR, line 7; you reported qualified dividends on Form 1040 or 1040-SR, line 3a; or you had a gain on both lines 15 and 16 of {% formLink formClass="f1040sD" %}Schedule D (Form 1040){% /formLink %} (as refigured for the AMT, if necessary), complete Part III on the back and enter the amount from line 40 here.
     - All others: If line 6 is $239,100 or less ($119,550 or less if married filing separately), multiply line 6 by 26% (0.26). Otherwise, multiply line 6 by 28% (0.28) and subtract $4,782 ($2,391 if married filing separately) from the result.
     {% /instructions %}
   - {% box identifier="7" %}
@@ -390,7 +394,7 @@
   - {% box identifier="8" %}{% value type="number_input" inputKey="amt_foreign_tax_credit" /%}{% /box %}
   {% /line %}
 - {% line index="9" %}
-  - {% instructions %}Tentative minimum tax. Subtract line 8 from line 7{% /instructions %}
+  - {% instructions %}**Tentative minimum tax.** Subtract line 8 from line 7{% /instructions %}
   - {% box identifier="9" %}
     {% value type="difference" %}
     - {% value slot="minuend" type="box_reference" box="7" /%}
@@ -399,7 +403,7 @@
     {% /box %}
   {% /line %}
 - {% line index="10" %}
-  - {% instructions %}Add Form 1040 or 1040-SR, line 16 (minus any tax from Form 4972), and Schedule 2 (Form 1040), line 1z. Subtract from the result Schedule 3 (Form 1040), line 1 and any negative amount reported on Form 8978, line 14 (treated as a positive number). If zero or less, enter -0-. If you used Schedule J to figure your tax on Form 1040 or 1040-SR, line 16, refigure that tax without using Schedule J before completing this line. See instructions{% /instructions %}
+  - {% instructions %}Add {% formLink formClass="f1040" %}Form 1040{% /formLink %} or 1040-SR, line 16 (minus any tax from Form 4972), and {% formLink formClass="f1040s2" %}Schedule 2 (Form 1040){% /formLink %}, line 1z. Subtract from the result {% formLink formClass="f1040s3" %}Schedule 3 (Form 1040){% /formLink %}, line 1 and any negative amount reported on Form 8978, line 14 (treated as a positive number). If zero or less, enter -0-. If you used Schedule J to figure your tax on Form 1040 or 1040-SR, line 16, refigure that tax without using Schedule J before completing this line. See instructions{% /instructions %}
   - {% box identifier="10" %}
     {% value type="override_number_input" inputKey="regular_tax_for_amt" %}
     - {% value slot="computedValue" type="non_negative_clamp" %}
@@ -415,7 +419,7 @@
     {% /box %}
   {% /line %}
 - {% line index="11" %}
-  - {% instructions %}**AMT.** Subtract line 10 from line 9. If zero or less, enter -0-. Enter here and on Schedule 2 (Form 1040), line 2{% /instructions %}
+  - {% instructions %}**AMT.** Subtract line 10 from line 9. If zero or less, enter -0-. Enter here and on {% formLink formClass="f1040s2" %}Schedule 2 (Form 1040){% /formLink %}, line 2{% /instructions %}
   - {% box identifier="11" %}
     {% value type="non_negative_clamp" %}
     - {% value type="difference" %}
@@ -445,7 +449,7 @@
     {% /box %}
   {% /line %}
 - {% line index="13" %}
-  - {% instructions %}Enter the amount from line 4 of the Qualified Dividends and Capital Gain Tax Worksheet in the Instructions for Form 1040 or the amount from line 13 of the Schedule D Tax Worksheet in the Instructions for Schedule D (Form 1040), whichever applies (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% instructions %}Enter the amount from line 4 of the {% formLink formClass="f1040_QDCGTWS" %}Qualified Dividends and Capital Gain Tax Worksheet{% /formLink %} in the Instructions for Form 1040 or the amount from line 13 of the {% formLink formClass="f1040sD_SDTWS" %}Schedule D Tax Worksheet{% /formLink %} in the Instructions for Schedule D (Form 1040), whichever applies (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="13" %}
     {% value
        type="override_number_input"
@@ -483,7 +487,7 @@
     {% /box %}
   {% /line %}
 - {% line index="14" %}
-  - {% instructions %}Enter the amount from Schedule D (Form 1040), line 19 (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% instructions %}Enter the amount from {% formLink formClass="f1040sD" %}Schedule D (Form 1040){% /formLink %}, line 19 (as refigured for the AMT, if necessary). See instructions. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="14" %}
     {% value
        type="override_number_input"
@@ -498,7 +502,7 @@
     {% /box %}
   {% /line %}
 - {% line index="15" %}
-  - {% instructions %}If you did not complete a Schedule D Tax Worksheet for the regular tax or the AMT, enter the amount from line 13. Otherwise, add lines 13 and 14, and enter the smaller of that result or the amount from line 10 of the Schedule D Tax Worksheet (as refigured for the AMT, if necessary). If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% instructions %}If you did not complete a {% formLink formClass="f1040sD_SDTWS" %}Schedule D Tax Worksheet{% /formLink %} for the regular tax or the AMT, enter the amount from line 13. Otherwise, add lines 13 and 14, and enter the smaller of that result or the amount from line 10 of the Schedule D Tax Worksheet (as refigured for the AMT, if necessary). If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="15" %}
     {% value
        type="override_number_input"
@@ -574,7 +578,7 @@
     {% /box %}
   {% /line %}
 - {% line index="20" %}
-  - {% instructions %}Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 14 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% instructions %}Enter the amount from line 5 of the {% formLink formClass="f1040_QDCGTWS" %}Qualified Dividends and Capital Gain Tax Worksheet{% /formLink %} or the amount from line 14 of the {% formLink formClass="f1040sD_SDTWS" %}Schedule D Tax Worksheet{% /formLink %}, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from {% formLink formClass="f1040" %}Form 1040{% /formLink %} or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="20" %}
     {% value type="override_number_input" inputKey="zero_rate_bracket_basis" %}
     - {% value slot="computedValue" type="non_negative_clamp" %}
@@ -683,7 +687,7 @@
   - {% box identifier="26" %}{% value type="box_reference" box="21" /%}{% /box %}
   {% /line %}
 - {% line index="27" %}
-  - {% instructions %}Enter the amount from line 5 of the Qualified Dividends and Capital Gain Tax Worksheet or the amount from line 21 of the Schedule D Tax Worksheet, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from Form 1040 or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
+  - {% instructions %}Enter the amount from line 5 of the {% formLink formClass="f1040_QDCGTWS" %}Qualified Dividends and Capital Gain Tax Worksheet{% /formLink %} or the amount from line 21 of the {% formLink formClass="f1040sD_SDTWS" %}Schedule D Tax Worksheet{% /formLink %}, whichever applies (as figured for the regular tax). If you did not complete either worksheet for the regular tax, enter the amount from {% formLink formClass="f1040" %}Form 1040{% /formLink %} or 1040-SR, line 15; if zero or less, enter -0-. If you are filing Form 2555, see instructions for the amount to enter{% /instructions %}
   - {% box identifier="27" %}
     {% value
        type="override_number_input"
@@ -768,6 +772,7 @@
 - {% line index="32" %}
   - {% instructions %}
     Add lines 23 and 30
+
     If lines 32 and 12 are the same, skip lines 33 through 37 and go to line 38. Otherwise, go to line 33.
     {% /instructions %}
   - {% box identifier="32" %}
@@ -789,6 +794,7 @@
 - {% line index="34" %}
   - {% instructions %}
     Multiply line 33 by 20% (0.20)
+
     If line 14 is zero or blank, skip lines 35 through 37 and go to line 38. Otherwise, go to line 35.
     {% /instructions %}
   - {% box identifier="34" %}

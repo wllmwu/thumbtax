@@ -1,6 +1,7 @@
 export const GLOSSARY_TERMS = [
   "adjusted-gross-income",
   "adjustment",
+  "alternative-minimum-tax",
   "backup-withholding",
   "capital-gain",
   "collectibles",
