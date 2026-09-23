@@ -7,6 +7,28 @@ export const f8959 = defineFormSpecification({
   maxInstances: 1,
   title: "Form 8959",
   subtitle: "Additional Medicare Tax",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "This form computes your ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "additional-medicare-tax" },
+        children: ["Additional Medicare tax"],
+      },
+      " and ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "withholding" },
+        children: ["withholding"],
+      },
+      " for the year.",
+    ],
+  },
   sections: [
     {
       heading: "Part I",
@@ -14,8 +36,16 @@ export const f8959 = defineFormSpecification({
       lines: [
         {
           index: "1",
-          instructions:
-            "Medicare wages and tips from Form W-2, box 5. If you have more than one Form W-2, enter the total of the amounts from box 5",
+          instructions: [
+            "Medicare wages and tips from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2" },
+              children: ["Form W-2"],
+            },
+            ", box 5. If you have more than one Form W-2, enter the total of the amounts from box 5",
+          ],
           box: {
             identifier: "1",
             value: { type: "box_reference", box: "5", form: "fW2" },
@@ -57,20 +87,41 @@ export const f8959 = defineFormSpecification({
         },
         {
           index: "5",
-          instructions: {
-            $$mdtype: "Tag",
-            name: "p",
-            attributes: {},
-            children: [
-              "Enter the following amount for your filing status:",
-              " ",
-              "Married filing jointly $250,000",
-              " ",
-              "Married filing separately $125,000",
-              " ",
-              "Single, Head of household, or Qualifying surviving spouse $200,000",
-            ],
-          },
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: ["Enter the following amount for your filing status:"],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["Married filing jointly $250,000"],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["Married filing separately $125,000"],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "Single, Head of household, or Qualifying surviving spouse $200,000",
+                  ],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "5",
             value: {
@@ -137,20 +188,41 @@ export const f8959 = defineFormSpecification({
         },
         {
           index: "9",
-          instructions: {
-            $$mdtype: "Tag",
-            name: "p",
-            attributes: {},
-            children: [
-              "Enter the following amount for your filing status:",
-              " ",
-              "Married filing jointly $250,000",
-              " ",
-              "Married filing separately $125,000",
-              " ",
-              "Single, Head of household, or Qualifying surviving spouse $200,000",
-            ],
-          },
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: ["Enter the following amount for your filing status:"],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["Married filing jointly $250,000"],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["Married filing separately $125,000"],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "Single, Head of household, or Qualifying surviving spouse $200,000",
+                  ],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "9",
             value: {
@@ -230,8 +302,16 @@ export const f8959 = defineFormSpecification({
       lines: [
         {
           index: "14",
-          instructions:
-            "Railroad retirement (RRTA) compensation and tips from Form(s) W-2, box 14 (see instructions)",
+          instructions: [
+            "Railroad retirement (RRTA) compensation and tips from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2" },
+              children: ["Form(s) W-2"],
+            },
+            ", box 14 (see instructions)",
+          ],
           box: {
             identifier: "14",
             value: {
@@ -243,8 +323,41 @@ export const f8959 = defineFormSpecification({
         },
         {
           index: "15",
-          instructions:
-            "Enter the following amount for your filing status: Married filing jointly $250,000 / Married filing separately $125,000 / Single, Head of household, or Qualifying surviving spouse $200,000",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: ["Enter the following amount for your filing status:"],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "ul",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["Married filing jointly $250,000"],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: ["Married filing separately $125,000"],
+                },
+                {
+                  $$mdtype: "Tag",
+                  name: "li",
+                  attributes: {},
+                  children: [
+                    "Single, Head of household, or Qualifying surviving spouse $200,000",
+                  ],
+                },
+              ],
+            },
+          ],
           box: {
             identifier: "15",
             value: {
@@ -302,8 +415,16 @@ export const f8959 = defineFormSpecification({
       lines: [
         {
           index: "18",
-          instructions:
-            "Add lines 7, 13, and 17. Also include this amount on Schedule 2 (Form 1040), line 11 (Form 1040-SS filers, see instructions), and go to Part V",
+          instructions: [
+            "Add lines 7, 13, and 17. Also include this amount on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s2" },
+              children: ["Schedule 2 (Form 1040)"],
+            },
+            ", line 11 (Form 1040-SS filers, see instructions), and go to Part V",
+          ],
           box: {
             identifier: "18",
             value: {
@@ -324,8 +445,16 @@ export const f8959 = defineFormSpecification({
       lines: [
         {
           index: "19",
-          instructions:
-            "Medicare tax withheld from Form W-2, box 6. If you have more than one Form W-2, enter the total of the amounts from box 6",
+          instructions: [
+            "Medicare tax withheld from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2" },
+              children: ["Form W-2"],
+            },
+            ", box 6. If you have more than one Form W-2, enter the total of the amounts from box 6",
+          ],
           box: {
             identifier: "19",
             value: { type: "box_reference", box: "6", form: "fW2" },
@@ -369,8 +498,16 @@ export const f8959 = defineFormSpecification({
         },
         {
           index: "23",
-          instructions:
-            "Additional Medicare Tax withholding on railroad retirement (RRTA) compensation from Form W-2, box 14 (see instructions)",
+          instructions: [
+            "Additional Medicare Tax withholding on railroad retirement (RRTA) compensation from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2" },
+              children: ["Form W-2"],
+            },
+            ", box 14 (see instructions)",
+          ],
           box: {
             identifier: "23",
             value: {
@@ -388,7 +525,14 @@ export const f8959 = defineFormSpecification({
               attributes: {},
               children: ["Total Additional Medicare Tax withholding."],
             },
-            " Add lines 22 and 23. Also include this amount with federal income tax withholding on Form 1040, 1040-SR, or 1040-NR, line 25c (Form 1040-SS filers, see instructions)",
+            " Add lines 22 and 23. Also include this amount with federal income tax withholding on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            ", 1040-SR, or 1040-NR, line 25c (Form 1040-SS filers, see instructions)",
           ],
           box: {
             identifier: "24",

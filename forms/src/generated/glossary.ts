@@ -2,6 +2,32 @@ import type { GlossaryEntry } from "../types/glossaryEntry";
 import type { GlossaryTerm } from "../types/glossaryTerm";
 
 export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
+  "additional-medicare-tax": {
+    name: "Additional Medicare tax",
+    definition: {
+      $$mdtype: "Tag",
+      name: "p",
+      attributes: {},
+      children: [
+        "Additional flat rate federal tax that applies to Medicare wages over a certain threshold.",
+        " ",
+        "See ",
+        {
+          $$mdtype: "Tag",
+          name: "FormLink",
+          attributes: { formClass: "f8959" },
+          children: ["Form 8959"],
+        },
+        ".",
+      ],
+    },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.irs.gov/taxtopics/tc560" },
+      children: ["Additional Medicare tax (IRS topic 560)"],
+    },
+  },
   "adjusted-gross-income": {
     name: "Adjusted gross income (AGI)",
     definition: {
@@ -1600,7 +1626,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
           },
           " on your behalf.",
           " ",
-          "For example, in the U.S., employers are usually required to withhold income tax on your ",
+          "For example, in the U.S., employers are usually required to withhold ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "federal-income-tax" },
+            children: ["federal income tax"],
+          },
+          " on your ",
           {
             $$mdtype: "Tag",
             name: "GlossaryLink",
@@ -1615,15 +1648,6 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
             children: ["Form W-2"],
           },
           ".",
-          " ",
-          "Any withheld amount is still included in your ",
-          {
-            $$mdtype: "Tag",
-            name: "GlossaryLink",
-            attributes: { term: "gross-income" },
-            children: ["gross income"],
-          },
-          ".",
         ],
       },
       {
@@ -1631,6 +1655,32 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
+          "Withholding doesn't change your ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "tax-liability" },
+            children: ["tax liability"],
+          },
+          "; any withheld amount still counts as part of your ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "gross-income" },
+            children: ["gross income"],
+          },
+          ".",
+          " ",
+          "It just lets the government collect the money sooner.",
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Different income taxes have different withholding rules governing who should withhold, when, and how much.",
+          " ",
           "Not all income sources withhold taxes, and if you have multiple income sources then the combined withheld amount might be less than the actual tax you owe (because the income tax rate increases as your income increases).",
           " ",
           "So, it's important to plan ahead in order to avoid owing a large amount at the end of the tax year.",

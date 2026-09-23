@@ -1,4 +1,5 @@
 export const GLOSSARY_TERMS = [
+  "additional-medicare-tax",
   "adjusted-gross-income",
   "adjustment",
   "alternative-minimum-tax",
