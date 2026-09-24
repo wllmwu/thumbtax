@@ -9,7 +9,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Flat rate federal tax that applies to Medicare wages over a certain threshold in addition to the regular Medicare tax.",
+        "A flat rate federal tax that applies to Medicare wages over a certain threshold in addition to the regular Medicare tax.",
         " ",
         "See ",
         {
@@ -35,7 +35,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Amount of ",
+        "Your amount of ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -95,7 +95,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Amount added to or subtracted from ",
+        "An amount added to or subtracted from ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -130,11 +130,12 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
+          "An ",
           {
             $$mdtype: "Tag",
             name: "GlossaryLink",
             attributes: { term: "income-tax" },
-            children: ["Income tax"],
+            children: ["income tax"],
           },
           " that applies to higher-income taxpayers in addition to regular ",
           {
@@ -209,7 +210,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Type of ",
+        "A type of ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -250,7 +251,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
-          "Profit from selling capital assets, such as a home, a vehicle, stocks, or bonds.",
+          "Profit from selling a capital asset, such as a home, vehicle, stock, or bond.",
           " ",
           "Capital gain is considered ",
           {
@@ -345,7 +346,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Category of capital asset that includes works of art, stamps, coins, cards, precious metals and gemstones, antiques, and other rare items.",
+        "A category of capital asset that includes works of art, stamps, coins, cards, precious metals and gemstones, antiques, and other rare items.",
         " ",
         "Long-term ",
         {
@@ -374,7 +375,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
-          "Amount subtracted from ",
+          "An amount subtracted from ",
           {
             $$mdtype: "Tag",
             name: "GlossaryLink",
@@ -490,7 +491,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
-          "Amount subtracted from ",
+          "An amount subtracted from ",
           {
             $$mdtype: "Tag",
             name: "GlossaryLink",
@@ -585,7 +586,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
-          "Payment from a corporation to its shareholders.",
+          "A payment from a corporation to its shareholders.",
           " ",
           "Corporations often invest some of their profits back into the company and distribute the rest as dividends.",
         ],
@@ -637,11 +638,12 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
+        "An ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
           attributes: { term: "income-tax" },
-          children: ["Income tax"],
+          children: ["income tax"],
         },
         " levied by the federal government.",
         " ",
@@ -699,9 +701,9 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
             $$mdtype: "Tag",
             name: "strong",
             attributes: {},
-            children: ["Excess"],
+            children: ["Excess golden parachute payments"],
           },
-          " golden parachute payments are the amount that golden parachute payments exceed one's average annual compensation in a recent time range.",
+          " are the amount that golden parachute payments exceed one's average annual compensation in a recent time range.",
         ],
       },
     ],
@@ -765,7 +767,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
             attributes: {},
             children: ["individuals,"],
           },
-          " total amount of ",
+          " the total amount of ",
           {
             $$mdtype: "Tag",
             name: "GlossaryLink",
@@ -865,7 +867,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Tax you pay when you earn ",
+        "Any tax you pay when you earn ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -888,7 +890,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
-          "Value computed by adding certain amounts to ",
+          "A value computed by adding certain amounts to ",
           {
             $$mdtype: "Tag",
             name: "GlossaryLink",
@@ -934,7 +936,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Flat rate federal tax on your net investment income or the excess of your ",
+        "A flat rate federal tax on your net investment income or the excess of your ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -968,11 +970,12 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
+          "Any ",
           {
             $$mdtype: "Tag",
             name: "GlossaryLink",
             attributes: { term: "dividend" },
-            children: ["Dividends"],
+            children: ["dividends"],
           },
           " that are not ",
           {
@@ -1036,7 +1039,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Broadly, income from self-employment or small business ownership, excluding certain items and subject to certain conditions and limits.",
+        "Broadly, ",
+        {
+          $$mdtype: "Tag",
+          name: "GlossaryLink",
+          attributes: { term: "income" },
+          children: ["income"],
+        },
+        " from self-employment or small business ownership, excluding certain items and subject to certain conditions and limits.",
         " ",
         "Eligible individuals can ",
         {
@@ -1065,11 +1075,12 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
+          "Any ",
           {
             $$mdtype: "Tag",
             name: "GlossaryLink",
             attributes: { term: "dividend" },
-            children: ["Dividends"],
+            children: ["dividends"],
           },
           ' that "qualify" as ',
           {
@@ -1138,7 +1149,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Fund that invests in ",
+        "A fund that invests in ",
         {
           $$mdtype: "Tag",
           name: "strong",
@@ -1194,7 +1205,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Decrease in a tax benefit, such as a ",
+        "A decrease in a tax benefit, such as a ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -1240,7 +1251,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Section of the U.S. tax code that allows individuals to exclude from ",
+        "A section of the U.S. tax code that allows individuals to exclude from ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -1273,7 +1284,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Section of the U.S. tax code that describes the tax treatment of certain real estate gains.",
+        "A section of the U.S. tax code that describes the tax treatment of certain real estate gains.",
       ],
     },
     learnMore: {
@@ -1292,7 +1303,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Section of the U.S. tax code that imposes the ",
+        "A section of the U.S. tax code that imposes the ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -1316,7 +1327,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Section of the U.S. tax code that allows individuals to ",
+        "A section of the U.S. tax code that allows individuals to ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -1349,7 +1360,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Section of the U.S. tax code that requires foreign individuals or corporations who own real estate in the U.S. to pay property tax on it.",
+        "A section of the U.S. tax code that requires foreign individuals or corporations who own real estate in the U.S. to pay property tax on it.",
       ],
     },
     learnMore: {
@@ -1459,7 +1470,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Amount you must pay to the IRS for the tax year.",
+        "The amount you must pay to the IRS for the tax year.",
         " ",
         "If you already paid more than this amount, for example through ",
         {
@@ -1501,7 +1512,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
-          "Sum of taxes you owe for the tax year.",
+          "The sum of taxes you owe for the tax year.",
           " ",
           "This can be reduced by ",
           {
@@ -1529,7 +1540,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Amount the IRS pays back to you for the tax year.",
+        "The amount the IRS pays back to you for the tax year.",
         " ",
         "This is how much you paid them in excess of your ",
         {
@@ -1549,7 +1560,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Amount of ",
+        "The amount of your ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -1630,7 +1641,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
           },
           " that an employee receives from their employer in exchange for their labor.",
           " ",
-          "This includes essentially all forms of compensation: base pay, bonuses, commissions, tips, company equity, and other benefits.",
+          "This includes essentially all forms of compensation: base pay, bonuses, commissions, tips, company equity, and other benefits, even noncash benefits.",
         ],
       },
       {
@@ -1667,7 +1678,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Act of selling a ",
+        "The act of selling a ",
         {
           $$mdtype: "Tag",
           name: "GlossaryLink",
@@ -1714,7 +1725,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
         name: "p",
         attributes: {},
         children: [
-          "Practice where someone paying ",
+          "The practice where someone paying ",
           {
             $$mdtype: "Tag",
             name: "GlossaryLink",
