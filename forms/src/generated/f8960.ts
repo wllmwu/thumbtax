@@ -7,6 +7,21 @@ export const f8960 = defineFormSpecification({
   maxInstances: 1,
   title: "Form 8960",
   subtitle: "Net Investment Income Tax—Individuals, Estates, and Trusts",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "This form computes your ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "net-investment-income-tax" },
+        children: ["net investment income tax"],
+      },
+      " for the year.",
+    ],
+  },
   sections: [
     {
       heading: "Part I",
@@ -27,7 +42,15 @@ export const f8960 = defineFormSpecification({
         },
         {
           index: "2",
-          instructions: "Ordinary dividends (see instructions)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "ordinary-dividends" },
+              children: ["Ordinary dividends"],
+            },
+            " (see instructions)",
+          ],
           box: {
             identifier: "2",
             value: {
@@ -64,8 +87,28 @@ export const f8960 = defineFormSpecification({
         },
         {
           index: "4b",
-          instructions:
-            "Adjustment for net income or loss derived in the ordinary course of a non-section 1411 trade or business (see instructions)",
+          instructions: [
+            "Adjustment for net income or loss derived in the ordinary course of a non-",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "section-1411" },
+              children: ["section 1411"],
+            },
+            " trade or business (see instructions)",
+          ],
+          commentary: [
+            "A non-section 1411 trade or business is any trade or business that doesn't meet the criteria for NIIT to apply. See ",
+            {
+              $$mdtype: "Tag",
+              name: "a",
+              attributes: {
+                href: "https://www.ecfr.gov/current/title-26/chapter-I/subchapter-A/part-1/subject-group-ECFR4d4f1d482c2f558/section-1.1411-5",
+              },
+              children: ["Regulations § 1.1411-5"],
+            },
+            ".",
+          ],
           box: {
             identifier: "4b",
             value: {
@@ -290,7 +333,15 @@ export const f8960 = defineFormSpecification({
         },
         {
           index: "13",
-          instructions: "Modified adjusted gross income (see instructions)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "modified-adjusted-gross-income" },
+              children: ["Modified adjusted gross income"],
+            },
+            " (see instructions)",
+          ],
           box: {
             identifier: "13",
             value: {

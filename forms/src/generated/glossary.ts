@@ -9,7 +9,7 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       name: "p",
       attributes: {},
       children: [
-        "Additional flat rate federal tax that applies to Medicare wages over a certain threshold.",
+        "Flat rate federal tax that applies to Medicare wages over a certain threshold in addition to the regular Medicare tax.",
         " ",
         "See ",
         {
@@ -880,6 +880,86 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       ],
     },
   },
+  "modified-adjusted-gross-income": {
+    name: "Modified adjusted gross income (MAGI)",
+    definition: [
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Value computed by adding certain amounts to ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "adjusted-gross-income" },
+            children: ["adjusted gross income (AGI)"],
+          },
+          ".",
+          " ",
+          "You might calculate a MAGI to determine whether you qualify for a tax benefit, how much you can contribute to a retirement or investment account, or whether you owe a particular tax.",
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "The specific amounts to add to AGI differ depending on what the MAGI is for.",
+          " ",
+          "For example, to compute the MAGI for ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "net-investment-income-tax" },
+            children: ["net investment income tax"],
+          },
+          ", you add back any foreign earned income which you originally excluded, among other things.",
+        ],
+      },
+    ],
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: {
+        href: "https://www.irs.gov/credits-deductions/modified-adjusted-gross-income",
+      },
+      children: ["Modified adjusted gross income (IRS.gov)"],
+    },
+  },
+  "net-investment-income-tax": {
+    name: "Net investment income tax (NIIT)",
+    definition: {
+      $$mdtype: "Tag",
+      name: "p",
+      attributes: {},
+      children: [
+        "Flat rate federal tax on your net investment income or the excess of your ",
+        {
+          $$mdtype: "Tag",
+          name: "GlossaryLink",
+          attributes: { term: "modified-adjusted-gross-income" },
+          children: ["modified adjusted gross income"],
+        },
+        " over a threshold, whichever is smaller.",
+        " ",
+        "See ",
+        {
+          $$mdtype: "Tag",
+          name: "FormLink",
+          attributes: { formClass: "f8960" },
+          children: ["Form 8960"],
+        },
+        ".",
+      ],
+    },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.irs.gov/taxtopics/tc559" },
+      children: ["Net investment income tax (IRS topic 559)"],
+    },
+  },
   "ordinary-dividends": {
     name: "Ordinary dividends",
     definition: [
@@ -1203,6 +1283,30 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       children: [
         "26 U.S. Code § 1250 - Gain from dispositions of certain depreciable realty (Cornell LII)",
       ],
+    },
+  },
+  "section-1411": {
+    name: "Section 1411",
+    definition: {
+      $$mdtype: "Tag",
+      name: "p",
+      attributes: {},
+      children: [
+        "Section of the U.S. tax code that imposes the ",
+        {
+          $$mdtype: "Tag",
+          name: "GlossaryLink",
+          attributes: { term: "net-investment-income-tax" },
+          children: ["net investment income tax"],
+        },
+        ".",
+      ],
+    },
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.law.cornell.edu/uscode/text/26/1411" },
+      children: ["26 U.S. Code § 1411 - Imposition of tax (Cornell LII)"],
     },
   },
   "section-199A": {

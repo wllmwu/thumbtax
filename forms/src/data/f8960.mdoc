@@ -7,6 +7,10 @@
 
 {% subtitle %}Net Investment Income Tax—Individuals, Estates, and Trusts{% /subtitle %}
 
+{% commentary %}
+This form computes your {% glossaryLink term="net-investment-income-tax" %}net investment income tax{% /glossaryLink %} for the year.
+{% /commentary %}
+
 {% section %}
 ## Part I
 
@@ -18,7 +22,7 @@
   - {% box identifier="1" %}{% value type="box_reference" form="f1040" box="2b" required=true /%}{% /box %}
   {% /line %}
 - {% line index="2" %}
-  - {% instructions %}Ordinary dividends (see instructions){% /instructions %}
+  - {% instructions %}{% glossaryLink term="ordinary-dividends" %}Ordinary dividends{% /glossaryLink %} (see instructions){% /instructions %}
   - {% box identifier="2" %}{% value type="box_reference" form="f1040" box="3b" required=true /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
@@ -36,7 +40,8 @@
     {% /box %}
   {% /line %}
 - {% line index="4b" %}
-  - {% instructions %}Adjustment for net income or loss derived in the ordinary course of a non-section 1411 trade or business (see instructions){% /instructions %}
+  - {% instructions %}Adjustment for net income or loss derived in the ordinary course of a non-{% glossaryLink term="section-1411" %}section 1411{% /glossaryLink %} trade or business (see instructions){% /instructions %}
+  - {% commentary %}A non-section 1411 trade or business is any trade or business that doesn't meet the criteria for NIIT to apply. See [Regulations § 1.1411-5](https://www.ecfr.gov/current/title-26/chapter-I/subchapter-A/part-1/subject-group-ECFR4d4f1d482c2f558/section-1.1411-5).{% /commentary %}
   - {% box identifier="4b" %}{% value type="number_input" inputKey="non_section_1411_business_adjustment" /%}{% /box %}
   {% /line %}
 - {% line index="4c" %}
@@ -162,7 +167,7 @@
     {% /box %}
   {% /line %}
 - {% line index="13" %}
-  - {% instructions %}Modified adjusted gross income (see instructions){% /instructions %}
+  - {% instructions %}{% glossaryLink term="modified-adjusted-gross-income" %}Modified adjusted gross income{% /glossaryLink %} (see instructions){% /instructions %}
   - {% box identifier="13" %}{% value type="box_reference" form="f1040" box="11a" required=true /%}{% /box %}
   {% /line %}
 - {% line index="14" %}
