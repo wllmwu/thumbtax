@@ -882,6 +882,73 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
       ],
     },
   },
+  "loss-carryover": {
+    name: "Loss carryover",
+    definition: [
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "Also called ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["loss carryforward."],
+          },
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          'The act of "carrying forward" a loss to a later tax year in order to reduce taxable income in the later year instead of the original year.',
+          " ",
+          "For example, an individual with a net ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "capital-gain" },
+            children: ["capital loss"],
+          },
+          " can use some of the loss to reduce their other income and carry forward the rest to future years.",
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "In some cases, a taxpayer can also do a ",
+          {
+            $$mdtype: "Tag",
+            name: "strong",
+            attributes: {},
+            children: ["carryback,"],
+          },
+          " which applies the loss to an earlier year instead of a later year.",
+        ],
+      },
+      {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          "How much and how far you can carry forward or back depends on many factors and complex rules, which can change over time.",
+          " ",
+          "So, if you use this capability, it's important to keep detailed records and always review the current tax laws.",
+        ],
+      },
+    ],
+    learnMore: {
+      $$mdtype: "Tag",
+      name: "a",
+      attributes: { href: "https://www.law.cornell.edu/wex/loss_carryover" },
+      children: ["loss carryover (Cornell LII)"],
+    },
+  },
   "modified-adjusted-gross-income": {
     name: "Modified adjusted gross income (MAGI)",
     definition: [
@@ -1055,7 +1122,14 @@ export const glossary: Record<GlossaryTerm, GlossaryEntry> = {
           attributes: { term: "deduction" },
           children: ["deduct"],
         },
-        " their QBI to reduce their taxes.",
+        " their QBI to reduce their taxes (see ",
+        {
+          $$mdtype: "Tag",
+          name: "FormLink",
+          attributes: { formClass: "f8995" },
+          children: ["Form 8995"],
+        },
+        ").",
       ],
     },
     learnMore: {

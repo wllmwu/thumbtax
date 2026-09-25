@@ -7,6 +7,25 @@ export const f8995 = defineFormSpecification({
   maxInstances: 1,
   title: "Form 8995",
   subtitle: "Qualified Business Income Deduction Simplified Computation",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "This form computes how much of your ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "qualified-business-income" },
+        children: ["qualified business income (QBI)"],
+      },
+      " you can deduct for the year using a simplified method.",
+      " ",
+      "You can use this form if your taxable income before the QBI deduction is less than a certain threshold, among a few other conditions.",
+      " ",
+      "Otherwise, you must use Form 8995-A, which is more complex.",
+    ],
+  },
   sections: [
     {
       columns: [
@@ -17,6 +36,7 @@ export const f8995 = defineFormSpecification({
       lines: [
         {
           index: "1i",
+          instructions: "Business 1",
           boxes: [
             { identifier: "1i(a)", value: { type: "unused" }, column: "(a)" },
             { identifier: "1i(b)", value: { type: "unused" }, column: "(b)" },
@@ -32,6 +52,7 @@ export const f8995 = defineFormSpecification({
         },
         {
           index: "1ii",
+          instructions: "Business 2",
           boxes: [
             { identifier: "1ii(a)", value: { type: "unused" }, column: "(a)" },
             { identifier: "1ii(b)", value: { type: "unused" }, column: "(b)" },
@@ -47,6 +68,7 @@ export const f8995 = defineFormSpecification({
         },
         {
           index: "1iii",
+          instructions: "Business 3",
           boxes: [
             { identifier: "1iii(a)", value: { type: "unused" }, column: "(a)" },
             { identifier: "1iii(b)", value: { type: "unused" }, column: "(b)" },
@@ -62,6 +84,7 @@ export const f8995 = defineFormSpecification({
         },
         {
           index: "1iv",
+          instructions: "Business 4",
           boxes: [
             { identifier: "1iv(a)", value: { type: "unused" }, column: "(a)" },
             { identifier: "1iv(b)", value: { type: "unused" }, column: "(b)" },
@@ -77,6 +100,7 @@ export const f8995 = defineFormSpecification({
         },
         {
           index: "1v",
+          instructions: "Business 5",
           boxes: [
             { identifier: "1v(a)", value: { type: "unused" }, column: "(a)" },
             { identifier: "1v(b)", value: { type: "unused" }, column: "(b)" },
@@ -114,8 +138,16 @@ export const f8995 = defineFormSpecification({
         },
         {
           index: "3",
-          instructions:
-            "Qualified business net (loss) carryforward from the prior year",
+          instructions: [
+            "Qualified business net ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "loss-carryover" },
+              children: ["(loss) carryforward"],
+            },
+            " from the prior year",
+          ],
           box: {
             identifier: "3",
             value: {
@@ -229,8 +261,15 @@ export const f8995 = defineFormSpecification({
         },
         {
           index: "11",
-          instructions:
-            "Taxable income before qualified business income deduction (see instructions)",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "taxable-income" },
+              children: ["Taxable income"],
+            },
+            " before qualified business income deduction (see instructions)",
+          ],
           box: {
             identifier: "11",
             value: {
@@ -263,8 +302,23 @@ export const f8995 = defineFormSpecification({
         },
         {
           index: "12",
-          instructions:
-            "Enter your net capital gain, if any, increased by any qualified dividends (see instructions)",
+          instructions: [
+            "Enter your net ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "capital-gain" },
+              children: ["capital gain"],
+            },
+            ", if any, increased by any ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "qualified-dividends" },
+              children: ["qualified dividends"],
+            },
+            " (see instructions)",
+          ],
           box: {
             identifier: "12",
             value: {

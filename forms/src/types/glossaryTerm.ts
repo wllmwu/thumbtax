@@ -14,6 +14,7 @@ export const GLOSSARY_TERMS = [
   "gross-income",
   "income",
   "income-tax",
+  "loss-carryover",
   "modified-adjusted-gross-income",
   "net-investment-income-tax",
   "ordinary-dividends",
