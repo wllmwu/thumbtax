@@ -4,6 +4,11 @@
    irsPageUrl="https://www.irs.gov/forms-pubs/about-form-w-2" %}
 # Form W-2: codes for box 12
 
+{% commentary %}
+If your employer reported anything on {% formLink formClass="fW2" %}Form W-2{% /formLink %}, box 12a through 12d, then enter those numbers on this form.
+This isn't a real tax form, it just works better with Thumbtax to model it this way.
+{% /commentary %}
+
 {% section %}
 {% lines %}
 - {% line index="A" %}
@@ -43,7 +48,7 @@
   - {% box identifier="J" %}{% value type="number_input" inputKey="nontaxable_sick_pay" /%}{% /box %}
   {% /line %}
 - {% line index="K" %}
-  - {% instructions %}20% excise tax on excess golden parachute payments{% /instructions %}
+  - {% instructions %}20% excise tax on excess {% glossaryLink term="golden-parachute" %}golden parachute{% /glossaryLink %} payments{% /instructions %}
   - {% box identifier="K" %}{% value type="number_input" inputKey="excess_golden_parachute_payments_excise_tax" /%}{% /box %}
   {% /line %}
 - {% line index="L" %}

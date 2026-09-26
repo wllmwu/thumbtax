@@ -7,6 +7,21 @@ export const fW2 = defineFormSpecification({
   maxInstances: null,
   title: "Form W-2",
   subtitle: "Wage and Tax Statement",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "If you receive ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "wages" },
+        children: ["wages"],
+      },
+      " from an employer as their employee during the year, the employer files this form with the IRS and sends a copy to you.",
+    ],
+  },
   sections: [
     {
       lines: [
@@ -20,7 +35,21 @@ export const fW2 = defineFormSpecification({
         },
         {
           index: "2",
-          instructions: "Federal income tax withheld",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "federal-income-tax" },
+              children: ["Federal income tax"],
+            },
+            " ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "withholding" },
+              children: ["withheld"],
+            },
+          ],
           box: {
             identifier: "2",
             value: {
@@ -106,17 +135,24 @@ export const fW2 = defineFormSpecification({
         {
           index: "12a–d",
           instructions: "Codes",
-          commentary: 'See "Form W-2: codes for box 12"',
+          commentary: [
+            "Use ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2_12_codes" },
+              children: ["Form W-2: codes for box 12"],
+            },
+            "to enter the information from these boxes",
+          ],
           box: { identifier: "12", value: { type: "unused" } },
         },
-        {
-          index: "13",
-          instructions: "Checkboxes",
-          box: { identifier: "13", value: { type: "unused" } },
-        },
+        { index: "13", box: { identifier: "13", value: { type: "unused" } } },
         {
           index: "14a",
           instructions: "Other",
+          commentary:
+            "Mostly for the employer to voluntarily provide additional information to you",
           box: {
             identifier: "14a",
             value: { type: "number_input", inputKey: "other_amount" },

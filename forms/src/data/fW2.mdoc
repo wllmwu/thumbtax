@@ -6,6 +6,10 @@
 
 {% subtitle %}Wage and Tax Statement{% /subtitle %}
 
+{% commentary %}
+If you receive {% glossaryLink term="wages" %}wages{% /glossaryLink %} from an employer as their employee during the year, the employer files this form with the IRS and sends a copy to you.
+{% /commentary %}
+
 {% section %}
 {% lines %}
 - {% line index="1" %}
@@ -13,7 +17,7 @@
   - {% box identifier="1" %}{% value type="number_input" inputKey="compensation" /%}{% /box %}
   {% /line %}
 - {% line index="2" %}
-  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% instructions %}{% glossaryLink term="federal-income-tax" %}Federal income tax{% /glossaryLink %} {% glossaryLink term="withholding" %}withheld{% /glossaryLink %}{% /instructions %}
   - {% box identifier="2" %}{% value type="number_input" inputKey="federal_income_tax_withheld" /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
@@ -53,15 +57,15 @@
   {% /line %}
 - {% line index="12a–d" %}
   - {% instructions %}Codes{% /instructions %}
-  - {% commentary %}See "Form W-2: codes for box 12"{% /commentary %}
+  - {% commentary %}Use {% formLink formClass="fW2_12_codes" %}Form W-2: codes for box 12{% /formLink %}to enter the information from these boxes{% /commentary %}
   - {% box identifier="12" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="13" %}
-  - {% instructions %}Checkboxes{% /instructions %}
   - {% box identifier="13" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="14a" %}
   - {% instructions %}Other{% /instructions %}
+  - {% commentary %}Mostly for the employer to voluntarily provide additional information to you{% /commentary %}
   - {% box identifier="14a" %}{% value type="number_input" inputKey="other_amount" /%}{% /box %}
   {% /line %}
 - {% line index="14b" %}

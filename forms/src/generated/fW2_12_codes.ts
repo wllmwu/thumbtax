@@ -6,6 +6,23 @@ export const fW2_12_codes = defineFormSpecification({
   category: "income",
   maxInstances: null,
   title: "Form W-2: codes for box 12",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "If your employer reported anything on ",
+      {
+        $$mdtype: "Tag",
+        name: "FormLink",
+        attributes: { formClass: "fW2" },
+        children: ["Form W-2"],
+      },
+      ", box 12a through 12d, then enter those numbers on this form.",
+      " ",
+      "This isn't a real tax form, it just works better with Thumbtax to model it this way.",
+    ],
+  },
   sections: [
     {
       lines: [
@@ -113,7 +130,16 @@ export const fW2_12_codes = defineFormSpecification({
         },
         {
           index: "K",
-          instructions: "20% excise tax on excess golden parachute payments",
+          instructions: [
+            "20% excise tax on excess ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "golden-parachute" },
+              children: ["golden parachute"],
+            },
+            " payments",
+          ],
           box: {
             identifier: "K",
             value: {
