@@ -6,7 +6,30 @@ export const f1040_QDCGTWS = defineFormSpecification({
   category: "taxes",
   maxInstances: 1,
   title: "Qualified Dividends and Capital Gain Tax Worksheet",
-  subtitle: "Line 16",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "Worksheet for ",
+      {
+        $$mdtype: "Tag",
+        name: "FormLink",
+        attributes: { formClass: "f1040" },
+        children: ["Form 1040"],
+      },
+      ", line 16.",
+      " ",
+      "Depending on your income situation, you use one of the ",
+      {
+        $$mdtype: "Tag",
+        name: "FormLink",
+        attributes: { formClass: "f1040sD_SDTWS" },
+        children: ["Schedule D Tax Worksheet"],
+      },
+      ", this worksheet, or the tax schedules or tables from the instructions.",
+    ],
+  },
   sections: [
     {
       lines: [
@@ -42,7 +65,16 @@ export const f1040_QDCGTWS = defineFormSpecification({
               $$mdtype: "Tag",
               name: "p",
               attributes: {},
-              children: ["Are you filing Schedule D?"],
+              children: [
+                "Are you filing ",
+                {
+                  $$mdtype: "Tag",
+                  name: "FormLink",
+                  attributes: { formClass: "f1040sD" },
+                  children: ["Schedule D"],
+                },
+                "?",
+              ],
             },
             {
               $$mdtype: "Tag",

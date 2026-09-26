@@ -7,12 +7,17 @@
 
 {% subtitle %}U.S. Individual Income Tax Return{% /subtitle %}
 
+{% commentary %}
+This is the central form of your income tax return.
+If you were filling out the forms manually, you would start with this one and attach other forms and schedules as needed.
+{% /commentary %}
+
 {% section %}
 ## Income
 
 {% lines %}
 - {% line index="1a" %}
-  - {% instructions %}Total amount from Form(s) W-2, box 1 (see instructions){% /instructions %}
+  - {% instructions %}Total amount from {% formLink formClass="fW2" %}Form(s) W-2{% /formLink %}, box 1 (see instructions){% /instructions %}
   - {% box identifier="1a" %}{% value type="box_reference" form="fW2" box="1" /%}{% /box %}
   {% /line %}
 - {% line index="1b" %}
@@ -76,11 +81,11 @@
     {% /box %}
   {% /line %}
 - {% line index="3a" %}
-  - {% instructions %}Qualified dividends{% /instructions %}
+  - {% instructions %}{% glossaryLink term="qualified-dividends" %}Qualified dividends{% /glossaryLink %}{% /instructions %}
   - {% box identifier="3a" %}{% value type="box_reference" form="f1099DIV" box="1b" /%}{% /box %}
   {% /line %}
 - {% line index="3b" %}
-  - {% instructions %}Ordinary dividends{% /instructions %}
+  - {% instructions %}{% glossaryLink term="ordinary-dividends" %}Ordinary dividends{% /glossaryLink %}{% /instructions %}
   - {% box identifier="3b" %}{% value type="box_reference" form="f1099DIV" box="1a" /%}{% /box %}
   {% /line %}
 - {% line index="3c" %}
@@ -145,7 +150,7 @@
   - {% box identifier="6d" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="7a" %}
-  - {% instructions %}Capital gain or (loss). Attach Schedule D if required{% /instructions %}
+  - {% instructions %}{% glossaryLink term="capital-gain" %}Capital gain or (loss){% /glossaryLink %}. Attach {% formLink formClass="f1040sD" %}Schedule D{% /formLink %} if required{% /instructions %}
   - {% box identifier="7a" %}
     {% value type="conditional" %}
     - {% value slot="condition" type="box_reference" box="7b" /%}
@@ -179,7 +184,7 @@
     {% /box %}
   {% /line %}
 - {% line index="8" %}
-  - {% instructions %}Additional income from Schedule 1, line 10{% /instructions %}
+  - {% instructions %}Additional income from {% formLink formClass="f1040s1" %}Schedule 1{% /formLink %}, line 10{% /instructions %}
   - {% box identifier="8" %}
     {% value type="box_reference" form="f1040s1" box="10" required=true /%}
     {% /box %}
@@ -238,7 +243,7 @@
   - {% box identifier="12d" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="12e" %}
-  - {% instructions %}**Standard deduction or itemized deductions** (from Schedule A){% /instructions %}
+  - {% instructions %}**Standard deduction or itemized deductions** (from {% formLink formClass="f1040sA" %}Schedule A{% /formLink %}){% /instructions %}
   - {% box identifier="12e" %}
     {% value type="conditional" %}
     - {% value slot="condition" type="box_reference" form="f1040sA" box="18" /%}
@@ -269,11 +274,11 @@
     {% /box %}
   {% /line %}
 - {% line index="13a" %}
-  - {% instructions %}Qualified business income deduction from Form 8995 or Form 8995-A{% /instructions %}
+  - {% instructions %}{% glossaryLink term="qualified-business-income" %}Qualified business income{% /glossaryLink %} deduction from {% formLink formClass="f8995" %}Form 8995{% /formLink %} or Form 8995-A{% /instructions %}
   - {% box identifier="13a" %}{% value type="box_reference" form="f8995" box="15" /%}{% /box %}
   {% /line %}
 - {% line index="13b" %}
-  - {% instructions %}Additional deductions from Schedule 1-A, line 38{% /instructions %}
+  - {% instructions %}Additional deductions from {% formLink formClass="f1040s1A" %}Schedule 1-A{% /formLink %}, line 38{% /instructions %}
   - {% box identifier="13b" %}
     {% value type="box_reference" form="f1040s1A" box="38" required=true /%}
     {% /box %}
@@ -362,6 +367,7 @@
   {% /line %}
 - {% line index="16" %}
   - {% instructions %}**Tax** (see instructions){% /instructions %}
+  - {% commentary %}Depending on your income situation, you compute this with one of the {% formLink formClass="f1040sD_SDTWS" %}Schedule D Tax Worksheet{% /formLink %}, the {% formLink formClass="f1040_QDCGTWS" %}Qualified Dividends and Capital Gains Tax Worksheet{% /formLink %}, or the tax schedules or tables from the instructions.{% /commentary %}
   - {% box identifier="16" %}
     {% value type="override_number_input" inputKey="tax_amount" %}
     - {% value slot="computedValue" type="conditional" %}
@@ -389,7 +395,7 @@
     {% /box %}
   {% /line %}
 - {% line index="17" %}
-  - {% instructions %}Amount from Schedule 2, line 3{% /instructions %}
+  - {% instructions %}Amount from {% formLink formClass="f1040s2" %}Schedule 2{% /formLink %}, line 3{% /instructions %}
   - {% box identifier="17" %}
     {% value type="box_reference" form="f1040s2" box="3" required=true /%}
     {% /box %}
@@ -408,7 +414,7 @@
   - {% box identifier="19" %}{% value type="number_input" inputKey="child_tax_credit" /%}{% /box %}
   {% /line %}
 - {% line index="20" %}
-  - {% instructions %}Amount from Schedule 3, line 8{% /instructions %}
+  - {% instructions %}Amount from {% formLink formClass="f1040s3" %}Schedule 3{% /formLink %}, line 8{% /instructions %}
   - {% box identifier="20" %}
     {% value type="box_reference" form="f1040s3" box="8" required=true /%}
     {% /box %}
@@ -471,6 +477,7 @@
     - {% value type="box_reference" form="f1099DIV" box="4" /%}
     - {% value type="box_reference" form="f1099INT" box="4" /%}
     - {% value type="box_reference" form="f1099NEC" box="4" /%}
+    - {% value type="box_reference" form="f1099R" box="4" /%}
     {% /value %}
     {% /box %}
   {% /line %}

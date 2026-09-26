@@ -7,14 +7,32 @@ export const f1040 = defineFormSpecification({
   maxInstances: 1,
   title: "Form 1040",
   subtitle: "U.S. Individual Income Tax Return",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "This is the central form of your income tax return.",
+      " ",
+      "If you were filling out the forms manually, you would start with this one and attach other forms and schedules as needed.",
+    ],
+  },
   sections: [
     {
       heading: "Income",
       lines: [
         {
           index: "1a",
-          instructions:
-            "Total amount from Form(s) W-2, box 1 (see instructions)",
+          instructions: [
+            "Total amount from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2" },
+              children: ["Form(s) W-2"],
+            },
+            ", box 1 (see instructions)",
+          ],
           box: {
             identifier: "1a",
             value: { type: "box_reference", box: "1", form: "fW2" },
@@ -152,7 +170,12 @@ export const f1040 = defineFormSpecification({
         },
         {
           index: "3a",
-          instructions: "Qualified dividends",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "qualified-dividends" },
+            children: ["Qualified dividends"],
+          },
           box: {
             identifier: "3a",
             value: { type: "box_reference", box: "1b", form: "f1099DIV" },
@@ -160,7 +183,12 @@ export const f1040 = defineFormSpecification({
         },
         {
           index: "3b",
-          instructions: "Ordinary dividends",
+          instructions: {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "ordinary-dividends" },
+            children: ["Ordinary dividends"],
+          },
           box: {
             identifier: "3b",
             value: { type: "box_reference", box: "1a", form: "f1099DIV" },
@@ -243,7 +271,22 @@ export const f1040 = defineFormSpecification({
         { index: "6d", box: { identifier: "6d", value: { type: "unused" } } },
         {
           index: "7a",
-          instructions: "Capital gain or (loss). Attach Schedule D if required",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "capital-gain" },
+              children: ["Capital gain or (loss)"],
+            },
+            ". Attach ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sD" },
+              children: ["Schedule D"],
+            },
+            " if required",
+          ],
           box: {
             identifier: "7a",
             value: {
@@ -290,7 +333,16 @@ export const f1040 = defineFormSpecification({
         },
         {
           index: "8",
-          instructions: "Additional income from Schedule 1, line 10",
+          instructions: [
+            "Additional income from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s1" },
+              children: ["Schedule 1"],
+            },
+            ", line 10",
+          ],
           box: {
             identifier: "8",
             value: {
@@ -388,7 +440,14 @@ export const f1040 = defineFormSpecification({
               attributes: {},
               children: ["Standard deduction or itemized deductions"],
             },
-            " (from Schedule A)",
+            " (from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sA" },
+              children: ["Schedule A"],
+            },
+            ")",
           ],
           box: {
             identifier: "12e",
@@ -429,8 +488,22 @@ export const f1040 = defineFormSpecification({
         },
         {
           index: "13a",
-          instructions:
-            "Qualified business income deduction from Form 8995 or Form 8995-A",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "qualified-business-income" },
+              children: ["Qualified business income"],
+            },
+            " deduction from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f8995" },
+              children: ["Form 8995"],
+            },
+            " or Form 8995-A",
+          ],
           box: {
             identifier: "13a",
             value: { type: "box_reference", box: "15", form: "f8995" },
@@ -438,7 +511,16 @@ export const f1040 = defineFormSpecification({
         },
         {
           index: "13b",
-          instructions: "Additional deductions from Schedule 1-A, line 38",
+          instructions: [
+            "Additional deductions from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s1A" },
+              children: ["Schedule 1-A"],
+            },
+            ", line 38",
+          ],
           box: {
             identifier: "13b",
             value: {
@@ -619,6 +701,23 @@ export const f1040 = defineFormSpecification({
               children: ["Tax"],
             },
             " (see instructions)",
+          ],
+          commentary: [
+            "Depending on your income situation, you compute this with one of the ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sD_SDTWS" },
+              children: ["Schedule D Tax Worksheet"],
+            },
+            ", the ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040_QDCGTWS" },
+              children: ["Qualified Dividends and Capital Gains Tax Worksheet"],
+            },
+            ", or the tax schedules or tables from the instructions.",
           ],
           box: {
             identifier: "16",
@@ -1049,7 +1148,16 @@ export const f1040 = defineFormSpecification({
         },
         {
           index: "17",
-          instructions: "Amount from Schedule 2, line 3",
+          instructions: [
+            "Amount from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s2" },
+              children: ["Schedule 2"],
+            },
+            ", line 3",
+          ],
           box: {
             identifier: "17",
             value: {
@@ -1085,7 +1193,16 @@ export const f1040 = defineFormSpecification({
         },
         {
           index: "20",
-          instructions: "Amount from Schedule 3, line 8",
+          instructions: [
+            "Amount from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040s3" },
+              children: ["Schedule 3"],
+            },
+            ", line 8",
+          ],
           box: {
             identifier: "20",
             value: {
@@ -1192,6 +1309,7 @@ export const f1040 = defineFormSpecification({
                 { type: "box_reference", box: "4", form: "f1099DIV" },
                 { type: "box_reference", box: "4", form: "f1099INT" },
                 { type: "box_reference", box: "4", form: "f1099NEC" },
+                { type: "box_reference", box: "4", form: "f1099R" },
               ],
             },
           },

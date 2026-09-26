@@ -5,7 +5,10 @@
    maxInstances=1 %}
 # Qualified Dividends and Capital Gain Tax Worksheet
 
-{% subtitle %}Line 16{% /subtitle %}
+{% commentary %}
+Worksheet for {% formLink formClass="f1040" %}Form 1040{% /formLink %}, line 16.
+Depending on your income situation, you use one of the {% formLink formClass="f1040sD_SDTWS" %}Schedule D Tax Worksheet{% /formLink %}, this worksheet, or the tax schedules or tables from the instructions.
+{% /commentary %}
 
 {% section %}
 {% lines %}
@@ -23,7 +26,7 @@
   {% /line %}
 - {% line index="3" %}
   - {% instructions %}
-    Are you filing Schedule D?
+    Are you filing {% formLink formClass="f1040sD" %}Schedule D{% /formLink %}?
 
     - Yes. Enter the smaller of line 15 or line 16 of Schedule D. If either line 15 or line 16 is blank or a loss, enter -0-.
     - No. Enter the amount from Form 1040 or 1040-SR, line 7a.
