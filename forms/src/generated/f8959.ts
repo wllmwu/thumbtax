@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f8959 = defineFormSpecification({
   class: "f8959",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8959",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-8959",
   category: "taxes",
   maxInstances: 1,
   title: "Form 8959",

@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f1099NEC = defineFormSpecification({
   class: "f1099NEC",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-nec",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-1099-nec",
   category: "income",
   maxInstances: null,
   title: "Form 1099-NEC",

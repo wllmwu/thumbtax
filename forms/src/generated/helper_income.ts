@@ -2,7 +2,6 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const helper_income = defineFormSpecification({
   class: "helper_income",
-  irsPageUrl: "",
   category: "income",
   maxInstances: null,
   title: "My income",

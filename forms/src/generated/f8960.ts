@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f8960 = defineFormSpecification({
   class: "f8960",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8960",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-8960",
   category: "taxes",
   maxInstances: 1,
   title: "Form 8960",

@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f1040 = defineFormSpecification({
   class: "f1040",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
   maxInstances: 1,
   title: "Form 1040",

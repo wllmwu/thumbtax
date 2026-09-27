@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const fW2_12_codes = defineFormSpecification({
   class: "fW2_12_codes",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-w-2",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-w-2",
   category: "income",
   maxInstances: null,
   title: "Form W-2: codes for box 12",

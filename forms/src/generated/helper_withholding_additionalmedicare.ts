@@ -2,7 +2,6 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const helper_withholding_additionalmedicare = defineFormSpecification({
   class: "helper_withholding_additionalmedicare",
-  irsPageUrl: "",
   category: "income",
   maxInstances: null,
   title: "My Additional Medicare withholding",

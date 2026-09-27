@@ -2,7 +2,6 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const helper_withholding_federal_additional = defineFormSpecification({
   class: "helper_withholding_federal_additional",
-  irsPageUrl: "",
   category: "income",
   maxInstances: null,
   title: "My federal income withholding (additional)",

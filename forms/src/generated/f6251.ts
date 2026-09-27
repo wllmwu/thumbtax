@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f6251 = defineFormSpecification({
   class: "f6251",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-6251",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-6251",
   category: "taxes",
   maxInstances: 1,
   title: "Form 6251",

@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f1040_QDCGTWS = defineFormSpecification({
   class: "f1040_QDCGTWS",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
   maxInstances: 1,
   title: "Qualified Dividends and Capital Gain Tax Worksheet",

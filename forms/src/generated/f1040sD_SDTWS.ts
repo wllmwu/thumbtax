@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f1040sD_SDTWS = defineFormSpecification({
   class: "f1040sD_SDTWS",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-schedule-d-form-1040",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-schedule-d-form-1040",
   category: "taxes",
   maxInstances: 1,
   title: "Schedule D Tax Worksheet",

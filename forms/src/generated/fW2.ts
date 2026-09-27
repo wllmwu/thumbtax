@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const fW2 = defineFormSpecification({
   class: "fW2",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-w-2",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-w-2",
   category: "income",
   maxInstances: null,
   title: "Form W-2",

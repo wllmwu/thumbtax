@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f1040s1A = defineFormSpecification({
   class: "f1040s1A",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-1040",
   category: "taxes",
   maxInstances: 1,
   title: "Schedule 1-A (Form 1040)",

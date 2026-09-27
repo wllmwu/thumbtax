@@ -2,7 +2,6 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const helper_withholding_socialsecurity = defineFormSpecification({
   class: "helper_withholding_socialsecurity",
-  irsPageUrl: "",
   category: "income",
   maxInstances: null,
   title: "My Social Security withholding",

@@ -8,7 +8,7 @@ type ColumnIndex = string;
 
 export type FormSpecification<InputKey extends string = string> = {
   class: FormClass;
-  irsPageUrl: string;
+  govAboutUrl?: string;
   category: FormCategory;
   maxInstances: number | null;
   title: string;

@@ -221,7 +221,9 @@ export function mapFormSpecification(
 
   return {
     class: requireOneOf(formNode.attributes.class, FORM_CLASSES),
-    irsPageUrl: requireString(formNode.attributes.irsPageUrl),
+    govAboutUrl: formNode.attributes.govAboutUrl
+      ? requireString(formNode.attributes.govAboutUrl)
+      : undefined,
     category: requireOneOf(formNode.attributes.category, FORM_CATEGORIES),
     maxInstances:
       formNode.attributes.maxInstances === undefined

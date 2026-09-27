@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f1040sC = defineFormSpecification({
   class: "f1040sC",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-schedule-c-form-1040",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-schedule-c-form-1040",
   category: "taxes",
   maxInstances: null,
   title: "Schedule C (Form 1040)",

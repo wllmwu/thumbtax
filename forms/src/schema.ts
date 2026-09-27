@@ -40,9 +40,8 @@ export const config: Config = {
           matches: [...FORM_CLASSES],
           errorLevel: "error",
         },
-        irsPageUrl: {
+        govAboutUrl: {
           type: "String",
-          required: true,
           errorLevel: "error",
         },
         maxInstances: {

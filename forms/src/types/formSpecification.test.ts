@@ -149,7 +149,6 @@ describe("single vs. multiple columns", () => {
     expectTypeOf({
       class: "fW2" as const,
       title: "test",
-      irsPageUrl: "test",
       category: "income" as const,
       maxInstances: null,
       sections: [
@@ -175,7 +174,6 @@ describe("single vs. multiple columns", () => {
     expectTypeOf({
       class: "fW2" as const,
       title: "test",
-      irsPageUrl: "test",
       category: "income" as const,
       maxInstances: null,
       sections: [
@@ -203,8 +201,7 @@ describe("single vs. multiple columns", () => {
 describe("input keys", () => {
   const specificationWithInputs = defineFormSpecification({
     class: "f1099INT",
-    title: "Form 1099-INT",
-    irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-int",
+    title: "test",
     category: "income",
     maxInstances: null,
     sections: [
@@ -255,8 +252,7 @@ describe("input keys", () => {
 
   const specificationWithoutInputs = defineFormSpecification({
     class: "f8960",
-    title: "Form 8960",
-    irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8960",
+    title: "test",
     category: "taxes",
     maxInstances: 1,
     sections: [

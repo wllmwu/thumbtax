@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f1099INT = defineFormSpecification({
   class: "f1099INT",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-1099-int",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-1099-int",
   category: "income",
   maxInstances: null,
   title: "Form 1099-INT",

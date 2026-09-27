@@ -34,7 +34,7 @@ Sample Markdoc specification:
 {% form
    category="income"
    class="fW2"
-   irsPageUrl="https://www.irs.gov/forms-pubs/about-form-w-2" %}
+   govAboutUrl="https://www.irs.gov/forms-pubs/about-form-w-2" %}
 # Form W-2
 
 {% subtitle %}Wage and Tax Statement{% /subtitle %}

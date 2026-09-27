@@ -2,7 +2,7 @@ import { defineFormSpecification } from "../types/defineFormSpecification";
 
 export const f8889 = defineFormSpecification({
   class: "f8889",
-  irsPageUrl: "https://www.irs.gov/forms-pubs/about-form-8889",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-8889",
   category: "taxes",
   maxInstances: 1,
   title: "Form 8889",

@@ -74,7 +74,6 @@ export function makeSpecificationFixture(
   return {
     class: "fW2",
     title: "",
-    irsPageUrl: "",
     category: "income",
     maxInstances: null,
     sections: [makeSectionFixture()],
