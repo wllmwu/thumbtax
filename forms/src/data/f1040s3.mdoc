@@ -12,6 +12,10 @@
 
 {% subtitle %}Nonrefundable Credits{% /subtitle %}
 
+{% commentary %}
+{% glossaryLink term="credit" %}Nonrefundable credits{% /glossaryLink %} can't reduce your {% glossaryLink term="tax-liability" %}tax liability{% /glossaryLink %} below 0.
+{% /commentary %}
+
 {% lines %}
 - {% line index="1" %}
   - {% instructions %}Foreign tax credit. Attach Form 1116 if required{% /instructions %}
@@ -119,7 +123,7 @@
     {% /box %}
   {% /line %}
 - {% line index="8" %}
-  - {% instructions %}Add lines 1 through 4, 5a, 5b, and 7. Enter here and on Form 1040, 1040-SR, or 1040-NR, line 20{% /instructions %}
+  - {% instructions %}Add lines 1 through 4, 5a, 5b, and 7. Enter here and on {% formLink formClass="f1040" %}Form 1040{% /formLink %}, 1040-SR, or 1040-NR, line 20{% /instructions %}
   - {% box identifier="8" %}
     {% value type="sum" %}
     - {% value type="box_reference" box="1" /%}
@@ -139,6 +143,10 @@
 ## Part II
 
 {% subtitle %}Other Payments and Refundable Credits{% /subtitle %}
+
+{% commentary %}
+{% glossaryLink term="credit" %}Refundable credits{% /glossaryLink %} can reduce your tax liability below 0, in which case you would get a refund.
+{% /commentary %}
 
 {% lines %}
 - {% line index="9" %}

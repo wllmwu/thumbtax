@@ -40,7 +40,15 @@ export const f1040s1 = defineFormSpecification({
         },
         {
           index: "3",
-          instructions: "Business income or (loss). Attach Schedule C",
+          instructions: [
+            "Business income or (loss). Attach ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sC" },
+              children: ["Schedule C"],
+            },
+          ],
           box: {
             identifier: "3",
             value: { type: "box_reference", box: "31", form: "f1040sC" },
@@ -270,8 +278,15 @@ export const f1040s1 = defineFormSpecification({
         },
         {
           index: "8r",
-          instructions:
-            "Scholarship and fellowship grants not reported on Form W-2",
+          instructions: [
+            "Scholarship and fellowship grants not reported on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2" },
+              children: ["Form W-2"],
+            },
+          ],
           box: {
             identifier: "8r",
             value: { type: "number_input", inputKey: "scholarship_grants" },
@@ -279,8 +294,16 @@ export const f1040s1 = defineFormSpecification({
         },
         {
           index: "8s",
-          instructions:
-            "Nontaxable amount of Medicaid waiver payments included on Form 1040, line 1a or 1d",
+          instructions: [
+            "Nontaxable amount of Medicaid waiver payments included on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            ", line 1a or 1d",
+          ],
           box: {
             identifier: "8s",
             value: {
@@ -425,7 +448,15 @@ export const f1040s1 = defineFormSpecification({
         },
         {
           index: "13",
-          instructions: "Health savings account deduction. Attach Form 8889",
+          instructions: [
+            "Health savings account deduction. Attach ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f8889" },
+              children: ["Form 8889"],
+            },
+          ],
           box: {
             identifier: "13",
             value: { type: "box_reference", box: "13", form: "f8889" },

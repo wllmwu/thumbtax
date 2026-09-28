@@ -26,7 +26,7 @@
   - {% box identifier="2b" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
-  - {% instructions %}Business income or (loss). Attach Schedule C{% /instructions %}
+  - {% instructions %}Business income or (loss). Attach {% formLink formClass="f1040sC" %}Schedule C{% /formLink %}{% /instructions %}
   - {% box identifier="3" %}{% value type="box_reference" form="f1040sC" box="31" /%}{% /box %}
   {% /line %}
 - {% line index="4" %}
@@ -129,11 +129,11 @@
   - {% box identifier="8q" %}{% value type="number_input" inputKey="able_account_taxable_distributions" /%}{% /box %}
   {% /line %}
 - {% line index="8r" %}
-  - {% instructions %}Scholarship and fellowship grants not reported on Form W-2{% /instructions %}
+  - {% instructions %}Scholarship and fellowship grants not reported on {% formLink formClass="fW2" %}Form W-2{% /formLink %}{% /instructions %}
   - {% box identifier="8r" %}{% value type="number_input" inputKey="scholarship_grants" /%}{% /box %}
   {% /line %}
 - {% line index="8s" %}
-  - {% instructions %}Nontaxable amount of Medicaid waiver payments included on Form 1040, line 1a or 1d{% /instructions %}
+  - {% instructions %}Nontaxable amount of Medicaid waiver payments included on {% formLink formClass="f1040" %}Form 1040{% /formLink %}, line 1a or 1d{% /instructions %}
   - {% box identifier="8s" %}{% value type="number_input" inputKey="nontaxable_medicaid_waiver_payment_amount" coerceSign="negative" /%}{% /box %}
   {% /line %}
 - {% line index="8t" %}
@@ -215,7 +215,7 @@
   - {% box identifier="12" %}{% value type="number_input" inputKey="certain_employee_business_expenses" /%}{% /box %}
   {% /line %}
 - {% line index="13" %}
-  - {% instructions %}Health savings account deduction. Attach Form 8889{% /instructions %}
+  - {% instructions %}Health savings account deduction. Attach {% formLink formClass="f8889" %}Form 8889{% /formLink %}{% /instructions %}
   - {% box identifier="13" %}{% value type="box_reference" form="f8889" box="13" /%}{% /box %}
   {% /line %}
 - {% line index="14" %}

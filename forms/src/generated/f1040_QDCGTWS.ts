@@ -11,14 +11,14 @@ export const f1040_QDCGTWS = defineFormSpecification({
     name: "p",
     attributes: {},
     children: [
-      "Worksheet for ",
+      "This worksheet computes your tax for the year to enter into ",
       {
         $$mdtype: "Tag",
         name: "FormLink",
         attributes: { formClass: "f1040" },
         children: ["Form 1040"],
       },
-      ", line 16.",
+      ".",
       " ",
       "Depending on your income situation, you use one of the ",
       {

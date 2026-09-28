@@ -14,8 +14,16 @@ export const f1040s1A = defineFormSpecification({
       lines: [
         {
           index: "1",
-          instructions:
-            "Enter the amount from Form 1040, 1040-SR, or 1040-NR, line 11b",
+          instructions: [
+            "Enter the amount from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            ", 1040-SR, or 1040-NR, line 11b",
+          ],
           box: {
             identifier: "1",
             value: {
@@ -114,8 +122,16 @@ export const f1040s1A = defineFormSpecification({
         },
         {
           index: "4a",
-          instructions:
-            "Enter qualified tips included on Form W-2, box 7, but see the instructions if Form W-2, box 5 is more than $176,100 or you received tips that are not subject to social security and Medicare taxes",
+          instructions: [
+            "Enter qualified tips included on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2" },
+              children: ["Form W-2"],
+            },
+            ", box 7, but see the instructions if Form W-2, box 5 is more than $176,100 or you received tips that are not subject to social security and Medicare taxes",
+          ],
           box: {
             identifier: "4a",
             value: {
@@ -165,7 +181,14 @@ export const f1040s1A = defineFormSpecification({
             children: [
               "Qualified tips received in the course of a trade or business.",
               " ",
-              "Qualified tip amount included in Form 1099-NEC, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions",
+              "Qualified tip amount included in ",
+              {
+                $$mdtype: "Tag",
+                name: "FormLink",
+                attributes: { formClass: "f1099NEC" },
+                children: ["Form 1099-NEC"],
+              },
+              ", box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions",
             ],
           },
           box: {
@@ -476,8 +499,16 @@ export const f1040s1A = defineFormSpecification({
         { index: "(i)", instructions: "Vehicle identification number (VIN)" },
         {
           index: "(ii)",
-          instructions:
-            "Interest for this loan deducted on Schedule C, Schedule E, or Schedule F",
+          instructions: [
+            "Interest for this loan deducted on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040sC" },
+              children: ["Schedule C"],
+            },
+            ", Schedule E, or Schedule F",
+          ],
         },
         {
           index: "(iii)",

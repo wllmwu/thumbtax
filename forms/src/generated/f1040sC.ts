@@ -14,8 +14,16 @@ export const f1040sC = defineFormSpecification({
       lines: [
         {
           index: "1",
-          instructions:
-            'Gross receipts or sales. See instructions for line 1 if this income was reported to you on Form W-2 and the "Statutory employee" box on that form was checked',
+          instructions: [
+            "Gross receipts or sales. See instructions for line 1 if this income was reported to you on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2" },
+              children: ["Form W-2"],
+            },
+            ' and the "Statutory employee" box on that form was checked',
+          ],
           box: {
             identifier: "1",
             value: { type: "number_input", inputKey: "gross_receipts" },
@@ -410,22 +418,30 @@ export const f1040sC = defineFormSpecification({
         },
         {
           index: "30",
-          instructions: {
-            $$mdtype: "Tag",
-            name: "p",
-            attributes: {},
-            children: [
-              "Expenses for business use of your home. Do not report these expenses elsewhere. Attach Form 8829 unless using the simplified method. See instructions.",
-              " ",
-              {
-                $$mdtype: "Tag",
-                name: "strong",
-                attributes: {},
-                children: ["Simplified method filers only:"],
-              },
-              " Use the Simplified Method Worksheet in the instructions to figure the amount to enter on line 30",
-            ],
-          },
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: [
+                "Expenses for business use of your home. Do not report these expenses elsewhere. Attach Form 8829 unless using the simplified method. See instructions.",
+              ],
+            },
+            {
+              $$mdtype: "Tag",
+              name: "p",
+              attributes: {},
+              children: [
+                {
+                  $$mdtype: "Tag",
+                  name: "strong",
+                  attributes: {},
+                  children: ["Simplified method filers only:"],
+                },
+                " Use the Simplified Method Worksheet in the instructions to figure the amount to enter on line 30",
+              ],
+            },
+          ],
           box: {
             identifier: "30",
             value: {
@@ -461,7 +477,14 @@ export const f1040sC = defineFormSpecification({
                   name: "li",
                   attributes: {},
                   children: [
-                    "If a profit, enter on both Schedule 1 (Form 1040), line 3, and on Schedule SE, line 2.",
+                    "If a profit, enter on both ",
+                    {
+                      $$mdtype: "Tag",
+                      name: "FormLink",
+                      attributes: { formClass: "f1040s1" },
+                      children: ["Schedule 1 (Form 1040)"],
+                    },
+                    ", line 3, and on Schedule SE, line 2.",
                   ],
                 },
                 {

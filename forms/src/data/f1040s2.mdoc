@@ -60,11 +60,11 @@
     {% /box %}
   {% /line %}
 - {% line index="2" %}
-  - {% instructions %}Alternative minimum tax. Attach Form 6251{% /instructions %}
+  - {% instructions %}Alternative minimum tax. Attach {% formLink formClass="f6251" %}Form 6251{% /formLink %}{% /instructions %}
   - {% box identifier="2" %}{% value type="box_reference" form="f6251" box="11" required=true /%}{% /box %}
   {% /line %}
 - {% line index="3" %}
-  - {% instructions %}Add lines 1z and 2. Enter here and on Form 1040, 1040-SR, or 1040-NR, line 17{% /instructions %}
+  - {% instructions %}Add lines 1z and 2. Enter here and on {% formLink formClass="f1040" %}Form 1040{% /formLink %}, 1040-SR, or 1040-NR, line 17{% /instructions %}
   - {% box identifier="3" %}
     {% value type="sum" %}
     - {% value type="box_reference" box="1z" /%}
@@ -115,15 +115,15 @@
   - {% box identifier="10" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="11" %}
-  - {% instructions %}Additional Medicare Tax. Attach Form 8959{% /instructions %}
+  - {% instructions %}Additional Medicare Tax. Attach {% formLink formClass="f8959" %}Form 8959{% /formLink %}{% /instructions %}
   - {% box identifier="11" %}{% value type="box_reference" form="f8959" box="18" required=true /%}{% /box %}
   {% /line %}
 - {% line index="12" %}
-  - {% instructions %}Net investment income tax. Attach Form 8960{% /instructions %}
+  - {% instructions %}Net investment income tax. Attach {% formLink formClass="f8960" %}Form 8960{% /formLink %}{% /instructions %}
   - {% box identifier="12" %}{% value type="box_reference" form="f8960" box="17" required=true /%}{% /box %}
   {% /line %}
 - {% line index="13" %}
-  - {% instructions %}Uncollected social security and Medicare or RRTA tax on tips or group-term life insurance from Form W-2, box 12{% /instructions %}
+  - {% instructions %}Uncollected social security and Medicare or RRTA tax on tips or group-term life insurance from {% formLink formClass="fW2_12_codes" %}Form W-2, box 12{% /formLink %}{% /instructions %}
   - {% box identifier="13" %}
     {% value type="sum" %}
     - {% value type="box_reference" form="fW2_12_codes" box="A" /%}
@@ -158,7 +158,7 @@
   - {% box identifier="17b" %}{% value type="number_input" inputKey="federal_mortgage_subsidy_recapture" /%}{% /box %}
   {% /line %}
 - {% line index="17c" %}
-  - {% instructions %}Additional tax on HSA distributions. Attach Form 8889{% /instructions %}
+  - {% instructions %}Additional tax on HSA distributions. Attach {% formLink formClass="f8889" %}Form 8889{% /formLink %}{% /instructions %}
   - {% box identifier="17c" %}{% value type="box_reference" form="f8889" box="17b" /%}{% /box %}
   {% /line %}
 - {% line index="17d" %}
@@ -190,7 +190,7 @@
   - {% box identifier="17j" %}{% value type="number_input" inputKey="section_72(m)(5)_excess_benefits_tax" /%}{% /box %}
   {% /line %}
 - {% line index="17k" %}
-  - {% instructions %}Golden parachute payments{% /instructions %}
+  - {% instructions %}{% glossaryLink term="golden-parachute" %}Golden parachute{% /glossaryLink %} payments{% /instructions %}
   - {% box identifier="17k" %}{% value type="number_input" inputKey="golden_parachute_payments" /%}{% /box %}
   {% /line %}
 - {% line index="17l" %}

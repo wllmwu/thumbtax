@@ -117,7 +117,15 @@ export const f1040s2 = defineFormSpecification({
         },
         {
           index: "2",
-          instructions: "Alternative minimum tax. Attach Form 6251",
+          instructions: [
+            "Alternative minimum tax. Attach ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f6251" },
+              children: ["Form 6251"],
+            },
+          ],
           box: {
             identifier: "2",
             value: {
@@ -130,8 +138,16 @@ export const f1040s2 = defineFormSpecification({
         },
         {
           index: "3",
-          instructions:
-            "Add lines 1z and 2. Enter here and on Form 1040, 1040-SR, or 1040-NR, line 17",
+          instructions: [
+            "Add lines 1z and 2. Enter here and on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            ", 1040-SR, or 1040-NR, line 17",
+          ],
           box: {
             identifier: "3",
             value: {
@@ -226,7 +242,15 @@ export const f1040s2 = defineFormSpecification({
         },
         {
           index: "11",
-          instructions: "Additional Medicare Tax. Attach Form 8959",
+          instructions: [
+            "Additional Medicare Tax. Attach ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f8959" },
+              children: ["Form 8959"],
+            },
+          ],
           box: {
             identifier: "11",
             value: {
@@ -239,7 +263,15 @@ export const f1040s2 = defineFormSpecification({
         },
         {
           index: "12",
-          instructions: "Net investment income tax. Attach Form 8960",
+          instructions: [
+            "Net investment income tax. Attach ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f8960" },
+              children: ["Form 8960"],
+            },
+          ],
           box: {
             identifier: "12",
             value: {
@@ -252,8 +284,15 @@ export const f1040s2 = defineFormSpecification({
         },
         {
           index: "13",
-          instructions:
-            "Uncollected social security and Medicare or RRTA tax on tips or group-term life insurance from Form W-2, box 12",
+          instructions: [
+            "Uncollected social security and Medicare or RRTA tax on tips or group-term life insurance from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "fW2_12_codes" },
+              children: ["Form W-2, box 12"],
+            },
+          ],
           box: {
             identifier: "13",
             value: {
@@ -334,7 +373,15 @@ export const f1040s2 = defineFormSpecification({
         },
         {
           index: "17c",
-          instructions: "Additional tax on HSA distributions. Attach Form 8889",
+          instructions: [
+            "Additional tax on HSA distributions. Attach ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f8889" },
+              children: ["Form 8889"],
+            },
+          ],
           box: {
             identifier: "17c",
             value: { type: "box_reference", box: "17b", form: "f8889" },
@@ -419,7 +466,15 @@ export const f1040s2 = defineFormSpecification({
         },
         {
           index: "17k",
-          instructions: "Golden parachute payments",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "golden-parachute" },
+              children: ["Golden parachute"],
+            },
+            " payments",
+          ],
           box: {
             identifier: "17k",
             value: {

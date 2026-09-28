@@ -13,7 +13,7 @@
 
 {% lines %}
 - {% line index="1" %}
-  - {% instructions %}Gross receipts or sales. See instructions for line 1 if this income was reported to you on Form W-2 and the "Statutory employee" box on that form was checked{% /instructions %}
+  - {% instructions %}Gross receipts or sales. See instructions for line 1 if this income was reported to you on {% formLink formClass="fW2" %}Form W-2{% /formLink %} and the "Statutory employee" box on that form was checked{% /instructions %}
   - {% box identifier="1" %}{% value type="number_input" inputKey="gross_receipts" /%}{% /box %}
   {% /line %}
 - {% line index="2" %}
@@ -219,15 +219,18 @@ Enter expenses for business use of your home **only** on line 30.
 - {% line index="30" %}
   - {% instructions %}
     Expenses for business use of your home. Do not report these expenses elsewhere. Attach Form 8829 unless using the simplified method. See instructions.
+
     **Simplified method filers only:** Use the Simplified Method Worksheet in the instructions to figure the amount to enter on line 30
     {% /instructions %}
-  - {% box identifier="30" %}{% value type="number_input" inputKey="business_use_of_home_expense" /%}{% /box %}
+  - {% box identifier="30" %}
+    {% value type="number_input" inputKey="business_use_of_home_expense" /%}
+    {% /box %}
   {% /line %}
 - {% line index="31" %}
   - {% instructions %}
     **Net profit or (loss).** Subtract line 30 from line 29.
 
-    - If a profit, enter on both Schedule 1 (Form 1040), line 3, and on Schedule SE, line 2.
+    - If a profit, enter on both {% formLink formClass="f1040s1" %}Schedule 1 (Form 1040){% /formLink %}, line 3, and on Schedule SE, line 2.
     - If a loss, you **must** go to line 32.
     {% /instructions %}
   - {% box identifier="31" %}

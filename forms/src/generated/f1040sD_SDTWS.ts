@@ -6,6 +6,30 @@ export const f1040sD_SDTWS = defineFormSpecification({
   category: "taxes",
   maxInstances: 1,
   title: "Schedule D Tax Worksheet",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "This worksheet computes your tax for the year to enter into ",
+      {
+        $$mdtype: "Tag",
+        name: "FormLink",
+        attributes: { formClass: "f1040" },
+        children: ["Form 1040"],
+      },
+      ".",
+      " ",
+      "Depending on your income situation, you use one of the ",
+      {
+        $$mdtype: "Tag",
+        name: "FormLink",
+        attributes: { formClass: "f1040_QDCGTWS" },
+        children: ["Qualified Dividends and Capital Gains Tax Worksheet"],
+      },
+      ", this worksheet, or the tax schedules or tables from the instructions.",
+    ],
+  },
   sections: [
     {
       lines: [

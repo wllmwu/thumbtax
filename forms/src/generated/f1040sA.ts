@@ -24,7 +24,16 @@ export const f1040sA = defineFormSpecification({
         },
         {
           index: "2",
-          instructions: "Enter amount from Form 1040 or 1040-SR, line 11b",
+          instructions: [
+            "Enter amount from ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            " or 1040-SR, line 11b",
+          ],
           box: {
             identifier: "2",
             value: {

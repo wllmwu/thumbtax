@@ -7,6 +7,21 @@ export const f1040sD = defineFormSpecification({
   maxInstances: 1,
   title: "Schedule D (Form 1040)",
   subtitle: "Capital Gains and Losses",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "This form reports your ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "capital-gain" },
+        children: ["capital gains"],
+      },
+      " for the year.",
+    ],
+  },
   sections: [
     {
       heading: "Part I",
@@ -29,8 +44,16 @@ export const f1040sD = defineFormSpecification({
       lines: [
         {
           index: "1a",
-          instructions:
-            "Totals for all short-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 1b",
+          instructions: [
+            "Totals for all short-term transactions reported on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1099B" },
+              children: ["Form 1099-B"],
+            },
+            " or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 1b",
+          ],
           boxes: [
             {
               identifier: "1a(d)",
@@ -578,7 +601,14 @@ export const f1040sD = defineFormSpecification({
                   name: "li",
                   attributes: {},
                   children: [
-                    "If line 16 is a gain, enter the amount from line 16 on Form 1040, 1040-SR, or 1040-NR, line 7a. Then, go to line 17 below.",
+                    "If line 16 is a gain, enter the amount from line 16 on ",
+                    {
+                      $$mdtype: "Tag",
+                      name: "FormLink",
+                      attributes: { formClass: "f1040" },
+                      children: ["Form 1040"],
+                    },
+                    ", 1040-SR, or 1040-NR, line 7a. Then, go to line 17 below.",
                   ],
                 },
                 {
@@ -736,7 +766,16 @@ export const f1040sD = defineFormSpecification({
                   name: "li",
                   attributes: {},
                   children: [
-                    "Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16. Don't complete lines 21 and 22 below.",
+                    "Yes. Complete the ",
+                    {
+                      $$mdtype: "Tag",
+                      name: "FormLink",
+                      attributes: { formClass: "f1040_QDCGTWS" },
+                      children: [
+                        "Qualified Dividends and Capital Gain Tax Worksheet",
+                      ],
+                    },
+                    " in the instructions for Form 1040, line 16. Don't complete lines 21 and 22 below.",
                   ],
                 },
                 {
@@ -744,7 +783,14 @@ export const f1040sD = defineFormSpecification({
                   name: "li",
                   attributes: {},
                   children: [
-                    "No. Complete the Schedule D Tax Worksheet in the instructions. Don't complete lines 21 and 22 below.",
+                    "No. Complete the ",
+                    {
+                      $$mdtype: "Tag",
+                      name: "FormLink",
+                      attributes: { formClass: "f1040sD_SDTWS" },
+                      children: ["Schedule D Tax Worksheet"],
+                    },
+                    " in the instructions. Don't complete lines 21 and 22 below.",
                   ],
                 },
               ],

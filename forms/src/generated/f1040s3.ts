@@ -11,6 +11,27 @@ export const f1040s3 = defineFormSpecification({
     {
       heading: "Part I",
       subtitle: "Nonrefundable Credits",
+      commentary: {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "credit" },
+            children: ["Nonrefundable credits"],
+          },
+          " can't reduce your ",
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "tax-liability" },
+            children: ["tax liability"],
+          },
+          " below 0.",
+        ],
+      },
       lines: [
         {
           index: "1",
@@ -253,8 +274,16 @@ export const f1040s3 = defineFormSpecification({
         },
         {
           index: "8",
-          instructions:
-            "Add lines 1 through 4, 5a, 5b, and 7. Enter here and on Form 1040, 1040-SR, or 1040-NR, line 20",
+          instructions: [
+            "Add lines 1 through 4, 5a, 5b, and 7. Enter here and on ",
+            {
+              $$mdtype: "Tag",
+              name: "FormLink",
+              attributes: { formClass: "f1040" },
+              children: ["Form 1040"],
+            },
+            ", 1040-SR, or 1040-NR, line 20",
+          ],
           box: {
             identifier: "8",
             value: {
@@ -276,6 +305,20 @@ export const f1040s3 = defineFormSpecification({
     {
       heading: "Part II",
       subtitle: "Other Payments and Refundable Credits",
+      commentary: {
+        $$mdtype: "Tag",
+        name: "p",
+        attributes: {},
+        children: [
+          {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "credit" },
+            children: ["Refundable credits"],
+          },
+          " can reduce your tax liability below 0, in which case you would get a refund.",
+        ],
+      },
       lines: [
         {
           index: "9",

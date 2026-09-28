@@ -7,6 +7,10 @@
 
 {% subtitle %}Capital Gains and Losses{% /subtitle %}
 
+{% commentary %}
+This form reports your {% glossaryLink term="capital-gain" %}capital gains{% /glossaryLink %} for the year.
+{% /commentary %}
+
 {% section %}
 ## Part I
 
@@ -29,7 +33,7 @@
 
 {% lines %}
 - {% line index="1a" %}
-  - {% instructions %}Totals for all short-term transactions reported on Form 1099-B or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 1b{% /instructions %}
+  - {% instructions %}Totals for all short-term transactions reported on {% formLink formClass="f1099B" %}Form 1099-B{% /formLink %} or Form 1099-DA for which basis was reported to the IRS and for which you have no adjustments (see instructions). However, if you choose to report all these transactions on Form 8949, leave this line blank and go to line 1b{% /instructions %}
   - {% box identifier="1a(d)" column="(d)" %}
     {% value
        type="select_instance_boxes_input"
@@ -280,7 +284,7 @@
   - {% instructions %}
     Combine lines 7 and 15 and enter the result
 
-    - If line 16 is a gain, enter the amount from line 16 on Form 1040, 1040-SR, or 1040-NR, line 7a. Then, go to line 17 below.
+    - If line 16 is a gain, enter the amount from line 16 on {% formLink formClass="f1040" %}Form 1040{% /formLink %}, 1040-SR, or 1040-NR, line 7a. Then, go to line 17 below.
     - If line 16 is a loss, skip lines 17 through 20 below. Then, go to line 21. Also be sure to complete line 22.
     - If line 16 is zero, skip lines 17 through 21 below and enter -0- on Form 1040, 1040-SR, or 1040-NR, line 7a. Then, go to line 22.
     {% /instructions %}
@@ -347,8 +351,8 @@
   - {% instructions %}
     Are lines 18 and 19 both zero or blank and you are not filing Form 4952?
 
-    - Yes. Complete the Qualified Dividends and Capital Gain Tax Worksheet in the instructions for Form 1040, line 16. Don't complete lines 21 and 22 below.
-    - No. Complete the Schedule D Tax Worksheet in the instructions. Don't complete lines 21 and 22 below.
+    - Yes. Complete the {% formLink formClass="f1040_QDCGTWS" %}Qualified Dividends and Capital Gain Tax Worksheet{% /formLink %} in the instructions for Form 1040, line 16. Don't complete lines 21 and 22 below.
+    - No. Complete the {% formLink formClass="f1040sD_SDTWS" %}Schedule D Tax Worksheet{% /formLink %} in the instructions. Don't complete lines 21 and 22 below.
     {% /instructions %}
   - {% box identifier="20" format="yes_no" %}
     {% value type="conjunction" %}

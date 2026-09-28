@@ -16,7 +16,7 @@
   - {% box identifier="1" %}{% value type="number_input" inputKey="medical_dental_expenses" /%}{% /box %}
   {% /line %}
 - {% line index="2" %}
-  - {% instructions %}Enter amount from Form 1040 or 1040-SR, line 11b{% /instructions %}
+  - {% instructions %}Enter amount from {% formLink formClass="f1040" %}Form 1040{% /formLink %} or 1040-SR, line 11b{% /instructions %}
   - {% box identifier="2" %}{% value type="box_reference" form="f1040" box="11b" required=true /%}{% /box %}
   {% /line %}
 - {% line index="3" %}

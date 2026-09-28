@@ -14,7 +14,7 @@
 
 {% lines %}
 - {% line index="1" %}
-  - {% instructions %}Enter the amount from Form 1040, 1040-SR, or 1040-NR, line 11b{% /instructions %}
+  - {% instructions %}Enter the amount from {% formLink formClass="f1040" %}Form 1040{% /formLink %}, 1040-SR, or 1040-NR, line 11b{% /instructions %}
   - {% box identifier="1" %}{% value type="box_reference" form="f1040" box="11b" required=true /%}{% /box %}
   {% /line %}
 - {% line index="2a" %}
@@ -67,7 +67,7 @@
   - {% box identifier="4" %}{% value type="unused" /%}{% /box %}
   {% /line %}
 - {% line index="4a" %}
-  - {% instructions %}Enter qualified tips included on Form W-2, box 7, but see the instructions if Form W-2, box 5 is more than $176,100 or you received tips that are not subject to social security and Medicare taxes{% /instructions %}
+  - {% instructions %}Enter qualified tips included on {% formLink formClass="fW2" %}Form W-2{% /formLink %}, box 7, but see the instructions if Form W-2, box 5 is more than $176,100 or you received tips that are not subject to social security and Medicare taxes{% /instructions %}
   - {% box identifier="4a" %}
     {% value type="select_instance_boxes_input" inputKey="fW2_qualified_tips" %}
     - {% option form="fW2" box="7" /%}
@@ -95,7 +95,7 @@
 - {% line index="5" %}
   - {% instructions %}
     Qualified tips received in the course of a trade or business.
-    Qualified tip amount included in Form 1099-NEC, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions
+    Qualified tip amount included in {% formLink formClass="f1099NEC" %}Form 1099-NEC{% /formLink %}, box 1; Form 1099-MISC, box 3; or Form 1099-K, box 1a. Do not enter more than the net profit from the trade or business. If you received qualified tips in the course of more than one trade or business or in more than one occupation, see instructions
     {% /instructions %}
   - {% box identifier="5" %}
     {% value
@@ -309,7 +309,7 @@
   {% instructions %}Vehicle identification number (VIN){% /instructions %}
   {% /column %}
 - {% column index="(ii)" %}
-  {% instructions %}Interest for this loan deducted on Schedule C, Schedule E, or Schedule F{% /instructions %}
+  {% instructions %}Interest for this loan deducted on {% formLink formClass="f1040sC" %}Schedule C{% /formLink %}, Schedule E, or Schedule F{% /instructions %}
   {% /column %}
 - {% column index="(iii)" %}
   {% instructions %}Interest for this loan paid in 2025 less column (ii){% /instructions %}
