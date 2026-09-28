@@ -53,11 +53,11 @@ describe("FormInstanceBuilder", () => {
 
   it("sets a number input", () => {
     const instance = new FormInstanceBuilder("fW2", "Test Label")
-      .setNumberInput("wages_tips_other_compensation", 50000)
+      .setNumberInput("compensation", 50000)
       .build();
 
     expect(instance.inputs).toEqual({
-      wages_tips_other_compensation: { type: "number", value: 50000 },
+      compensation: { type: "number", value: 50000 },
     });
   });
 
@@ -93,14 +93,14 @@ describe("FormInstanceBuilder", () => {
 
   it("chains multiple input setters together", () => {
     const instance = new FormInstanceBuilder("fW2", "Test Label")
-      .setNumberInput("wages_tips_other_compensation", 50000)
+      .setNumberInput("compensation", 50000)
       .setAmountListInput("other_amount", [
         { label: "Test amount", amount: 312.5 },
       ])
       .build();
 
     expect(instance.inputs).toEqual({
-      wages_tips_other_compensation: { type: "number", value: 50000 },
+      compensation: { type: "number", value: 50000 },
       other_amount: {
         type: "amount_list",
         value: [{ label: "Test amount", amount: 312.5 }],
@@ -110,12 +110,12 @@ describe("FormInstanceBuilder", () => {
 
   it("overwrites a previously set input for the same key", () => {
     const instance = new FormInstanceBuilder("fW2", "Test Label")
-      .setNumberInput("wages_tips_other_compensation", 50000)
-      .setNumberInput("wages_tips_other_compensation", 60000)
+      .setNumberInput("compensation", 50000)
+      .setNumberInput("compensation", 60000)
       .build();
 
     expect(instance.inputs).toEqual({
-      wages_tips_other_compensation: { type: "number", value: 60000 },
+      compensation: { type: "number", value: 60000 },
     });
   });
 });
