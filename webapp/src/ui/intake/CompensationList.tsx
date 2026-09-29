@@ -3,7 +3,8 @@ import React from "react";
 import { VisuallyHidden } from "react-aria-components";
 import { Controller, useFieldArray } from "react-hook-form";
 
-import { DEFAULT_EMPLOYMENT_INCOME_COMPONENT } from "#src/ui/intake/defaults";
+import { useStore } from "#src/state/useStore";
+import { makeDefaultEmploymentIncomeComponent } from "#src/ui/intake/defaults";
 import { IncomeComponentFields } from "#src/ui/intake/IncomeComponentFields";
 import { ListItemDisclosure } from "#src/ui/intake/ListItemDisclosure";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
@@ -25,6 +26,7 @@ export function CompensationList({
   control,
   jobIndex,
 }: Props): React.ReactNode {
+  const taxYear = useStore((state) => state.applicationState.taxYear);
   const { append, fields, move, remove } = useFieldArray({
     control,
     name: `jobs.${jobIndex}.wages`,
@@ -167,7 +169,7 @@ export function CompensationList({
       <AriaButton
         onPress={() =>
           append({
-            income: DEFAULT_EMPLOYMENT_INCOME_COMPONENT,
+            income: makeDefaultEmploymentIncomeComponent(taxYear),
             label: "",
             ui: { expanded: true },
           })

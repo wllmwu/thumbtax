@@ -9,7 +9,7 @@ import {
 } from "#src/state/defaults";
 import { FormInstanceBuilder } from "#src/state/formInstanceBuilder";
 
-import type { FilingStatus, FormClass } from "@thumbtax/common";
+import type { FilingStatus, FormClass, TaxYear } from "@thumbtax/common";
 import type { SpecificationRegistry } from "@thumbtax/forms";
 import type { FormInstanceId } from "#src/common/types/formInstanceId";
 import type { UserInput } from "#src/common/types/userInput";
@@ -25,18 +25,19 @@ type StoreState = {
   userPreferences: UserPreferences;
   workbook: Workbook;
   history: { past: ApplicationState[]; future: ApplicationState[] };
-  specifications: SpecificationRegistry | undefined;
+  specificationsByYear: Record<TaxYear, SpecificationRegistry> | undefined;
   loadErrors: LoadError[];
   initialize: (
     applicationState: ApplicationState,
     uiState: UiState,
     userPreferences: UserPreferences,
-    specifications: SpecificationRegistry,
+    specificationsByYear: Record<TaxYear, SpecificationRegistry>,
     loadErrors?: LoadError[],
   ) => void;
   setApplicationState: (applicationState: ApplicationState) => void;
   setLoadErrors: (errors: LoadError[]) => void;
   clearLoadErrors: () => void;
+  setTaxYear: (taxYear: TaxYear) => void;
   setFilingStatus: (filingStatus: FilingStatus) => void;
   addFormInstance: (formClass: FormClass) => FormInstanceId;
   removeFormInstance: (
@@ -67,13 +68,46 @@ type StoreState = {
   redo: () => void;
 };
 
+/**
+ * Returns the specification registry for the tax year of the current application state,
+ * or undefined if the store isn't initialized yet.
+ */
+export function selectSpecifications(
+  state: Pick<StoreState, "applicationState" | "specificationsByYear">,
+): SpecificationRegistry | undefined {
+  return state.specificationsByYear?.[state.applicationState.taxYear];
+}
+
+/**
+ * Computes the workbook for the given application state using the specifications of its tax year.
+ */
+function computeWorkbookForState(
+  specificationsByYear: Record<TaxYear, SpecificationRegistry> | undefined,
+  applicationState: ApplicationState,
+  currentWorkbook: Workbook,
+): Workbook {
+  const specifications = selectSpecifications({
+    applicationState,
+    specificationsByYear,
+  });
+  if (!specifications) {
+    throw new Error("Store not initialized yet");
+  }
+  return computeWorkbook(
+    specifications,
+    applicationState.formInstances,
+    applicationState.filingStatus,
+    currentWorkbook,
+  );
+}
+
 type ApplicationStateRecipe = (draft: Draft<ApplicationState>) => void;
 
 function applyApplicationStateChange(
   recipe: ApplicationStateRecipe,
 ): (state: StoreState) => StoreState {
   return (state) => {
-    if (!state.specifications) {
+    if (!state.specificationsByYear) {
       throw new Error("Store not initialized yet");
     }
 
@@ -88,10 +122,9 @@ function applyApplicationStateChange(
       newPast.splice(0, newPast.length - maximumSize);
     }
 
-    const newWorkbook = computeWorkbook(
-      state.specifications,
-      newApplicationState.formInstances,
-      newApplicationState.filingStatus,
+    const newWorkbook = computeWorkbookForState(
+      state.specificationsByYear,
+      newApplicationState,
       state.workbook,
     );
 
@@ -115,7 +148,7 @@ function applyUiStateChange(
   });
 }
 
-const useStoreInner = create<StoreState>((set) => ({
+const useStoreInner = create<StoreState>((set, get) => ({
   applicationState: DEFAULT_APPLICATION_STATE,
   uiState: DEFAULT_UI_STATE,
   userPreferences: DEFAULT_USER_PREFERENCES,
@@ -124,14 +157,14 @@ const useStoreInner = create<StoreState>((set) => ({
     past: [],
     future: [],
   },
-  specifications: undefined,
+  specificationsByYear: undefined,
   loadErrors: [],
 
   initialize: (
     applicationState,
     uiState,
     userPreferences,
-    specifications,
+    specificationsByYear,
     loadErrors = [],
   ) => {
     set(
@@ -141,12 +174,11 @@ const useStoreInner = create<StoreState>((set) => ({
         uiState,
         userPreferences,
         history: { past: [], future: [] },
-        specifications,
+        specificationsByYear,
         loadErrors,
-        workbook: computeWorkbook(
-          specifications,
-          applicationState.formInstances,
-          applicationState.filingStatus,
+        workbook: computeWorkbookForState(
+          specificationsByYear,
+          applicationState,
           {},
         ),
       }),
@@ -155,22 +187,19 @@ const useStoreInner = create<StoreState>((set) => ({
   },
 
   setApplicationState: (applicationState) => {
-    set((state) => {
-      if (!state.specifications) {
-        throw new Error("Store not initialized yet");
-      }
-      return {
+    set(
+      (state) => ({
         ...state,
         applicationState,
         history: { past: [], future: [] },
-        workbook: computeWorkbook(
-          state.specifications,
-          applicationState.formInstances,
-          applicationState.filingStatus,
+        workbook: computeWorkbookForState(
+          state.specificationsByYear,
+          applicationState,
           state.workbook,
         ),
-      };
-    }, true);
+      }),
+      true,
+    );
   },
 
   setLoadErrors: (errors) => {
@@ -179,6 +208,15 @@ const useStoreInner = create<StoreState>((set) => ({
 
   clearLoadErrors: () => {
     set((state) => ({ ...state, loadErrors: [] }));
+  },
+
+  setTaxYear: (taxYear) => {
+    set(
+      applyApplicationStateChange((draft) => {
+        draft.taxYear = taxYear;
+      }),
+      true,
+    );
   },
 
   setFilingStatus: (filingStatus) => {
@@ -192,6 +230,7 @@ const useStoreInner = create<StoreState>((set) => ({
 
   addFormInstance: (formClass) => {
     const newInstance = new FormInstanceBuilder(
+      get().applicationState.taxYear,
       formClass,
       "Untitled form",
     ).build();
@@ -329,7 +368,7 @@ const useStoreInner = create<StoreState>((set) => ({
 
   undo: () => {
     set((state) => {
-      if (!state.specifications) {
+      if (!state.specificationsByYear) {
         throw new Error("Store not initialized yet");
       }
 
@@ -346,10 +385,9 @@ const useStoreInner = create<StoreState>((set) => ({
         ...state,
         applicationState: previous,
         history: { past: newPast, future: newFuture },
-        workbook: computeWorkbook(
-          state.specifications,
-          previous.formInstances,
-          previous.filingStatus,
+        workbook: computeWorkbookForState(
+          state.specificationsByYear,
+          previous,
           state.workbook,
         ),
       };
@@ -358,7 +396,7 @@ const useStoreInner = create<StoreState>((set) => ({
 
   redo: () => {
     set((state) => {
-      if (!state.specifications) {
+      if (!state.specificationsByYear) {
         throw new Error("Store not initialized yet");
       }
 
@@ -375,10 +413,9 @@ const useStoreInner = create<StoreState>((set) => ({
         ...state,
         applicationState: next,
         history: { past: newPast, future: newFuture },
-        workbook: computeWorkbook(
-          state.specifications,
-          next.formInstances,
-          next.filingStatus,
+        workbook: computeWorkbookForState(
+          state.specificationsByYear,
+          next,
           state.workbook,
         ),
       };

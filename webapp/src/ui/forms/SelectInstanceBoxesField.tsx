@@ -57,12 +57,6 @@ export function SelectInstanceBoxesField({
   selectedAddresses,
   onChange,
 }: Props) {
-  const selectedKeys = React.useMemo(
-    () =>
-      selectedAddresses.map((address) => makeOptionItemId(boxAddress, address)),
-    [boxAddress, selectedAddresses],
-  );
-
   const options = React.useMemo<OptionItem[]>(() => {
     return valueProvider.options.flatMap((option) => {
       const instances = instanceRegistry[option.form];
@@ -74,23 +68,31 @@ export function SelectInstanceBoxesField({
           instance: optionInstance.id,
           box: option.box,
         };
-        const optionId = makeOptionItemId(boxAddress, optionAddress);
         return {
-          id: optionId,
+          id: makeOptionItemId(boxAddress, optionAddress),
           formTitle: specifications[option.form].title,
           instanceLabel: optionInstance.label,
           address: optionAddress,
-          isSelected: selectedKeys.includes(optionId),
+          isSelected: selectedAddresses.some(
+            ({ instance, box }) =>
+              instance === optionAddress.instance && box === optionAddress.box,
+          ),
         };
       });
     });
   }, [
     boxAddress,
     instanceRegistry,
-    selectedKeys,
+    selectedAddresses,
     specifications,
     valueProvider.options,
   ]);
+
+  // Selected addresses that aren't among the options are hidden.
+  const selectedKeys = React.useMemo(
+    () => options.filter(({ isSelected }) => isSelected).map(({ id }) => id),
+    [options],
+  );
 
   const renderOptionItem = React.useCallback(
     ({

@@ -2,7 +2,8 @@ import React from "react";
 
 import { Controller, useFieldArray } from "react-hook-form";
 
-import { DEFAULT_OTHER_INCOME_COMPONENT } from "#src/ui/intake/defaults";
+import { useStore } from "#src/state/useStore";
+import { makeDefaultOtherIncomeComponent } from "#src/ui/intake/defaults";
 import { IncomeComponentFields } from "#src/ui/intake/IncomeComponentFields";
 import { ListItemDisclosure } from "#src/ui/intake/ListItemDisclosure";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
@@ -18,6 +19,7 @@ type Props = {
 };
 
 export function OtherIncomeSection({ control }: Props): React.ReactNode {
+  const taxYear = useStore((state) => state.applicationState.taxYear);
   const { append, fields, move, remove } = useFieldArray({
     control,
     name: "otherIncome",
@@ -107,7 +109,7 @@ export function OtherIncomeSection({ control }: Props): React.ReactNode {
       <AriaButton
         onPress={() =>
           append({
-            income: DEFAULT_OTHER_INCOME_COMPONENT,
+            income: makeDefaultOtherIncomeComponent(taxYear),
             label: "",
             source: "",
             type: null,

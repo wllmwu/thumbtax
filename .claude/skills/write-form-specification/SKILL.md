@@ -5,22 +5,26 @@ description: Use when adding or updating the specification for a tax form
 
 # Writing a form specification
 
-Tax form specifications are static data files written in Markdoc, an extension of Markdown, in `forms/src/data`.
+Tax form specifications are static data files written in Markdoc, an extension of Markdown, in `forms/src/data/{taxYear}`.
+Each tax year has its own full set of specifications, so first confirm which year (or years) to change.
 Follow these steps to write one:
 
 1. Understand the specification schema.
    See below for details.
 2. If the form is not included yet in the FormClass type (`common/src/types/formClass.ts`), then add it there and run `cd common && npm install`.
-3. Write the specification in `forms/src/data/{formClass}.mdoc`.
+3. Write the specification in `forms/src/data/{taxYear}/{formClass}.mdoc`.
    - Write all lines/boxes from the form, including those that don't take a value and just group other lines as children.
    - Do your best to encode each box's instructions using the value provider DSL.
      If the instructions aren't present in the form or the DSL doesn't support it, fall back to a `number_input`.
    - Don't write any commentary, virtual lines, or value providers that diverge from the instructions, but preserve them if they already exist and are still accurate.
    - Preserve existing `inputKey` values where applicable (see below).
-4. Run `cd forms && npm run build:forms -- {formClass}.mdoc`.
-   This script generates the corresponding TypeScript file at `forms/src/generated/{formClass}.ts`.
+   - Partial references must use the same year's partials, such as `{% partial file="{taxYear}/taxComputation" /%}`.
+   - If you added the form to FormClass, every other tax year also needs a specification for it.
+     Write a placeholder specification in those years.
+4. Run `cd forms && npm run build:forms -- {taxYear}/{formClass}.mdoc`.
+   This script generates the corresponding TypeScript file at `forms/src/generated/{taxYear}/{formClass}.ts` and regenerates that year's registry at `forms/src/generated/{taxYear}/index.ts`.
    - If the script shows any schema validation errors, fix the errors and repeat until it works.
-5. If you added the form to FormClass, then also add it to the `specifications` export in `forms/src/index.ts` and run `cd forms && npm install`.
+5. Run `cd forms && npm install` to rebuild the package so the webapp sees the change.
 
 ## Specification schema
 

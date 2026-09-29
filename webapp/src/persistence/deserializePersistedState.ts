@@ -1,4 +1,5 @@
-import { CURRENT_TAX_YEAR } from "#src/persistence/config";
+import { isTaxYear, LATEST_TAX_YEAR } from "@thumbtax/common";
+
 import { deserializeVersioned } from "#src/persistence/deserializeVersioned";
 import { persistedStateMigrations } from "#src/persistence/migrations";
 import {
@@ -23,15 +24,26 @@ export function deserializePersistedState(
     return result;
   }
 
-  const persistedState = result.value;
-  const errors: LoadError[] = [];
-  if (persistedState.taxYear !== CURRENT_TAX_YEAR) {
-    errors.push({
-      type: "tax_year_mismatch",
-      saved: persistedState.taxYear,
-      current: CURRENT_TAX_YEAR,
-    });
+  const persistedApplicationState = result.value.applicationState;
+  const savedTaxYear = persistedApplicationState.taxYear;
+  if (isTaxYear(savedTaxYear)) {
+    return {
+      ok: true,
+      value: { ...persistedApplicationState, taxYear: savedTaxYear },
+      errors: [],
+    };
   }
 
-  return { ok: true, value: persistedState.applicationState, errors };
+  const errors: LoadError[] = [
+    {
+      type: "unsupported_tax_year",
+      saved: savedTaxYear,
+      loadedAs: LATEST_TAX_YEAR,
+    },
+  ];
+  return {
+    ok: true,
+    value: { ...persistedApplicationState, taxYear: LATEST_TAX_YEAR },
+    errors,
+  };
 }

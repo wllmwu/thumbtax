@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useStore } from "#src/state/useStore";
+import { selectSpecifications, useStore } from "#src/state/useStore";
 import { FormList } from "#src/ui/forms/FormList";
 import { LoadErrorBanner } from "#src/ui/forms/LoadErrorBanner";
 import { Page } from "#src/ui/pages/Page";
@@ -33,7 +33,8 @@ export function MainPage() {
   const formInstances = useStore(
     (state) => state.applicationState.formInstances,
   );
-  const specifications = useStore((state) => state.specifications);
+  const taxYear = useStore((state) => state.applicationState.taxYear);
+  const specifications = useStore(selectSpecifications);
 
   const headings = React.useMemo<TableOfContentsHeading[]>(() => {
     if (!specifications) {
@@ -48,7 +49,7 @@ export function MainPage() {
   }, [formClasses, formInstances, specifications]);
 
   return (
-    <Page headings={headings} header={<h1>Tax forms</h1>}>
+    <Page headings={headings} header={<h1>{`${taxYear} tax forms`}</h1>}>
       <LoadErrorBanner />
       <p>
         Welcome to Thumbtax, a tool for estimating your U.S. individual tax

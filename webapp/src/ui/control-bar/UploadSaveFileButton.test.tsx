@@ -2,17 +2,14 @@ import { render, renderHook, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-  CURRENT_SCHEMA_VERSION,
-  CURRENT_TAX_YEAR,
-} from "#src/persistence/config";
+import { CURRENT_SCHEMA_VERSION } from "#src/persistence/config";
 import {
   DEFAULT_APPLICATION_STATE,
   DEFAULT_UI_STATE,
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
 import { useStore } from "#src/state/useStore";
-import { makeRegistryFixture } from "#src/test/specificationFixtures";
+import { makeSpecificationsByYearFixture } from "#src/test/specificationFixtures";
 import { UploadSaveFileButton } from "#src/ui/control-bar/UploadSaveFileButton";
 
 function initializeStore() {
@@ -21,7 +18,7 @@ function initializeStore() {
     DEFAULT_APPLICATION_STATE,
     DEFAULT_UI_STATE,
     DEFAULT_USER_PREFERENCES,
-    makeRegistryFixture(),
+    makeSpecificationsByYearFixture(),
   );
 }
 
@@ -68,7 +65,6 @@ describe("UploadSaveFileButton", () => {
       fileFromJson({
         applicationState: DEFAULT_APPLICATION_STATE,
         schemaVersion: CURRENT_SCHEMA_VERSION,
-        taxYear: CURRENT_TAX_YEAR,
       }),
     );
 
@@ -91,12 +87,12 @@ describe("UploadSaveFileButton", () => {
       getFileInput(container),
       fileFromJson({
         applicationState: {
+          taxYear: 2025,
           filingStatus: "married_filing_jointly" as const,
           formClasses: [],
           formInstances: {},
         },
         schemaVersion: CURRENT_SCHEMA_VERSION,
-        taxYear: CURRENT_TAX_YEAR,
       }),
     );
     await screen.findByRole("dialog");
@@ -115,6 +111,7 @@ describe("UploadSaveFileButton", () => {
     const { result: applicationState } = renderApplicationState();
 
     const newApplicationState = {
+      taxYear: 2025,
       filingStatus: "married_filing_jointly" as const,
       formClasses: [],
       formInstances: {},
@@ -125,7 +122,6 @@ describe("UploadSaveFileButton", () => {
       fileFromJson({
         applicationState: newApplicationState,
         schemaVersion: CURRENT_SCHEMA_VERSION,
-        taxYear: CURRENT_TAX_YEAR,
       }),
     );
     await screen.findByRole("dialog");
@@ -190,7 +186,6 @@ describe("UploadSaveFileButton", () => {
       JSON.stringify({
         applicationState: DEFAULT_APPLICATION_STATE,
         schemaVersion: CURRENT_SCHEMA_VERSION,
-        taxYear: CURRENT_TAX_YEAR,
       }),
     );
 

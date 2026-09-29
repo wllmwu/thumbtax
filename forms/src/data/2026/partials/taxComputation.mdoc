@@ -1,0 +1,204 @@
+{% value type="filing_status_map" %}
+- {% value type="piecewise_function" filingStatusKey="head_of_household" %}
+  - {% value slot="input" type="box_reference" form=$form box=$box /%}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=103350 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.22 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=6825 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=197300 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.24 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=8892 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=250500 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.32 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=24676 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=626350 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.35 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=32191 /%}
+      {% /value %}
+    {% /piece %}
+  - {% value slot="lastOutput" type="difference" %}
+    - {% value slot="minuend" type="product" %}
+      - {% value type="box_reference" form=$form box=$box /%}
+      - {% value type="number_constant" value=0.37 /%}
+      {% /value %}
+    - {% value slot="subtrahend" type="number_constant" value=44718 /%}
+    {% /value %}
+  {% /value %}
+- {% value
+     type="piecewise_function"
+     filingStatusKey="married_filing_separately" %}
+  - {% value slot="input" type="box_reference" form=$form box=$box /%}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=103350 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.22 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=5086 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=197300 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.24 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=7153 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=250525 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.32 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=22937 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=375800 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.35 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=30452.75 /%}
+      {% /value %}
+    {% /piece %}
+  - {% value slot="lastOutput" type="difference" %}
+    - {% value slot="minuend" type="product" %}
+      - {% value type="box_reference" form=$form box=$box /%}
+      - {% value type="number_constant" value=0.37 /%}
+      {% /value %}
+    - {% value slot="subtrahend" type="number_constant" value=37968.75 /%}
+    {% /value %}
+  {% /value %}
+- {% value type="piecewise_function" filingStatusKey="single" %}
+  - {% value slot="input" type="box_reference" form=$form box=$box /%}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=103350 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.22 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=5086 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=197300 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.24 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=7153 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=250525 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.32 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=22937 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=626350 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.35 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=30452.75 /%}
+      {% /value %}
+    {% /piece %}
+  - {% value slot="lastOutput" type="difference" %}
+    - {% value slot="minuend" type="product" %}
+      - {% value type="box_reference" form=$form box=$box /%}
+      - {% value type="number_constant" value=0.37 /%}
+      {% /value %}
+    - {% value slot="subtrahend" type="number_constant" value=42979.75 /%}
+    {% /value %}
+  {% /value %}
+- {% value slot="default" type="piecewise_function" %}
+  - {% value slot="input" type="box_reference" form=$form box=$box /%}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=206700 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.22 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=10172 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=394600 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.24 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=14306 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=501050 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.32 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=45874 /%}
+      {% /value %}
+    {% /piece %}
+  - {% piece %}
+    - {% value slot="inputUpperBound" type="number_constant" value=751600 /%}
+    - {% value slot="output" type="difference" %}
+      - {% value slot="minuend" type="product" %}
+        - {% value type="box_reference" form=$form box=$box /%}
+        - {% value type="number_constant" value=0.35 /%}
+        {% /value %}
+      - {% value slot="subtrahend" type="number_constant" value=60905.5 /%}
+      {% /value %}
+    {% /piece %}
+  - {% value slot="lastOutput" type="difference" %}
+    - {% value slot="minuend" type="product" %}
+      - {% value type="box_reference" form=$form box=$box /%}
+      - {% value type="number_constant" value=0.37 /%}
+      {% /value %}
+    - {% value slot="subtrahend" type="number_constant" value=75937.5 /%}
+    {% /value %}
+  {% /value %}
+{% /value %}

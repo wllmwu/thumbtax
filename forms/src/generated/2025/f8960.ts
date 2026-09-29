@@ -1,0 +1,474 @@
+import { defineFormSpecification } from "../../types/defineFormSpecification";
+
+export const f8960 = defineFormSpecification({
+  class: "f8960",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-8960",
+  category: "taxes",
+  maxInstances: 1,
+  title: "Form 8960",
+  subtitle: "Net Investment Income Tax—Individuals, Estates, and Trusts",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "This form computes your ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "net-investment-income-tax" },
+        children: ["net investment income tax"],
+      },
+      " for the year.",
+    ],
+  },
+  sections: [
+    {
+      heading: "Part I",
+      subtitle: "Investment Income",
+      lines: [
+        {
+          index: "1",
+          instructions: "Taxable interest (see instructions)",
+          box: {
+            identifier: "1",
+            value: {
+              type: "box_reference",
+              box: "2b",
+              form: "f1040",
+              required: true,
+            },
+          },
+        },
+        {
+          index: "2",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "ordinary-dividends" },
+              children: ["Ordinary dividends"],
+            },
+            " (see instructions)",
+          ],
+          box: {
+            identifier: "2",
+            value: {
+              type: "box_reference",
+              box: "3b",
+              form: "f1040",
+              required: true,
+            },
+          },
+        },
+        {
+          index: "3",
+          instructions: "Annuities (see instructions)",
+          box: {
+            identifier: "3",
+            value: { type: "number_input", inputKey: "annuities" },
+          },
+        },
+        {
+          index: "4a",
+          instructions:
+            "Rental real estate, royalties, partnerships, S corporations, trusts, trades or businesses, etc. (see instructions)",
+          box: {
+            identifier: "4a",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "3", form: "f1040s1" },
+                { type: "box_reference", box: "5", form: "f1040s1" },
+                { type: "box_reference", box: "6", form: "f1040s1" },
+              ],
+            },
+          },
+        },
+        {
+          index: "4b",
+          instructions: [
+            "Adjustment for net income or loss derived in the ordinary course of a non-",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "section-1411" },
+              children: ["section 1411"],
+            },
+            " trade or business (see instructions)",
+          ],
+          commentary: [
+            "A non-section 1411 trade or business is any trade or business that doesn't meet the criteria for NIIT to apply. See ",
+            {
+              $$mdtype: "Tag",
+              name: "a",
+              attributes: {
+                href: "https://www.ecfr.gov/current/title-26/chapter-I/subchapter-A/part-1/subject-group-ECFR4d4f1d482c2f558/section-1.1411-5",
+              },
+              children: ["Regulations § 1.1411-5"],
+            },
+            ".",
+          ],
+          box: {
+            identifier: "4b",
+            value: {
+              type: "number_input",
+              inputKey: "non_section_1411_business_adjustment",
+            },
+          },
+        },
+        {
+          index: "4c",
+          instructions: "Combine lines 4a and 4b",
+          box: {
+            identifier: "4c",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "4a" },
+                { type: "box_reference", box: "4b" },
+              ],
+            },
+          },
+        },
+        {
+          index: "5a",
+          instructions:
+            "Net gain or loss from disposition of property (see instructions)",
+          box: {
+            identifier: "5a",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "7a", form: "f1040" },
+                { type: "box_reference", box: "4", form: "f1040s1" },
+              ],
+            },
+          },
+        },
+        {
+          index: "5b",
+          instructions:
+            "Net gain or loss from disposition of property that is not subject to net investment income tax (see instructions)",
+          box: {
+            identifier: "5b",
+            value: {
+              type: "number_input",
+              inputKey:
+                "disposition_gain_not_subject_to_net_investment_income_tax",
+            },
+          },
+        },
+        {
+          index: "5c",
+          instructions:
+            "Adjustment from disposition of partnership interest or S corporation stock (see instructions)",
+          box: {
+            identifier: "5c",
+            value: {
+              type: "number_input",
+              inputKey: "partnership_s_corporation_disposition_adjustment",
+            },
+          },
+        },
+        {
+          index: "5d",
+          instructions: "Combine lines 5a through 5c",
+          box: {
+            identifier: "5d",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "5a" },
+                { type: "box_reference", box: "5b" },
+                { type: "box_reference", box: "5c" },
+              ],
+            },
+          },
+        },
+        {
+          index: "6",
+          instructions:
+            "Adjustments to investment income for certain CFCs and PFICs (see instructions)",
+          box: {
+            identifier: "6",
+            value: { type: "number_input", inputKey: "cfc_pfic_adjustments" },
+          },
+        },
+        {
+          index: "7",
+          instructions:
+            "Other modifications to investment income (see instructions)",
+          box: {
+            identifier: "7",
+            value: {
+              type: "number_input",
+              inputKey: "other_investment_income_modifications",
+            },
+          },
+        },
+        {
+          index: "8",
+          instructions:
+            "Total investment income. Combine lines 1, 2, 3, 4c, 5d, 6, and 7",
+          box: {
+            identifier: "8",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "1" },
+                { type: "box_reference", box: "2" },
+                { type: "box_reference", box: "3" },
+                { type: "box_reference", box: "4c" },
+                { type: "box_reference", box: "5d" },
+                { type: "box_reference", box: "6" },
+                { type: "box_reference", box: "7" },
+              ],
+            },
+          },
+        },
+      ],
+    },
+    {
+      heading: "Part II",
+      subtitle:
+        "Investment Expenses Allocable to Investment Income and Modifications",
+      lines: [
+        {
+          index: "9a",
+          instructions: "Investment interest expenses (see instructions)",
+          box: {
+            identifier: "9a",
+            value: {
+              type: "number_input",
+              inputKey: "investment_interest_expenses",
+            },
+          },
+        },
+        {
+          index: "9b",
+          instructions:
+            "State, local, and foreign income tax (see instructions)",
+          box: {
+            identifier: "9b",
+            value: {
+              type: "number_input",
+              inputKey: "state_local_foreign_income_tax",
+            },
+          },
+        },
+        {
+          index: "9c",
+          instructions: "Miscellaneous investment expenses (see instructions)",
+          box: {
+            identifier: "9c",
+            value: {
+              type: "number_input",
+              inputKey: "miscellaneous_investment_expenses",
+            },
+          },
+        },
+        {
+          index: "9d",
+          instructions: "Add lines 9a, 9b, and 9c",
+          box: {
+            identifier: "9d",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "9a" },
+                { type: "box_reference", box: "9b" },
+                { type: "box_reference", box: "9c" },
+              ],
+            },
+          },
+        },
+        {
+          index: "10",
+          instructions: "Additional modifications (see instructions)",
+          box: {
+            identifier: "10",
+            value: {
+              type: "number_input",
+              inputKey: "additional_modifications",
+            },
+          },
+        },
+        {
+          index: "11",
+          instructions:
+            "Total deductions and modifications. Add lines 9d and 10",
+          box: {
+            identifier: "11",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "9d" },
+                { type: "box_reference", box: "10" },
+              ],
+            },
+          },
+        },
+      ],
+    },
+    {
+      heading: "Part III",
+      subtitle: "Tax Computation",
+      lines: [
+        {
+          index: "12",
+          instructions:
+            "Net investment income. Subtract Part II, line 11, from Part I, line 8. Individuals, complete lines 13–17. Estates and trusts, complete lines 18a–21. If zero or less, enter -0-",
+          box: {
+            identifier: "12",
+            value: {
+              type: "non_negative_clamp",
+              value: {
+                type: "difference",
+                minuend: { type: "box_reference", box: "8" },
+                subtrahend: { type: "box_reference", box: "11" },
+              },
+            },
+          },
+        },
+        {
+          index: "13",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "modified-adjusted-gross-income" },
+              children: ["Modified adjusted gross income"],
+            },
+            " (see instructions)",
+          ],
+          box: {
+            identifier: "13",
+            value: {
+              type: "box_reference",
+              box: "11a",
+              form: "f1040",
+              required: true,
+            },
+          },
+        },
+        {
+          index: "14",
+          instructions: "Threshold based on filing status (see instructions)",
+          box: {
+            identifier: "14",
+            value: {
+              type: "filing_status_map",
+              values: {
+                head_of_household: { type: "number_constant", value: 200000 },
+                married_filing_jointly: {
+                  type: "number_constant",
+                  value: 250000,
+                },
+                married_filing_separately: {
+                  type: "number_constant",
+                  value: 125000,
+                },
+                qualifying_surviving_spouse: {
+                  type: "number_constant",
+                  value: 250000,
+                },
+                single: { type: "number_constant", value: 200000 },
+              },
+            },
+          },
+        },
+        {
+          index: "15",
+          instructions:
+            "Subtract line 14 from line 13. If zero or less, enter -0-",
+          box: {
+            identifier: "15",
+            value: {
+              type: "non_negative_clamp",
+              value: {
+                type: "difference",
+                minuend: { type: "box_reference", box: "13" },
+                subtrahend: { type: "box_reference", box: "14" },
+              },
+            },
+          },
+        },
+        {
+          index: "16",
+          instructions: "Enter the smaller of line 12 or line 15",
+          box: {
+            identifier: "16",
+            value: {
+              type: "minimum",
+              values: [
+                { type: "box_reference", box: "12" },
+                { type: "box_reference", box: "15" },
+              ],
+            },
+          },
+        },
+        {
+          index: "17",
+          instructions:
+            "Net investment income tax for individuals. Multiply line 16 by 3.8% (0.038). Enter here and include on your tax return (see instructions)",
+          box: {
+            identifier: "17",
+            value: {
+              type: "product",
+              values: [
+                { type: "box_reference", box: "16" },
+                { type: "number_constant", value: 0.038 },
+              ],
+            },
+          },
+        },
+        {
+          index: "18a",
+          instructions: "Net investment income (line 12 above)",
+          box: { identifier: "18a", value: { type: "unsupported" } },
+        },
+        {
+          index: "18b",
+          instructions:
+            "Deductions for distributions of net investment income and charitable deductions (see instructions)",
+          box: { identifier: "18b", value: { type: "unsupported" } },
+        },
+        {
+          index: "18c",
+          instructions:
+            "Undistributed net investment income. Subtract line 18b from line 18a (see instructions). If zero or less, enter -0-",
+          box: { identifier: "18c", value: { type: "unsupported" } },
+        },
+        {
+          index: "19a",
+          instructions: "Adjusted gross income (see instructions)",
+          box: { identifier: "19a", value: { type: "unsupported" } },
+        },
+        {
+          index: "19b",
+          instructions:
+            "Highest tax bracket for estates and trusts for the year (see instructions)",
+          box: { identifier: "19b", value: { type: "unsupported" } },
+        },
+        {
+          index: "19c",
+          instructions:
+            "Subtract line 19b from line 19a. If zero or less, enter -0-",
+          box: { identifier: "19c", value: { type: "unsupported" } },
+        },
+        {
+          index: "20",
+          instructions: "Enter the smaller of line 18c or line 19c",
+          box: { identifier: "20", value: { type: "unsupported" } },
+        },
+        {
+          index: "21",
+          instructions:
+            "Net investment income tax for estates and trusts. Multiply line 20 by 3.8% (0.038). Enter here and include on your tax return (see instructions)",
+          box: { identifier: "21", value: { type: "unsupported" } },
+        },
+      ],
+    },
+  ],
+});

@@ -5,5 +5,4 @@ import { applicationStateSchema } from "#src/persistence/schemas/v1/applicationS
 export const persistedStateSchema = z.strictObject({
   applicationState: applicationStateSchema,
   schemaVersion: z.number(),
-  taxYear: z.number(),
 });

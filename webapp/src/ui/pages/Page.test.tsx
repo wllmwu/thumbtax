@@ -9,7 +9,7 @@ import {
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
 import { useStore } from "#src/state/useStore";
-import { makeRegistryFixture } from "#src/test/specificationFixtures";
+import { makeSpecificationsByYearFixture } from "#src/test/specificationFixtures";
 import { Page } from "#src/ui/pages/Page";
 
 import type { UiState } from "#src/state/types/uiState";
@@ -21,7 +21,7 @@ function initializeStore(uiState: UiState = DEFAULT_UI_STATE) {
     DEFAULT_APPLICATION_STATE,
     uiState,
     DEFAULT_USER_PREFERENCES,
-    makeRegistryFixture(),
+    makeSpecificationsByYearFixture(),
   );
 }
 

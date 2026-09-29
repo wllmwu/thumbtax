@@ -1,9 +1,7 @@
+import { LATEST_TAX_YEAR } from "@thumbtax/common";
 import { describe, expect, it } from "vitest";
 
-import {
-  CURRENT_SCHEMA_VERSION,
-  CURRENT_TAX_YEAR,
-} from "#src/persistence/config";
+import { CURRENT_SCHEMA_VERSION } from "#src/persistence/config";
 import { parseUploadedFile } from "#src/persistence/parseUploadedFile";
 
 import type { ApplicationState } from "#src/state/types/applicationState";
@@ -17,6 +15,7 @@ function fileFromJson(value: unknown): File {
 describe("parseUploadedFile", () => {
   it("returns kind:'ok' with the parsed application state for a well-formed file", async () => {
     const applicationState: ApplicationState = {
+      taxYear: 2025,
       filingStatus: "head_of_household",
       formClasses: ["fW2"],
       formInstances: {
@@ -33,7 +32,6 @@ describe("parseUploadedFile", () => {
     const file = fileFromJson({
       applicationState,
       schemaVersion: CURRENT_SCHEMA_VERSION,
-      taxYear: CURRENT_TAX_YEAR,
     });
 
     const result = await parseUploadedFile(file);
@@ -44,26 +42,25 @@ describe("parseUploadedFile", () => {
     expect(result.errors).toEqual([]);
   });
 
-  it("returns kind:'ok' with a non-fatal tax-year notice", async () => {
+  it("returns kind:'ok' with a non-fatal notice for an unsupported tax year", async () => {
     const file = fileFromJson({
       applicationState: {
+        taxYear: 2019,
         filingStatus: "single",
         formClasses: [],
         formInstances: {},
       },
       schemaVersion: CURRENT_SCHEMA_VERSION,
-      taxYear: CURRENT_TAX_YEAR - 1,
     });
 
     const result = await parseUploadedFile(file);
 
     expect(result.kind).toBe("ok");
     if (result.kind !== "ok") throw new Error("expected ok");
-    expect(result.errors).toContainEqual({
-      type: "tax_year_mismatch",
-      saved: CURRENT_TAX_YEAR - 1,
-      current: CURRENT_TAX_YEAR,
-    });
+    expect(result.applicationState.taxYear).toBe(LATEST_TAX_YEAR);
+    expect(result.errors).toEqual([
+      { type: "unsupported_tax_year", saved: 2019, loadedAs: LATEST_TAX_YEAR },
+    ]);
   });
 
   it("returns kind:'structural_failure' for invalid JSON", async () => {
@@ -87,12 +84,12 @@ describe("parseUploadedFile", () => {
   it("returns kind:'structural_failure' for a structurally invalid file", async () => {
     const file = fileFromJson({
       applicationState: {
+        taxYear: 2026,
         filingStatus: "martian",
         formClasses: [],
         formInstances: {},
       },
       schemaVersion: CURRENT_SCHEMA_VERSION,
-      taxYear: CURRENT_TAX_YEAR,
     });
 
     const result = await parseUploadedFile(file);

@@ -9,4 +9,5 @@ This module contains the central state manager, which uses the Zustand library.
     - `userPreferences.ts`: Preferences/settings that likewise don't affect the real outputs but do affect other application behavior
   - `defaults.ts`: Constant default/initial state
   - `formInstanceBuilder.ts`: Builder for constructing a form instance with type-checked input keys and a generated id
-  - `useStore.tsx`: React hook that exposes the Zustand store to the rest of the application
+  - `useStore.tsx`: React hook that exposes the Zustand store to the rest of the application.
+    The store holds the specifications of every tax year; use the `selectSpecifications` selector to get the current year's registry.

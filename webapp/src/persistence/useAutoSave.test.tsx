@@ -1,10 +1,8 @@
 import { act, render, renderHook } from "@testing-library/react";
+import { LATEST_TAX_YEAR } from "@thumbtax/common";
 import { describe, expect, it, vi } from "vitest";
 
-import {
-  CURRENT_SCHEMA_VERSION,
-  CURRENT_TAX_YEAR,
-} from "#src/persistence/config";
+import { CURRENT_SCHEMA_VERSION } from "#src/persistence/config";
 import {
   PREFERENCES_KEY,
   SAVED_STATE_KEY,
@@ -18,33 +16,41 @@ import {
   makeRegistryFixture,
   makeSectionFixture,
   makeSpecificationFixture,
+  makeSpecificationsByYearFixture,
 } from "#src/test/specificationFixtures";
 
 const TEST_BOX = "box1";
+const LATEST_ONLY_BOX = "box2";
 
-function makeTestRegistry() {
+function makeTestRegistry(inputKeys: string[]) {
   return makeRegistryFixture({
     fW2: makeSpecificationFixture({
       class: "fW2",
       sections: [
         makeSectionFixture({
-          lines: [
+          lines: inputKeys.map((inputKey, index) =>
             makeLineFixture({
-              index: "1",
+              index: String(index + 1),
               box: makeBoxFixture({
-                identifier: TEST_BOX,
-                value: { type: "number_input", inputKey: TEST_BOX },
+                identifier: inputKey,
+                value: { type: "number_input", inputKey },
               }),
             }),
-          ],
+          ),
         }),
       ],
     }),
   });
 }
 
+// Only the latest year recognizes the second box's input.
+const TEST_SPECIFICATIONS_BY_YEAR = makeSpecificationsByYearFixture(
+  makeTestRegistry([TEST_BOX]),
+  { [LATEST_TAX_YEAR]: makeTestRegistry([TEST_BOX, LATEST_ONLY_BOX]) },
+);
+
 function Harness() {
-  useAutoSave(makeTestRegistry());
+  useAutoSave(TEST_SPECIFICATIONS_BY_YEAR);
   return null;
 }
 
@@ -63,7 +69,10 @@ describe("useAutoSave", () => {
       expect(result.current.uiState.formClassExpansion).toEqual({});
       expect(result.current.userPreferences.browserSaveEnabled).toBe(false);
       expect(result.current.loadErrors).toEqual([]);
-      expect(result.current.specifications).toBeDefined();
+      expect(result.current.specificationsByYear).toBe(
+        TEST_SPECIFICATIONS_BY_YEAR,
+      );
+      expect(result.current.applicationState.taxYear).toBe(LATEST_TAX_YEAR);
     });
 
     it("initializes the store from values present in localStorage", () => {
@@ -78,6 +87,7 @@ describe("useAutoSave", () => {
         SAVED_STATE_KEY,
         JSON.stringify({
           applicationState: {
+            taxYear: 2025,
             filingStatus: "head_of_household",
             formClasses: ["fW2"],
             formInstances: {
@@ -92,7 +102,6 @@ describe("useAutoSave", () => {
             },
           },
           schemaVersion: CURRENT_SCHEMA_VERSION,
-          taxYear: CURRENT_TAX_YEAR,
         }),
       );
       localStorage.setItem(
@@ -115,6 +124,7 @@ describe("useAutoSave", () => {
         browserSaveEnabled: false,
         maximumHistorySize: 7,
       });
+      expect(result.current.applicationState.taxYear).toBe(2025);
       expect(result.current.applicationState.filingStatus).toBe(
         "head_of_household",
       );
@@ -148,12 +158,12 @@ describe("useAutoSave", () => {
         SAVED_STATE_KEY,
         JSON.stringify({
           applicationState: {
+            taxYear: 2025,
             filingStatus: "martian",
             formClasses: [],
             formInstances: {},
           },
           schemaVersion: CURRENT_SCHEMA_VERSION,
-          taxYear: CURRENT_TAX_YEAR,
         }),
       );
 
@@ -170,7 +180,121 @@ describe("useAutoSave", () => {
     });
   });
 
+  describe("load tax year on mount", () => {
+    it("loads stored state from an unsupported tax year into the latest year with a warning", () => {
+      localStorage.setItem(
+        SAVED_STATE_KEY,
+        JSON.stringify({
+          applicationState: {
+            taxYear: 2017,
+            filingStatus: "single",
+            formClasses: [],
+            formInstances: {},
+          },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
+        }),
+      );
+
+      const { result, rerender } = renderUseStore();
+      render(<Harness />);
+      rerender();
+
+      expect(result.current.applicationState.taxYear).toBe(LATEST_TAX_YEAR);
+      expect(result.current.loadErrors).toEqual([
+        {
+          type: "unsupported_tax_year",
+          saved: 2017,
+          loadedAs: LATEST_TAX_YEAR,
+        },
+      ]);
+    });
+  });
+
   describe("autosave (browserSaveEnabled true)", () => {
+    it("excludes inputs the current tax year doesn't recognize and includes them again after switching back", () => {
+      vi.useFakeTimers();
+
+      localStorage.setItem(
+        PREFERENCES_KEY,
+        JSON.stringify({
+          preferences: { browserSaveEnabled: true, maximumHistorySize: 50 },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
+        }),
+      );
+      localStorage.setItem(
+        SAVED_STATE_KEY,
+        JSON.stringify({
+          applicationState: {
+            taxYear: LATEST_TAX_YEAR,
+            filingStatus: "single",
+            formClasses: ["fW2"],
+            formInstances: {
+              fW2: [
+                {
+                  id: "w2",
+                  class: "fW2",
+                  label: "Job",
+                  inputs: {
+                    [TEST_BOX]: { type: "number", value: 4100 },
+                    [LATEST_ONLY_BOX]: { type: "number", value: 350 },
+                  },
+                },
+              ],
+            },
+          },
+          schemaVersion: CURRENT_SCHEMA_VERSION,
+        }),
+      );
+
+      function readSavedInputs() {
+        const saved = localStorage.getItem(SAVED_STATE_KEY);
+        if (saved === null) throw new Error("expected saved state");
+        const parsed = JSON.parse(saved);
+        return {
+          taxYear: parsed.applicationState.taxYear,
+          inputs: parsed.applicationState.formInstances.fW2[0].inputs,
+        };
+      }
+
+      const { result } = renderUseStore();
+      render(<Harness />);
+
+      act(() => {
+        result.current.setTaxYear(2025);
+      });
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
+
+      expect(readSavedInputs()).toEqual({
+        taxYear: 2025,
+        inputs: { [TEST_BOX]: { type: "number", value: 4100 } },
+      });
+      expect(
+        result.current.applicationState.formInstances.fW2?.[0].inputs,
+      ).toEqual({
+        [TEST_BOX]: { type: "number", value: 4100 },
+        [LATEST_ONLY_BOX]: { type: "number", value: 350 },
+      });
+
+      act(() => {
+        result.current.setTaxYear(LATEST_TAX_YEAR);
+      });
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
+
+      expect(readSavedInputs()).toEqual({
+        taxYear: LATEST_TAX_YEAR,
+        inputs: {
+          [TEST_BOX]: { type: "number", value: 4100 },
+          [LATEST_ONLY_BOX]: { type: "number", value: 350 },
+        },
+      });
+
+      vi.useRealTimers();
+    });
+
     it("writes applicationState changes to SAVED_STATE_KEY after debounce", () => {
       vi.useFakeTimers();
 

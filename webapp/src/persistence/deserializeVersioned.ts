@@ -13,7 +13,7 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 // (application state, UI state, preferences). It selects a schema by the stored
 // schemaVersion, validates against it, migrates up to the current shape, then
 // re-validates against the current schema. Callers extract their payload from
-// the returned wrapper and add any blob-specific notices (e.g. tax-year).
+// the returned wrapper and add any blob-specific notices (e.g. unsupported tax year).
 export function deserializeVersioned<Current>(
   raw: unknown,
   schemasByVersion: Map<number, ZodType>,

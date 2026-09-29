@@ -2,28 +2,71 @@ import { render, renderHook, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-  CURRENT_SCHEMA_VERSION,
-  CURRENT_TAX_YEAR,
-} from "#src/persistence/config";
+import { CURRENT_SCHEMA_VERSION } from "#src/persistence/config";
 import {
   DEFAULT_APPLICATION_STATE,
   DEFAULT_UI_STATE,
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
 import { useStore } from "#src/state/useStore";
-import { makeRegistryFixture } from "#src/test/specificationFixtures";
+import {
+  makeBoxFixture,
+  makeLineFixture,
+  makeRegistryFixture,
+  makeSectionFixture,
+  makeSpecificationFixture,
+  makeSpecificationsByYearFixture,
+} from "#src/test/specificationFixtures";
 import { DownloadSaveFileButton } from "#src/ui/control-bar/DownloadSaveFileButton";
 
-function initializeStore() {
+import type { ApplicationState } from "#src/state/types/applicationState";
+
+function initializeStore(
+  applicationState: ApplicationState = DEFAULT_APPLICATION_STATE,
+) {
   const { result } = renderHook(() => useStore((state) => state));
   result.current.initialize(
-    DEFAULT_APPLICATION_STATE,
+    applicationState,
     DEFAULT_UI_STATE,
     DEFAULT_USER_PREFERENCES,
-    makeRegistryFixture(),
+    // Only 2025 recognizes the W-2 wages input.
+    makeSpecificationsByYearFixture(makeRegistryFixture(), {
+      2025: makeRegistryFixture({
+        fW2: makeSpecificationFixture({
+          class: "fW2",
+          sections: [
+            makeSectionFixture({
+              lines: [
+                makeLineFixture({
+                  box: makeBoxFixture({
+                    identifier: "1",
+                    value: { type: "number_input", inputKey: "wages" },
+                  }),
+                }),
+              ],
+            }),
+          ],
+        }),
+      }),
+    }),
   );
 }
+
+const STATE_WITH_WAGES: ApplicationState = {
+  taxYear: 2026,
+  filingStatus: "single",
+  formClasses: ["fW2"],
+  formInstances: {
+    fW2: [
+      {
+        id: "w2-1",
+        class: "fW2",
+        label: "Employer",
+        inputs: { wages: { type: "number", value: 68000 } },
+      },
+    ],
+  },
+};
 
 describe("DownloadSaveFileButton", () => {
   let createObjectUrl: ReturnType<typeof vi.fn>;
@@ -59,6 +102,22 @@ describe("DownloadSaveFileButton", () => {
     clickSpy.mockRestore();
   });
 
+  async function downloadAndParse(): Promise<{
+    fileName: string | null;
+    contents: unknown;
+  }> {
+    let fileName: string | null = null;
+    clickSpy.mockImplementation(function (this: HTMLAnchorElement) {
+      fileName = this.getAttribute("download");
+    });
+    const user = userEvent.setup();
+    await user.click(
+      screen.getByRole("button", { name: "Download save file" }),
+    );
+    if (!lastBlob) throw new Error("no blob");
+    return { fileName, contents: JSON.parse(await lastBlob.text()) };
+  }
+
   it("renders a button for downloading the save file", () => {
     render(<DownloadSaveFileButton />);
 
@@ -87,7 +146,36 @@ describe("DownloadSaveFileButton", () => {
     expect(parsed).toEqual({
       applicationState: DEFAULT_APPLICATION_STATE,
       schemaVersion: CURRENT_SCHEMA_VERSION,
-      taxYear: CURRENT_TAX_YEAR,
     });
+  });
+
+  it("excludes inputs that the current tax year doesn't recognize", async () => {
+    initializeStore(STATE_WITH_WAGES);
+    render(<DownloadSaveFileButton />);
+
+    const { contents } = await downloadAndParse();
+
+    expect(contents).toEqual({
+      applicationState: {
+        ...STATE_WITH_WAGES,
+        formInstances: {
+          fW2: [{ id: "w2-1", class: "fW2", label: "Employer", inputs: {} }],
+        },
+      },
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+    });
+  });
+
+  it("includes inputs that the current tax year recognizes and names the file after the year", async () => {
+    initializeStore({ ...STATE_WITH_WAGES, taxYear: 2025 });
+    render(<DownloadSaveFileButton />);
+
+    const { fileName, contents } = await downloadAndParse();
+
+    expect(contents).toEqual({
+      applicationState: { ...STATE_WITH_WAGES, taxYear: 2025 },
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+    });
+    expect(fileName).toMatch(/^thumbtax-ty2025_/);
   });
 });

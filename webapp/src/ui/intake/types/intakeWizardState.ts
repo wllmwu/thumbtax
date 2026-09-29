@@ -1,6 +1,6 @@
 import type { Temporal } from "temporal-polyfill";
 
-type DateRange = {
+export type DateRange = {
   end: Temporal.PlainDate;
   start: Temporal.PlainDate;
 };

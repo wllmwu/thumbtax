@@ -1,0 +1,441 @@
+import { defineFormSpecification } from "../../types/defineFormSpecification";
+
+export const f8995 = defineFormSpecification({
+  class: "f8995",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-8995",
+  category: "taxes",
+  maxInstances: 1,
+  title: "Form 8995",
+  subtitle: "Qualified Business Income Deduction Simplified Computation",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "This form computes how much of your ",
+      {
+        $$mdtype: "Tag",
+        name: "GlossaryLink",
+        attributes: { term: "qualified-business-income" },
+        children: ["qualified business income (QBI)"],
+      },
+      " you can deduct for the year using a simplified method.",
+      " ",
+      "You can use this form if your taxable income before the QBI deduction is less than a certain threshold, among a few other conditions.",
+      " ",
+      "Otherwise, you must use Form 8995-A, which is more complex.",
+    ],
+  },
+  sections: [
+    {
+      columns: [
+        { index: "(a)", instructions: "Trade, business, or aggregation name" },
+        { index: "(b)", instructions: "Taxpayer identification number" },
+        { index: "(c)", instructions: "Qualified business income or (loss)" },
+      ],
+      lines: [
+        {
+          index: "1i",
+          instructions: "Business 1",
+          boxes: [
+            { identifier: "1i(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1i(b)", value: { type: "unused" }, column: "(b)" },
+            {
+              identifier: "1i(c)",
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_1",
+              },
+              column: "(c)",
+            },
+          ],
+        },
+        {
+          index: "1ii",
+          instructions: "Business 2",
+          boxes: [
+            { identifier: "1ii(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1ii(b)", value: { type: "unused" }, column: "(b)" },
+            {
+              identifier: "1ii(c)",
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_2",
+              },
+              column: "(c)",
+            },
+          ],
+        },
+        {
+          index: "1iii",
+          instructions: "Business 3",
+          boxes: [
+            { identifier: "1iii(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1iii(b)", value: { type: "unused" }, column: "(b)" },
+            {
+              identifier: "1iii(c)",
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_3",
+              },
+              column: "(c)",
+            },
+          ],
+        },
+        {
+          index: "1iv",
+          instructions: "Business 4",
+          boxes: [
+            { identifier: "1iv(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1iv(b)", value: { type: "unused" }, column: "(b)" },
+            {
+              identifier: "1iv(c)",
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_4",
+              },
+              column: "(c)",
+            },
+          ],
+        },
+        {
+          index: "1v",
+          instructions: "Business 5",
+          boxes: [
+            { identifier: "1v(a)", value: { type: "unused" }, column: "(a)" },
+            { identifier: "1v(b)", value: { type: "unused" }, column: "(b)" },
+            {
+              identifier: "1v(c)",
+              value: {
+                type: "number_input",
+                inputKey: "qualified_business_income_5",
+              },
+              column: "(c)",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lines: [
+        {
+          index: "2",
+          instructions:
+            "Total qualified business income or (loss). Combine lines 1i through 1v, column (c)",
+          box: {
+            identifier: "2",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "1i(c)" },
+                { type: "box_reference", box: "1ii(c)" },
+                { type: "box_reference", box: "1iii(c)" },
+                { type: "box_reference", box: "1iv(c)" },
+                { type: "box_reference", box: "1v(c)" },
+              ],
+            },
+          },
+        },
+        {
+          index: "3",
+          instructions: [
+            "Qualified business net ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "loss-carryover" },
+              children: ["(loss) carryforward"],
+            },
+            " from the prior year",
+          ],
+          box: {
+            identifier: "3",
+            value: {
+              type: "number_input",
+              inputKey: "qualified_business_net_loss_carryforward",
+              coerceSign: "negative",
+            },
+          },
+        },
+        {
+          index: "4",
+          instructions:
+            "Total qualified business income. Combine lines 2 and 3. If zero or less, enter -0-",
+          box: {
+            identifier: "4",
+            value: {
+              type: "non_negative_clamp",
+              value: {
+                type: "sum",
+                values: [
+                  { type: "box_reference", box: "2" },
+                  { type: "box_reference", box: "3" },
+                ],
+              },
+            },
+          },
+        },
+        {
+          index: "5",
+          instructions:
+            "Qualified business income component. Multiply line 4 by 20% (0.20)",
+          box: {
+            identifier: "5",
+            value: {
+              type: "product",
+              values: [
+                { type: "box_reference", box: "4" },
+                { type: "number_constant", value: 0.2 },
+              ],
+            },
+          },
+        },
+        {
+          index: "6",
+          instructions:
+            "Qualified REIT dividends and publicly traded partnership (PTP) income or (loss) (see instructions)",
+          box: {
+            identifier: "6",
+            value: { type: "number_input", inputKey: "reit_ptp_income" },
+          },
+        },
+        {
+          index: "7",
+          instructions:
+            "Qualified REIT dividends and qualified PTP (loss) carryforward from the prior year",
+          box: {
+            identifier: "7",
+            value: {
+              type: "number_input",
+              inputKey: "reit_ptp_loss_carryforward",
+              coerceSign: "negative",
+            },
+          },
+        },
+        {
+          index: "8",
+          instructions:
+            "Total qualified REIT dividends and PTP income. Combine lines 6 and 7. If zero or less, enter -0-",
+          box: {
+            identifier: "8",
+            value: {
+              type: "non_negative_clamp",
+              value: {
+                type: "sum",
+                values: [
+                  { type: "box_reference", box: "6" },
+                  { type: "box_reference", box: "7" },
+                ],
+              },
+            },
+          },
+        },
+        {
+          index: "9",
+          instructions: "REIT and PTP component. Multiply line 8 by 20% (0.20)",
+          box: {
+            identifier: "9",
+            value: {
+              type: "product",
+              values: [
+                { type: "box_reference", box: "8" },
+                { type: "number_constant", value: 0.2 },
+              ],
+            },
+          },
+        },
+        {
+          index: "10",
+          instructions:
+            "Qualified business income deduction before the income limitation. Add lines 5 and 9",
+          box: {
+            identifier: "10",
+            value: {
+              type: "sum",
+              values: [
+                { type: "box_reference", box: "5" },
+                { type: "box_reference", box: "9" },
+              ],
+            },
+          },
+        },
+        {
+          index: "11",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "taxable-income" },
+              children: ["Taxable income"],
+            },
+            " before qualified business income deduction (see instructions)",
+          ],
+          box: {
+            identifier: "11",
+            value: {
+              type: "difference",
+              minuend: {
+                type: "box_reference",
+                box: "11a",
+                form: "f1040",
+                required: true,
+              },
+              subtrahend: {
+                type: "sum",
+                values: [
+                  {
+                    type: "box_reference",
+                    box: "12e",
+                    form: "f1040",
+                    required: true,
+                  },
+                  {
+                    type: "box_reference",
+                    box: "13b",
+                    form: "f1040",
+                    required: true,
+                  },
+                ],
+              },
+            },
+          },
+        },
+        {
+          index: "12",
+          instructions: [
+            "Enter your net ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "capital-gain" },
+              children: ["capital gain"],
+            },
+            ", if any, increased by any ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "qualified-dividends" },
+              children: ["qualified dividends"],
+            },
+            " (see instructions)",
+          ],
+          box: {
+            identifier: "12",
+            value: {
+              type: "sum",
+              values: [
+                {
+                  type: "box_reference",
+                  box: "3a",
+                  form: "f1040",
+                  required: true,
+                },
+                {
+                  type: "conditional",
+                  condition: { type: "form_instance_count", form: "f1040sD" },
+                  trueValue: {
+                    type: "non_negative_clamp",
+                    value: {
+                      type: "minimum",
+                      values: [
+                        { type: "box_reference", box: "15", form: "f1040sD" },
+                        { type: "box_reference", box: "16", form: "f1040sD" },
+                      ],
+                    },
+                  },
+                  falseValue: {
+                    type: "box_reference",
+                    box: "7a",
+                    form: "f1040",
+                    required: true,
+                  },
+                },
+              ],
+            },
+          },
+        },
+        {
+          index: "13",
+          instructions:
+            "Subtract line 12 from line 11. If zero or less, enter -0-",
+          box: {
+            identifier: "13",
+            value: {
+              type: "non_negative_clamp",
+              value: {
+                type: "difference",
+                minuend: { type: "box_reference", box: "11" },
+                subtrahend: { type: "box_reference", box: "12" },
+              },
+            },
+          },
+        },
+        {
+          index: "14",
+          instructions: "Income limitation. Multiply line 13 by 20% (0.20)",
+          box: {
+            identifier: "14",
+            value: {
+              type: "product",
+              values: [
+                { type: "box_reference", box: "13" },
+                { type: "number_constant", value: 0.2 },
+              ],
+            },
+          },
+        },
+        {
+          index: "15",
+          instructions:
+            "Qualified business income deduction. Enter the smaller of line 10 or line 14. Also enter this amount on the applicable line of your return (see instructions)",
+          box: {
+            identifier: "15",
+            value: {
+              type: "minimum",
+              values: [
+                { type: "box_reference", box: "10" },
+                { type: "box_reference", box: "14" },
+              ],
+            },
+          },
+        },
+        {
+          index: "16",
+          instructions:
+            "Total qualified business (loss) carryforward. Combine lines 2 and 3. If greater than zero, enter -0-",
+          box: {
+            identifier: "16",
+            value: {
+              type: "non_positive_clamp",
+              value: {
+                type: "sum",
+                values: [
+                  { type: "box_reference", box: "2" },
+                  { type: "box_reference", box: "3" },
+                ],
+              },
+            },
+          },
+        },
+        {
+          index: "17",
+          instructions:
+            "Total qualified REIT dividends and PTP (loss) carryforward. Combine lines 6 and 7. If greater than zero, enter -0-",
+          box: {
+            identifier: "17",
+            value: {
+              type: "non_positive_clamp",
+              value: {
+                type: "sum",
+                values: [
+                  { type: "box_reference", box: "6" },
+                  { type: "box_reference", box: "7" },
+                ],
+              },
+            },
+          },
+        },
+      ],
+    },
+  ],
+});

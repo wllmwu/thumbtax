@@ -1,8 +1,11 @@
+import { LATEST_TAX_YEAR } from "@thumbtax/common";
+
 import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
 import type { UserPreferences } from "#src/state/types/userPreferences";
 
 export const DEFAULT_APPLICATION_STATE: ApplicationState = {
+  taxYear: LATEST_TAX_YEAR,
   filingStatus: "single",
   formClasses: [],
   formInstances: {},

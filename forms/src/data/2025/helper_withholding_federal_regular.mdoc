@@ -1,0 +1,58 @@
+{% form category="income" class="helper_withholding_federal_regular" %}
+# My federal income withholding
+
+{% subtitle %}
+Helper form: Federal income tax withholding
+{% /subtitle %}
+
+{% instructions %}
+Thumbtax uses this "helper" form to model a part of your income tax withholding.
+This isn't a real tax form.
+You can modify these values directly or use the wizard again to replace them.
+{% /instructions %}
+
+{% section %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Gross amount{% /instructions %}
+  - {% box identifier="1" %}
+    {% value type="select_instance_boxes_input" inputKey="gross_amount" %}
+    - {% option form="helper_income" box="4" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Amount subject to withholding{% /instructions %}
+  - {% box identifier="2" %}
+    {% value type="override_number_input" inputKey="subject_amount" %}
+    - {% value slot="computedValue" type="box_reference" box="1" /%}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Withholding rate{% /instructions %}
+  - {% box identifier="3" format="percentage" %}
+    {% value type="override_number_input" inputKey="withholding_rate" %}
+    - {% value slot="computedValue" type="quotient" %}
+      - {% value slot="dividend" type="_partial_passthrough" %}
+        - {% partial file="2025/taxComputation" variables={box: "2"} /%}
+        {% /value %}
+      - {% value slot="divisor" type="box_reference" box="2" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}Federal income tax withheld{% /instructions %}
+  - {% box identifier="4" %}
+    {% value type="override_number_input" inputKey="withheld_amount" %}
+    - {% value slot="computedValue" type="product" %}
+      - {% value type="box_reference" box="2" /%}
+      - {% value type="box_reference" box="3" /%}
+      {% /value %}
+    {% /value %}
+    {% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

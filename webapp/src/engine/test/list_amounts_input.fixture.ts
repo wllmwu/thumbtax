@@ -48,4 +48,19 @@ export const list_amounts_input: ValueProviderFixture[] = [
     },
     expected: { value: 30, errors: [] },
   },
+  {
+    description: "ignores an input of the wrong type",
+    provider: { type: "list_amounts_input", inputKey: INPUT_UNDER_TEST_KEY },
+    instanceRegistry: {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          inputs: {
+            [INPUT_UNDER_TEST_KEY]: { type: "number", value: 75 },
+          },
+        }),
+      ],
+    },
+    expected: { value: 0, errors: [] },
+  },
 ];

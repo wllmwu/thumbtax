@@ -1,0 +1,107 @@
+{% form
+   category="income"
+   class="f1099DIV"
+   govAboutUrl="https://www.irs.gov/forms-pubs/about-form-1099-div" %}
+# Form 1099-DIV
+
+{% subtitle %}Dividends and Distributions{% /subtitle %}
+
+{% commentary %}
+If you earn {% glossaryLink term="dividend" %}dividends{% /glossaryLink %} during the year, the bank or brokerage files this form with the IRS and sends a copy to you.
+{% /commentary %}
+
+{% section %}
+{% lines %}
+- {% line index="1a" %}
+  - {% instructions %}Total {% glossaryLink term="ordinary-dividends" %}ordinary dividends{% /glossaryLink %}{% /instructions %}
+  - {% box identifier="1a" %}{% value type="number_input" inputKey="total_ordinary_dividends" /%}{% /box %}
+  {% /line %}
+- {% line index="1b" %}
+  - {% instructions %}{% glossaryLink term="qualified-dividends" %}Qualified dividends{% /glossaryLink %}{% /instructions %}
+  - {% box identifier="1b" %}{% value type="number_input" inputKey="qualified_dividends" /%}{% /box %}
+  {% /line %}
+- {% line index="2a" %}
+  - {% instructions %}Total {% glossaryLink term="capital-gain" %}capital gain{% /glossaryLink %} distributions{% /instructions %}
+  - {% box identifier="2a" %}{% value type="number_input" inputKey="total_capital_gain_distributions" /%}{% /box %}
+  {% /line %}
+- {% line index="2b" %}
+  - {% instructions %}Unrecaptured {% glossaryLink term="section-1250" %}Section 1250{% /glossaryLink %} gain{% /instructions %}
+  - {% commentary %}"Unrecaptured" refers to the amount not subject to {% glossaryLink term="recapture" %}recapture{% /glossaryLink %}.{% /commentary %}
+  - {% box identifier="2b" %}{% value type="number_input" inputKey="unrecaptured_section_1250_gain" /%}{% /box %}
+  {% /line %}
+- {% line index="2c" %}
+  - {% instructions %}{% glossaryLink term="section-1202" %}Section 1202{% /glossaryLink %} gain{% /instructions %}
+  - {% box identifier="2c" %}{% value type="number_input" inputKey="section_1202_gain" /%}{% /box %}
+  {% /line %}
+- {% line index="2d" %}
+  - {% instructions %}{% glossaryLink term="collectibles" %}Collectibles{% /glossaryLink %} (28%) gain{% /instructions %}
+  - {% box identifier="2d" %}{% value type="number_input" inputKey="collectibles_gain" /%}{% /box %}
+  {% /line %}
+- {% line index="2e" %}
+  - {% instructions %}{% glossaryLink term="section-897" %}Section 897{% /glossaryLink %} ordinary dividends{% /instructions %}
+  - {% box identifier="2e" %}{% value type="number_input" inputKey="section_897_ordinary_dividends" /%}{% /box %}
+  {% /line %}
+- {% line index="2f" %}
+  - {% instructions %}{% glossaryLink term="section-897" %}Section 897{% /glossaryLink %} capital gain{% /instructions %}
+  - {% box identifier="2f" %}{% value type="number_input" inputKey="section_897_capital_gain" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Nondividend distributions{% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" inputKey="nondividend_distributions" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}{% glossaryLink term="federal-income-tax" %}Federal income tax{% /glossaryLink %} {% glossaryLink term="withholding" %}withheld{% /glossaryLink %}{% /instructions %}
+  - {% commentary %}{% glossaryLink term="backup-withholding" %}Backup withholding{% /glossaryLink %}{% /commentary %}
+  - {% box identifier="4" %}{% value type="number_input" inputKey="federal_income_tax_withheld" /%}{% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}{% glossaryLink term="section-199A" %}Section 199A{% /glossaryLink %} dividends{% /instructions %}
+  - {% box identifier="5" %}{% value type="number_input" inputKey="section_199A_dividends" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}Investment expenses{% /instructions %}
+  - {% box identifier="6" %}{% value type="number_input" inputKey="investment_expenses" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}Foreign tax paid{% /instructions %}
+  - {% box identifier="7" %}{% value type="number_input" inputKey="foreign_tax_paid" /%}{% /box %}
+  {% /line %}
+- {% line index="8" %}
+  - {% instructions %}Foreign country or U.S. possession{% /instructions %}
+  - {% box identifier="8" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="9" %}
+  - {% instructions %}Cash liquidation distributions{% /instructions %}
+  - {% box identifier="9" %}{% value type="number_input" inputKey="cash_liquidation_distributions" /%}{% /box %}
+  {% /line %}
+- {% line index="10" %}
+  - {% instructions %}Noncash liquidation distributions{% /instructions %}
+  - {% box identifier="10" %}{% value type="number_input" inputKey="noncash_liquidation_distributions" /%}{% /box %}
+  {% /line %}
+- {% line index="11" %}
+  - {% instructions %}FATCA filing requirement{% /instructions %}
+  - {% box identifier="11" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="12" %}
+  - {% instructions %}Exempt-interest dividends{% /instructions %}
+  - {% box identifier="12" %}{% value type="number_input" inputKey="exempt_interest_dividends" /%}{% /box %}
+  {% /line %}
+- {% line index="13" %}
+  - {% instructions %}{% glossaryLink term="specified-private-activity-bond" %}Specified private activity bond{% /glossaryLink %} interest dividends{% /instructions %}
+  - {% box identifier="13" %}{% value type="number_input" inputKey="specified_private_activity_bond_interest_dividends" /%}{% /box %}
+  {% /line %}
+- {% line index="14" %}
+  - {% instructions %}State{% /instructions %}
+  - {% box identifier="14" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="15" %}
+  - {% instructions %}State identification number{% /instructions %}
+  - {% box identifier="15" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="16" %}
+  - {% instructions %}State tax withheld{% /instructions %}
+  - {% box identifier="16" %}{% value type="number_input" inputKey="state_tax_withheld" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

@@ -25,4 +25,19 @@ export const date_input: ValueProviderFixture[] = [
     },
     expected: { value: 123, errors: [] },
   },
+  {
+    description: "ignores an input of the wrong type",
+    provider: { type: "date_input", inputKey: INPUT_UNDER_TEST_KEY },
+    instanceRegistry: {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          inputs: {
+            [INPUT_UNDER_TEST_KEY]: { type: "override", override: 20089 },
+          },
+        }),
+      ],
+    },
+    expected: { value: 0, errors: [] },
+  },
 ];

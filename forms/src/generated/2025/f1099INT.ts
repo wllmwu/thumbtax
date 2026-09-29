@@ -1,0 +1,195 @@
+import { defineFormSpecification } from "../../types/defineFormSpecification";
+
+export const f1099INT = defineFormSpecification({
+  class: "f1099INT",
+  govAboutUrl: "https://www.irs.gov/forms-pubs/about-form-1099-int",
+  category: "income",
+  maxInstances: null,
+  title: "Form 1099-INT",
+  subtitle: "Interest Income",
+  commentary: {
+    $$mdtype: "Tag",
+    name: "p",
+    attributes: {},
+    children: [
+      "If you earn interest during the year, the payer files this form with the IRS and sends a copy to you.",
+    ],
+  },
+  sections: [
+    {
+      lines: [
+        {
+          index: "1",
+          instructions: "Interest income",
+          box: {
+            identifier: "1",
+            value: { type: "number_input", inputKey: "interest_income" },
+          },
+        },
+        {
+          index: "2",
+          instructions: "Early withdrawal penalty",
+          box: {
+            identifier: "2",
+            value: {
+              type: "number_input",
+              inputKey: "early_withdrawal_penalty",
+            },
+          },
+        },
+        {
+          index: "3",
+          instructions:
+            "Interest on U.S. Savings Bonds and Treasury obligations",
+          box: {
+            identifier: "3",
+            value: {
+              type: "number_input",
+              inputKey: "us_savings_bonds_treasury_interest",
+            },
+          },
+        },
+        {
+          index: "4",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "federal-income-tax" },
+              children: ["Federal income tax"],
+            },
+            " ",
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "withholding" },
+              children: ["withheld"],
+            },
+          ],
+          commentary: {
+            $$mdtype: "Tag",
+            name: "GlossaryLink",
+            attributes: { term: "backup-withholding" },
+            children: ["Backup withholding"],
+          },
+          box: {
+            identifier: "4",
+            value: {
+              type: "number_input",
+              inputKey: "federal_income_tax_withheld",
+            },
+          },
+        },
+        {
+          index: "5",
+          instructions: "Investment expenses",
+          box: {
+            identifier: "5",
+            value: { type: "number_input", inputKey: "investment_expenses" },
+          },
+        },
+        {
+          index: "6",
+          instructions: "Foreign tax paid",
+          box: {
+            identifier: "6",
+            value: { type: "number_input", inputKey: "foreign_tax_paid" },
+          },
+        },
+        {
+          index: "7",
+          instructions: "Foreign country or U.S. territory",
+          box: { identifier: "7", value: { type: "unused" } },
+        },
+        {
+          index: "8",
+          instructions: "Tax-exempt interest",
+          box: {
+            identifier: "8",
+            value: { type: "number_input", inputKey: "tax_exempt_interest" },
+          },
+        },
+        {
+          index: "9",
+          instructions: [
+            {
+              $$mdtype: "Tag",
+              name: "GlossaryLink",
+              attributes: { term: "specified-private-activity-bond" },
+              children: ["Specified private activity bond"],
+            },
+            " interest",
+          ],
+          box: {
+            identifier: "9",
+            value: {
+              type: "number_input",
+              inputKey: "specified_private_activity_bond_interest",
+            },
+          },
+        },
+        {
+          index: "10",
+          instructions: "Market discount",
+          box: {
+            identifier: "10",
+            value: { type: "number_input", inputKey: "market_discount" },
+          },
+        },
+        {
+          index: "11",
+          instructions: "Bond premium",
+          box: {
+            identifier: "11",
+            value: { type: "number_input", inputKey: "bond_premium" },
+          },
+        },
+        {
+          index: "12",
+          instructions: "Bond premium on Treasury obligations",
+          box: {
+            identifier: "12",
+            value: {
+              type: "number_input",
+              inputKey: "treasury_obligations_bond_premium",
+            },
+          },
+        },
+        {
+          index: "13",
+          instructions: "Bond premium on tax-exempt bond",
+          box: {
+            identifier: "13",
+            value: {
+              type: "number_input",
+              inputKey: "tax_exempt_bond_premium",
+            },
+          },
+        },
+        {
+          index: "14",
+          instructions: "Tax-exempt and tax credit bond CUSIP number",
+          box: { identifier: "14", value: { type: "unused" } },
+        },
+        {
+          index: "15",
+          instructions: "State",
+          box: { identifier: "15", value: { type: "unused" } },
+        },
+        {
+          index: "16",
+          instructions: "State identification number",
+          box: { identifier: "16", value: { type: "unused" } },
+        },
+        {
+          index: "17",
+          instructions: "State tax withheld",
+          box: {
+            identifier: "17",
+            value: { type: "number_input", inputKey: "state_tax_withheld" },
+          },
+        },
+      ],
+    },
+  ],
+});

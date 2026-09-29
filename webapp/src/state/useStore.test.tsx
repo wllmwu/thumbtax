@@ -1,16 +1,21 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { subscribeToStore, useStore } from "#src/state/useStore";
+import {
+  selectSpecifications,
+  subscribeToStore,
+  useStore,
+} from "#src/state/useStore";
 import {
   makeBoxFixture,
   makeLineFixture,
   makeRegistryFixture,
   makeSectionFixture,
   makeSpecificationFixture,
+  makeSpecificationsByYearFixture,
 } from "#src/test/specificationFixtures";
 
-import type { FormClass } from "@thumbtax/common";
+import type { FormClass, TaxYear } from "@thumbtax/common";
 import type { FormLine, SpecificationRegistry } from "@thumbtax/forms";
 import type { UserInput } from "#src/common/types/userInput";
 import type { LoadError } from "#src/persistence/types/loadError";
@@ -103,6 +108,35 @@ function makeTestRegistry(
   });
 }
 
+function makeTestSpecificationsByYear(
+  extraLines: FormLine<false>[] = [],
+): Record<TaxYear, SpecificationRegistry> {
+  return makeSpecificationsByYearFixture(makeTestRegistry(extraLines));
+}
+
+const YEAR_BOX = "year-box";
+
+// Each year's registry has a box whose value is the year, so the workbook
+// shows which year's specifications computed it.
+function makeYearSpecificSpecificationsByYear(): Record<
+  TaxYear,
+  SpecificationRegistry
+> {
+  const makeYearRegistry = (taxYear: TaxYear) =>
+    makeTestRegistry([
+      makeLineFixture({
+        index: "6",
+        box: makeBoxFixture({
+          identifier: YEAR_BOX,
+          value: { type: "number_constant", value: taxYear },
+        }),
+      }),
+    ]);
+  return makeSpecificationsByYearFixture(makeYearRegistry(2025), {
+    2026: makeYearRegistry(2026),
+  });
+}
+
 function makeInstanceSelectionsLineFixture(): FormLine<false> {
   return makeLineFixture({
     index: "5",
@@ -118,6 +152,7 @@ function makeInstanceSelectionsLineFixture(): FormLine<false> {
 }
 
 const DEFAULT_APPLICATION_STATE: ApplicationState = {
+  taxYear: 2025,
   filingStatus: "single",
   formClasses: [],
   formInstances: {},
@@ -136,22 +171,35 @@ function renderUseStore() {
   return renderHook(() => useStore((state) => state));
 }
 
+function renderYearSpecificStore(taxYear: TaxYear) {
+  const hook = renderUseStore();
+  hook.result.current.initialize(
+    { ...DEFAULT_APPLICATION_STATE, taxYear },
+    DEFAULT_UI_STATE,
+    DEFAULT_PREFERENCES,
+    makeYearSpecificSpecificationsByYear(),
+  );
+  hook.rerender();
+  return hook;
+}
+
 beforeEach(() => {
   const { result } = renderUseStore();
   result.current.initialize(
     DEFAULT_APPLICATION_STATE,
     DEFAULT_UI_STATE,
     DEFAULT_PREFERENCES,
-    makeTestRegistry(),
+    makeTestSpecificationsByYear(),
   );
 });
 
 describe("useStore", () => {
   describe("initialize", () => {
-    it("populates applicationState, uiState, userPreferences, and specifications from arguments", () => {
+    it("populates applicationState, uiState, userPreferences, and specificationsByYear from arguments", () => {
       const { result, rerender } = renderUseStore();
 
       const applicationState: ApplicationState = {
+        taxYear: 2026,
         filingStatus: "head_of_household",
         formClasses: [TEST_CLASS],
         formInstances: {
@@ -170,11 +218,13 @@ describe("useStore", () => {
         maximumHistorySize: 5,
       };
 
+      const specificationsByYear = makeTestSpecificationsByYear();
+
       result.current.initialize(
         applicationState,
         uiState,
         preferences,
-        makeTestRegistry(),
+        specificationsByYear,
       );
 
       rerender();
@@ -182,6 +232,7 @@ describe("useStore", () => {
       expect(state.applicationState).toEqual(applicationState);
       expect(state.uiState).toEqual(uiState);
       expect(state.userPreferences).toEqual(preferences);
+      expect(state.specificationsByYear).toBe(specificationsByYear);
     });
 
     it("resets history when called on a store that already has history", () => {
@@ -199,7 +250,7 @@ describe("useStore", () => {
         DEFAULT_APPLICATION_STATE,
         DEFAULT_UI_STATE,
         DEFAULT_PREFERENCES,
-        makeTestRegistry(),
+        makeTestSpecificationsByYear(),
       );
 
       rerender();
@@ -210,6 +261,7 @@ describe("useStore", () => {
       const { result, rerender } = renderUseStore();
 
       const applicationState: ApplicationState = {
+        taxYear: 2025,
         filingStatus: "single",
         formClasses: [TEST_CLASS],
         formInstances: {
@@ -228,7 +280,7 @@ describe("useStore", () => {
         applicationState,
         DEFAULT_UI_STATE,
         DEFAULT_PREFERENCES,
-        makeTestRegistry(),
+        makeTestSpecificationsByYear(),
       );
 
       rerender();
@@ -238,10 +290,34 @@ describe("useStore", () => {
       });
     });
 
+    it("computes the workbook with the specifications of the state's tax year", () => {
+      const { result, rerender } = renderUseStore();
+
+      result.current.initialize(
+        {
+          taxYear: 2026,
+          filingStatus: "single",
+          formClasses: [TEST_CLASS],
+          formInstances: {
+            [TEST_CLASS]: [
+              { id: "y", class: TEST_CLASS, label: "", inputs: {} },
+            ],
+          },
+        },
+        DEFAULT_UI_STATE,
+        DEFAULT_PREFERENCES,
+        makeYearSpecificSpecificationsByYear(),
+      );
+
+      rerender();
+      expect(result.current.workbook["y"][YEAR_BOX].value).toEqual(2026);
+    });
+
     it("replaces previously loaded state when called twice (no merging)", () => {
       const { result, rerender } = renderUseStore();
 
       const firstApplicationState: ApplicationState = {
+        taxYear: 2025,
         filingStatus: "single",
         formClasses: [TEST_CLASS],
         formInstances: {
@@ -255,10 +331,11 @@ describe("useStore", () => {
         firstApplicationState,
         DEFAULT_UI_STATE,
         DEFAULT_PREFERENCES,
-        makeTestRegistry(),
+        makeTestSpecificationsByYear(),
       );
 
       const secondApplicationState: ApplicationState = {
+        taxYear: 2025,
         filingStatus: "married_filing_jointly",
         formClasses: [],
         formInstances: {},
@@ -268,13 +345,145 @@ describe("useStore", () => {
         secondApplicationState,
         DEFAULT_UI_STATE,
         DEFAULT_PREFERENCES,
-        makeTestRegistry(),
+        makeTestSpecificationsByYear(),
       );
 
       rerender();
       const state = result.current;
       expect(state.applicationState).toEqual(secondApplicationState);
       expect(state.workbook).toEqual({});
+    });
+  });
+
+  describe("setTaxYear", () => {
+    it("updates applicationState.taxYear and keeps all other data", () => {
+      const { result, rerender } = renderYearSpecificStore(2025);
+      const firstId = result.current.addFormInstance(TEST_CLASS);
+      const secondId = result.current.addFormInstance(TEST_CLASS);
+      result.current.addFormInstance(OTHER_CLASS);
+      result.current.moveFormInstance(TEST_CLASS, secondId, -1);
+      result.current.setFormInstanceLabel(TEST_CLASS, firstId, "Second job");
+      result.current.setFilingStatus("head_of_household");
+      result.current.setBoxInput(TEST_CLASS, firstId, NUMBER_INPUT_KEY, {
+        type: "number",
+        value: 1800,
+      });
+      // Not recognized by any year's specifications.
+      result.current.setBoxInput(TEST_CLASS, firstId, "retired-key", {
+        type: "selection",
+        selectedKey: "legacy",
+      });
+
+      rerender();
+      const before = result.current.applicationState;
+
+      result.current.setTaxYear(2026);
+
+      rerender();
+      expect(result.current.applicationState).toEqual({
+        ...before,
+        taxYear: 2026,
+      });
+    });
+
+    it("recomputes the workbook with the new year's specifications", () => {
+      const { result, rerender } = renderYearSpecificStore(2025);
+      const id = result.current.addFormInstance(TEST_CLASS);
+
+      rerender();
+      expect(result.current.workbook[id][YEAR_BOX].value).toEqual(2025);
+
+      result.current.setTaxYear(2026);
+
+      rerender();
+      expect(result.current.workbook[id][YEAR_BOX].value).toEqual(2026);
+    });
+
+    it("pushes the prior applicationState onto history.past and clears history.future", () => {
+      const { result, rerender } = renderYearSpecificStore(2025);
+      result.current.setFilingStatus("married_filing_jointly");
+      result.current.undo();
+
+      rerender();
+      const before = result.current.applicationState;
+      expect(result.current.history.future).toHaveLength(1);
+
+      result.current.setTaxYear(2026);
+
+      rerender();
+      expect(result.current.history.past.at(-1)).toBe(before);
+      expect(result.current.history.future).toEqual([]);
+    });
+
+    it("does nothing (state and history unchanged) when the year is already selected", () => {
+      const { result, rerender } = renderYearSpecificStore(2026);
+      result.current.addFormInstance(TEST_CLASS);
+
+      rerender();
+      const applicationStateBefore = result.current.applicationState;
+      const historyBefore = result.current.history;
+
+      result.current.setTaxYear(2026);
+
+      rerender();
+      expect(result.current.applicationState).toBe(applicationStateBefore);
+      expect(result.current.history).toBe(historyBefore);
+    });
+
+    it("is undone with all of the previous year's data and redone", () => {
+      const { result, rerender } = renderYearSpecificStore(2026);
+      const id = result.current.addFormInstance(TEST_CLASS);
+      result.current.setBoxInput(TEST_CLASS, id, NUMBER_INPUT_KEY, {
+        type: "number",
+        value: 73,
+      });
+
+      rerender();
+      const stateIn2026 = result.current.applicationState;
+
+      result.current.setTaxYear(2025);
+      result.current.undo();
+
+      rerender();
+      expect(result.current.applicationState).toBe(stateIn2026);
+      expect(result.current.workbook[id][YEAR_BOX].value).toEqual(2026);
+      expect(result.current.workbook[id][NUMBER_INPUT_BOX].value).toEqual(73);
+
+      result.current.redo();
+
+      rerender();
+      expect(result.current.applicationState).toEqual({
+        ...stateIn2026,
+        taxYear: 2025,
+      });
+      expect(result.current.workbook[id][YEAR_BOX].value).toEqual(2025);
+    });
+  });
+
+  describe("selectSpecifications", () => {
+    it("returns the registry for the current tax year", () => {
+      const { result, rerender } = renderYearSpecificStore(2025);
+      const specificationsByYear = result.current.specificationsByYear;
+
+      expect(selectSpecifications(result.current)).toBe(
+        specificationsByYear?.[2025],
+      );
+
+      result.current.setTaxYear(2026);
+
+      rerender();
+      expect(selectSpecifications(result.current)).toBe(
+        specificationsByYear?.[2026],
+      );
+    });
+
+    it("returns undefined before the store is initialized", () => {
+      expect(
+        selectSpecifications({
+          applicationState: DEFAULT_APPLICATION_STATE,
+          specificationsByYear: undefined,
+        }),
+      ).toBeUndefined();
     });
   });
 
@@ -542,7 +751,7 @@ describe("useStore", () => {
         DEFAULT_APPLICATION_STATE,
         DEFAULT_UI_STATE,
         DEFAULT_PREFERENCES,
-        makeTestRegistry([makeInstanceSelectionsLineFixture()]),
+        makeTestSpecificationsByYear([makeInstanceSelectionsLineFixture()]),
       );
 
       const removedId = result.current.addFormInstance(TEST_CLASS);
@@ -579,7 +788,7 @@ describe("useStore", () => {
         DEFAULT_APPLICATION_STATE,
         DEFAULT_UI_STATE,
         DEFAULT_PREFERENCES,
-        makeTestRegistry([makeInstanceSelectionsLineFixture()]),
+        makeTestSpecificationsByYear([makeInstanceSelectionsLineFixture()]),
       );
 
       const removedId = result.current.addFormInstance(TEST_CLASS);
@@ -1406,7 +1615,7 @@ describe("useStore", () => {
         DEFAULT_APPLICATION_STATE,
         DEFAULT_UI_STATE,
         { ...DEFAULT_PREFERENCES, maximumHistorySize: 2 },
-        makeTestRegistry(),
+        makeTestSpecificationsByYear(),
       );
 
       result.current.setFilingStatus("married_filing_jointly");
@@ -1465,7 +1674,7 @@ describe("useStore", () => {
           userPreferences: expect.any(Object),
           workbook: expect.any(Object),
           history: expect.any(Object),
-          specifications: expect.any(Object),
+          specificationsByYear: expect.any(Object),
         }),
       );
     });
@@ -1506,11 +1715,12 @@ describe("useStore", () => {
           tableOfContentsExpanded: true,
         },
         { browserSaveEnabled: false, maximumHistorySize: 12 },
-        makeTestRegistry(),
+        makeTestSpecificationsByYear(),
       );
       rerender();
 
       const next: ApplicationState = {
+        taxYear: 2026,
         filingStatus: "head_of_household",
         formClasses: [TEST_CLASS],
         formInstances: {
@@ -1540,7 +1750,7 @@ describe("useStore", () => {
         DEFAULT_APPLICATION_STATE,
         DEFAULT_UI_STATE,
         DEFAULT_PREFERENCES,
-        makeTestRegistry(),
+        makeTestSpecificationsByYear(),
       );
       rerender();
       result.current.setFilingStatus("married_filing_jointly");
@@ -1548,6 +1758,7 @@ describe("useStore", () => {
       expect(result.current.history.past.length).toBe(1);
 
       result.current.setApplicationState({
+        taxYear: 2025,
         filingStatus: "single",
         formClasses: [],
         formInstances: {},
@@ -1563,11 +1774,12 @@ describe("useStore", () => {
         DEFAULT_APPLICATION_STATE,
         DEFAULT_UI_STATE,
         DEFAULT_PREFERENCES,
-        makeTestRegistry(),
+        makeTestSpecificationsByYear(),
       );
       rerender();
 
       const next: ApplicationState = {
+        taxYear: 2025,
         filingStatus: "single",
         formClasses: [TEST_CLASS],
         formInstances: {
@@ -1591,6 +1803,24 @@ describe("useStore", () => {
           }),
         }),
       );
+    });
+
+    it("computes the workbook with the specifications of the new state's tax year", () => {
+      const { result, rerender } = renderYearSpecificStore(2026);
+
+      result.current.setApplicationState({
+        taxYear: 2025,
+        filingStatus: "qualifying_surviving_spouse",
+        formClasses: [TEST_CLASS],
+        formInstances: {
+          [TEST_CLASS]: [
+            { id: "loaded", class: TEST_CLASS, label: "L", inputs: {} },
+          ],
+        },
+      });
+
+      rerender();
+      expect(result.current.workbook["loaded"][YEAR_BOX].value).toEqual(2025);
     });
   });
 

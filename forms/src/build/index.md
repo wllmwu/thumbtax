@@ -11,3 +11,4 @@ It was mostly written by Claude Code.
   - `mapFormSpecification.ts`: The mapping from Markdoc renderable tree to form specification object
   - `mapGlossary.ts`: The mapping from Markdoc renderable tree to glossary entries
   - `mapValueProvider.ts`: Subroutine for mapping value providers
+  - `validatePartialYears.ts`: Check that a form only references partials from its own tax year

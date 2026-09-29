@@ -14,7 +14,7 @@ import {
 } from "react-aria-components";
 import { useNavigate } from "react-router";
 
-import { useStore } from "#src/state/useStore";
+import { selectSpecifications, useStore } from "#src/state/useStore";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { SearchField } from "#src/ui/primitives/SearchField";
 import { racn } from "#src/ui/utils/racn";
@@ -48,7 +48,7 @@ function formatInstanceCount({
 export function AddFormMenu() {
   const navigate = useNavigate();
 
-  const specifications = useStore((state) => state.specifications);
+  const specifications = useStore(selectSpecifications);
   const instances = useStore((state) => state.applicationState.formInstances);
   const addFormInstance = useStore((state) => state.addFormInstance);
 

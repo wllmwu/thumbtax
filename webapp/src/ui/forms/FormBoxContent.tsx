@@ -4,7 +4,7 @@ import { absurd } from "@thumbtax/common";
 import { noop } from "lodash";
 
 import { EPOCH_DATE } from "#src/common/epochDate";
-import { useStore } from "#src/state/useStore";
+import { selectSpecifications, useStore } from "#src/state/useStore";
 import { useFormatBoxValue } from "#src/ui/formatting/useFormatBoxValue";
 import { AmountListField } from "#src/ui/forms/AmountListField";
 import { SelectInstanceBoxesField } from "#src/ui/forms/SelectInstanceBoxesField";
@@ -344,7 +344,7 @@ function SelectInstanceBoxesInputBox({
   boxValue: Extract<ValueProvider, { type: "select_instance_boxes_input" }>;
   value: number;
 }) {
-  const specifications = useStore((state) => state.specifications);
+  const specifications = useStore(selectSpecifications);
   const instanceRegistry = useStore(
     (state) => state.applicationState.formInstances,
   );
@@ -443,7 +443,7 @@ export function FormBoxContent({
   const resolvedBox = useStore(
     (state) => state.workbook[instance.id][box.identifier],
   );
-  const specifications = useStore((state) => state.specifications);
+  const specifications = useStore(selectSpecifications);
 
   const errorMessage = React.useMemo<React.ReactNode>(() => {
     if (resolvedBox.errors.length === 0) {

@@ -17,10 +17,12 @@ import type { FilingStatus, FormClass } from "@thumbtax/common";
 import type { BoxAddress } from "#src/common/types/boxAddress";
 import type { FormInstance } from "#src/common/types/formInstance";
 import type { UserInput } from "#src/common/types/userInput";
-import type { PersistedState } from "#src/persistence/types/persistedState";
+import type {
+  PersistedApplicationState,
+  PersistedState,
+} from "#src/persistence/types/persistedState";
 import type { PersistedUiState } from "#src/persistence/types/persistedUiState";
 import type { PersistedUserPreferences } from "#src/persistence/types/persistedUserPreferences";
-import type { ApplicationState } from "#src/state/types/applicationState";
 import type { UiState } from "#src/state/types/uiState";
 import type { UserPreferences } from "#src/state/types/userPreferences";
 
@@ -40,7 +42,7 @@ describe("schema/type conformance", () => {
 
     expectTypeOf<
       z.infer<typeof applicationStateSchema>
-    >().toEqualTypeOf<ApplicationState>();
+    >().toEqualTypeOf<PersistedApplicationState>();
 
     expectTypeOf<
       z.infer<typeof boxAddressSchema>
@@ -68,6 +70,7 @@ describe("schema/type conformance", () => {
   it("parses a representative valid persisted state", () => {
     const result = currentPersistedStateSchema.safeParse({
       applicationState: {
+        taxYear: 2025,
         filingStatus: "single",
         formClasses: ["fW2"],
         formInstances: {
@@ -82,7 +85,6 @@ describe("schema/type conformance", () => {
         },
       },
       schemaVersion: 1,
-      taxYear: 2025,
     });
     expect(result.success).toBe(true);
   });

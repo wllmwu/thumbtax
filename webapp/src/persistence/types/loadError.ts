@@ -1,3 +1,5 @@
+import type { TaxYear } from "@thumbtax/common";
+
 export type LoadError =
   | { type: "not_an_object" }
   | { type: "missing_schema_version" }
@@ -8,4 +10,4 @@ export type LoadError =
     }
   | { type: "migration_failed"; reason: string }
   | { type: "invalid_json" }
-  | { type: "tax_year_mismatch"; saved: number; current: number };
+  | { type: "unsupported_tax_year"; saved: number; loadedAs: TaxYear };

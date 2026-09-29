@@ -7,3 +7,4 @@ This module contains shared type definitions.
   - `boxIdentifier.ts`: Unique identifier of a form box
   - `filingStatus.ts`: Tax filing statuses
   - `formClass.ts`: Identifiers for all currently supported tax forms
+  - `taxYear.ts`: Supported tax years and the latest one

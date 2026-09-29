@@ -8,7 +8,7 @@ import {
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
 import { useStore } from "#src/state/useStore";
-import { makeRegistryFixture } from "#src/test/specificationFixtures";
+import { makeSpecificationsByYearFixture } from "#src/test/specificationFixtures";
 import { LoadErrorBanner } from "#src/ui/forms/LoadErrorBanner";
 
 import type { LoadError } from "#src/persistence/types/loadError";
@@ -19,7 +19,7 @@ function initializeStore(loadErrors: LoadError[] = []) {
     DEFAULT_APPLICATION_STATE,
     DEFAULT_UI_STATE,
     DEFAULT_USER_PREFERENCES,
-    makeRegistryFixture(),
+    makeSpecificationsByYearFixture(),
     loadErrors,
   );
 }
@@ -44,14 +44,16 @@ describe("LoadErrorBanner", () => {
   it("renders a message for each load error", () => {
     initializeStore([
       { type: "invalid_json" },
-      { type: "tax_year_mismatch", saved: 2023, current: 2026 },
+      { type: "unsupported_tax_year", saved: 2023, loadedAs: 2026 },
     ]);
 
     render(<LoadErrorBanner />);
 
     expect(screen.getByText("Expected JSON object")).toBeInTheDocument();
     expect(
-      screen.getByText("Expected tax year 2026, received 2023"),
+      screen.getByText(
+        "Tax year 2023 isn't supported. Your data was loaded into tax year 2026 instead.",
+      ),
     ).toBeInTheDocument();
   });
 

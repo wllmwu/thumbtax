@@ -8,7 +8,7 @@ import {
   DEFAULT_USER_PREFERENCES,
 } from "#src/state/defaults";
 import { useStore } from "#src/state/useStore";
-import { makeRegistryFixture } from "#src/test/specificationFixtures";
+import { makeSpecificationsByYearFixture } from "#src/test/specificationFixtures";
 import { FormLabelDialog } from "#src/ui/forms/FormLabelDialog";
 
 import type { FormClass } from "@thumbtax/common";
@@ -20,6 +20,7 @@ const ORIGINAL_LABEL = "Original label";
 
 function initializeStore() {
   const applicationState: ApplicationState = {
+    taxYear: 2025,
     filingStatus: "single",
     formClasses: [TEST_CLASS],
     formInstances: {
@@ -38,7 +39,7 @@ function initializeStore() {
     applicationState,
     DEFAULT_UI_STATE,
     DEFAULT_USER_PREFERENCES,
-    makeRegistryFixture(),
+    makeSpecificationsByYearFixture(),
   );
 }
 

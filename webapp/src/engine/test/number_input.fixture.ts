@@ -70,4 +70,22 @@ export const number_input: ValueProviderFixture[] = [
     },
     expected: { value: 0, errors: [{ type: "divide_by_zero" }] },
   },
+  {
+    description: "ignores an input of the wrong type",
+    provider: { type: "number_input", inputKey: INPUT_UNDER_TEST_KEY },
+    instanceRegistry: {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          inputs: {
+            [INPUT_UNDER_TEST_KEY]: {
+              type: "amount_list",
+              value: [{ label: "Tips", amount: 60 }],
+            },
+          },
+        }),
+      ],
+    },
+    expected: { value: 0, errors: [] },
+  },
 ];

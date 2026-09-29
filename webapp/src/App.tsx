@@ -1,4 +1,4 @@
-import { specifications } from "@thumbtax/forms";
+import { specificationsByYear } from "@thumbtax/forms";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 import { useAutoSave } from "#src/persistence/useAutoSave";
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
 ]);
 
 export function App() {
-  useAutoSave(specifications);
+  useAutoSave(specificationsByYear);
 
   return <RouterProvider router={router} />;
 }

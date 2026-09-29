@@ -22,6 +22,7 @@ import {
 } from "#src/state/defaults";
 import { subscribeToStore, useStore } from "#src/state/useStore";
 
+import type { TaxYear } from "@thumbtax/common";
 import type { SpecificationRegistry } from "@thumbtax/forms";
 import type { LoadError } from "#src/persistence/types/loadError";
 
@@ -47,7 +48,9 @@ function readLocalStorageJson(key: string): {
   }
 }
 
-export function useAutoSave(specifications: SpecificationRegistry): void {
+export function useAutoSave(
+  specificationsByYear: Record<TaxYear, SpecificationRegistry>,
+): void {
   const initialize = useStore((state) => state.initialize);
   const setLoadErrors = useStore((state) => state.setLoadErrors);
 
@@ -90,7 +93,7 @@ export function useAutoSave(specifications: SpecificationRegistry): void {
       allErrors.push(...result.errors);
     }
 
-    initialize(applicationState, uiState, preferences, specifications);
+    initialize(applicationState, uiState, preferences, specificationsByYear);
     setLoadErrors(allErrors);
 
     // Latest slice values captured in closure so the debounced writers and the
@@ -103,7 +106,12 @@ export function useAutoSave(specifications: SpecificationRegistry): void {
       if (!latestPreferences.browserSaveEnabled) return;
       localStorage.setItem(
         SAVED_STATE_KEY,
-        JSON.stringify(serializePersistedState(latestApplicationState)),
+        JSON.stringify(
+          serializePersistedState(
+            latestApplicationState,
+            specificationsByYear[latestApplicationState.taxYear],
+          ),
+        ),
       );
     }, AUTOSAVE_DEBOUNCE_MS);
 
@@ -165,5 +173,5 @@ export function useAutoSave(specifications: SpecificationRegistry): void {
       writeApplicationState.flush();
       writeUiState.flush();
     };
-  }, [initialize, setLoadErrors, specifications]);
+  }, [initialize, setLoadErrors, specificationsByYear]);
 }

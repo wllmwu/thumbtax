@@ -1,8 +1,10 @@
 import { nodes, parse } from "@markdoc/markdoc";
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
-import alternativeMinimumTaxComputationPartial from "./data/partials/alternativeMinimumTaxComputation.mdoc";
-import taxComputationPartial from "./data/partials/taxComputation.mdoc";
+import alternativeMinimumTaxComputationPartial2025 from "./data/2025/partials/alternativeMinimumTaxComputation.mdoc";
+import taxComputationPartial2025 from "./data/2025/partials/taxComputation.mdoc";
+import alternativeMinimumTaxComputationPartial2026 from "./data/2026/partials/alternativeMinimumTaxComputation.mdoc";
+import taxComputationPartial2026 from "./data/2026/partials/taxComputation.mdoc";
 import { formLinkTag, glossaryLinkTag } from "./schema/contentTags";
 import { makeTransformer } from "./schema/makeTransformer";
 import { unwrapInlineTags } from "./schema/unwrapInlineTagChildren";
@@ -377,9 +379,13 @@ export const config: Config = {
     },
   },
   partials: {
-    alternativeMinimumTaxComputation: parse(
-      alternativeMinimumTaxComputationPartial,
+    "2025/alternativeMinimumTaxComputation": parse(
+      alternativeMinimumTaxComputationPartial2025,
     ),
-    taxComputation: parse(taxComputationPartial),
+    "2025/taxComputation": parse(taxComputationPartial2025),
+    "2026/alternativeMinimumTaxComputation": parse(
+      alternativeMinimumTaxComputationPartial2026,
+    ),
+    "2026/taxComputation": parse(taxComputationPartial2026),
   },
 };

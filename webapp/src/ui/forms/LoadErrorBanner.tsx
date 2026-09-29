@@ -23,8 +23,8 @@ function formatLoadError(error: LoadError): string {
       return `Failed to migrate to current schema: ${error.reason}`;
     case "invalid_json":
       return "Expected JSON object";
-    case "tax_year_mismatch":
-      return `Expected tax year ${error.current}, received ${error.saved}`;
+    case "unsupported_tax_year":
+      return `Tax year ${error.saved} isn't supported. Your data was loaded into tax year ${error.loadedAs} instead.`;
     default:
       return absurd(error);
   }

@@ -1,7 +1,7 @@
 import { Trash2Icon } from "lucide-react";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 
-import { useStore } from "#src/state/useStore";
+import { selectSpecifications, useStore } from "#src/state/useStore";
 import { CommentaryDisplay } from "#src/ui/content/CommentaryDisplay";
 import { FormLink } from "#src/ui/content/FormLink";
 import { ProseContent } from "#src/ui/content/ProseContent";
@@ -112,7 +112,7 @@ function FormListItem({
 }
 
 export function FormList() {
-  const specifications = useStore((state) => state.specifications);
+  const specifications = useStore(selectSpecifications);
   const formClasses = useStore((state) => state.applicationState.formClasses);
 
   if (!specifications) {

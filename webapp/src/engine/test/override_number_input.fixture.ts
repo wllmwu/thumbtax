@@ -60,4 +60,23 @@ export const override_number_input: ValueProviderFixture[] = [
     },
     expected: { value: 10, errors: [] },
   },
+  {
+    description: "ignores an input of the wrong type",
+    provider: {
+      type: "override_number_input",
+      inputKey: INPUT_UNDER_TEST_KEY,
+      computedValue: { type: "number_constant", value: 10 },
+    },
+    instanceRegistry: {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          inputs: {
+            [INPUT_UNDER_TEST_KEY]: { type: "number", value: 99 },
+          },
+        }),
+      ],
+    },
+    expected: { value: 10, errors: [] },
+  },
 ];

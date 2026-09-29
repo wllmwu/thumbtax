@@ -60,6 +60,63 @@ describe("SelectInstanceBoxesField", () => {
     );
   });
 
+  it("doesn't count selected addresses that aren't among the options", async () => {
+    renderComponent({
+      selectedAddresses: [
+        { instance: "w2-b", box: "1" },
+        // Instance doesn't exist
+        { instance: "w2-deleted", box: "1" },
+        // Box isn't an option
+        { instance: "w2-a", box: "12" },
+      ],
+    });
+
+    expect(await screen.findByLabelText("Test field")).toHaveTextContent(
+      "1 of 2 selected",
+    );
+  });
+
+  it("only marks options as selected when their address is selected", async () => {
+    renderComponent({
+      selectedAddresses: [
+        { instance: "w2-a", box: "12" },
+        { instance: "w2-b", box: "1" },
+      ],
+    });
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByRole("button"));
+
+    expect(
+      await screen.findByRole("option", { name: "W-2 (Employer A) 1" }),
+    ).toHaveAttribute("aria-selected", "false");
+    expect(
+      await screen.findByRole("option", { name: "W-2 (Employer B) 1" }),
+    ).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("drops selected addresses that aren't among the options on change", async () => {
+    const onChange = vi.fn();
+    renderComponent({
+      selectedAddresses: [
+        { instance: "w2-deleted", box: "1" },
+        { instance: "w2-a", box: "1" },
+      ],
+      onChange,
+    });
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByRole("button"));
+    await user.click(
+      await screen.findByRole("option", { name: "W-2 (Employer B) 1" }),
+    );
+
+    expect(onChange).toHaveBeenCalledWith([
+      { instance: "w2-a", box: "1" },
+      { instance: "w2-b", box: "1" },
+    ]);
+  });
+
   it("renders error message when provided", async () => {
     renderComponent({ errorMessage: "Test error message" });
 

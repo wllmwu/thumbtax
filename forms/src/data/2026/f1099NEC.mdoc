@@ -1,0 +1,47 @@
+{% form
+   category="income"
+   class="f1099NEC"
+   govAboutUrl="https://www.irs.gov/forms-pubs/about-form-1099-nec" %}
+# Form 1099-NEC
+
+{% subtitle %}Nonemployee Compensation{% /subtitle %}
+
+{% commentary %}
+If you receive payments during the year from a business that you're not considered an employee of, the business files this form with the IRS and sends a copy to you.
+To require this form, the payments must either exceed a certain amount or be subject to {% glossaryLink term="backup-withholding" %}backup withholding{% /glossaryLink %}.
+{% /commentary %}
+
+{% section %}
+{% lines %}
+- {% line index="1" %}
+  - {% instructions %}Nonemployee compensation{% /instructions %}
+  - {% box identifier="1" %}{% value type="number_input" inputKey="nonemployee_compensation" /%}{% /box %}
+  {% /line %}
+- {% line index="2" %}
+  - {% instructions %}Payer made direct sales totaling $5,000 or more of consumer products to recipient for resale{% /instructions %}
+  - {% box identifier="2" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="3" %}
+  - {% instructions %}Excess {% glossaryLink term="golden-parachute" %}golden parachute{% /glossaryLink %} payments{% /instructions %}
+  - {% box identifier="3" %}{% value type="number_input" inputKey="excess_golden_parachute_payments" /%}{% /box %}
+  {% /line %}
+- {% line index="4" %}
+  - {% instructions %}{% glossaryLink term="federal-income-tax" %}Federal income tax{% /glossaryLink %} {% glossaryLink term="withholding" %}withheld{% /glossaryLink %}{% /instructions %}
+  - {% commentary %}{% glossaryLink term="backup-withholding" %}Backup withholding{% /glossaryLink %}{% /commentary %}
+  - {% box identifier="4" %}{% value type="number_input" inputKey="federal_income_tax_withheld" /%}{% /box %}
+  {% /line %}
+- {% line index="5" %}
+  - {% instructions %}State tax withheld{% /instructions %}
+  - {% box identifier="5" %}{% value type="number_input" inputKey="state_tax_withheld" /%}{% /box %}
+  {% /line %}
+- {% line index="6" %}
+  - {% instructions %}State/Payer's state number{% /instructions %}
+  - {% box identifier="6" %}{% value type="unused" /%}{% /box %}
+  {% /line %}
+- {% line index="7" %}
+  - {% instructions %}State income{% /instructions %}
+  - {% box identifier="7" %}{% value type="number_input" inputKey="state_income" /%}{% /box %}
+  {% /line %}
+{% /lines %}
+{% /section %}
+{% /form %}

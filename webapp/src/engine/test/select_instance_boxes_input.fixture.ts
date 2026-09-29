@@ -300,4 +300,119 @@ export const select_instance_boxes_input: ValueProviderFixture[] = [
     },
     expected: { value: 10, errors: [] },
   },
+  {
+    description: "ignores an input of the wrong type",
+    specificationRegistry: makeRegistryFixture({
+      [TEST_CLASS]: makeSpecificationFixture({
+        class: TEST_CLASS,
+        sections: [
+          makeSectionFixture({
+            lines: [
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: "box-1",
+                  value: { type: "number_constant", value: 10 },
+                }),
+              }),
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: BOX_UNDER_TEST_ID,
+                  value: {
+                    type: "select_instance_boxes_input",
+                    inputKey: INPUT_UNDER_TEST_KEY,
+                    options: [{ form: TEST_CLASS, box: "box-1" }],
+                  },
+                }),
+              }),
+            ],
+          }),
+        ],
+      }),
+    }),
+    instanceRegistry: {
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          class: TEST_CLASS,
+          inputs: {
+            [INPUT_UNDER_TEST_KEY]: { type: "selection", selectedKey: "box-1" },
+          },
+        }),
+      ],
+    },
+    expected: { value: 0, errors: [] },
+  },
+  {
+    description: "ignores addresses whose form or box isn't an option",
+    specificationRegistry: makeRegistryFixture({
+      f1040: makeSpecificationFixture({
+        class: "f1040",
+        sections: [
+          makeSectionFixture({
+            lines: [
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: "box-1",
+                  value: { type: "number_constant", value: 300 },
+                }),
+              }),
+            ],
+          }),
+        ],
+      }),
+      [TEST_CLASS]: makeSpecificationFixture({
+        class: TEST_CLASS,
+        sections: [
+          makeSectionFixture({
+            lines: [
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: "box-1",
+                  value: { type: "number_constant", value: 10 },
+                }),
+              }),
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: "box-2",
+                  value: { type: "number_constant", value: 40 },
+                }),
+              }),
+              makeLineFixture({
+                box: makeBoxFixture({
+                  identifier: BOX_UNDER_TEST_ID,
+                  value: {
+                    type: "select_instance_boxes_input",
+                    inputKey: INPUT_UNDER_TEST_KEY,
+                    options: [{ form: TEST_CLASS, box: "box-1" }],
+                  },
+                }),
+              }),
+            ],
+          }),
+        ],
+      }),
+    }),
+    instanceRegistry: {
+      f1040: [makeInstanceFixture({ id: "1040-1", class: "f1040" })],
+      [TEST_CLASS]: [
+        makeInstanceFixture({
+          id: TEST_INSTANCE_ID,
+          class: TEST_CLASS,
+          inputs: {
+            [INPUT_UNDER_TEST_KEY]: {
+              type: "instance_box_selections",
+              selected: [
+                // Box exists but isn't an option
+                { instance: TEST_INSTANCE_ID, box: "box-2" },
+                // Box identifier matches an option, but on a different form
+                { instance: "1040-1", box: "box-1" },
+                { instance: TEST_INSTANCE_ID, box: "box-1" },
+              ],
+            },
+          },
+        }),
+      ],
+    },
+    expected: { value: 10, errors: [] },
+  },
 ];

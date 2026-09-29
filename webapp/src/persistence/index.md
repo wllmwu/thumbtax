@@ -17,10 +17,11 @@ It was mostly written by Claude Code.
   - `deserializePersisted(State|UiState|UserPreferences).ts`: Functions that attempt to parse raw input into the corresponding schema types
   - `deserializeVersioned.ts`: Helper that attempts to parse raw input and then run migrations on it to get to the latest schema shape
   - `downloadSaveFile.ts`: Serializes and imperatively downloads a save file
+  - `filterRecognizedState.ts`: Removes user data that a tax year's specifications don't recognize, so it isn't persisted
   - `localStorageKeys.ts`: Constant keys used in browser localStorage
   - `migrations.ts`: Functions to migrate from vN to v(N+1). None currently exist because there is only v1.
   - `parseUploadedFile.ts`: Runs `deserializePersistedState` against an uploaded File object
-  - `serialize.ts`: Mappers from internal state types to persisted state types
+  - `serialize.ts`: Mappers from internal state types to persisted state types. Application state is filtered with `filterRecognizedState` first.
   - `useAutoSave.tsx`: React hook that loads state from browser storage on mount and handles autosave
   - `useUploadSaveFile.ts`: React callback hook that loads state from a save file
   - `zodIssuesToLoadError.ts`: Maps from Zod error to a LoadError

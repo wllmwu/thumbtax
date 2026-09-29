@@ -4,7 +4,11 @@ import { FormInstanceBuilder } from "#src/state/formInstanceBuilder";
 
 describe("FormInstanceBuilder", () => {
   it("builds a form instance with the given class and label", () => {
-    const instance = new FormInstanceBuilder("f1040", "Test Label").build();
+    const instance = new FormInstanceBuilder(
+      2025,
+      "f1040",
+      "Test Label",
+    ).build();
 
     expect(instance).toEqual({
       id: expect.any(String),
@@ -15,14 +19,14 @@ describe("FormInstanceBuilder", () => {
   });
 
   it("builds a form instance with a unique id each time", () => {
-    const first = new FormInstanceBuilder("f1040", "").build();
-    const second = new FormInstanceBuilder("f1040", "").build();
+    const first = new FormInstanceBuilder(2025, "f1040", "").build();
+    const second = new FormInstanceBuilder(2026, "f1040", "").build();
 
     expect(first.id).not.toEqual(second.id);
   });
 
   it("sets an amount list input", () => {
-    const instance = new FormInstanceBuilder("fW2", "Test Label")
+    const instance = new FormInstanceBuilder(2025, "fW2", "Test Label")
       .setAmountListInput("other_amount", [
         { label: "Test amount", amount: 312.5 },
       ])
@@ -37,7 +41,7 @@ describe("FormInstanceBuilder", () => {
   });
 
   it("sets an instance box selections input", () => {
-    const instance = new FormInstanceBuilder("f1040", "Test Label")
+    const instance = new FormInstanceBuilder(2025, "f1040", "Test Label")
       .setInstanceBoxSelectionsInput("ira_distributions", [
         { instance: "form-instance-1", box: "1" },
       ])
@@ -52,7 +56,7 @@ describe("FormInstanceBuilder", () => {
   });
 
   it("sets a number input", () => {
-    const instance = new FormInstanceBuilder("fW2", "Test Label")
+    const instance = new FormInstanceBuilder(2025, "fW2", "Test Label")
       .setNumberInput("compensation", 50000)
       .build();
 
@@ -62,7 +66,7 @@ describe("FormInstanceBuilder", () => {
   });
 
   it("sets an override input", () => {
-    const instance = new FormInstanceBuilder("f1099INT", "Test Label")
+    const instance = new FormInstanceBuilder(2025, "f1099INT", "Test Label")
       .setOverrideInput("interest_income", 125.75)
       .build();
 
@@ -72,7 +76,7 @@ describe("FormInstanceBuilder", () => {
   });
 
   it("clears an override input with null", () => {
-    const instance = new FormInstanceBuilder("f1099INT", "Test Label")
+    const instance = new FormInstanceBuilder(2025, "f1099INT", "Test Label")
       .setOverrideInput("interest_income", null)
       .build();
 
@@ -82,7 +86,7 @@ describe("FormInstanceBuilder", () => {
   });
 
   it("sets a selection input", () => {
-    const instance = new FormInstanceBuilder("f1099INT", "Test Label")
+    const instance = new FormInstanceBuilder(2026, "f1099INT", "Test Label")
       .setSelectionInput("interest_income", "treasury_bonds")
       .build();
 
@@ -92,7 +96,7 @@ describe("FormInstanceBuilder", () => {
   });
 
   it("chains multiple input setters together", () => {
-    const instance = new FormInstanceBuilder("fW2", "Test Label")
+    const instance = new FormInstanceBuilder(2026, "fW2", "Test Label")
       .setNumberInput("compensation", 50000)
       .setAmountListInput("other_amount", [
         { label: "Test amount", amount: 312.5 },
@@ -109,7 +113,7 @@ describe("FormInstanceBuilder", () => {
   });
 
   it("overwrites a previously set input for the same key", () => {
-    const instance = new FormInstanceBuilder("fW2", "Test Label")
+    const instance = new FormInstanceBuilder(2025, "fW2", "Test Label")
       .setNumberInput("compensation", 50000)
       .setNumberInput("compensation", 60000)
       .build();

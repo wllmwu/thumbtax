@@ -1,5 +1,6 @@
-import { FORM_CLASSES } from "@thumbtax/common";
+import { FORM_CLASSES, TAX_YEARS } from "@thumbtax/common";
 
+import type { TaxYear } from "@thumbtax/common";
 import type {
   FormBox,
   FormLine,
@@ -94,4 +95,28 @@ export function makeRegistryFixture(
     ...defaults,
     ...overrides,
   };
+}
+
+function hasEveryTaxYear<Value>(
+  record: Partial<Record<TaxYear, Value>>,
+): record is Record<TaxYear, Value> {
+  return TAX_YEARS.every((taxYear) => record[taxYear] !== undefined);
+}
+
+/**
+ * Uses `registry` for every tax year, except the years given in `overrides`.
+ */
+export function makeSpecificationsByYearFixture(
+  registry: SpecificationRegistry = makeRegistryFixture(),
+  overrides?: Partial<Record<TaxYear, SpecificationRegistry>>,
+): Record<TaxYear, SpecificationRegistry> {
+  const specificationsByYear: Partial<Record<TaxYear, SpecificationRegistry>> =
+    {};
+  for (const taxYear of TAX_YEARS) {
+    specificationsByYear[taxYear] = overrides?.[taxYear] ?? registry;
+  }
+  if (!hasEveryTaxYear(specificationsByYear)) {
+    throw new Error("Missing specifications for a tax year");
+  }
+  return specificationsByYear;
 }

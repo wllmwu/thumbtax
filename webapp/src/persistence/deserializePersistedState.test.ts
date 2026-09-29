@@ -1,12 +1,12 @@
+import { LATEST_TAX_YEAR, TAX_YEARS } from "@thumbtax/common";
+import omit from "lodash/omit";
 import { describe, expect, it } from "vitest";
 
-import {
-  CURRENT_SCHEMA_VERSION,
-  CURRENT_TAX_YEAR,
-} from "#src/persistence/config";
+import { CURRENT_SCHEMA_VERSION } from "#src/persistence/config";
 import { deserializePersistedState } from "#src/persistence/deserializePersistedState";
 
 const validApplicationState = {
+  taxYear: 2025,
   filingStatus: "single",
   formClasses: ["fW2"],
   formInstances: {
@@ -25,7 +25,6 @@ function validFile(overrides: Record<string, unknown> = {}) {
   return {
     applicationState: validApplicationState,
     schemaVersion: CURRENT_SCHEMA_VERSION,
-    taxYear: CURRENT_TAX_YEAR,
     ...overrides,
   };
 }
@@ -48,7 +47,6 @@ describe("deserializePersistedState", () => {
   it("rejects a missing schemaVersion", () => {
     const result = deserializePersistedState({
       applicationState: validApplicationState,
-      taxYear: CURRENT_TAX_YEAR,
     });
     expect(result.ok).toBe(false);
     expect(result.errors).toEqual([{ type: "missing_schema_version" }]);
@@ -90,19 +88,59 @@ describe("deserializePersistedState", () => {
     expect(result.errors[0].type).toBe("validation_failed");
   });
 
-  it("loads a valid file from a different tax year with a non-fatal notice", () => {
-    const result = deserializePersistedState(
-      validFile({ taxYear: CURRENT_TAX_YEAR - 1 }),
-    );
-    expect(result.ok).toBe(true);
-    if (!result.ok) throw new Error("expected ok");
-    expect(result.value).toEqual(validApplicationState);
-    expect(result.errors).toEqual([
-      {
-        type: "tax_year_mismatch",
-        saved: CURRENT_TAX_YEAR - 1,
-        current: CURRENT_TAX_YEAR,
-      },
-    ]);
+  it("rejects the old top-level tax year field (strict)", () => {
+    const result = deserializePersistedState(validFile({ taxYear: 2025 }));
+    expect(result.ok).toBe(false);
+    if (result.ok) throw new Error("expected failure");
+    expect(result.errors[0].type).toBe("validation_failed");
   });
+
+  it("rejects a missing tax year", () => {
+    const result = deserializePersistedState(
+      validFile({ applicationState: omit(validApplicationState, "taxYear") }),
+    );
+    expect(result.ok).toBe(false);
+    if (result.ok) throw new Error("expected failure");
+    const failure = result.errors[0];
+    if (failure.type !== "validation_failed") throw new Error("wrong type");
+    expect(failure.issues).toContainEqual(
+      expect.objectContaining({ path: "applicationState.taxYear" }),
+    );
+  });
+
+  it.each(TAX_YEARS)(
+    "loads a file from supported tax year %i as is, without a notice",
+    (taxYear) => {
+      const applicationState = { ...validApplicationState, taxYear };
+      const result = deserializePersistedState(validFile({ applicationState }));
+      expect(result.ok).toBe(true);
+      if (!result.ok) throw new Error("expected ok");
+      expect(result.value).toEqual(applicationState);
+      expect(result.errors).toEqual([]);
+    },
+  );
+
+  it.each([2019, 2099, 2025.5])(
+    "loads a file from unsupported tax year %d into the latest year with a non-fatal notice",
+    (taxYear) => {
+      const result = deserializePersistedState(
+        validFile({
+          applicationState: { ...validApplicationState, taxYear },
+        }),
+      );
+      expect(result.ok).toBe(true);
+      if (!result.ok) throw new Error("expected ok");
+      expect(result.value).toEqual({
+        ...validApplicationState,
+        taxYear: LATEST_TAX_YEAR,
+      });
+      expect(result.errors).toEqual([
+        {
+          type: "unsupported_tax_year",
+          saved: taxYear,
+          loadedAs: LATEST_TAX_YEAR,
+        },
+      ]);
+    },
+  );
 });

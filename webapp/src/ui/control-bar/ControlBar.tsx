@@ -11,6 +11,7 @@ import { AddFormMenu } from "#src/ui/control-bar/AddFormMenu";
 import { DownloadSaveFileButton } from "#src/ui/control-bar/DownloadSaveFileButton";
 import { FilingStatusSelector } from "#src/ui/control-bar/FilingStatusSelector";
 import { SettingsDialog } from "#src/ui/control-bar/SettingsDialog";
+import { TaxYearSelector } from "#src/ui/control-bar/TaxYearSelector";
 import { UploadSaveFileButton } from "#src/ui/control-bar/UploadSaveFileButton";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { IconButton } from "#src/ui/primitives/IconButton";
@@ -24,6 +25,7 @@ export function ControlBar() {
 
   return (
     <Toolbar aria-label="App controls" className={styles.controlBar}>
+      <TaxYearSelector />
       <FilingStatusSelector />
       <Separator orientation="vertical" />
       <IconButton
