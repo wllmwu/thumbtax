@@ -14,4 +14,3 @@ Do not add new validation logic here.
   - `mapFormSpecification.ts`: The mapping from Markdoc renderable tree to form specification object
   - `mapGlossary.ts`: The mapping from Markdoc renderable tree to glossary entries
   - `mapValueProvider.ts`: Subroutine for mapping value providers
-  - `validatePartialYears.ts`: Check that a form only references partials from its own tax year

@@ -57,9 +57,7 @@ async function chooseYear(taxYear: TaxYear) {
   const user = userEvent.setup();
   await user.click(screen.getByRole("button", { name: /Tax year/ }));
   await user.click(
-    await screen.findByRole("menuitemradio", {
-      name: `Set tax year to ${taxYear}`,
-    }),
+    await screen.findByRole("option", { name: String(taxYear) }),
   );
   return user;
 }
@@ -76,20 +74,20 @@ describe("TaxYearSelector", () => {
     );
   });
 
-  it("lists every supported year newest first, with the selected year checked", async () => {
+  it("lists every supported year newest first, with the selected year marked as selected", async () => {
     initializeEmptyStore(2025);
     const user = userEvent.setup();
     render(<TaxYearSelector />);
 
     await user.click(screen.getByRole("button", { name: /Tax year/ }));
 
-    const options = await screen.findAllByRole("menuitemradio");
+    const options = await screen.findAllByRole("option");
     expect(options.map((option) => option.textContent)).toEqual(
       TAX_YEARS.toSorted((a, b) => b - a).map(String),
     );
     for (const option of options) {
       expect(option).toHaveAttribute(
-        "aria-checked",
+        "aria-selected",
         option.textContent === "2025" ? "true" : "false",
       );
     }
@@ -133,7 +131,7 @@ describe("TaxYearSelector", () => {
     const dialog = await screen.findByRole("alertdialog");
     expect(dialog).toHaveAccessibleName("Switch to tax year 2025?");
     expect(dialog).toHaveAccessibleDescription(
-      "Some inputs may not apply to 2025. Those inputs will be hidden and won't be saved. Switching back to 2026 before you leave or reload the page will restore them.",
+      "If any tax forms have different inputs between 2026 and 2025, the data you entered for those inputs in 2026 might not be present in 2025.",
     );
     expect(screen.getByRole("button", { name: "Cancel" })).toBeInTheDocument();
     expect(

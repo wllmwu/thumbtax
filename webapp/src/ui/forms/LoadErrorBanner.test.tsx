@@ -51,9 +51,7 @@ describe("LoadErrorBanner", () => {
 
     expect(screen.getByText("Expected JSON object")).toBeInTheDocument();
     expect(
-      screen.getByText(
-        "Tax year 2023 isn't supported. Your data was loaded into tax year 2026 instead.",
-      ),
+      screen.getByText("Unsupported tax year: 2023. Loaded as 2026 instead."),
     ).toBeInTheDocument();
   });
 

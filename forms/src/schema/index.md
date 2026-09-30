@@ -8,6 +8,7 @@ This module contains code used by the Markdoc schema.
   - `unwrapInlineTagChildren.ts`: Unwraps an inline tag
   - `unwrapListItemChildren.ts`: Unwraps list items
   - `validateChildren.ts`: Validates a Markdoc node's children
+  - `validatePartialYear.ts`: Checks that a `partial` tag references a partial from the same tax year
   - `validatePlainTextContent.ts`: Checks that a node contains only plain text
   - `validateProseContent.ts`: Checks that a node contains only prose
   - `validateUniqueInputKeys.ts`: Checks that input keys are unique within a form

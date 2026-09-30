@@ -7,3 +7,7 @@ export const FILING_STATUSES = [
 ] as const;
 
 export type FilingStatus = (typeof FILING_STATUSES)[number];
+
+export function isFilingStatus(value: string): value is FilingStatus {
+  return FILING_STATUSES.some((filingStatus) => filingStatus === value);
+}

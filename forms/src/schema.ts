@@ -1,4 +1,4 @@
-import { nodes, parse } from "@markdoc/markdoc";
+import { nodes, parse, tags } from "@markdoc/markdoc";
 import { BOX_FORMATS, FORM_CLASSES } from "@thumbtax/common";
 
 import alternativeMinimumTaxComputationPartial2025 from "./data/2025/partials/alternativeMinimumTaxComputation.mdoc";
@@ -11,6 +11,7 @@ import { unwrapInlineTags } from "./schema/unwrapInlineTagChildren";
 import { unwrapListItemChildren } from "./schema/unwrapListItemChildren";
 import { unwrapParagraphChild } from "./schema/unwrapParagraphChild";
 import { validateChildren } from "./schema/validateChildren";
+import { validatePartialYear } from "./schema/validatePartialYear";
 import { validatePlainTextContent } from "./schema/validatePlainTextContent";
 import { validateProseContent } from "./schema/validateProseContent";
 import { validateUniqueInputKeys } from "./schema/validateUniqueInputKeys";
@@ -258,6 +259,10 @@ export const config: Config = {
     value: valueTag,
     piece: pieceTag,
     option: optionTag,
+    partial: {
+      ...tags.partial,
+      validate: validatePartialYear,
+    },
     subtitle: {
       transform: makeTransformer("subtitle"),
       validate: validatePlainTextContent,

@@ -1,33 +1,16 @@
 import React from "react";
 
-import { TAX_YEARS } from "@thumbtax/common";
-import { CheckIcon } from "lucide-react";
-import {
-  Collection,
-  Dialog,
-  Heading,
-  Label,
-  Menu,
-  MenuItem,
-  MenuTrigger,
-  Modal,
-  Popover,
-  Text,
-} from "react-aria-components";
+import { isTaxYear, TAX_YEARS } from "@thumbtax/common";
+import { Dialog, Heading, Modal, Text } from "react-aria-components";
 
 import { useStore } from "#src/state/useStore";
 import { AriaButton } from "#src/ui/primitives/AriaButton";
 import { DialogFooter } from "#src/ui/primitives/DialogFooter";
-import { SelectorButton } from "#src/ui/primitives/SelectField";
-import { racn } from "#src/ui/utils/racn";
-import styles from "#src/ui/control-bar/TaxYearSelector.module.css";
+import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 
 import type { TaxYear } from "@thumbtax/common";
-import type { MenuItemProps } from "react-aria-components";
 
 const TAX_YEARS_NEWEST_FIRST = TAX_YEARS.toSorted((a, b) => b - a);
-
-type TaxYearOption = MenuItemProps & { id: TaxYear };
 
 export function TaxYearSelector() {
   const taxYear = useStore((state) => state.applicationState.taxYear);
@@ -40,54 +23,38 @@ export function TaxYearSelector() {
     null,
   );
 
-  const options = React.useMemo(() => {
-    return TAX_YEARS_NEWEST_FIRST.map<TaxYearOption>((value) => ({
-      id: value,
-      "aria-label": `Set tax year to ${value}`,
-      onAction: () => {
-        if (value === taxYear) {
-          return;
-        }
-        if (hasForms) {
-          setPendingTaxYear(value);
-        } else {
-          setTaxYear(value);
-        }
-      },
-      className: racn(styles.optionItem),
-      children: ({ isSelected }) => (
-        <>
-          {isSelected && <CheckIcon aria-hidden="true" />}
-          {value}
-        </>
-      ),
-    }));
-  }, [hasForms, setTaxYear, taxYear]);
-
-  const OptionItem = React.useCallback(
-    (props: TaxYearOption) => <MenuItem {...props} />,
-    [],
+  const handleChange = React.useCallback(
+    (value: string) => {
+      const newTaxYear = Number(value);
+      if (!isTaxYear(newTaxYear) || newTaxYear === taxYear) {
+        return;
+      }
+      if (hasForms) {
+        setPendingTaxYear(newTaxYear);
+      } else {
+        setTaxYear(newTaxYear);
+      }
+    },
+    [hasForms, setTaxYear, taxYear],
   );
-
-  const selectedKeys = React.useMemo(() => [taxYear], [taxYear]);
 
   return (
     <>
-      <MenuTrigger>
-        <Label className={styles.label}>
-          Tax year
-          <SelectorButton className={styles.button}>{taxYear}</SelectorButton>
-        </Label>
-        <Popover>
-          <Menu
-            disallowEmptySelection
-            selectedKeys={selectedKeys}
-            selectionMode="single"
+      <SelectField
+        label="Tax year"
+        value={String(taxYear)}
+        onChange={handleChange}
+      >
+        {TAX_YEARS_NEWEST_FIRST.map((value) => (
+          <SelectFieldItem
+            key={value}
+            id={String(value)}
+            textValue={String(value)}
           >
-            <Collection items={options}>{OptionItem}</Collection>
-          </Menu>
-        </Popover>
-      </MenuTrigger>
+            {value}
+          </SelectFieldItem>
+        ))}
+      </SelectField>
       <Modal
         isOpen={pendingTaxYear !== null}
         onOpenChange={(isOpen) => {

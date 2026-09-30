@@ -7,7 +7,6 @@ import * as prettier from "prettier";
 
 import { mapFormSpecification } from "./build/mapFormSpecification";
 import { mapGlossary } from "./build/mapGlossary";
-import { validatePartialYears } from "./build/validatePartialYears";
 import { config } from "./schema";
 
 import type { Node } from "@markdoc/markdoc";
@@ -23,11 +22,10 @@ const GLOSSARY_OUTPUT_PATH = path.join(OUTPUT_DIRECTORY, "glossary.ts");
 type BuildError = { lines: number[]; message: string };
 
 function validateDocument(documentNode: Node): BuildError[] {
-  return validate(documentNode, config)
-    .filter(
-      ({ error }) => error.level === "error" || error.level === "critical",
-    )
-    .map(({ error, lines }) => ({ lines, message: error.message }));
+  return validate(documentNode, config).map(({ error, lines }) => ({
+    lines,
+    message: error.message,
+  }));
 }
 
 function reportBuildErrors(label: string, errors: BuildError[]): void {
@@ -43,15 +41,7 @@ async function buildForm(taxYear: TaxYear, fileName: string): Promise<void> {
   const content = await fsPromises.readFile(filePath, "utf-8");
   const documentNode = parse(content, { file: dataSubpath });
 
-  const validationErrors = [
-    ...validateDocument(documentNode),
-    ...validatePartialYears(documentNode, taxYear).map(
-      ({ location, message }) => ({
-        lines: location ? [location.start.line] : [],
-        message,
-      }),
-    ),
-  ];
+  const validationErrors = validateDocument(documentNode);
   if (validationErrors.length > 0) {
     reportBuildErrors(dataSubpath, validationErrors);
     return;

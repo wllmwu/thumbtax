@@ -1,52 +1,35 @@
 import React from "react";
 
-import { FILING_STATUSES } from "@thumbtax/common";
-import {
-  Collection,
-  Label,
-  Menu,
-  MenuItem,
-  type MenuItemProps,
-  MenuTrigger,
-  Popover,
-} from "react-aria-components";
+import { FILING_STATUSES, isFilingStatus } from "@thumbtax/common";
 
 import { useStore } from "#src/state/useStore";
 import { formatFilingStatus } from "#src/ui/formatting/formatFilingStatus";
-import { SelectorButton } from "#src/ui/primitives/SelectField";
-import styles from "#src/ui/control-bar/FilingStatusSelector.module.css";
+import { SelectField, SelectFieldItem } from "#src/ui/primitives/SelectField";
 
 export function FilingStatusSelector() {
   const filingStatus = useStore((state) => state.applicationState.filingStatus);
   const setFilingStatus = useStore((state) => state.setFilingStatus);
 
-  const options = React.useMemo(() => {
-    return FILING_STATUSES.map<MenuItemProps>((value) => ({
-      id: `filing-status-selector-option-${value}`,
-      "aria-label": `Set filing status to ${formatFilingStatus(value)}`,
-      onAction: () => setFilingStatus(value),
-      children: formatFilingStatus(value),
-    }));
-  }, [setFilingStatus]);
-
-  const OptionItem = React.useCallback(
-    (props: MenuItemProps) => <MenuItem {...props} />,
-    [],
+  const handleChange = React.useCallback(
+    (value: string) => {
+      if (isFilingStatus(value)) {
+        setFilingStatus(value);
+      }
+    },
+    [setFilingStatus],
   );
 
   return (
-    <MenuTrigger>
-      <Label className={styles.label}>
-        Filing status
-        <SelectorButton className={styles.button}>
-          {formatFilingStatus(filingStatus)}
-        </SelectorButton>
-      </Label>
-      <Popover>
-        <Menu>
-          <Collection items={options}>{OptionItem}</Collection>
-        </Menu>
-      </Popover>
-    </MenuTrigger>
+    <SelectField
+      label="Filing status"
+      value={filingStatus}
+      onChange={handleChange}
+    >
+      {FILING_STATUSES.map((value) => (
+        <SelectFieldItem key={value} id={value}>
+          {formatFilingStatus(value)}
+        </SelectFieldItem>
+      ))}
+    </SelectField>
   );
 }
