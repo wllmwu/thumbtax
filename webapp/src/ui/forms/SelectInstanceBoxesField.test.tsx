@@ -60,7 +60,7 @@ describe("SelectInstanceBoxesField", () => {
     );
   });
 
-  it("doesn't count selected addresses that aren't among the options", async () => {
+  it("ignores invalid selected addresses", async () => {
     renderComponent({
       selectedAddresses: [
         { instance: "w2-b", box: "1" },
@@ -74,17 +74,8 @@ describe("SelectInstanceBoxesField", () => {
     expect(await screen.findByLabelText("Test field")).toHaveTextContent(
       "1 of 2 selected",
     );
-  });
 
-  it("only marks options as selected when their address is selected", async () => {
-    renderComponent({
-      selectedAddresses: [
-        { instance: "w2-a", box: "12" },
-        { instance: "w2-b", box: "1" },
-      ],
-    });
     const user = userEvent.setup();
-
     await user.click(await screen.findByRole("button"));
 
     expect(
@@ -95,7 +86,7 @@ describe("SelectInstanceBoxesField", () => {
     ).toHaveAttribute("aria-selected", "true");
   });
 
-  it("drops selected addresses that aren't among the options on change", async () => {
+  it("drops invalid selected addresses on change", async () => {
     const onChange = vi.fn();
     renderComponent({
       selectedAddresses: [

@@ -88,7 +88,6 @@ export function SelectInstanceBoxesField({
     valueProvider.options,
   ]);
 
-  // Selected addresses that aren't among the options are hidden.
   const selectedKeys = React.useMemo(
     () => options.filter(({ isSelected }) => isSelected).map(({ id }) => id),
     [options],

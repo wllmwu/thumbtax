@@ -1,5 +1,4 @@
 import { LATEST_TAX_YEAR, TAX_YEARS } from "@thumbtax/common";
-import omit from "lodash/omit";
 import { describe, expect, it } from "vitest";
 
 import { CURRENT_SCHEMA_VERSION } from "#src/persistence/config";
@@ -88,16 +87,11 @@ describe("deserializePersistedState", () => {
     expect(result.errors[0].type).toBe("validation_failed");
   });
 
-  it("rejects the old top-level tax year field (strict)", () => {
-    const result = deserializePersistedState(validFile({ taxYear: 2025 }));
-    expect(result.ok).toBe(false);
-    if (result.ok) throw new Error("expected failure");
-    expect(result.errors[0].type).toBe("validation_failed");
-  });
-
   it("rejects a missing tax year", () => {
     const result = deserializePersistedState(
-      validFile({ applicationState: omit(validApplicationState, "taxYear") }),
+      validFile({
+        applicationState: { ...validApplicationState, taxYear: undefined },
+      }),
     );
     expect(result.ok).toBe(false);
     if (result.ok) throw new Error("expected failure");

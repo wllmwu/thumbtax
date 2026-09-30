@@ -68,19 +68,12 @@ type StoreState = {
   redo: () => void;
 };
 
-/**
- * Returns the specification registry for the tax year of the current application state,
- * or undefined if the store isn't initialized yet.
- */
 export function selectSpecifications(
   state: Pick<StoreState, "applicationState" | "specificationsByYear">,
 ): SpecificationRegistry | undefined {
   return state.specificationsByYear?.[state.applicationState.taxYear];
 }
 
-/**
- * Computes the workbook for the given application state using the specifications of its tax year.
- */
 function computeWorkbookForState(
   specificationsByYear: Record<TaxYear, SpecificationRegistry> | undefined,
   applicationState: ApplicationState,

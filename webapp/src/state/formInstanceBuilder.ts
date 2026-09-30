@@ -18,7 +18,6 @@ export class FormInstanceBuilder<
 > {
   private form: FormInstance;
 
-  // The tax year is only used to type-check input keys against that year's specification.
   constructor(_taxYear: Year, formClass: Class, label: string) {
     this.form = { class: formClass, id: uuidv4(), inputs: {}, label };
   }

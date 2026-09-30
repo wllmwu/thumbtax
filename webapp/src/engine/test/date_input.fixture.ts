@@ -33,7 +33,7 @@ export const date_input: ValueProviderFixture[] = [
         makeInstanceFixture({
           id: TEST_INSTANCE_ID,
           inputs: {
-            [INPUT_UNDER_TEST_KEY]: { type: "override", override: 20089 },
+            [INPUT_UNDER_TEST_KEY]: { type: "override", override: 1 },
           },
         }),
       ],

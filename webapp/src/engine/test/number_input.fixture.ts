@@ -80,7 +80,7 @@ export const number_input: ValueProviderFixture[] = [
           inputs: {
             [INPUT_UNDER_TEST_KEY]: {
               type: "amount_list",
-              value: [{ label: "Tips", amount: 60 }],
+              value: [{ label: "test", amount: 60 }],
             },
           },
         }),

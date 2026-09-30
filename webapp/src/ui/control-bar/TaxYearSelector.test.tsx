@@ -163,7 +163,7 @@ describe("TaxYearSelector", () => {
     });
   });
 
-  it("keeps the year when cancelled", async () => {
+  it("keeps the year when canceled", async () => {
     initializeStore(STATE_WITH_FORMS);
     const { result, rerender } = renderStore();
     render(<TaxYearSelector />);

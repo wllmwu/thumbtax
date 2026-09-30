@@ -9,7 +9,6 @@ import {
   Label,
   Menu,
   MenuItem,
-  type MenuItemProps,
   MenuTrigger,
   Modal,
   Popover,
@@ -24,6 +23,7 @@ import { racn } from "#src/ui/utils/racn";
 import styles from "#src/ui/control-bar/TaxYearSelector.module.css";
 
 import type { TaxYear } from "@thumbtax/common";
+import type { MenuItemProps } from "react-aria-components";
 
 const TAX_YEARS_NEWEST_FIRST = TAX_YEARS.toSorted((a, b) => b - a);
 
@@ -99,7 +99,7 @@ export function TaxYearSelector() {
         <Dialog role="alertdialog">
           <Heading slot="title">{`Switch to tax year ${pendingTaxYear}?`}</Heading>
           <Text slot="description">
-            {`Some inputs may not apply to ${pendingTaxYear}. Those inputs will be hidden and won't be saved. Switching back to ${taxYear} before you leave or reload the page will restore them.`}
+            {`If any tax forms have different inputs between ${taxYear} and ${pendingTaxYear}, the data you entered for those inputs in ${taxYear} might not be present in ${pendingTaxYear}.`}
           </Text>
           <DialogFooter>
             <AriaButton onPress={() => setPendingTaxYear(null)}>

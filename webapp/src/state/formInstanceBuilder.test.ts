@@ -20,7 +20,7 @@ describe("FormInstanceBuilder", () => {
 
   it("builds a form instance with a unique id each time", () => {
     const first = new FormInstanceBuilder(2025, "f1040", "").build();
-    const second = new FormInstanceBuilder(2026, "f1040", "").build();
+    const second = new FormInstanceBuilder(2025, "f1040", "").build();
 
     expect(first.id).not.toEqual(second.id);
   });

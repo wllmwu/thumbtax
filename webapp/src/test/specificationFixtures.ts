@@ -103,9 +103,6 @@ function hasEveryTaxYear<Value>(
   return TAX_YEARS.every((taxYear) => record[taxYear] !== undefined);
 }
 
-/**
- * Uses `registry` for every tax year, except the years given in `overrides`.
- */
 export function makeSpecificationsByYearFixture(
   registry: SpecificationRegistry = makeRegistryFixture(),
   overrides?: Partial<Record<TaxYear, SpecificationRegistry>>,
